@@ -1,0 +1,5 @@
+import { Database } from "lucide-react";
+import type { AppData } from "../../../shared/domain";
+import { RecipeComposition } from "../components/RecipeComposition";
+
+export function RecipesPage({ data }: { data: AppData }) { return <><div className="page-heading"><div><p className="eyebrow">Authoritative intended inputs</p><h1>Recipe library</h1><p>Recipes 5–14 from the labeled Video 5 record. Missing purpose notes remain missing.</p></div></div><div className="recipe-grid">{data.recipes.map((recipe) => <article className="card recipe-tile" key={recipe.recipeId}><div className="card__header"><div><p className="eyebrow">Recipe</p><h2>{recipe.recipeId}</h2></div><strong>{recipe.totalMl} mL</strong></div><RecipeComposition recipe={recipe} /><dl className="definition-list"><div><dt>Order</dt><dd>{recipe.dispenseOrder.join(" → ")}</dd></div><div><dt>Documented appearance</dt><dd>{recipe.expectedAppearance ?? "Not documented"}</dd></div></dl><p className="source-line"><Database /> {recipe.source}</p></article>)}</div></>; }

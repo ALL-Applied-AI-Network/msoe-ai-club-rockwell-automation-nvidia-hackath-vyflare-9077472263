@@ -1,0 +1,20 @@
+node_modules/
+client/dist/
+server/dist/
+.env
+.env.*
+*.log
+coverage/
+
+# Keep delivered and generated heavyweight artifacts outside Git.
+datasets/
+models/
+artifacts/
+generated/
+*.mp4
+*.usd
+*.usda
+*.usdc
+*.pt
+*.pth
+*.onnx

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: vyflare-inspection-console
+    runtime: node
+    plan: free
+    branch: ui-development
+    buildCommand: pnpm install --frozen-lockfile && pnpm run build
+    startCommand: pnpm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: NODE_VERSION
+        value: 24.19.0

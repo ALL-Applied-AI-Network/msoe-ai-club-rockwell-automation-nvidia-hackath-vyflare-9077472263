@@ -1,4 +1,61 @@
-# Rockwell Automation + NVIDIA Innovation Lab · Fall 2026
+# Vyflare Inspection Console
+
+A full-stack, recorded-data operator console for the Rockwell Automation + NVIDIA Fluid Mixing Station challenge. The interface keeps intended recipe data, observed image-relative measurements, simulated advisory decisions, human review status, and cause hypotheses visibly separate.
+
+> **Prototype boundary:** advisory only—no machine control. The included observations and decisions are deterministic demo fixtures and do not represent a running inference model. Physical volume is not reported because no validated pixel-to-volume calibration is included.
+
+## Run locally
+
+Requirements: Node.js 20 or later and pnpm 10 or later (`corepack enable` on standard Node installations).
+
+```bash
+pnpm install
+pnpm run dev
+```
+
+Open <http://localhost:5173>. The Express API runs on <http://127.0.0.1:8787> and Vite proxies `/api` during development.
+
+Production verification and serving:
+
+```bash
+pnpm run check
+pnpm start
+```
+
+After `pnpm run build`, `pnpm start` serves the API and compiled client at <http://127.0.0.1:8787>.
+
+## Application structure
+
+- `client/` — React, TypeScript, Vite operator interface.
+- `server/` — Express read-only inspection and recipe API.
+- `shared/` — domain contracts shared by both layers.
+- `client/public/demo/` — six curated 640×480 Vial Fill frames from labeled Video 5.
+
+API endpoints:
+
+- `GET /api/health`
+- `GET /api/bootstrap`
+- `GET /api/cases`
+- `GET /api/cases/:id`
+- `GET /api/recipes`
+
+## Continuous integration and deployment
+
+GitHub Actions runs type checking, domain tests, and a production build for pushes to `main` or `ui-development` and for pull requests targeting `main`. The workflow uses the pinned Node and pnpm versions declared in `.node-version` and `package.json`.
+
+The root `render.yaml` defines a Render Node web service for the `ui-development` branch. To create the hosted service, connect this private GitHub repository to Render and create a new Blueprint from the repository. Render will build and start the same Express-served production bundle used locally and verify `/api/health`.
+
+The Blueprint intentionally targets `ui-development` until the feature is reviewed and merged. Change its `branch` field to `main` as part of the eventual merge/deployment decision.
+
+## Data provenance
+
+Recipe values and selected frame identifiers come from the supplied `video5_vial_recipes.csv` and `video5_frame_labels.csv`. The six UI cases use real recorded frames, while observations, overlays, decisions, quality flags, and hypotheses are explicitly labeled simulated or illustrative. Raw videos, bulk images, USD files, generated data, and model artifacts are intentionally excluded from Git.
+
+---
+
+## Event reference
+
+### Rockwell Automation + NVIDIA Innovation Lab · Fall 2026
 
 This is your team's repository for the four-week physical AI hackathon run by Rockwell Automation, NVIDIA, the MSOE AI Club and UWM's Connected Systems Institute. Build everything here. Sponsors can follow your work as it progresses, and your final submission links straight to this repository.
 
