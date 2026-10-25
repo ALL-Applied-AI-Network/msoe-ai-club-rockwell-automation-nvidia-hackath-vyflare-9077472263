@@ -11,7 +11,7 @@ from flask_cors import CORS
 from PIL import Image, ImageOps, UnidentifiedImageError
 from werkzeug.exceptions import HTTPException
 
-from models import SafetyBlocked, load_models
+from models import RemoteInferenceError, SafetyBlocked, load_models
 
 Image.MAX_IMAGE_PIXELS = 16_000_000
 
@@ -58,11 +58,17 @@ def create_app(model_registry=None, config=None):
     def predict():
         frame_id = request.form.get("frame_id", "").strip()
         name = request.form.get("model", "resnet18")
+        include_resnet = request.form.get("include_resnet", "false")
         prompt = request.form.get("prompt", "Describe the visible scene briefly.").strip()
         if not frame_id or len(frame_id) > 128:
             return error("frame_id is required and must be at most 128 characters", 400)
         if name not in registry:
             return error("Unknown or disabled model", 400)
+        if include_resnet not in {"true", "false"}:
+            return error("include_resnet must be true or false", 400)
+        paired = include_resnet == "true" and name != "resnet18"
+        if paired and "resnet18" not in registry:
+            return error("ResNet-18 is required for paired inference but is disabled", 400)
         if not prompt or len(prompt) > 2000:
             return error("prompt must contain 1–2000 characters", 400)
         upload = request.files.get("image")
@@ -91,10 +97,22 @@ def create_app(model_registry=None, config=None):
             image.thumbnail((1280, 1280))
             started = time.perf_counter()
             result = registry[name].predict(image, prompt)
+            if paired:
+                # Sequential execution under the same gate bounds GPU workload.
+                # Cosmos runs first so rejected input does not return partial results.
+                results = {name: result, "resnet18": registry["resnet18"].predict(image, prompt)}
+                return jsonify(frame_id=frame_id, model=name, mode=app.config["MODEL_MODE"],
+                               result=result, results=results,
+                               inference_ms=round((time.perf_counter()-started)*1000, 1))
             return jsonify(frame_id=frame_id, model=name, mode=app.config["MODEL_MODE"],
                            result=result, inference_ms=round((time.perf_counter()-started)*1000, 1))
         except SafetyBlocked as exc:
             return error(str(exc), 422)
+        except RemoteInferenceError as exc:
+            response, code = error(str(exc), exc.status)
+            if code == 429:
+                response.headers["Retry-After"] = "1"
+            return response, code
         except Exception:
             app.logger.exception("Inference failed for %s", name)
             return error("Model inference failed; see backend log", 500)

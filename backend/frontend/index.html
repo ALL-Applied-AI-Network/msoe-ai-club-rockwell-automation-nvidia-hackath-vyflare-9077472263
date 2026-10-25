@@ -9,7 +9,7 @@ body{font:16px system-ui;max-width:900px;margin:40px auto;padding:0 20px;backgro
 <h1>Local model API test</h1>
 <p>ResNet-18 classifies a frame. Cosmos3-Nano reasons about the image with safety checks. Mock mode tests uploads only.</p>
 <label>API <input id="api" value="http://127.0.0.1:8000"></label>
-<label>Model <select id="model"><option value="resnet18">ResNet-18</option><option value="cosmos">Cosmos3-Nano</option></select></label>
+<label>Models <select id="model"><option value="cosmos_lite">ResNet-18 + Cosmos Lite (local)</option><option value="cosmos_full">ResNet-18 + Cosmos Full (DGX Spark)</option><option value="resnet18">ResNet-18 only</option></select></label>
 <label>Cosmos prompt <input id="prompt" size="50" value="Describe the visible scene briefly." maxlength="2000"></label>
 <button id="health">Check API</button><button id="start">Start camera</button><button id="stop" disabled>Stop</button>
 <label>Or upload an image <input id="file" type="file" accept="image/jpeg,image/png"></label>

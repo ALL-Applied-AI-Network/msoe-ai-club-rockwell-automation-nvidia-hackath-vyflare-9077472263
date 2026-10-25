@@ -30,6 +30,34 @@ class APITests(unittest.TestCase):
     def test_cosmos_routing(self):
         self.assertEqual(self.post(model='cosmos').json['result']['model'], 'cosmos')
 
+    def test_paired_inference(self):
+        with patch.object(self.model, 'predict', wraps=self.model.predict) as resnet:
+            response = self.post(model='cosmos', include_resnet='true')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(set(response.json['results']), {'resnet18', 'cosmos'})
+        self.assertEqual(response.json['results']['resnet18']['model'], 'resnet18')
+        self.assertEqual(response.json['results']['cosmos']['model'], 'cosmos')
+        resnet.assert_called_once()
+
+    def test_paired_requires_resnet(self):
+        client = create_app({'cosmos': MockModel('cosmos')},
+                            {'TESTING': True, 'MODEL_MODE': 'mock'}).test_client()
+        response = client.post('/predict', data={
+            'frame_id': '42', 'model': 'cosmos', 'include_resnet': 'true'})
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('disabled', response.json['error'])
+
+    def test_invalid_pairing_flag(self):
+        self.assertEqual(self.post(include_resnet='yes').status_code, 400)
+
+    def test_paired_failure_releases_gate(self):
+        with patch.object(self.model, 'predict', side_effect=RuntimeError('failed')):
+            with self.assertLogs(self.app.logger, level='ERROR'):
+                response = self.post(model='cosmos', include_resnet='true')
+        self.assertEqual(response.status_code, 500)
+        self.assertNotIn('results', response.json)
+        self.assertEqual(self.post().status_code, 200)
+
     def test_allowed_preflight(self):
         response = self.client.options('/predict', headers={
             'Origin': 'http://localhost:3000', 'Access-Control-Request-Method': 'POST',

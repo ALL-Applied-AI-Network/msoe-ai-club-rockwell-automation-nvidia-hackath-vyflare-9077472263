@@ -1,4 +1,101 @@
-# VyFlare local inference backend
+# VyFlare inference backend
+
+## Cosmos Lite / Full switch
+
+The included frontend requests **ResNet-18 plus the selected Cosmos model**
+for each photo by sending `include_resnet=true`. The backend runs them
+sequentially under one inference gate and returns both outputs in
+`results.resnet18` and `results.cosmos_lite` or `results.cosmos_full`.
+The existing `result` field continues to contain the selected Cosmos output.
+If either model fails, the request returns an error without partial results.
+Requests without `include_resnet=true` retain single-model behavior; the
+DGX worker receives single-model requests and needs only Cosmos enabled.
+
+For real paired inference use `MODEL_MODE=real` and enable both ResNet and
+the chosen Cosmos route. On Windows, `ENABLED_MODELS=resnet18,cosmos_full`
+can use local CPU ResNet and the DGX worker. Enabling `cosmos_lite` still
+requires the existing local Linux/CUDA runtime; mock mode does not run models.
+
+The frontend selects the destination per request using the existing multipart
+`model` field. There is no global switch shared between clients:
+
+| Value | Execution |
+| --- | --- |
+| `resnet18` | Local ResNet-18 (unchanged) |
+| `cosmos_lite` | Local existing Cosmos3-Nano adapter |
+| `cosmos_full` | HTTP request to the DGX worker |
+| `cosmos` | Legacy local Cosmos alias; also the DGX worker selector |
+
+For a dropdown, send `body.append('model', 'cosmos_lite')` or
+`body.append('model', 'cosmos_full')` with the image, frame ID, and prompt.
+The response echoes the frontend selector and original frame ID. `/health`
+lists enabled selectors; it reports gateway initialization, not DGX readiness.
+Mock mode mocks both routes and does not contact the DGX.
+
+### Local gateway
+
+In `backend/.env`:
+
+```dotenv
+MODEL_MODE=real
+ENABLED_MODELS=resnet18,cosmos_lite,cosmos_full
+COSMOS_CHECKPOINT=Cosmos3-Nano
+COSMOS_FULL_URL=http://127.0.0.1:8001/predict
+COSMOS_FULL_REMOTE_MODEL=cosmos
+COSMOS_FULL_TIMEOUT_SECONDS=120
+```
+
+The Lite label uses the existing Cosmos3-Nano implementation; it does not add
+a new smaller checkpoint or a Windows-compatible runtime. This adapter still
+requires its Linux/CUDA Framework environment. To run only ResNet and remote
+Full on Windows, use `ENABLED_MODELS=resnet18,cosmos_full`. To test all dropdown
+choices without model dependencies, use `MODEL_MODE=mock`.
+
+### DGX worker
+
+Place this backend folder on the DGX and use the validated Cosmos Framework
+environment. In the DGX copy's `.env`, configure:
+
+```dotenv
+PORT=8001
+MODEL_MODE=real
+ENABLED_MODELS=cosmos
+COSMOS_CHECKPOINT=/absolute/path/to/your/full/cosmos/checkpoint
+COSMOS_MAX_NEW_TOKENS=256
+```
+
+Run `python app.py` there. The checkpoint must support the existing
+Cosmos Framework reasoner interface in `Cosmos3Model`; a different Cosmos
+architecture requires a corresponding adapter. `ENABLED_MODELS=cosmos` runs
+locally on the worker and prevents recursive forwarding. Full weights load
+only on the DGX; Lite weights load only on the gateway.
+
+On Windows, keep this SSH tunnel running in a separate terminal:
+
+```powershell
+ssh -N -o ExitOnForwardFailure=yes -L 8001:127.0.0.1:8001 yt-vyflare71b7@172.30.102.122
+```
+
+The worker stays bound to loopback. Use the tunnel instead of exposing the
+unauthenticated API on the network. Check worker initialization through
+`http://127.0.0.1:8001/health`; it must report `mode: real` and `cosmos`.
+Start the local gateway with `python app.py` and select either route in the
+included test client. No worker was installed or started automatically.
+
+Remote safety rejections return 422, busy workers return 429 with Retry-After,
+connection failures return 503, timeouts return 504, and invalid responses or
+other worker failures return 502. Full never falls back to Lite or mock.
+Mock responses from a worker are rejected. A gateway timeout releases its
+gate but does not cancel inference already running on the DGX.
+
+Full results must also include runtime-reported Linux/aarch64/NVIDIA GB10
+execution metadata. Results from other hardware or older workers without
+metadata are rejected with 502. Returned Cosmos results include the worker
+hostname and GPU so the execution destination is visible. This metadata is
+a configuration check, not hardware attestation: use the SSH tunnel to
+`yt-vyflare71b7@172.30.102.122` to establish the destination. Deploy the updated
+`models.py` with the worker before using Full. Local Cosmos weights are never
+loaded by the `cosmos_full` adapter, and it has no local fallback.
 
 Flask API for ResNet-18 classification and Cosmos3-Nano image reasoning. This folder is designed to live at `backend/` in the team repository. `frontend/` is a small API test client, not the final product UI.
 
@@ -18,7 +115,8 @@ Flask API for ResNet-18 classification and Cosmos3-Nano image reasoning. This fo
 
 MacBook Pro, M4 Pro, 24 GB unified memory: run ResNet on CPU first, or try `RESNET_DEVICE=mps` after verifying the CPU baseline. The prepared local `.env` enables real ResNet only. Cosmos3-Nano is implemented for a compatible Linux/NVIDIA device and is not runnable through this CUDA adapter on the Mac. To test both routes without Cosmos weights, use `MODEL_MODE=mock` and `ENABLED_MODELS=resnet18,cosmos`.
 
-Running real Cosmos elsewhere would require an additional remote-worker design and would no longer be the single-device topology. No remote service is contacted by this backend.
+The local Cosmos setup below also applies to the DGX worker. Use the routing
+configuration above for the two-machine topology.
 
 ## 1. Start without model downloads
 

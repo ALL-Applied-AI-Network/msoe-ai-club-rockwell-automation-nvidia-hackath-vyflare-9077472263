@@ -11,6 +11,7 @@ async function send(image, session) {
   body.append('image', image, 'frame.jpg');
   body.append('frame_id', id);
   body.append('model', el('model').value);
+  body.append('include_resnet', el('model').value.startsWith('cosmos') ? 'true' : 'false');
   body.append('prompt', el('prompt').value);
   // The browser supplies the multipart boundary; do not set Content-Type.
   const response = await fetch(endpoint('/predict'), {method: 'POST', body});
@@ -35,7 +36,7 @@ async function capture() {
 }
 function schedule() {
   clearInterval(timer);
-  timer = setInterval(capture, el('model').value === 'cosmos' ? 5000 : 500);
+  timer = setInterval(capture, el('model').value.startsWith('cosmos') ? 5000 : 500);
 }
 el('start').onclick = async () => {
   el('start').disabled = true;

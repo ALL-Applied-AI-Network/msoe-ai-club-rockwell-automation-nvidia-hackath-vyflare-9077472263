@@ -1,7 +1,13 @@
 """Adapters are loaded once by create_app; ML dependencies are optional in mock mode."""
 import json
 import os
+import platform
+import socket
+import uuid
+from io import BytesIO
 from pathlib import Path
+from urllib import error, request
+from urllib.parse import urlsplit
 
 
 class MockModel:
@@ -56,6 +62,76 @@ class SafetyBlocked(Exception):
     """A safety classifier declined the input or output."""
 
 
+class RemoteInferenceError(Exception):
+    def __init__(self, message, status=502):
+        super().__init__(message)
+        self.status = status
+
+
+class RemoteCosmosModel:
+    """Forward to a persistent DGX worker using the same /predict contract."""
+
+    def __init__(self):
+        self.url = os.getenv("COSMOS_FULL_URL", "http://127.0.0.1:8001/predict")
+        parsed = urlsplit(self.url)
+        if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+            raise ValueError("COSMOS_FULL_URL must be an HTTP(S) inference URL")
+        self.timeout = float(os.getenv("COSMOS_FULL_TIMEOUT_SECONDS", "120"))
+        if not 0 < self.timeout <= 3600:
+            raise ValueError("COSMOS_FULL_TIMEOUT_SECONDS must be in (0, 3600]")
+        self.model = os.getenv("COSMOS_FULL_REMOTE_MODEL", "cosmos")
+        if self.model not in {"cosmos", "cosmos_lite"}:
+            raise ValueError("Remote worker model must be cosmos or cosmos_lite (local execution)")
+
+    def predict(self, image, prompt):
+        boundary = uuid.uuid4().hex
+        frame_id = uuid.uuid4().hex
+        chunks = []
+        for name, value in {"frame_id": frame_id, "model": self.model, "prompt": prompt}.items():
+            chunks.append((f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"'
+                           f'\r\n\r\n{value}\r\n').encode("utf-8"))
+        encoded = BytesIO()
+        image.save(encoded, format="JPEG")
+        chunks.extend([
+            (f'--{boundary}\r\nContent-Disposition: form-data; name="image"; '
+             'filename="frame.jpg"\r\nContent-Type: image/jpeg\r\n\r\n').encode(),
+            encoded.getvalue(), f'\r\n--{boundary}--\r\n'.encode(),
+        ])
+        outbound = request.Request(self.url, data=b"".join(chunks), headers={
+            "Content-Type": f"multipart/form-data; boundary={boundary}",
+        }, method="POST")
+        try:
+            with request.urlopen(outbound, timeout=self.timeout) as response:
+                payload = json.load(response)
+        except error.HTTPError as exc:
+            exc.close()
+            if exc.code == 422:
+                raise SafetyBlocked("DGX Cosmos safety check rejected this request") from exc
+            if exc.code == 429:
+                raise RemoteInferenceError("DGX Cosmos is busy; skip this frame", 429) from exc
+            raise RemoteInferenceError("DGX Cosmos inference failed") from exc
+        except (TimeoutError, socket.timeout) as exc:
+            raise RemoteInferenceError("DGX Cosmos request timed out", 504) from exc
+        except error.URLError as exc:
+            status = 504 if isinstance(exc.reason, (TimeoutError, socket.timeout)) else 503
+            raise RemoteInferenceError("DGX Cosmos is unavailable", status) from exc
+        except (ValueError, OSError) as exc:
+            raise RemoteInferenceError("DGX Cosmos returned an invalid response") from exc
+        if (not isinstance(payload, dict) or payload.get("frame_id") != frame_id
+                or payload.get("model") != self.model or payload.get("mode") != "real"
+                or not isinstance(payload.get("result"), dict)
+                or payload["result"].get("mock")
+                or not isinstance(payload["result"].get("text"), str)):
+            raise RemoteInferenceError("DGX Cosmos returned an invalid or non-real result")
+        execution = payload["result"].get("execution")
+        if (not isinstance(execution, dict)
+                or execution.get("system") != "Linux"
+                or execution.get("machine") != "aarch64"
+                or execution.get("gpu") != "NVIDIA GB10"):
+            raise RemoteInferenceError("Full Cosmos requires a DGX Spark GB10 worker")
+        return payload["result"]
+
+
 class Cosmos3Model:
     """Single-GPU Cosmos Framework adapter; integration requires GPU validation."""
     def __init__(self):
@@ -63,6 +139,9 @@ class Cosmos3Model:
         import torch
         if not torch.cuda.is_available():
             raise RuntimeError("Cosmos3-Nano requires the Linux/CUDA Cosmos Framework environment")
+        self.execution = {"hostname": socket.gethostname(), "system": platform.system(),
+                          "machine": platform.machine(),
+                          "gpu": torch.cuda.get_device_name(torch.cuda.current_device())}
         from cosmos_framework.inference.common.init import init_script
         init_script()
         from cosmos_framework.inference.args import OmniSetupOverrides, reasoner_only_overrides
@@ -116,17 +195,18 @@ class Cosmos3Model:
             # Explicit output check, even if an upstream version changes its defaults.
             if not presets.run_text_guardrail(text, self.pipe.guardrails.text):
                 raise SafetyBlocked("Response rejected by text safety check")
-            return {"text": text, "safety": {
+            return {"text": text, "execution": self.execution, "safety": {
                 "input_text": "passed", "input_image": "passed", "output_text": "passed",
                 "provider": "Cosmos Framework (Cosmos-Guardrail1 / Qwen3Guard)",
             }}
 
 
 def load_models(mode):
-    names = [x.strip() for x in os.getenv("ENABLED_MODELS", "resnet18,cosmos").split(",")]
-    factories = {"resnet18": ResNet18Model, "cosmos": Cosmos3Model}
+    names = [x.strip() for x in os.getenv("ENABLED_MODELS", "resnet18,cosmos_lite,cosmos_full").split(",")]
+    factories = {"resnet18": ResNet18Model, "cosmos": Cosmos3Model,
+                 "cosmos_lite": Cosmos3Model, "cosmos_full": RemoteCosmosModel}
     if not names or any(name not in factories for name in names):
-        raise ValueError("ENABLED_MODELS must contain resnet18 and/or cosmos")
+        raise ValueError("ENABLED_MODELS supports resnet18, cosmos_lite, cosmos_full, cosmos")
     if mode == "mock":
         return {name: MockModel(name) for name in names}
     if mode != "real":
