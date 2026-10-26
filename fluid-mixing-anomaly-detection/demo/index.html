@@ -1,0 +1,1197 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#0E1420;color:#E7ECF2}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Vial Mix Monitor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* 레이아웃: 공정 모니터 한 화면 - 요약 타일 -> 바이알 컨베이어 그리드 -> 오류 로그 -> 원리. 어두운 관제실 화면을 의도적으로 고정(단일 테마). */
+:root{
+  color-scheme:dark;
+  --bg:#0E1420; --paper:#151D2B; --paper-2:#1B2535; --line:#2A3548; --ink:#E7ECF2; --muted:#8C98AC;
+  --accent:#4FD6C0; --accent-ink:#06211C;
+  --dye-orange:#E08A3C; --dye-blue:#3E8FE0; --dye-mixed:#9AA23C; --dye-clear:#5B6B80;
+  --bad:#E8685F; --bad-bg:rgba(232,104,95,.14);
+  --good:#49B37D;
+  --display:"Archivo","IBM Plex Sans KR",system-ui,sans-serif;
+  --body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 72px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(14,20,32,.92);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding-block:10px;flex-wrap:wrap}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar .id{font-family:var(--mono);font-size:.84rem;color:var(--muted);letter-spacing:.04em}
+.runbtn{font:inherit;font-weight:600;font-size:.94rem;background:var(--accent);color:var(--accent-ink);
+  border:0;border-radius:7px;padding:9px 18px;cursor:pointer;white-space:nowrap}
+.runbtn:disabled{opacity:.55;cursor:default}
+.status{font-family:var(--mono);font-size:.86rem;color:var(--muted);min-width:14ch}
+.lang{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.langbtn{font:inherit;font-size:.8rem;background:transparent;color:var(--ink);border:0;padding:5px 11px;cursor:pointer}
+.langbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+button:focus-visible,.vcard:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header{display:flex;flex-direction:column;gap:12px;padding-top:26px}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-stretch:82%;font-weight:750;font-size:clamp(1.9rem,4.6vw,2.8rem);line-height:1.08;margin:0;text-wrap:balance}
+.lede{font-size:1.1rem;color:var(--muted);max-width:66ch;margin:0}
+h2{font-family:var(--display);font-stretch:85%;font-weight:700;font-size:1.55rem;margin:0;text-wrap:balance}
+section{display:flex;flex-direction:column;gap:16px}
+.note{margin:0;color:var(--muted);font-size:.95rem;max-width:68ch}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.stat{background:var(--paper);padding:16px;display:flex;flex-direction:column;gap:4px}
+.stat .num{font-family:var(--mono);font-weight:500;font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums}
+.stat .num small{font-size:.95rem;color:var(--muted);font-weight:400}
+.stat p{margin:0;font-size:.9rem;color:var(--muted)}
+.stat.bad .num{color:var(--bad)}
+.stat.good .num{color:var(--good)}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px 20px;font-size:.9rem;color:var(--muted);align-items:center}
+.legend i{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+.legend .sw-flag{width:11px;height:11px;border-radius:3px;border:2px solid var(--bad);display:inline-block;margin-right:6px;vertical-align:middle}
+.filterbtn{font:inherit;font-weight:600;font-size:.84rem;background:transparent;color:var(--ink);border:1px solid var(--line);
+  border-radius:7px;padding:6px 14px;cursor:pointer;margin-left:auto}
+.filterbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.grid.hide-normal .vcard:not(.flagged){display:none}
+.sortlabel{display:flex;align-items:center;gap:7px;font-size:.84rem;color:var(--muted)}
+.sortlabel select{font:inherit;font-family:var(--body);font-size:.84rem;font-weight:600;color:var(--ink);
+  background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:6px 10px;cursor:pointer}
+.sortlabel select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:12px}
+.vcard{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px;display:flex;flex-direction:column;
+  gap:7px;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:border-color .25s,opacity .3s,transform .25s}
+.vcard.flagged{border-color:var(--bad);background:var(--bad-bg)}
+.vcard.pending{opacity:.28;filter:grayscale(.6)}
+.vcard.current{border-color:var(--accent);transform:scale(1.04)}
+.vcard img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:6px;display:block;background:var(--paper-2)}
+.vbadge{position:absolute;top:6px;right:6px;background:var(--bad);color:#fff;font-size:.62rem;font-weight:700;
+  letter-spacing:.02em;border-radius:5px;padding:2px 6px;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.vmeta{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:.84rem;color:var(--muted)}
+.vmeta b{color:var(--ink);font-weight:600;font-size:.95rem}
+.rbar{height:8px;border-radius:4px;background:var(--paper-2);position:relative;overflow:visible}
+.rbar i{display:block;height:100%;border-radius:4px;background:var(--muted);transition:width .35s}
+.vcard.flagged .rbar i{background:var(--bad)}
+.rbar .tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.4)}
+.vres{font-family:var(--mono);font-size:.74rem;color:var(--muted);display:flex;justify-content:space-between}
+.vcard.flagged .vres b{color:var(--bad)}
+.vres b{color:var(--ink);font-weight:600}
+.vdetail{display:none;flex-direction:column;gap:4px;font-family:var(--mono);font-size:.76rem;color:var(--muted);
+  border-top:1px solid var(--line);padding-top:7px;margin-top:2px}
+.vcard.open .vdetail{display:flex}
+.vdetail .row{display:flex;justify-content:space-between;gap:6px}
+.vdetail b{color:var(--ink);font-weight:500}
+
+.log{display:flex;flex-direction:column;gap:8px}
+.lrow{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center;background:var(--paper);
+  border:1px solid var(--bad);border-left-width:4px;border-radius:9px;padding:13px 16px;opacity:0;transform:translateY(6px);
+  animation:in .35s ease forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.lrow img{width:60px;height:80px;object-fit:cover;border-radius:5px;display:block}
+.ltxt{display:flex;flex-direction:column;gap:5px;min-width:0}
+.ltxt .top{display:flex;gap:9px;flex-wrap:wrap;align-items:baseline;font-size:.98rem}
+.ltxt .top b{font-family:var(--mono);font-weight:600}
+.ltxt .mix{font-family:var(--mono);font-size:.86rem;color:var(--muted);line-height:1.5}
+.ltxt .mix b{color:var(--ink);font-weight:600}
+.chip{display:inline-flex;align-items:center;font-size:.72rem;letter-spacing:.02em;border-radius:99px;padding:3px 10px;
+  white-space:nowrap;border:1px solid var(--line);font-weight:600}
+.chip.confirmed{color:var(--bad);border-color:var(--bad)}
+.chip.new{color:var(--accent);border-color:var(--accent)}
+.lscore{text-align:right;font-family:var(--mono)}
+.lscore .v{font-size:1.4rem;font-weight:500;color:var(--bad);font-variant-numeric:tabular-nums}
+.lscore .l{font-size:.68rem;color:var(--muted)}
+.logempty{color:var(--muted);font-size:.85rem;font-style:italic}
+
+.method{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.method code{font-family:var(--mono);font-size:.82rem;background:var(--paper-2);padding:1px 6px;border-radius:4px}
+.method ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:5px}
+.caveat{border-left:2px solid var(--muted);padding-left:12px;color:var(--muted);font-size:.92rem}
+
+footer{font-size:.84rem;color:var(--muted);max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation-duration:.01ms!important}}
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <span class="id" id="barId">CSI VIAL-FILL LINE &middot; AI QC</span>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" class="langbtn" data-lang="ko" aria-pressed="true">한국어</button>
+        <button type="button" class="langbtn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <span class="status" id="status">30 / 30 분석 완료</span>
+      <button type="button" class="runbtn" id="run">▶ 스캔 재생</button>
+    </div>
+  </div>
+
+  <header>
+    <span class="eyebrow" id="eyebrow">잔차 기반 이상 탐지 &middot; Model 4 physics baseline</span>
+    <h1 id="titleH1">Vial Mix 이상 탐지 모니터</h1>
+    <p class="lede" id="ledeP">T100/T200/T400 세 탱크를 섞어 바이알을 채우는 라인에서, 색 흡광도로 섞인 비율을 예측하는 물리 기반 회귀 모델이 각 바이알을 통과시키며 예측과 실측의 차이(잔차)를 계산합니다. 잔차가 정상 범위를 벗어나면 오류로 플래깅합니다.</p>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section>
+    <h2 id="scanH">라인 스캔</h2>
+    <p class="note" id="scanNote">바이알 30개를 정렬 기준에 따라 나열했습니다. 카드를 클릭하면 예측값과 실측값을 볼 수 있습니다.</p>
+    <div class="legend">
+      <span><i style="background:var(--dye-orange)"></i>orange</span>
+      <span><i style="background:var(--dye-blue)"></i>blue</span>
+      <span><i style="background:var(--dye-mixed)"></i>mixed</span>
+      <span><i style="background:var(--dye-clear)"></i>clear</span>
+      <span><span class="sw-flag"></span><span id="legendFlagText">모델이 오류로 플래깅</span></span>
+      <label class="sortlabel"><span id="sortLabelText">정렬</span>
+        <select id="sortSelect">
+          <option value="vial">충전 순서</option>
+          <option value="residual">오류 심한 순서</option>
+        </select>
+      </label>
+      <button type="button" class="filterbtn" id="filterToggle" aria-pressed="false">오류만 보기</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section>
+    <h2 id="logH">오류 로그</h2>
+    <p class="note" id="logNoteP"></p>
+    <div class="log" id="log"></div>
+  </section>
+
+  <section>
+    <h2 id="methodH">작동 원리</h2>
+    <div class="method">
+      <p style="margin:0" id="methodP"></p>
+      <ul>
+        <li id="methodLi1"></li>
+        <li id="methodLi2"></li>
+      </ul>
+      <p class="caveat" id="caveatP"></p>
+    </div>
+  </section>
+
+  <footer id="footerText">데이터: csi_vial_ai_dataset_v1 (video 5, 바이알 30개) &middot; 모델: scripts/model4_anomaly.py &middot; 2026-10-26</footer>
+</div>
+
+<script type="application/json" id="vial-data">{
+  "threshold": 0.1995,
+  "vials": [
+    {
+      "vial_uid": "v5_e01",
+      "vial": 1,
+      "recipe_id": 5,
+      "t100_ml": 10.0,
+      "t200_ml": 10.0,
+      "t400_ml": 10.0,
+      "total_ml": 30.0,
+      "r200_actual": 0.333,
+      "r400_actual": 0.333,
+      "r200_pred": 0.0,
+      "r400_pred": 0.45,
+      "residual": 0.2248,
+      "flagged": true,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 16,
+      "obs_g": 46,
+      "obs_b": 28,
+      "thumb": "thumbs/v5_e01.jpg"
+    },
+    {
+      "vial_uid": "v5_e02",
+      "vial": 2,
+      "recipe_id": 5,
+      "t100_ml": 10.0,
+      "t200_ml": 10.0,
+      "t400_ml": 10.0,
+      "total_ml": 30.0,
+      "r200_actual": 0.333,
+      "r400_actual": 0.333,
+      "r200_pred": 0.237,
+      "r400_pred": 0.457,
+      "residual": 0.1097,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 21,
+      "obs_g": 34,
+      "obs_b": 25,
+      "thumb": "thumbs/v5_e02.jpg"
+    },
+    {
+      "vial_uid": "v5_e03",
+      "vial": 3,
+      "recipe_id": 5,
+      "t100_ml": 10.0,
+      "t200_ml": 10.0,
+      "t400_ml": 10.0,
+      "total_ml": 30.0,
+      "r200_actual": 0.333,
+      "r400_actual": 0.333,
+      "r200_pred": 0.411,
+      "r400_pred": 0.371,
+      "residual": 0.0576,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 29,
+      "obs_g": 34,
+      "obs_b": 25,
+      "thumb": "thumbs/v5_e03.jpg"
+    },
+    {
+      "vial_uid": "v5_e04",
+      "vial": 4,
+      "recipe_id": 6,
+      "t100_ml": 30.0,
+      "t200_ml": 10.0,
+      "t400_ml": 0.0,
+      "total_ml": 40.0,
+      "r200_actual": 0.25,
+      "r400_actual": 0.0,
+      "r200_pred": 0.443,
+      "r400_pred": 0.337,
+      "residual": 0.2649,
+      "flagged": true,
+      "color_match": false,
+      "carryover_suspected": true,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "orange",
+      "obs_r": 31,
+      "obs_g": 34,
+      "obs_b": 24,
+      "thumb": "thumbs/v5_e04.jpg"
+    },
+    {
+      "vial_uid": "v5_e05",
+      "vial": 5,
+      "recipe_id": 6,
+      "t100_ml": 30.0,
+      "t200_ml": 10.0,
+      "t400_ml": 0.0,
+      "total_ml": 40.0,
+      "r200_actual": 0.25,
+      "r400_actual": 0.0,
+      "r200_pred": 0.55,
+      "r400_pred": 0.033,
+      "residual": 0.1663,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "orange",
+      "expected_color_class": "orange",
+      "obs_r": 65,
+      "obs_g": 42,
+      "obs_b": 20,
+      "thumb": "thumbs/v5_e05.jpg"
+    },
+    {
+      "vial_uid": "v5_e06",
+      "vial": 6,
+      "recipe_id": 6,
+      "t100_ml": 30.0,
+      "t200_ml": 10.0,
+      "t400_ml": 0.0,
+      "total_ml": 40.0,
+      "r200_actual": 0.25,
+      "r400_actual": 0.0,
+      "r200_pred": 0.642,
+      "r400_pred": 0.0,
+      "residual": 0.1961,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "orange",
+      "expected_color_class": "orange",
+      "obs_r": 88,
+      "obs_g": 45,
+      "obs_b": 15,
+      "thumb": "thumbs/v5_e06.jpg"
+    },
+    {
+      "vial_uid": "v5_e07",
+      "vial": 7,
+      "recipe_id": 7,
+      "t100_ml": 20.0,
+      "t200_ml": 0.0,
+      "t400_ml": 50.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.0,
+      "r400_actual": 0.714,
+      "r200_pred": 0.329,
+      "r400_pred": 0.352,
+      "residual": 0.3459,
+      "flagged": true,
+      "color_match": false,
+      "carryover_suspected": true,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "blue",
+      "obs_r": 27,
+      "obs_g": 38,
+      "obs_b": 28,
+      "thumb": "thumbs/v5_e07.jpg"
+    },
+    {
+      "vial_uid": "v5_e08",
+      "vial": 8,
+      "recipe_id": 7,
+      "t100_ml": 20.0,
+      "t200_ml": 0.0,
+      "t400_ml": 50.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.0,
+      "r400_actual": 0.714,
+      "r200_pred": 0.0,
+      "r400_pred": 0.535,
+      "residual": 0.0898,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "blue",
+      "expected_color_class": "blue",
+      "obs_r": 14,
+      "obs_g": 52,
+      "obs_b": 66,
+      "thumb": "thumbs/v5_e08.jpg"
+    },
+    {
+      "vial_uid": "v5_e09",
+      "vial": 9,
+      "recipe_id": 7,
+      "t100_ml": 20.0,
+      "t200_ml": 0.0,
+      "t400_ml": 50.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.0,
+      "r400_actual": 0.714,
+      "r200_pred": 0.0,
+      "r400_pred": 0.511,
+      "residual": 0.1016,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "blue",
+      "expected_color_class": "blue",
+      "obs_r": 15,
+      "obs_g": 52,
+      "obs_b": 67,
+      "thumb": "thumbs/v5_e09.jpg"
+    },
+    {
+      "vial_uid": "v5_e10",
+      "vial": 10,
+      "recipe_id": 8,
+      "t100_ml": 20.0,
+      "t200_ml": 20.0,
+      "t400_ml": 20.0,
+      "total_ml": 60.0,
+      "r200_actual": 0.333,
+      "r400_actual": 0.333,
+      "r200_pred": 0.252,
+      "r400_pred": 0.478,
+      "residual": 0.1132,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 20,
+      "obs_g": 39,
+      "obs_b": 32,
+      "thumb": "thumbs/v5_e10.jpg"
+    },
+    {
+      "vial_uid": "v5_e11",
+      "vial": 11,
+      "recipe_id": 8,
+      "t100_ml": 20.0,
+      "t200_ml": 20.0,
+      "t400_ml": 20.0,
+      "total_ml": 60.0,
+      "r200_actual": 0.333,
+      "r400_actual": 0.333,
+      "r200_pred": 0.354,
+      "r400_pred": 0.376,
+      "residual": 0.0318,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 27,
+      "obs_g": 37,
+      "obs_b": 27,
+      "thumb": "thumbs/v5_e11.jpg"
+    },
+    {
+      "vial_uid": "v5_e12",
+      "vial": 12,
+      "recipe_id": 8,
+      "t100_ml": 20.0,
+      "t200_ml": 20.0,
+      "t400_ml": 20.0,
+      "total_ml": 60.0,
+      "r200_actual": 0.333,
+      "r400_actual": 0.333,
+      "r200_pred": 0.393,
+      "r400_pred": 0.359,
+      "residual": 0.0426,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 28,
+      "obs_g": 35,
+      "obs_b": 24,
+      "thumb": "thumbs/v5_e12.jpg"
+    },
+    {
+      "vial_uid": "v5_e13",
+      "vial": 13,
+      "recipe_id": 9,
+      "t100_ml": 10.0,
+      "t200_ml": 35.0,
+      "t400_ml": 35.0,
+      "total_ml": 80.0,
+      "r200_actual": 0.438,
+      "r400_actual": 0.438,
+      "r200_pred": 0.425,
+      "r400_pred": 0.345,
+      "residual": 0.0523,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 29,
+      "obs_g": 33,
+      "obs_b": 24,
+      "thumb": "thumbs/v5_e13.jpg"
+    },
+    {
+      "vial_uid": "v5_e14",
+      "vial": 14,
+      "recipe_id": 9,
+      "t100_ml": 10.0,
+      "t200_ml": 35.0,
+      "t400_ml": 35.0,
+      "total_ml": 80.0,
+      "r200_actual": 0.438,
+      "r400_actual": 0.438,
+      "r200_pred": 0.421,
+      "r400_pred": 0.394,
+      "residual": 0.0299,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 26,
+      "obs_g": 32,
+      "obs_b": 25,
+      "thumb": "thumbs/v5_e14.jpg"
+    },
+    {
+      "vial_uid": "v5_e15",
+      "vial": 15,
+      "recipe_id": 9,
+      "t100_ml": 10.0,
+      "t200_ml": 35.0,
+      "t400_ml": 35.0,
+      "total_ml": 80.0,
+      "r200_actual": 0.438,
+      "r400_actual": 0.438,
+      "r200_pred": 0.435,
+      "r400_pred": 0.421,
+      "residual": 0.0097,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 24,
+      "obs_g": 31,
+      "obs_b": 25,
+      "thumb": "thumbs/v5_e15.jpg"
+    },
+    {
+      "vial_uid": "v5_e16",
+      "vial": 16,
+      "recipe_id": 10,
+      "t100_ml": 45.0,
+      "t200_ml": 15.0,
+      "t400_ml": 15.0,
+      "total_ml": 75.0,
+      "r200_actual": 0.2,
+      "r400_actual": 0.2,
+      "r200_pred": 0.439,
+      "r400_pred": 0.484,
+      "residual": 0.2615,
+      "flagged": true,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 21,
+      "obs_g": 31,
+      "obs_b": 25,
+      "thumb": "thumbs/v5_e16.jpg"
+    },
+    {
+      "vial_uid": "v5_e17",
+      "vial": 17,
+      "recipe_id": 10,
+      "t100_ml": 45.0,
+      "t200_ml": 15.0,
+      "t400_ml": 15.0,
+      "total_ml": 75.0,
+      "r200_actual": 0.2,
+      "r400_actual": 0.2,
+      "r200_pred": 0.359,
+      "r400_pred": 0.219,
+      "residual": 0.0889,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 40,
+      "obs_g": 43,
+      "obs_b": 24,
+      "thumb": "thumbs/v5_e17.jpg"
+    },
+    {
+      "vial_uid": "v5_e18",
+      "vial": 18,
+      "recipe_id": 10,
+      "t100_ml": 45.0,
+      "t200_ml": 15.0,
+      "t400_ml": 15.0,
+      "total_ml": 75.0,
+      "r200_actual": 0.2,
+      "r400_actual": 0.2,
+      "r200_pred": 0.329,
+      "r400_pred": 0.211,
+      "residual": 0.0699,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "mixed",
+      "obs_r": 42,
+      "obs_g": 45,
+      "obs_b": 26,
+      "thumb": "thumbs/v5_e18.jpg"
+    },
+    {
+      "vial_uid": "v5_e19",
+      "vial": 19,
+      "recipe_id": 11,
+      "t100_ml": 10.0,
+      "t200_ml": 10.0,
+      "t400_ml": 50.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.143,
+      "r400_actual": 0.714,
+      "r200_pred": 0.207,
+      "r400_pred": 0.323,
+      "residual": 0.2279,
+      "flagged": true,
+      "color_match": false,
+      "carryover_suspected": true,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "blue",
+      "obs_r": 29,
+      "obs_g": 47,
+      "obs_b": 35,
+      "thumb": "thumbs/v5_e19.jpg"
+    },
+    {
+      "vial_uid": "v5_e20",
+      "vial": 20,
+      "recipe_id": 11,
+      "t100_ml": 10.0,
+      "t200_ml": 10.0,
+      "t400_ml": 50.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.143,
+      "r400_actual": 0.714,
+      "r200_pred": 0.326,
+      "r400_pred": 0.445,
+      "residual": 0.2265,
+      "flagged": true,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "blue",
+      "expected_color_class": "blue",
+      "obs_r": 21,
+      "obs_g": 36,
+      "obs_b": 33,
+      "thumb": "thumbs/v5_e20.jpg"
+    },
+    {
+      "vial_uid": "v5_e21",
+      "vial": 21,
+      "recipe_id": 11,
+      "t100_ml": 10.0,
+      "t200_ml": 10.0,
+      "t400_ml": 50.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.143,
+      "r400_actual": 0.714,
+      "r200_pred": 0.309,
+      "r400_pred": 0.459,
+      "residual": 0.2107,
+      "flagged": true,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "blue",
+      "expected_color_class": "blue",
+      "obs_r": 19,
+      "obs_g": 37,
+      "obs_b": 33,
+      "thumb": "thumbs/v5_e21.jpg"
+    },
+    {
+      "vial_uid": "v5_e22",
+      "vial": 22,
+      "recipe_id": 12,
+      "t100_ml": 10.0,
+      "t200_ml": 50.0,
+      "t400_ml": 10.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.714,
+      "r400_actual": 0.143,
+      "r200_pred": 0.381,
+      "r400_pred": 0.432,
+      "residual": 0.3109,
+      "flagged": true,
+      "color_match": false,
+      "carryover_suspected": true,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "orange",
+      "obs_r": 24,
+      "obs_g": 33,
+      "obs_b": 26,
+      "thumb": "thumbs/v5_e22.jpg"
+    },
+    {
+      "vial_uid": "v5_e23",
+      "vial": 23,
+      "recipe_id": 12,
+      "t100_ml": 10.0,
+      "t200_ml": 50.0,
+      "t400_ml": 10.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.714,
+      "r400_actual": 0.143,
+      "r200_pred": 0.45,
+      "r400_pred": 0.191,
+      "residual": 0.1561,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "orange",
+      "expected_color_class": "orange",
+      "obs_r": 51,
+      "obs_g": 34,
+      "obs_b": 21,
+      "thumb": "thumbs/v5_e23.jpg"
+    },
+    {
+      "vial_uid": "v5_e24",
+      "vial": 24,
+      "recipe_id": 12,
+      "t100_ml": 10.0,
+      "t200_ml": 50.0,
+      "t400_ml": 10.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.714,
+      "r400_actual": 0.143,
+      "r200_pred": 0.45,
+      "r400_pred": 0.142,
+      "residual": 0.1325,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "orange",
+      "expected_color_class": "orange",
+      "obs_r": 61,
+      "obs_g": 35,
+      "obs_b": 21,
+      "thumb": "thumbs/v5_e24.jpg"
+    },
+    {
+      "vial_uid": "v5_e25",
+      "vial": 25,
+      "recipe_id": 13,
+      "t100_ml": 0.0,
+      "t200_ml": 50.0,
+      "t400_ml": 20.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.714,
+      "r400_actual": 0.286,
+      "r200_pred": 0.447,
+      "r400_pred": 0.132,
+      "residual": 0.2106,
+      "flagged": true,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": true,
+      "obs_color_class": "orange",
+      "expected_color_class": "orange",
+      "obs_r": 55,
+      "obs_g": 33,
+      "obs_b": 19,
+      "thumb": "thumbs/v5_e25.jpg"
+    },
+    {
+      "vial_uid": "v5_e26",
+      "vial": 26,
+      "recipe_id": 13,
+      "t100_ml": 0.0,
+      "t200_ml": 50.0,
+      "t400_ml": 20.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.714,
+      "r400_actual": 0.286,
+      "r200_pred": 0.405,
+      "r400_pred": 0.28,
+      "residual": 0.1573,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "orange",
+      "expected_color_class": "orange",
+      "obs_r": 35,
+      "obs_g": 31,
+      "obs_b": 22,
+      "thumb": "thumbs/v5_e26.jpg"
+    },
+    {
+      "vial_uid": "v5_e27",
+      "vial": 27,
+      "recipe_id": 13,
+      "t100_ml": 0.0,
+      "t200_ml": 50.0,
+      "t400_ml": 20.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.714,
+      "r400_actual": 0.286,
+      "r200_pred": 0.407,
+      "r400_pred": 0.263,
+      "residual": 0.1649,
+      "flagged": false,
+      "color_match": true,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "orange",
+      "expected_color_class": "orange",
+      "obs_r": 38,
+      "obs_g": 32,
+      "obs_b": 22,
+      "thumb": "thumbs/v5_e27.jpg"
+    },
+    {
+      "vial_uid": "v5_e28",
+      "vial": 28,
+      "recipe_id": 14,
+      "t100_ml": 60.0,
+      "t200_ml": 0.0,
+      "t400_ml": 10.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.0,
+      "r400_actual": 0.143,
+      "r200_pred": 0.474,
+      "r400_pred": 0.333,
+      "residual": 0.3319,
+      "flagged": true,
+      "color_match": false,
+      "carryover_suspected": true,
+      "first_after_recipe_change": true,
+      "obs_color_class": "mixed",
+      "expected_color_class": "blue",
+      "obs_r": 30,
+      "obs_g": 31,
+      "obs_b": 23,
+      "thumb": "thumbs/v5_e28.jpg"
+    },
+    {
+      "vial_uid": "v5_e29",
+      "vial": 29,
+      "recipe_id": 14,
+      "t100_ml": 60.0,
+      "t200_ml": 0.0,
+      "t400_ml": 10.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.0,
+      "r400_actual": 0.143,
+      "r200_pred": 0.058,
+      "r400_pred": 0.374,
+      "residual": 0.1445,
+      "flagged": false,
+      "color_match": false,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "blue",
+      "obs_r": 48,
+      "obs_g": 63,
+      "obs_b": 49,
+      "thumb": "thumbs/v5_e29.jpg"
+    },
+    {
+      "vial_uid": "v5_e30",
+      "vial": 30,
+      "recipe_id": 14,
+      "t100_ml": 60.0,
+      "t200_ml": 0.0,
+      "t400_ml": 10.0,
+      "total_ml": 70.0,
+      "r200_actual": 0.0,
+      "r400_actual": 0.143,
+      "r200_pred": 0.0,
+      "r400_pred": 0.424,
+      "residual": 0.1404,
+      "flagged": false,
+      "color_match": false,
+      "carryover_suspected": false,
+      "first_after_recipe_change": false,
+      "obs_color_class": "mixed",
+      "expected_color_class": "blue",
+      "obs_r": 49,
+      "obs_g": 79,
+      "obs_b": 66,
+      "thumb": "thumbs/v5_e30.jpg"
+    }
+  ]
+}</script>
+<script>
+(function(){
+  var payload = JSON.parse(document.getElementById('vial-data').textContent);
+  var THRESH = payload.threshold;
+  var MAXR = 0.40;
+  var vials = payload.vials.slice().sort(function(a,b){return a.vial-b.vial});
+  var flaggedTotal = vials.filter(function(v){return v.flagged}).length;
+  var carryover = vials.filter(function(v){return v.carryover_suspected});
+  var carryCaught = carryover.filter(function(v){return v.flagged}).length;
+  var mismatched = vials.filter(function(v){return !v.color_match});
+  var mismatchCaught = mismatched.filter(function(v){return v.flagged}).length;
+  var dyeColor = {orange:'var(--dye-orange)',blue:'var(--dye-blue)',mixed:'var(--dye-mixed)',clear:'var(--dye-clear)'};
+  function fmt(n){ return (Math.round(n*1000)/1000).toFixed(3); }
+
+  var STR = {
+    ko:{
+      barId:'CSI VIAL-FILL LINE · AI QC',
+      eyebrow:'잔차 기반 이상 탐지 · Model 4 physics baseline',
+      title:'Vial Mix 이상 탐지 모니터',
+      lede:'T100/T200/T400 세 탱크를 섞어 바이알을 채우는 라인에서, 색 흡광도로 섞인 비율을 예측하는 물리 기반 회귀 모델이 각 바이알을 통과시키며 예측과 실측의 차이(잔차)를 계산합니다. 잔차가 정상 범위를 벗어나면 오류로 플래깅합니다.',
+      run:'▶ 스캔 재생',
+      statusDone:function(n){ return n+' / '+n+' 분석 완료'; },
+      statusRun:function(i,n,f){ return i+' / '+n+' 분석 중 · 오류 '+f+'건'; },
+      badge:'오류',
+      scanH:'라인 스캔',
+      scanNote:'바이알 30개를 정렬 기준에 따라 나열했습니다. 카드를 클릭하면 예측값과 실측값을 볼 수 있습니다.',
+      legendFlag:'모델이 오류로 플래깅',
+      sortLabel:'정렬',
+      sortVial:'충전 순서',
+      sortResidual:'오류 심한 순서',
+      filterShow:'오류만 보기',
+      filterHide:'전체 보기',
+      recipe:'레시피',
+      residual:'잔차',
+      actualR:'실제 r200 / r400',
+      predR:'예측 r200 / r400',
+      actualLbl:'실제',
+      predLbl:'예측',
+      obsColor:'관찰색',
+      logH:'오류 로그',
+      logNote:'잔차 임계값('+THRESH+')을 넘은 바이알입니다. <span class="chip confirmed" style="padding:1px 7px">확인됨</span>은 기존 색-일치 규칙도 같은 바이알을 의심했던 경우, <span class="chip new" style="padding:1px 7px">신규 포착</span>은 규칙은 정상으로 봤지만 모델이 추가로 찾아낸 경우입니다.',
+      chipConfirmed:'확인됨',
+      chipNew:'신규 포착',
+      logEmpty:'플래깅된 바이알이 없습니다.',
+      logScanning:'스캔 중...',
+      methodH:'작동 원리',
+      methodP:'바이알 바닥 액체의 RGB를 <code>-log10(channel/255)</code>로 흡광도 변환한 뒤, 레시피 1개를 통째로 빼놓고 학습하는 Leave-One-Recipe-Out Ridge 회귀로 염료 비율(r200, r400)을 예측합니다. "정상"으로 분류된 바이알의 잔차 평균 + 표준편차를 임계값('+THRESH+')으로 써서, 그보다 잔차가 큰 바이알을 오류로 플래깅합니다.',
+      methodLi1:'Carryover 의심 바이알(레시피 전환 직후 오염) 5건을 <b>전부</b> 잡아냈습니다 (재현율 100%).',
+      methodLi2:'기존 색-일치 규칙과 다른 애매한 사례(v5_e29, v5_e30 — 리포트가 "진짜 오염 아님, 약한 염료"로 판단한 건)는 과잉 플래깅하지 않았습니다.',
+      caveat:'한계: 레시피가 10개뿐이라 정밀도는 0.5 수준입니다. 일부 플래그는 레시피 자체가 모델에 낯설어 생긴 것인지 실제 이상인지 구분이 어렵습니다 — 레시피를 20개로 늘리면 개선될 것으로 예상합니다.',
+      footer:'데이터: csi_vial_ai_dataset_v1 (video 5, 바이알 30개) · 모델: scripts/model4_anomaly.py · 2026-10-26',
+      statAnalyzed:'분석된 바이알',
+      statErrors:'탐지된 오류',
+      statCarryover:'Carryover 포착 (재현율 100%)',
+      statMismatch:'색 불일치 재현 (71%)'
+    },
+    en:{
+      barId:'CSI VIAL-FILL LINE · AI QC',
+      eyebrow:'Residual-based anomaly detection · Model 4 physics baseline',
+      title:'Vial Mix Anomaly Monitor',
+      lede:'On a line that fills vials from three tanks (T100/T200/T400), a physics-based regression model predicts the mixed ratio from color absorbance. As each vial passes, it compares the prediction to the measured ratio (the residual) and flags the vial when that residual is unusually large.',
+      run:'▶ Replay scan',
+      statusDone:function(n){ return n+' / '+n+' analyzed'; },
+      statusRun:function(i,n,f){ return i+' / '+n+' scanning · '+f+' flagged'; },
+      badge:'Error',
+      scanH:'Line scan',
+      scanNote:'All 30 vials, ordered by the selector below. Click a card to see its predicted vs. measured ratio.',
+      legendFlag:'Flagged by the model',
+      sortLabel:'Sort',
+      sortVial:'Fill order',
+      sortResidual:'Worst residual first',
+      filterShow:'Errors only',
+      filterHide:'Show all',
+      recipe:'Recipe',
+      residual:'Residual',
+      actualR:'Actual r200 / r400',
+      predR:'Predicted r200 / r400',
+      actualLbl:'Actual',
+      predLbl:'Predicted',
+      obsColor:'Observed color',
+      logH:'Error log',
+      logNote:'Vials whose residual exceeds the threshold ('+THRESH+'). <span class="chip confirmed" style="padding:1px 7px">Confirmed</span> means the existing color-match rule also suspected this vial; <span class="chip new" style="padding:1px 7px">New catch</span> means the rule called it normal but the model flagged it anyway.',
+      chipConfirmed:'Confirmed',
+      chipNew:'New catch',
+      logEmpty:'No vials flagged.',
+      logScanning:'Scanning...',
+      methodH:'How it works',
+      methodP:'Each vial’s bottom-liquid RGB is converted to absorbance with <code>-log10(channel/255)</code>, then a Leave-One-Recipe-Out Ridge regression (holding one whole recipe out at a time) predicts the dye fractions (r200, r400). The anomaly threshold ('+THRESH+') is the mean + one standard deviation of the residual on vials classed as normal; anything above it gets flagged.',
+      methodLi1:'All 5 carryover-suspected vials (contamination right after a recipe change) were caught, <b>every one</b> (100% recall).',
+      methodLi2:'Borderline cases the color-match rule disagreed on (v5_e29, v5_e30 — the report judged these “not real contamination, just a weak dye”) were not over-flagged.',
+      caveat:'Limitation: with only 10 recipes, precision sits around 0.5. Some flags are hard to tell apart from cases where the recipe itself was simply unfamiliar to the model — more recipes (20) should help.',
+      footer:'Data: csi_vial_ai_dataset_v1 (video 5, 30 vials) · Model: scripts/model4_anomaly.py · 2026-10-26',
+      statAnalyzed:'Vials analyzed',
+      statErrors:'Errors detected',
+      statCarryover:'Carryover caught (100% recall)',
+      statMismatch:'Color-mismatch recall (71%)'
+    }
+  };
+
+  var LANG = 'ko';
+  try { var saved = localStorage.getItem('vialmon-lang'); if(saved === 'ko' || saved === 'en') LANG = saved; } catch(e){}
+  function L(){ return STR[LANG]; }
+
+  // --- elements ---
+  var statsEl = document.getElementById('stats');
+  var gridEl = document.getElementById('grid');
+  var logEl = document.getElementById('log');
+  var runBtn = document.getElementById('run');
+  var statusEl = document.getElementById('status');
+  var filterBtn = document.getElementById('filterToggle');
+  var sortSelect = document.getElementById('sortSelect');
+  var currentSort = 'vial';
+
+  function cardHTML(v){
+    var cls = 'vcard' + (v.flagged ? ' flagged' : '');
+    var pct = Math.min(100, (v.residual/MAXR)*100);
+    var tickPct = (THRESH/MAXR)*100;
+    return (
+      '<button type="button" class="'+cls+'" data-vial="'+v.vial+'" aria-expanded="false">'+
+        (v.flagged ? '<span class="vbadge">'+L().badge+'</span>' : '')+
+        '<img src="'+v.thumb+'" alt="vial '+v.vial+'" loading="lazy">'+
+        '<div class="vmeta"><b>#'+v.vial+'</b><span>'+L().recipe+' '+v.recipe_id+'</span></div>'+
+        '<div class="rbar"><i style="width:'+pct.toFixed(1)+'%"></i><span class="tick" style="left:'+tickPct.toFixed(1)+'%"></span></div>'+
+        '<div class="vres"><span>'+L().residual+'</span><b>'+fmt(v.residual)+'</b></div>'+
+        '<div class="vdetail">'+
+          '<div class="row"><span>'+L().actualR+'</span><b>'+fmt(v.r200_actual)+' / '+fmt(v.r400_actual)+'</b></div>'+
+          '<div class="row"><span>'+L().predR+'</span><b>'+fmt(v.r200_pred)+' / '+fmt(v.r400_pred)+'</b></div>'+
+          '<div class="row"><span>'+L().obsColor+'</span><b style="color:'+(dyeColor[v.obs_color_class]||'var(--muted)')+'">'+v.obs_color_class+'</b></div>'+
+        '</div>'+
+      '</button>'
+    );
+  }
+
+  function renderGrid(order){
+    currentSort = order;
+    var ordered = vials.slice();
+    if(order === 'residual'){
+      ordered.sort(function(a,b){ return b.residual - a.residual; });
+    } else {
+      ordered.sort(function(a,b){ return a.vial - b.vial; });
+    }
+    gridEl.innerHTML = ordered.map(cardHTML).join('');
+  }
+
+  function logRowHTML(v){
+    var confirmed = v.carryover_suspected || !v.color_match;
+    var chip = confirmed ? '<span class="chip confirmed">'+L().chipConfirmed+'</span>' : '<span class="chip new">'+L().chipNew+'</span>';
+    return (
+      '<div class="lrow">'+
+        '<img src="'+v.thumb+'" alt="vial '+v.vial+'">'+
+        '<div class="ltxt">'+
+          '<div class="top"><b>#'+v.vial+'</b> '+L().recipe+' '+v.recipe_id+' '+chip+'</div>'+
+          '<div class="mix">'+L().actualLbl+' r200 <b>'+fmt(v.r200_actual)+'</b> · r400 <b>'+fmt(v.r400_actual)+'</b></div>'+
+          '<div class="mix">'+L().predLbl+' r200 <b>'+fmt(v.r200_pred)+'</b> · r400 <b>'+fmt(v.r400_pred)+'</b></div>'+
+        '</div>'+
+        '<div class="lscore"><div class="v">'+fmt(v.residual)+'</div><div class="l">'+L().residual+'</div></div>'+
+      '</div>'
+    );
+  }
+
+  function renderFullLog(){
+    var flagged = vials.filter(function(v){return v.flagged}).sort(function(a,b){return b.residual-a.residual});
+    logEl.innerHTML = flagged.length ? flagged.map(logRowHTML).join('') : '<p class="logempty">'+L().logEmpty+'</p>';
+  }
+
+  function renderStats(){
+    statsEl.innerHTML =
+      '<div class="stat"><div class="num">'+vials.length+'</div><p>'+L().statAnalyzed+'</p></div>'+
+      '<div class="stat bad"><div class="num">'+flaggedTotal+'<small>/'+vials.length+'</small></div><p>'+L().statErrors+'</p></div>'+
+      '<div class="stat good"><div class="num">'+carryCaught+'<small>/'+carryover.length+'</small></div><p>'+L().statCarryover+'</p></div>'+
+      '<div class="stat"><div class="num">'+mismatchCaught+'<small>/'+mismatched.length+'</small></div><p>'+L().statMismatch+'</p></div>';
+  }
+
+  function applyStaticText(){
+    document.getElementById('barId').textContent = L().barId;
+    document.getElementById('eyebrow').textContent = L().eyebrow;
+    document.getElementById('titleH1').textContent = L().title;
+    document.getElementById('ledeP').textContent = L().lede;
+    document.getElementById('scanH').textContent = L().scanH;
+    document.getElementById('scanNote').textContent = L().scanNote;
+    document.getElementById('legendFlagText').textContent = L().legendFlag;
+    document.getElementById('sortLabelText').textContent = L().sortLabel;
+    document.querySelector('#sortSelect option[value="vial"]').textContent = L().sortVial;
+    document.querySelector('#sortSelect option[value="residual"]').textContent = L().sortResidual;
+    filterBtn.textContent = filterBtn.getAttribute('aria-pressed') === 'true' ? L().filterHide : L().filterShow;
+    document.getElementById('logH').textContent = L().logH;
+    document.getElementById('logNoteP').innerHTML = L().logNote;
+    document.getElementById('methodH').textContent = L().methodH;
+    document.getElementById('methodP').innerHTML = L().methodP;
+    document.getElementById('methodLi1').innerHTML = L().methodLi1;
+    document.getElementById('methodLi2').innerHTML = L().methodLi2;
+    document.getElementById('caveatP').textContent = L().caveat;
+    document.getElementById('footerText').textContent = L().footer;
+    runBtn.textContent = L().run;
+    document.querySelectorAll('.langbtn').forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-lang') === LANG ? 'true' : 'false');
+    });
+  }
+
+  function renderAll(){
+    applyStaticText();
+    renderStats();
+    renderGrid(currentSort);
+    renderFullLog();
+    gridEl.classList.toggle('hide-normal', filterBtn.getAttribute('aria-pressed') === 'true');
+    statusEl.textContent = L().statusDone(vials.length);
+  }
+
+  renderAll();
+
+  gridEl.addEventListener('click', function(e){
+    var btn = e.target.closest('.vcard');
+    if(!btn) return;
+    var open = btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  sortSelect.addEventListener('change', function(){
+    renderGrid(sortSelect.value);
+    gridEl.classList.toggle('hide-normal', filterBtn.getAttribute('aria-pressed') === 'true');
+  });
+
+  filterBtn.addEventListener('click', function(){
+    var active = filterBtn.getAttribute('aria-pressed') === 'true';
+    active = !active;
+    filterBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    filterBtn.textContent = active ? L().filterHide : L().filterShow;
+    gridEl.classList.toggle('hide-normal', active);
+  });
+
+  document.querySelectorAll('.langbtn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var newLang = btn.getAttribute('data-lang');
+      if(newLang === LANG) return;
+      LANG = newLang;
+      try { localStorage.setItem('vialmon-lang', LANG); } catch(e){}
+      renderAll();
+    });
+  });
+
+  // --- replay scan animation ---
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resetGridToPending(){
+    gridEl.querySelectorAll('.vcard').forEach(function(c){
+      c.classList.add('pending');
+      c.classList.remove('flagged','current','open');
+      var bar = c.querySelector('.rbar i');
+      if(bar) bar.style.width = '0%';
+    });
+  }
+
+  function runScan(){
+    runBtn.disabled = true;
+    sortSelect.value = 'vial';
+    renderGrid('vial');
+    resetGridToPending();
+    logEl.innerHTML = '<p class="logempty">'+L().logScanning+'</p>';
+    var foundLog = [];
+    var i = 0;
+    var step = reduced ? 1 : 220;
+    function tick(){
+      if(i >= vials.length){
+        statusEl.textContent = L().statusDone(vials.length);
+        runBtn.disabled = false;
+        return;
+      }
+      var v = vials[i];
+      var card = gridEl.querySelector('.vcard[data-vial="'+v.vial+'"]');
+      gridEl.querySelectorAll('.vcard.current').forEach(function(c){c.classList.remove('current')});
+      if(card){
+        card.classList.remove('pending');
+        card.classList.add('current');
+        if(v.flagged) card.classList.add('flagged');
+        var bar = card.querySelector('.rbar i');
+        if(bar) bar.style.width = Math.min(100,(v.residual/MAXR)*100).toFixed(1)+'%';
+      }
+      if(v.flagged){
+        foundLog.push(v);
+        var sorted = foundLog.slice().sort(function(a,b){return b.residual-a.residual});
+        logEl.innerHTML = sorted.map(logRowHTML).join('');
+      }
+      i++;
+      statusEl.textContent = L().statusRun(i, vials.length, foundLog.length);
+      setTimeout(tick, step);
+    }
+    setTimeout(tick, step);
+  }
+  runBtn.addEventListener('click', runScan);
+})();
+</script>
+</body></html>
