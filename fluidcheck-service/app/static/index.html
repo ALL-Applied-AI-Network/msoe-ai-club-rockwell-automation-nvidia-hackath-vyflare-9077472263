@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FluidCheck demo</title>
+<style>
+  :root { --ink:#1d1d1f; --muted:#6b6b70; --line:#d9d9de; --bg:#fafafa; --pass:#2e7d32; --watch:#b26a00; --flag:#c62828; }
+  body { font: 15px/1.45 system-ui, sans-serif; color: var(--ink); background: var(--bg); margin: 0; padding: 24px 16px; }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p.lead { color: var(--muted); margin: 0 0 20px; }
+  fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 12px; padding: 12px 14px; }
+  legend { font-weight: 600; padding: 0 4px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; }
+  label { display: flex; flex-direction: column; font-size: 13px; color: var(--muted); }
+  input[type=number], input[type=text] { width: 90px; padding: 4px 6px; font: inherit; }
+  button { font: inherit; padding: 8px 18px; border-radius: 6px; border: 0; background: #1b65ca; color: #fff; cursor: pointer; }
+  .card { border: 1px solid var(--line); border-left-width: 6px; border-radius: 8px; background: #fff; padding: 14px 16px; margin-top: 16px; }
+  .card.pass { border-left-color: var(--pass); } .card.watch { border-left-color: var(--watch); } .card.flag { border-left-color: var(--flag); }
+  .verdict { font-weight: 700; text-transform: uppercase; }
+  .swatches { display: flex; gap: 16px; margin: 10px 0; flex-wrap: wrap; }
+  .sw { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .sw span { width: 36px; height: 36px; border-radius: 6px; border: 1px solid var(--line); display: inline-block; }
+  pre { background: #f0f0f3; padding: 10px; border-radius: 6px; overflow-x: auto; font-size: 12px; }
+  .err { color: var(--flag); }
+</style>
+</head>
+<body>
+<main>
+  <h1>FluidCheck demo</h1>
+  <p class="lead">Upload the frame before and after a fill, enter the recipe, and see what the API returns. This page is for testing; the real front end calls the same <code>/analyze</code> endpoint.</p>
+
+  <form id="f">
+    <fieldset><legend>Frames</legend>
+      <div class="row">
+        <label>Empty vial (before fill)<input type="file" name="empty" accept="image/*" required></label>
+        <label>Full vial (after fill)<input type="file" name="full" accept="image/*" required></label>
+      </div>
+    </fieldset>
+    <fieldset><legend>This recipe</legend>
+      <div class="row">
+        <label>ID<input type="text" id="r_id" value="7"></label>
+        <label>T-100 clear mL<input type="number" id="r_100" value="20" min="0"></label>
+        <label>T-200 orange mL<input type="number" id="r_200" value="0" min="0"></label>
+        <label>T-400 blue mL<input type="number" id="r_400" value="50" min="0"></label>
+        <label>Vial # in batch<input type="number" id="pos" value="1" min="1" max="3"></label>
+      </div>
+    </fieldset>
+    <fieldset><legend>Previous recipe (leave ID blank if none)</legend>
+      <div class="row">
+        <label>ID<input type="text" id="p_id" value="6"></label>
+        <label>T-100 clear mL<input type="number" id="p_100" value="30" min="0"></label>
+        <label>T-200 orange mL<input type="number" id="p_200" value="10" min="0"></label>
+        <label>T-400 blue mL<input type="number" id="p_400" value="0" min="0"></label>
+      </div>
+    </fieldset>
+    <button type="submit">Analyze</button>
+  </form>
+  <div id="out"></div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const recipe = p => ({ id: $(p + "_id").value, t100_ml: +$(p + "_100").value, t200_ml: +$(p + "_200").value, t400_ml: +$(p + "_400").value });
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+$("f").addEventListener("submit", async e => {
+  e.preventDefault();
+  const fd = new FormData($("f"));
+  fd.append("recipe", JSON.stringify(recipe("r")));
+  if ($("p_id").value.trim()) fd.append("prev_recipe", JSON.stringify(recipe("p")));
+  fd.append("batch_position", $("pos").value);
+  $("out").innerHTML = "<p>Analyzing…</p>";
+  try {
+    const res = await fetch("/analyze", { method: "POST", body: fd });
+    const body = await res.json();
+    if (!res.ok) throw new Error(body.detail || res.statusText);
+    render(body);
+  } catch (err) {
+    $("out").innerHTML = `<p class="err">${esc(err.message)}</p>`;
+  }
+});
+
+function render(r) {
+  const sw = (label, c) => c ? `<div class="sw"><span style="background:${esc(c.hex)}"></span>${label}</div>` : "";
+  const causes = r.causes.map(c => `<li><b>${esc(c.cause)}</b> (${Math.round(c.score * 100)}%): ${esc(c.evidence)}</li>`).join("");
+  $("out").innerHTML = `
+    <div class="card ${esc(r.verdict)}">
+      <div class="verdict">${esc(r.verdict)}</div>
+      <div class="swatches">${sw("Measured", r.measured)}${sw("Expected", r.expected)}${sw("With carryover", r.carryover_prediction)}</div>
+      <p>${esc(r.explanation)}</p>
+      <ul>${causes}</ul>
+      <p style="color:var(--muted);font-size:13px">ΔE vs expected ${r.delta_e.vs_expected} · model ${esc(r.model_version)}</p>
+    </div>
+    <details><summary>Raw JSON</summary><pre>${esc(JSON.stringify(r, null, 2))}</pre></details>`;
+}
+</script>
+</body>
+</html>

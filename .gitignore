@@ -1,0 +1,11 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+csi-vial-fill-dataset/
+*.mp4
+vial*_empty.png
+vial*_full.png
+.DS_Store

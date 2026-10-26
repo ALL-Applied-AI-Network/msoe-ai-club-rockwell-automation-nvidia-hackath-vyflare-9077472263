@@ -1,0 +1,13 @@
+{
+  "vial_roi": [
+    280,
+    150,
+    80,
+    220
+  ],
+  "glare_cutoff": 245,
+  "liquid_absorbance_min": 0.03,
+  "min_liquid_pixels": 200,
+  "ml_per_px": 0.4,
+  "volume_calibrated": false
+}

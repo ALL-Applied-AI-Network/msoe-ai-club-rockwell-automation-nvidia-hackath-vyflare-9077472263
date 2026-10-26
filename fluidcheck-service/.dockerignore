@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+tests/
+.git/
+csi-vial-fill-dataset/
+*.ipynb
