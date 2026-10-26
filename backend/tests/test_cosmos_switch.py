@@ -2,6 +2,7 @@ import io
 import os
 import threading
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 from urllib.error import URLError
 
@@ -9,7 +10,30 @@ from PIL import Image
 from werkzeug.serving import make_server
 
 from app import create_app
-from models import MockModel, RemoteCosmosModel, SafetyBlocked, load_models
+from models import Cosmos3Model, MockModel, RemoteCosmosModel, SafetyBlocked, load_models
+
+
+class TextSafetyTests(unittest.TestCase):
+    def test_native_classifier_errors_are_not_treated_as_safe(self):
+        adapter = Cosmos3Model.__new__(Cosmos3Model)
+        classifier = SimpleNamespace(classify=lambda text: (_ for _ in ()).throw(
+            RuntimeError('classifier unavailable')))
+        adapter.pipe = SimpleNamespace(guardrails=SimpleNamespace(
+            text=SimpleNamespace(safety_models=[classifier])))
+        with self.assertRaises(RuntimeError):
+            adapter._check_text('Describe a vial.')
+
+    def test_native_classifier_labels(self):
+        adapter = Cosmos3Model.__new__(Cosmos3Model)
+        for label in ['Safe', 'Unsafe', 'Controversial']:
+            classifier = SimpleNamespace(classify=lambda text: SimpleNamespace(label=label))
+            adapter.pipe = SimpleNamespace(guardrails=SimpleNamespace(
+                text=SimpleNamespace(safety_models=[classifier])))
+            if label == 'Safe':
+                adapter._check_text('Describe a vial.')
+            else:
+                with self.assertRaises(SafetyBlocked):
+                    adapter._check_text('Describe a vial.')
 
 
 class CosmosSwitchTests(unittest.TestCase):

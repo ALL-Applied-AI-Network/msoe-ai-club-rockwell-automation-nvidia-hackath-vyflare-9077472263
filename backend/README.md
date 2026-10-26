@@ -1,5 +1,10 @@
 # VyFlare inference backend
 
+For the deployed worker and step-by-step laptop startup, see
+[DGX startup instructions](dgx/README.md). The current DGX Framework release
+disables image content classification; the API reports that limitation
+explicitly rather than claiming an image safety pass.
+
 ## Cosmos Lite / Full switch
 
 The included frontend requests **ResNet-18 plus the selected Cosmos model**

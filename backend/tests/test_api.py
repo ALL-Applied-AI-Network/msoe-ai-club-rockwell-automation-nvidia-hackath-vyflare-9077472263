@@ -27,6 +27,10 @@ class APITests(unittest.TestCase):
         self.assertEqual(response.json['result']['image_size'], [32, 24])
         self.assertTrue(response.json['result']['mock'])
 
+    def test_framework_disabling_pillow_global_limit(self):
+        with patch('app.Image.MAX_IMAGE_PIXELS', None):
+            self.assertEqual(self.post().status_code, 200)
+
     def test_cosmos_routing(self):
         self.assertEqual(self.post(model='cosmos').json['result']['model'], 'cosmos')
 

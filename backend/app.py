@@ -13,7 +13,8 @@ from werkzeug.exceptions import HTTPException
 
 from models import RemoteInferenceError, SafetyBlocked, load_models
 
-Image.MAX_IMAGE_PIXELS = 16_000_000
+MAX_IMAGE_PIXELS = 16_000_000
+Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS
 
 
 def create_app(model_registry=None, config=None):
@@ -85,7 +86,8 @@ def create_app(model_registry=None, config=None):
                     with Image.open(BytesIO(upload.read())) as source:
                         if source.format not in {"JPEG", "PNG"}:
                             return error("Only JPEG and PNG images are supported", 415)
-                        if source.width * source.height > Image.MAX_IMAGE_PIXELS:
+                        # Framework imports can change Pillow's global limit to None.
+                        if source.width * source.height > MAX_IMAGE_PIXELS:
                             return error("Image exceeds 16 million pixels", 413)
                         source.load()
                         image = ImageOps.exif_transpose(source).convert("RGB")

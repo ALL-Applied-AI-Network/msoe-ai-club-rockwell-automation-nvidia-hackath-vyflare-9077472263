@@ -161,14 +161,26 @@ class Cosmos3Model:
         if not 1 <= self.max_tokens <= 4096:
             raise ValueError("COSMOS_MAX_NEW_TOKENS must be between 1 and 4096")
 
+    def _check_text(self, text):
+        # Use the classifier directly: this Framework release's is_safe helper
+        # treats classifier exceptions as safe. Exceptions here propagate instead.
+        classifiers = self.pipe.guardrails.text.safety_models
+        if not classifiers:
+            raise RuntimeError("No text safety classifiers loaded")
+        for classifier in classifiers:
+            if hasattr(classifier, "classify"):
+                safe = classifier.classify(text).label.lower() == "safe"
+            else:
+                safe, _ = classifier.is_safe(text)
+            if not safe:
+                raise SafetyBlocked("Text rejected by safety check")
+
     def predict(self, image, prompt):
         import tempfile
         import numpy as np
         from PIL import Image
-        from cosmos_framework.auxiliary.guardrail.common import presets
         # Fail closed: exceptions propagate; rejected content never reaches Cosmos.
-        if not presets.run_text_guardrail(prompt, self.pipe.guardrails.text):
-            raise SafetyBlocked("Prompt rejected by text safety check")
+        self._check_text(prompt)
         frames = np.asarray(image)[None, ...].copy()
         safe, _ = self.pipe.guardrails.video.run_safety_check(frames)
         if not safe:
@@ -193,11 +205,13 @@ class Cosmos3Model:
                 raise RuntimeError("Cosmos returned no successful, screened result")
             text = receipts[0].outputs[0].content["reasoner_text"]
             # Explicit output check, even if an upstream version changes its defaults.
-            if not presets.run_text_guardrail(text, self.pipe.guardrails.text):
-                raise SafetyBlocked("Response rejected by text safety check")
+            self._check_text(text)
             return {"text": text, "execution": self.execution, "safety": {
-                "input_text": "passed", "input_image": "passed", "output_text": "passed",
-                "provider": "Cosmos Framework (Cosmos-Guardrail1 / Qwen3Guard)",
+                "input_text": "passed", "input_image": (
+                    "passed" if self.pipe.guardrails.video.safety_models
+                    else "disabled_in_framework_release"),
+                "image_postprocessing": "completed", "output_text": "passed",
+                "provider": "Cosmos Framework / Qwen3Guard",
             }}
 
 
