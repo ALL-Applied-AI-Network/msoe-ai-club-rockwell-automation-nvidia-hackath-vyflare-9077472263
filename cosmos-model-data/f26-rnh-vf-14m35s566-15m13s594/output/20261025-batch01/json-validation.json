@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-14m35s566-15m13s594",
+  "vial": 17,
+  "recipe_id": 10,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned beneath a dispensing nozzle and receives a continuous stream of yellow liquid, which gradually fills the vial.",
+  "liquid_color_in_vial": "Yellow",
+  "dispensed_liquid_color": "Yellow",
+  "visibility": "clear",
+  "schema_errors": []
+}

@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-12m29s500-13m17s504",
+  "vial": 15,
+  "recipe_id": 9,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and gradually fills with a dark green liquid. The vial remains stationary while the liquid level rises steadily over time.",
+  "liquid_color_in_vial": "Dark green",
+  "dispensed_liquid_color": "Dark green",
+  "visibility": "clear",
+  "schema_errors": []
+}

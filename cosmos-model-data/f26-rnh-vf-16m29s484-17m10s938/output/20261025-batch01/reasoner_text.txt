@@ -1,0 +1,19 @@
+```json
+{
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a colored liquid is poured into it, gradually filling it.",
+  "target_vial": "The vial on the left, labeled 'BRADY' with a barcode, is positioned directly beneath the dispensing nozzle and receives the liquid.",
+  "observed_stages": [
+    "The vial is empty and waiting under the nozzle.",
+    "A colored liquid begins to flow from the nozzle into the vial.",
+    "The vial fills with the colored liquid, which becomes visible inside.",
+    "The filling process continues until the vial is nearly full."
+  ],
+  "dispensed_liquid_color": "Green",
+  "liquid_color_in_vial": "Green",
+  "color_changes": "The liquid inside the vial changes from clear to green as it is filled.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed — no expected recipe supplied"
+}
+```

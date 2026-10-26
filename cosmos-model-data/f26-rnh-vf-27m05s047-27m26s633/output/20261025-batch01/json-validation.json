@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-27m05s047-27m26s633",
+  "vial": 29,
+  "recipe_id": 14,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial positioned beneath a dispensing nozzle receives a green liquid, which gradually fills it over time.",
+  "liquid_color_in_vial": "Green",
+  "dispensed_liquid_color": "Green",
+  "visibility": "clear",
+  "schema_errors": []
+}

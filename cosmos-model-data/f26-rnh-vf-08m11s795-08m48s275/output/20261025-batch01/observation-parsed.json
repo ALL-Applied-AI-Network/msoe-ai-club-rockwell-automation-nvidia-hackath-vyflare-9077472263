@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a green liquid is poured into it, gradually filling the vial.",
+  "target_vial": "The vial beneath the dispensing nozzle, labeled with a barcode sticker, is the focus of the filling process.",
+  "observed_stages": [
+    "The vial is positioned under the dispensing nozzle and appears empty at the start.",
+    "A green liquid is dispensed into the vial, rising steadily from the bottom.",
+    "The vial continues to fill with the green liquid until it reaches a certain level.",
+    "The dispensing stops, and the vial remains filled with the green liquid."
+  ],
+  "dispensed_liquid_color": "green",
+  "liquid_color_in_vial": "green",
+  "color_changes": "The liquid inside the vial changes from clear/empty to green as it is filled.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

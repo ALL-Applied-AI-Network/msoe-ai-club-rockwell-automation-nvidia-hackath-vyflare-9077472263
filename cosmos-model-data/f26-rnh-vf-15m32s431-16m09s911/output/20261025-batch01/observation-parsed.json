@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a yellow liquid is poured into it. The vial gradually fills with the same yellow liquid over the course of the video.",
+  "target_vial": "A clear plastic vial mounted on a metal stand, positioned directly beneath a vertical dispensing nozzle. It contains a yellow liquid that increases in volume over time.",
+  "observed_stages": [
+    "The vial is empty and positioned under the nozzle.",
+    "A yellow liquid begins to flow from the nozzle into the vial.",
+    "The vial fills with the yellow liquid, which rises steadily.",
+    "The vial is nearly full, with the liquid level approaching the top."
+  ],
+  "dispensed_liquid_color": "Yellow",
+  "liquid_color_in_vial": "Yellow",
+  "color_changes": "The liquid inside the vial becomes more concentrated as it fills, but no significant change in hue is observed.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

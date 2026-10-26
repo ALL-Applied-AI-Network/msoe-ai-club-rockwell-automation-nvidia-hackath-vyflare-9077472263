@@ -1,0 +1,19 @@
+```json
+{
+  "event_summary": "A vial is held stationary under a dispensing nozzle. A green liquid is dispensed into it, gradually filling the vial from empty to nearly full.",
+  "target_vial": "A transparent cylindrical vial mounted on a metal stand, positioned directly beneath a vertical dispensing nozzle. The vial is empty at the start and gradually fills with green liquid.",
+  "observed_stages": [
+    "Waiting: The vial is empty and held in place under the nozzle.",
+    "Dispensing begins: A green liquid stream appears from the nozzle and enters the vial.",
+    "Filling: The green liquid accumulates inside the vial, rising steadily.",
+    "Nearly full: The vial contains a significant amount of green liquid, approaching capacity."
+  ],
+  "dispensed_liquid_color": "Green",
+  "liquid_color_in_vial": "Green",
+  "color_changes": "The vial transitions from empty to containing a green liquid that fills it.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed — no expected recipe supplied"
+}
+```

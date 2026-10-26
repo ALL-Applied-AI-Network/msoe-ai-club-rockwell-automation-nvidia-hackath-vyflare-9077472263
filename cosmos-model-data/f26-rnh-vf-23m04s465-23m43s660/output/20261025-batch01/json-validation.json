@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-23m04s465-23m43s660",
+  "vial": 25,
+  "recipe_id": 13,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and is filled with a brown liquid. The liquid level rises steadily over time, and the vial remains stationary throughout the process.",
+  "liquid_color_in_vial": "Brown",
+  "dispensed_liquid_color": "Brown",
+  "visibility": "clear",
+  "schema_errors": []
+}

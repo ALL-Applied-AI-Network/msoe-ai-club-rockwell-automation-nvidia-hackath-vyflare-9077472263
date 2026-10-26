@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-04m44s669-05m08s023",
+  "vial": 7,
+  "recipe_id": 7,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and receives a colored liquid that gradually fills it. The liquid starts as orange, transitions to green, and continues to fill the vial.",
+  "liquid_color_in_vial": "The liquid inside the vial starts as orange and transitions to green.",
+  "dispensed_liquid_color": "The liquid being dispensed is green.",
+  "visibility": "clear",
+  "schema_errors": []
+}

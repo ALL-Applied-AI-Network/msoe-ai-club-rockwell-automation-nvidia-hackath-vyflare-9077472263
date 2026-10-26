@@ -1,0 +1,16 @@
+{
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a blue liquid is dispensed into it. The liquid level inside the vial rises steadily over time. A second vial is visible to the right but remains empty and stationary.",
+  "target_vial": "The vial directly beneath the dispensing nozzle, labeled 'BRADY' with a barcode. It is a clear cylindrical vial mounted on a black holder.",
+  "observed_stages": [
+    "The vial is positioned under the nozzle and begins receiving a blue liquid.",
+    "The liquid level inside the vial rises steadily as more liquid is dispensed.",
+    "The vial remains stationary while the liquid continues to fill it."
+  ],
+  "dispensed_liquid_color": "Blue",
+  "liquid_color_in_vial": "Blue",
+  "color_changes": "The liquid inside the vial becomes more filled, but its color remains consistently blue throughout.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

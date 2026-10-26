@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-06m31s343-06m54s236",
+  "vial": 9,
+  "recipe_id": 7,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and is filled with a blue liquid. The liquid level rises steadily over time as the vial collects the dispensed material.",
+  "liquid_color_in_vial": "Blue",
+  "dispensed_liquid_color": "Blue",
+  "visibility": "clear",
+  "schema_errors": []
+}

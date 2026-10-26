@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a green liquid is poured into it, gradually filling the vial.",
+  "target_vial": "A clear plastic vial with a white label reading 'BRADY VIAL 96' and a barcode, mounted on a black holder.",
+  "observed_stages": [
+    "The vial is empty and positioned under the dispensing nozzle.",
+    "A green liquid begins to flow from the nozzle into the vial.",
+    "The vial gradually fills with the green liquid.",
+    "The vial is nearly full, with the green liquid reaching close to the top."
+  ],
+  "dispensed_liquid_color": "Green",
+  "liquid_color_in_vial": "Green",
+  "color_changes": "The vial starts empty and becomes progressively filled with green liquid.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}
