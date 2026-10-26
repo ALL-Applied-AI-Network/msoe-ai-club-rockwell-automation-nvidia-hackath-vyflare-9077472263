@@ -8,3 +8,5 @@ import "./responsive.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode><BrowserRouter><App /></BrowserRouter></React.StrictMode>
 );
+
+import './integration.css';

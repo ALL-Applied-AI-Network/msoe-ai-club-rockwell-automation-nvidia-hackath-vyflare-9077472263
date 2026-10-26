@@ -1,114 +1,129 @@
-# Vyflare Inspection Console
+# Integrated Vyflare workspace
 
-A full-stack, recorded-data operator console for the Rockwell Automation + NVIDIA Fluid Mixing Station challenge. The interface keeps intended recipe data, observed image-relative measurements, simulated advisory decisions, human review status, and cause hypotheses visibly separate.
+The console combines `ui-development`, `full-stack-attempt` (which includes Amy's
+three notebooks and the Cosmos gateway), and `vial-mix-anomaly-detection`.
 
-> **Prototype boundary:** advisory only—no machine control. The included observations and decisions are deterministic demo fixtures and do not represent a running inference model. Physical volume is not reported because no validated pixel-to-volume calibration is included.
+## Complete local startup
 
-## Run locally
+Requirements: Node 24.19+ (24.x), pnpm 11.25+, Python 3.12+.
+From the repository root in PowerShell:
 
-Requirements: Node.js 20 or later and pnpm 10 or later (`corepack enable` on standard Node installations).
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r backend/requirements-integration.lock.txt
+pnpm install --frozen-lockfile
+.\.venv\Scripts\Activate.ps1
+pnpm run dev:integrated
+```
 
-```bash
-pnpm install
+Open http://localhost:5173/analyze or http://localhost:5173/experiments.
+No `.env` is needed: Python defaults to real CPU measurements on port 8000,
+Express to port 8787, and Vite to port 5173. If an old `backend/.env` exists,
+set `MODEL_MODE=real` and `ENABLED_MODELS=measurements` for the CPU workflow.
+
+Without PowerShell activation, start two terminals:
+
+```powershell
+# Terminal 1
+.\.venv\Scripts\python.exe backend/app.py
+# Terminal 2
 pnpm run dev
 ```
 
-Open <http://localhost:5173>. The Express API runs on <http://127.0.0.1:8787> and Vite proxies `/api` during development.
+On macOS/Linux use `.venv/bin/python` and `source .venv/bin/activate`.
+Set `INFERENCE_URL` on Express when Python runs elsewhere (default:
+`http://127.0.0.1:8000`). Keep the gateway private or use its optional shared
+`INFERENCE_TOKEN`, configured identically on Node and Python.
 
-Production verification and serving:
+## Available workflows
 
-```bash
+- **Analyze an image:** real upload through React -> Express -> Python. The CPU
+  method measures average RGB in a user-selected region. It requires no weights
+  or GPU, does not segment liquid, and abstains from defect and volume judgments.
+- **Recorded experiments:** 30 saved anomaly results, thumbnail images, and Cosmos
+  clip observations joined by vial ID. These come from different data pipelines;
+  they are saved evidence, not new inference or a jointly validated model.
+- **Original inspection pages:** six simulated review cases, still labeled as such.
+- **Optional ResNet/Cosmos:** selected methods appear when enabled in Python health.
+  An unavailable method returns an error, not fake results.
+
+Uploads/results are not persisted by this console. A remote Cosmos runtime can
+retain its own inference artifacts; inspect its runtime policy before using it.
+
+## Connect the vial-only recipe classifier
+
+Install torch/torchvision for your platform using `backend/requirements-models.txt`.
+Keep weights outside Git. Create a JSON labels file containing this ordered array:
+
+```json
+["5","6","7","8","9","10","11","12","13","14"]
+```
+
+In `backend/.env`:
+
+```dotenv
+MODEL_MODE=real
+ENABLED_MODELS=measurements,resnet18
+RESNET_DEVICE=cpu
+RESNET_CHECKPOINT=/absolute/path/to/vial_resnet18_recipe_model.pth
+RESNET_LABELS=/absolute/path/to/recipe-labels.json
+```
+
+Restart Python and refresh the connection in Analyze an image. The adapter accepts
+Model 1's `model_state_dict` bundle, validates recipe order, and applies its timestamp
+mask and image-padding/normalization. Unknown custom preprocessing fails explicitly.
+Fusion requires a paired-image adapter and is rejected by this single-image path.
+Without custom weights, ResNet returns generic ImageNet demonstration classes.
+Recipe scores are not calibrated defect probabilities. Actual checkpoint parity
+and GPU inference have not been tested in this integration environment.
+
+For Cosmos, follow [the DGX guide](backend/dgx/README.md), then enable
+`measurements,cosmos_full` and set the existing `COSMOS_FULL_URL` tunnel destination.
+Gateway health does not guarantee remote GPU readiness. Lite/Full are routes to
+Cosmos3-Nano, not differently sized models. Browser cancellation does not stop an
+already-running remote inference job.
+
+## Verification
+
+```powershell
 pnpm run check
-pnpm start
+$env:PYTHONPATH = "$PWD\backend"
+.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -p 'test_*.py'
+pnpm run test:integration
 ```
 
-After `pnpm run build`, `pnpm start` serves the API and compiled client at <http://127.0.0.1:8787>.
+The integration smoke test needs a production build and uses temporary ports 18000
+and 18787. It tests a known red image through the actual HTTP proxy into real Python
+code, plus recorded evidence, thumbnails and SPA routes. Set `PYTHON` to the Python
+executable if your environment differs from `.venv`. CI uses the same workflow.
 
-## Application structure
+## Deployment and branch scope
 
-- `client/` — React, TypeScript, Vite operator interface.
-- `server/` — Express read-only inspection and recipe API.
-- `shared/` — domain contracts shared by both layers.
-- `client/public/demo/` — six curated 640×480 Vial Fill frames from labeled Video 5.
+The root Dockerfile now builds the Node console. The CPU Python image is
+`backend/Dockerfile`, built with repository root as context. Python binds loopback
+locally and supports `HOST=0.0.0.0` inside the container. GPU Cosmos uses its existing
+DGX runtime, not this CPU container.
 
-API endpoints:
+The existing `render.yaml` continues targeting `ui-development`; this integration
+does not change the deployed service. A test Render service can target
+`integration/usable-console` with the existing Node build/start commands and
+`INFERENCE_URL` pointing to its private Python gateway. Recorded evidence works
+without Python; image analysis requires a reachable Python service.
 
-- `GET /api/health`
-- `GET /api/bootstrap`
-- `GET /api/cases`
-- `GET /api/cases/:id`
-- `GET /api/recipes`
+The reverted `model_api` FluidCheck service is not activated: it uses unfitted
+physical parameters and a different schema. Its branch remains available. The
+maintained Flask gateway provides the integrated runtime. Original notebooks and
+Cosmos evidence remain in their team folders. Large existing source-branch videos
+remain in Git history; this integration adds no new dataset or weight binaries.
 
-## Continuous integration and deployment
+## Submission limits
 
-GitHub Actions runs type checking, domain tests, and a production build for pushes to `main` or `ui-development` and for pull requests targeting `main`. The workflow uses the pinned Node and pnpm versions declared in `.node-version` and `package.json`.
-
-The root `render.yaml` defines a Render Node web service for the `ui-development` branch. To create the hosted service, connect this private GitHub repository to Render and create a new Blueprint from the repository. Render will build and start the same Express-served production bundle used locally and verify `/api/health`.
-
-The Blueprint intentionally targets `ui-development` until the feature is reviewed and merged. Change its `branch` field to `main` as part of the eventual merge/deployment decision.
-
-## Data provenance
-
-Recipe values and selected frame identifiers come from the supplied `video5_vial_recipes.csv` and `video5_frame_labels.csv`. The six UI cases use real recorded frames, while observations, overlays, decisions, quality flags, and hypotheses are explicitly labeled simulated or illustrative. Raw videos, bulk images, USD files, generated data, and model artifacts are intentionally excluded from Git.
-
----
-
-## Event reference
-
-### Rockwell Automation + NVIDIA Innovation Lab · Fall 2026
-
-This is your team's repository for the four-week physical AI hackathon run by Rockwell Automation, NVIDIA, the MSOE AI Club and UWM's Connected Systems Institute. Build everything here. Sponsors can follow your work as it progresses, and your final submission links straight to this repository.
-
-**Full event guide** (datasets, compute, rules, judging, prizes): <https://msoe-maic.com/library/?article=Rockwell-NVIDIA-Fall-2026>
-**Your team workspace** (team, repository access, submissions): <https://dashboard.all-ai-network.org/j/L36HEH>
-**Questions:** [join the hackathon Slack](https://join.slack.com/t/rockwellnvidi-wq82211/shared_invite/zt-4bp05nsn9-UW3afFtM9wjzWtZiQoJBHg) and ask in the channel that matches your question. The event guide's "Getting help" section says who to ping for what. HELLO.
-
-## Key dates
-
-| When | What |
-|---|---|
-| Thu Oct 8, 4:00–6:00 PM | Kickoff at Rockwell Automation HQ, 1201 S 2nd St, Milwaukee |
-| **Wed Oct 14, 11:59 PM CT** | **Team plan due:** [submit it here](https://dashboard.all-ai-network.org/s/V28NHK) |
-| **Sun Nov 1, 11:59 PM CT** | **Final submission due:** [submit it here](https://dashboard.all-ai-network.org/s/V28NHK) |
-| Thu Nov 5, 5:00–8:00 PM | Finals at MSOE Diercks Hall: live presentations and prizes |
-
-## First week
-
-- [ ] Everyone on the team has an ALL AI Network account and has joined this team in the [workspace](https://dashboard.all-ai-network.org/j/L36HEH).
-- [ ] Everyone has connected GitHub and accepted the repository invitation (check your GitHub email, or open the workspace and press the check button).
-- [ ] Pick your dataset. We recommend one strong solution around a single dataset.
-- [ ] Download the data and make sure everyone who needs it can open it.
-- [ ] Read the compute guide and decide what you'll need.
-- [ ] Join Slack, open `#hackathon-announcements`, and find your dataset's channel.
-- [ ] Submit the [team plan](https://dashboard.all-ai-network.org/s/V28NHK) by Wednesday, October 14. It's a short resource request, not a graded paper, and any teammate can update it before the deadline.
-
-## The three datasets
-
-1. **[Final Vial Inspection](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Vial-Inspection):** find missing caps, crooked caps, damaged vials and unexpected empty positions after the robot fills a fixture.
-2. **[Fluid Mixing Station 3](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Fluid-Mixing):** use synchronized camera views to detect fill and color problems caused by recipes and fluid carryover.
-3. **[Grasping and Sorting](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Grasping-Sorting):** use a digital twin and multiple cameras to make a standalone FANUC arm grasp and sort objects more reliably.
-
-## Read before your team plan
-
-- **[Compute: Brev, DGX Spark and build.nvidia.com](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Compute).** Brev credits are spent whenever an instance is running, so stop instances you aren't using.
-- **[Collect and test your own data](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Data-Collection):** visits, extra data, digital twins, and booking a supervised test on the real equipment.
-- **[Tools and resources](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Resources):** AI coding tools, vision-language models, NVIDIA Cosmos and more. Start with a simple baseline.
-
-## Final submission (Sun Nov 1)
-
-- A video of about five minutes
-- A one-page project summary
-- A link to this repository
-- References and credits for data, models, code and tools
-
-## Working in this repository
-
-```bash
-git clone <this repository's URL from the green "Code" button>
-```
-
-- Commit early and push often. Mentors and judges see what's here.
-- **Don't commit large datasets or model weights.** Keep them out with `.gitignore` and note in this README where to download them.
-- Before the finals, replace this README with your project: the problem, your approach, results, how to run it, and credits.
-
-**Can't push or see this repository?** Open the [team workspace](https://dashboard.all-ai-network.org/j/L36HEH) and press the GitHub check button. If it still doesn't work, ping Brett Storoe in `#hackathon-general` on Slack.
+- Resolve the reported camera/video clock discrepancy before further training.
+- Model 2's random-frame 100% score is not unseen-vial performance.
+- Anomaly reference labels are rule-based/suspected, and threshold calibration
+  reuses the evaluated pool: 5/5 suspected detections include five false alarms.
+- Cosmos 24/30 color-description acceptance is a team review of one recorded batch.
+- No calibrated milliliters, actual composition assay, verified carryover cause,
+  production reliability, or measured scrap savings is established.
+- Complete independent evaluation, external dataset/weight distribution, and a
+  supervised CSI demonstration before making broader claims.

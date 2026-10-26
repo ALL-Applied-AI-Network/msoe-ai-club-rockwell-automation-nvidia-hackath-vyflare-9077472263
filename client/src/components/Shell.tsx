@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 
 const links = [
   ["/overview", "Overview", LayoutDashboard],
+  ["/analyze", "Analyze an image", Activity],
+  ["/experiments", "Recorded experiments", ClipboardList],
   ["/inspection", "Inspection review", Activity],
   ["/history", "Case history", ClipboardList],
   ["/recipes", "Recipes", BookOpen],
@@ -20,7 +22,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <div className="sidebar__foot"><ShieldCheck /><div><strong>No control path</strong><span>Advisory only</span></div></div>
     </aside>
     <main>
-      <header className="topbar"><div className="demo-pill"><span /> Recorded demo</div><div className="advisory"><ShieldCheck /> Advisory only — no machine control</div></header>
+      <header className="topbar"><div className="demo-pill"><span /> Experimental inspection workspace</div><div className="advisory"><ShieldCheck /> Advisory only — no machine control</div></header>
       <div className="page">{children}</div>
     </main>
   </div>;

@@ -38,14 +38,37 @@ class ResNet18Model:
                 raise ValueError("Labels must be a non-empty JSON array in training class order")
             self.model = resnet18(weights=None, num_classes=len(self.labels))
             state = torch.load(checkpoint, map_location="cpu", weights_only=True)
-            if "state_dict" in state:
+            metadata = state if isinstance(state, dict) else {}
+            if "model_state_dict" in state:
+                if metadata.get("architecture", "").startswith("two ResNet18"):
+                    raise ValueError("Fusion checkpoints need the two-camera adapter, not single-image ResNet")
+                state = state["model_state_dict"]
+            elif "state_dict" in state:
                 state = state["state_dict"]
+            if metadata.get("recipe_ids") is not None and self.labels != [str(v) for v in metadata["recipe_ids"]]:
+                raise ValueError("RESNET_LABELS must match checkpoint recipe_ids in order")
             self.model.load_state_dict(state, strict=True)
         else:
             self.labels = weights.meta["categories"]
             self.model = resnet18(weights=weights)
-        # Replace this with training-time validation transforms for custom weights.
-        self.transform = weights.transforms()
+        if checkpoint:
+            if metadata.get("timestamp_mask") != "lower-left 58% width by 8.5% height":
+                raise ValueError("Custom checkpoint needs verified training preprocessing metadata")
+            from PIL import Image, ImageDraw, ImageOps
+            from torchvision import transforms
+            size = int(metadata.get("image_size", 224))
+            def training_transform(source):
+                image = source.convert("RGB").copy()
+                width, height = image.size
+                ImageDraw.Draw(image).rectangle(
+                    (0, height-max(1, round(height*.085)), min(width, round(width*.58)), height),
+                    fill=(128, 128, 128))
+                image = ImageOps.pad(image, (size, size), method=Image.Resampling.BILINEAR, color=(128,128,128))
+                return transforms.Normalize(weights.transforms().mean, weights.transforms().std)(transforms.ToTensor()(image))
+            self.transform = training_transform
+        else:
+            self.transform = weights.transforms()
+        self.custom = bool(checkpoint)
         self.model.to(self.device).eval()
 
     def predict(self, image, prompt):
@@ -55,7 +78,9 @@ class ResNet18Model:
             values, indices = scores.topk(min(5, len(self.labels)))
             predictions = [{"label": self.labels[i], "class_id": i, "score": score}
                            for score, i in zip(values.tolist(), indices.tolist())]
-        return {"predictions": predictions}
+        return {"predictions": predictions, "task": "recipe_classification" if self.custom else "imagenet_demonstration",
+                "decision": "UNABLE_TO_DECIDE", "provenance": "COMPUTED_RESULT",
+                "limitations": ["Class scores are not calibrated defect probabilities."]}
 
 
 class SafetyBlocked(Exception):
@@ -216,11 +241,13 @@ class Cosmos3Model:
 
 
 def load_models(mode):
-    names = [x.strip() for x in os.getenv("ENABLED_MODELS", "resnet18,cosmos_lite,cosmos_full").split(",")]
+    from measurements import MeasurementsModel
+    names = [x.strip() for x in os.getenv("ENABLED_MODELS", "measurements").split(",")]
     factories = {"resnet18": ResNet18Model, "cosmos": Cosmos3Model,
-                 "cosmos_lite": Cosmos3Model, "cosmos_full": RemoteCosmosModel}
+                 "cosmos_lite": Cosmos3Model, "cosmos_full": RemoteCosmosModel,
+                 "measurements": MeasurementsModel}
     if not names or any(name not in factories for name in names):
-        raise ValueError("ENABLED_MODELS supports resnet18, cosmos_lite, cosmos_full, cosmos")
+        raise ValueError("ENABLED_MODELS supports measurements, resnet18, cosmos_lite, cosmos_full, cosmos")
     if mode == "mock":
         return {name: MockModel(name) for name in names}
     if mode != "real":

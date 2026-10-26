@@ -15,8 +15,10 @@
     "build": "tsc -p server/tsconfig.json && vite build --config client/vite.config.ts",
     "start": "node server/dist/server/src/index.js",
     "typecheck": "tsc -p server/tsconfig.json --noEmit && tsc -p client/tsconfig.json --noEmit",
-    "test": "vitest run server/src/data.test.ts",
-    "check": "tsc -p server/tsconfig.json --noEmit && tsc -p client/tsconfig.json --noEmit && vitest run server/src/data.test.ts && tsc -p server/tsconfig.json && vite build --config client/vite.config.ts"
+    "test": "vitest run server/src --exclude \"**/dist/**\"",
+    "check": "pnpm run typecheck && pnpm test && pnpm run build",
+    "test:integration": "node scripts/smoke-integration.mjs",
+    "dev:integrated": "concurrently -k -n PYTHON,API,UI \"python backend/app.py\" \"tsx watch server/src/index.ts\" \"vite --config client/vite.config.ts\""
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

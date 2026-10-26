@@ -1,0 +1,17 @@
+.git
+node_modules
+.venv
+**/__pycache__
+**/.ipynb_checkpoints
+**/.env
+**/.env.*
+**/*.mp4
+**/*.zip
+**/*.pth
+**/*.pt
+cosmos-original-dataset
+Training model 1
+Training model 2
+Training model 3
+client/dist
+server/dist

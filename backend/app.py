@@ -23,7 +23,7 @@ def create_app(model_registry=None, config=None):
     app = Flask(__name__)
     app.config.update(
         MAX_CONTENT_LENGTH=5 * 1024 * 1024,
-        MODEL_MODE=os.getenv("MODEL_MODE", "mock"),
+        MODEL_MODE=os.getenv("MODEL_MODE", "real"),
         CORS_ORIGINS=[x.strip() for x in os.getenv(
             "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
         ).split(",") if x.strip()],
@@ -41,6 +41,11 @@ def create_app(model_registry=None, config=None):
 
     @app.before_request
     def check_origin():
+        token = os.getenv("INFERENCE_TOKEN", "")
+        if token and request.path == "/predict":
+            import hmac
+            if not hmac.compare_digest(request.headers.get("Authorization", ""), f"Bearer {token}"):
+                return jsonify(error="Inference credentials required"), 401
         # CORS alone does not prevent a foreign page from submitting a POST.
         origin = request.headers.get("Origin")
         if origin is not None and origin not in app.config["CORS_ORIGINS"]:
@@ -58,7 +63,7 @@ def create_app(model_registry=None, config=None):
     @app.post("/predict")
     def predict():
         frame_id = request.form.get("frame_id", "").strip()
-        name = request.form.get("model", "resnet18")
+        name = request.form.get("model", "measurements")
         include_resnet = request.form.get("include_resnet", "false")
         prompt = request.form.get("prompt", "Describe the visible scene briefly.").strip()
         if not frame_id or len(frame_id) > 128:
@@ -96,7 +101,8 @@ def create_app(model_registry=None, config=None):
             except (UnidentifiedImageError, OSError, ValueError):
                 return error("Invalid or corrupt image", 400)
             # Bound the visual workload; the ResNet adapter applies its own final transform.
-            image.thumbnail((1280, 1280))
+            if name not in {"measurements", "resnet18"}:
+                image.thumbnail((1280, 1280))
             started = time.perf_counter()
             result = registry[name].predict(image, prompt)
             if paired:
@@ -109,6 +115,8 @@ def create_app(model_registry=None, config=None):
             return jsonify(frame_id=frame_id, model=name, mode=app.config["MODEL_MODE"],
                            result=result, inference_ms=round((time.perf_counter()-started)*1000, 1))
         except SafetyBlocked as exc:
+            return error(str(exc), 422)
+        except (ValueError, TypeError) as exc:
             return error(str(exc), 422)
         except RemoteInferenceError as exc:
             response, code = error(str(exc), exc.status)
@@ -130,5 +138,5 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", "8000"))
     print(f"API: http://127.0.0.1:{port} | mode={application.config['MODEL_MODE']}", flush=True)
     # One process: no reloader or multiple workers duplicating model weights.
-    serve(application, host="127.0.0.1", port=port, threads=4,
+    serve(application, host=os.getenv("HOST", "127.0.0.1"), port=port, threads=4,
           max_request_body_size=5 * 1024 * 1024)
