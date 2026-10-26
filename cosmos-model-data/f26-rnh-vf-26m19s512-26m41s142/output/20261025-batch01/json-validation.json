@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-26m19s512-26m41s142",
+  "vial": 28,
+  "recipe_id": 14,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is filled with a liquid that starts as orange and darkens to brown as it fills.",
+  "liquid_color_in_vial": "Orange initially, darkening to brown as the vial fills",
+  "dispensed_liquid_color": "Orange",
+  "visibility": "clear",
+  "schema_errors": []
+}

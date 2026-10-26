@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local model API test</title>
+<style>
+body{font:16px system-ui;max-width:900px;margin:40px auto;padding:0 20px;background:#f6f8fb;color:#17263c}video{width:100%;max-width:640px;background:#182131;border-radius:12px}button,input,select{font:inherit;padding:9px;margin:5px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:white;padding:20px;border-radius:12px}label{display:block}button{cursor:pointer}p{line-height:1.5}
+</style>
+<h1>Local model API test</h1>
+<p>ResNet-18 classifies a frame. Cosmos3-Nano reasons about the image with safety checks. Mock mode tests uploads only.</p>
+<label>API <input id="api" value="http://127.0.0.1:8000"></label>
+<label>Models <select id="model"><option value="cosmos_lite">ResNet-18 + Cosmos Lite (local)</option><option value="cosmos_full">ResNet-18 + Cosmos Full (DGX Spark)</option><option value="resnet18">ResNet-18 only</option></select></label>
+<label>Cosmos prompt <input id="prompt" size="50" value="Describe the visible scene briefly." maxlength="2000"></label>
+<button id="health">Check API</button><button id="start">Start camera</button><button id="stop" disabled>Stop</button>
+<label>Or upload an image <input id="file" type="file" accept="image/jpeg,image/png"></label>
+<p>Camera target: 2 FPS for ResNet, one request every 5 seconds for Cosmos. Busy frames are skipped. Actual speed depends on inference time.</p>
+<video id="video" autoplay muted playsinline></video><canvas id="canvas" hidden></canvas>
+<pre id="result" aria-live="polite">Start the API, then check its status.</pre>
+<script src="app.js"></script>
+</html>

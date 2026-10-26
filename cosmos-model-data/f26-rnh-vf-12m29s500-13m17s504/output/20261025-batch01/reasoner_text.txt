@@ -1,0 +1,19 @@
+```json
+{
+  "event_summary": "A vial is positioned under a dispensing nozzle and gradually fills with a dark green liquid. The vial remains stationary while the liquid level rises steadily over time.",
+  "target_vial": "A clear plastic vial with a white label reading 'BRADY' and a barcode, mounted on a black platform above a transparent tube. The vial is the primary focus and remains in the same position throughout the sequence.",
+  "observed_stages": [
+    "The vial is empty and positioned under the dispensing nozzle.",
+    "A dark green liquid begins to dispense into the vial from above.",
+    "The liquid level inside the vial rises steadily as more liquid is added.",
+    "The vial continues to fill until it reaches a near-full state."
+  ],
+  "dispensed_liquid_color": "Dark green",
+  "liquid_color_in_vial": "Dark green",
+  "color_changes": "The liquid inside the vial becomes visibly darker and more concentrated as it fills, though it remains consistently dark green throughout.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed — no expected recipe supplied"
+}
+```

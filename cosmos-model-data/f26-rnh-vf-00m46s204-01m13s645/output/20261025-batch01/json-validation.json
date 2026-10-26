@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-00m46s204-01m13s645",
+  "vial": 2,
+  "recipe_id": 5,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and receives a green liquid. The liquid level inside the vial rises steadily as the dispensing continues.",
+  "liquid_color_in_vial": "Green",
+  "dispensed_liquid_color": "Green",
+  "visibility": "clear",
+  "schema_errors": []
+}

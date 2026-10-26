@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial is positioned beneath a dispensing nozzle and receives a continuous stream of blue liquid, which gradually fills the vial.",
+  "target_vial": "The vial on the left, mounted on a black clamp, is the focus of the dispensing action. It is cylindrical and transparent, allowing the blue liquid to be clearly visible as it fills.",
+  "observed_stages": [
+    "The vial is empty and positioned under the nozzle.",
+    "A blue liquid stream begins dispensing into the vial.",
+    "The vial gradually fills with blue liquid.",
+    "The dispensing stream stops, leaving the vial partially filled with blue liquid."
+  ],
+  "dispensed_liquid_color": "Blue",
+  "liquid_color_in_vial": "Blue",
+  "color_changes": "The vial starts empty and becomes progressively filled with blue liquid.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

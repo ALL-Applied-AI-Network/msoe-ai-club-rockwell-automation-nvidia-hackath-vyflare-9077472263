@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial is positioned under a dispensing nozzle and receives a green liquid. The liquid level inside the vial rises steadily as the dispensing continues. The vial remains stationary throughout the sequence.",
+  "target_vial": "A transparent cylindrical vial with a white label containing a barcode, mounted on a black holder. It is located on the left side of the frame and is the primary focus of the dispensing action.",
+  "observed_stages": [
+    "The vial is positioned under the dispensing nozzle and begins receiving a green liquid.",
+    "The green liquid flows into the vial, gradually filling it.",
+    "The liquid level inside the vial rises steadily as the dispensing continues.",
+    "The dispensing process continues without interruption, maintaining a consistent flow."
+  ],
+  "dispensed_liquid_color": "Green",
+  "liquid_color_in_vial": "Green",
+  "color_changes": "The liquid inside the vial becomes more visible as it fills, but its color remains consistently green throughout the dispensing process.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

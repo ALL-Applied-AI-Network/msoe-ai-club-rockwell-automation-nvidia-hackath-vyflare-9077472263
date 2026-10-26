@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-02m18s250-02m41s318",
+  "vial": 4,
+  "recipe_id": 6,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and gradually fills with a dark green liquid over the course of the video.",
+  "liquid_color_in_vial": "Dark green",
+  "dispensed_liquid_color": "Dark green",
+  "visibility": "clear",
+  "schema_errors": []
+}

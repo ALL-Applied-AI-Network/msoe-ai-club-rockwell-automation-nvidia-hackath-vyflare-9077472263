@@ -1,0 +1,20 @@
+```json
+{
+  "event_summary": "A vial is positioned under a dispensing nozzle and is filled with a dark brown liquid. The liquid level rises steadily over time, and the nozzle is later seen dispensing a lighter brown liquid into the same vial.",
+  "target_vial": "The vial beneath the dispensing nozzle, identified by its position under the nozzle and the accumulation of liquid inside it.",
+  "observed_stages": [
+    "Waiting: The vial is positioned under the nozzle with no liquid present.",
+    "Filling: A dark brown liquid is dispensed into the vial, gradually filling it.",
+    "Movement: The vial is moved away from the nozzle.",
+    "Waiting: The vial is positioned under the nozzle again with no liquid present.",
+    "Filling: A lighter brown liquid is dispensed into the vial, gradually filling it."
+  ],
+  "dispensed_liquid_color": "Dark brown, then lighter brown",
+  "liquid_color_in_vial": "Dark brown, then lighter brown",
+  "color_changes": "The liquid in the vial changes from dark brown to lighter brown as a different liquid is dispensed.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed — no expected recipe supplied"
+}
+```

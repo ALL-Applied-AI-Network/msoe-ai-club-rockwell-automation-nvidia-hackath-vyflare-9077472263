@@ -18,3 +18,13 @@ generated/
 *.pt
 *.pth
 *.onnx
+
+# Python development and model inputs
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.zip
+.model-cache/
+!**/.env.example

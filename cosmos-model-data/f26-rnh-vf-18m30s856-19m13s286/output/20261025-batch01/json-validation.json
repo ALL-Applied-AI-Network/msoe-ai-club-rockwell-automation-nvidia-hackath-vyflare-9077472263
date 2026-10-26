@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-18m30s856-19m13s286",
+  "vial": 21,
+  "recipe_id": 11,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a blue liquid is dispensed into it. The liquid level inside the vial rises steadily over time. A second vial is visible to the right but remains empty and stationary.",
+  "liquid_color_in_vial": "Blue",
+  "dispensed_liquid_color": "Blue",
+  "visibility": "clear",
+  "schema_errors": []
+}

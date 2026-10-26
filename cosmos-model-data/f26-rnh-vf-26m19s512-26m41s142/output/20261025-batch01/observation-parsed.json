@@ -1,0 +1,18 @@
+{
+  "event_summary": "A vial is filled with a liquid that starts as orange and darkens to brown as it fills.",
+  "target_vial": "The vial directly beneath the dispensing nozzle, identified by its position under the stream of liquid.",
+  "observed_stages": [
+    "Waiting: The vial is empty and positioned under the nozzle.",
+    "Dispensing begins: A stream of orange liquid starts flowing into the vial.",
+    "Filling: The vial gradually fills with the orange liquid.",
+    "Color change: The liquid inside the vial darkens from orange to brown.",
+    "Completion: The vial is nearly full with brown liquid."
+  ],
+  "dispensed_liquid_color": "Orange",
+  "liquid_color_in_vial": "Orange initially, darkening to brown as the vial fills",
+  "color_changes": "The liquid inside the vial changes from orange to brown during the filling process.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

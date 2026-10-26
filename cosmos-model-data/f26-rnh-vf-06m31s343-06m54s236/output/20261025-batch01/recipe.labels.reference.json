@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "clip_id": "f26-rnh-vf-06m31s343-06m54s236",
+  "source": {
+    "video": "csi-vial-fill-dataset/vial_fill/videos/vial_fill_video_5.mp4",
+    "video_id": 5,
+    "sha256": "6f87cec1aeec3b2bae6dac639a317c077a3f175f27abd5fc8430d6953d9d05b9",
+    "recipe_csv": "csi-vial-fill-dataset/vial_fill/labels/video5_vial_recipes.csv",
+    "frame_labels_csv": "csi-vial-fill-dataset/vial_fill/labels/video5_frame_labels.csv"
+  },
+  "segment": {
+    "start_s": 391.343,
+    "end_s": 414.236,
+    "requested_duration_s": 22.893,
+    "interval": "[start_s, end_s)",
+    "actual_clip_duration_s": 22.87,
+    "source_start_frame_annotation": 11740,
+    "source_end_frame_annotation": 12427,
+    "timing_basis": "CSV start_s/end_s; frame annotations retained as reference only; cut boundaries quantized to video frames"
+  },
+  "recipe": {
+    "vial": 9,
+    "recipe_id": 7,
+    "type": "Pair 100+400",
+    "tanks_ml": {
+      "T100": 20.0,
+      "T200": null,
+      "T400": 50.0
+    },
+    "total_ml": 70.0,
+    "dispense_order": [
+      "T400",
+      "T100"
+    ],
+    "color_purpose": "pale blue (fresh ratio)"
+  },
+  "ground_truth_status": {
+    "recipe_role": "source annotation; commanded versus independently verified contents is not established",
+    "color_purpose": "recipe intent, not verified observed color",
+    "observed_color": null,
+    "verified_mismatch": null
+  },
+  "source_recipe_row": {
+    "vial": "9",
+    "recipe_id": "7",
+    "type": "Pair 100+400",
+    "t100_ml": "20",
+    "t200_ml": "",
+    "t400_ml": "50",
+    "total_ml": "70",
+    "dispense_order": "T400>T100",
+    "color_purpose": "pale blue (fresh ratio)",
+    "start_time": "6:31.3",
+    "end_time": "6:54.2",
+    "start_s": "391.343",
+    "end_s": "414.236",
+    "duration_s": "22.893",
+    "start_frame": "11740",
+    "end_frame": "12427"
+  },
+  "frame_labels": [
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195341_763465.jpg",
+        "timestamp": "2026-09-23 19:53:41.763465",
+        "video_s": "391.763",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 0.42,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195341_763465.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195343_771335.jpg",
+        "timestamp": "2026-09-23 19:53:43.771335",
+        "video_s": "393.771",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 2.428,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195343_771335.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195345_782254.jpg",
+        "timestamp": "2026-09-23 19:53:45.782254",
+        "video_s": "395.782",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 4.439,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195345_782254.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195347_797024.jpg",
+        "timestamp": "2026-09-23 19:53:47.797024",
+        "video_s": "397.797",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 6.454,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195347_797024.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195349_805277.jpg",
+        "timestamp": "2026-09-23 19:53:49.805277",
+        "video_s": "399.805",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 8.462,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195349_805277.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195351_817760.jpg",
+        "timestamp": "2026-09-23 19:53:51.817760",
+        "video_s": "401.818",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 10.475,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195351_817760.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195353_837081.jpg",
+        "timestamp": "2026-09-23 19:53:53.837081",
+        "video_s": "403.837",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 12.494,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195353_837081.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195355_847582.jpg",
+        "timestamp": "2026-09-23 19:53:55.847582",
+        "video_s": "405.848",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 14.505,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195355_847582.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195357_858696.jpg",
+        "timestamp": "2026-09-23 19:53:57.858696",
+        "video_s": "407.859",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 16.516,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195357_858696.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195359_871529.jpg",
+        "timestamp": "2026-09-23 19:53:59.871529",
+        "video_s": "409.872",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 18.529,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195359_871529.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195401_880102.jpg",
+        "timestamp": "2026-09-23 19:54:01.880102",
+        "video_s": "411.880",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 20.537,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195401_880102.jpg"
+    },
+    {
+      "source_row": {
+        "filename": "vial_fill_20260923_195403_888775.jpg",
+        "timestamp": "2026-09-23 19:54:03.888775",
+        "video_s": "413.889",
+        "in_fill": "1",
+        "vial": "9",
+        "recipe_id": "7",
+        "type": "Pair 100+400",
+        "t100_ml": "20",
+        "t200_ml": "",
+        "t400_ml": "50",
+        "total_ml": "70",
+        "dispense_order": "T400>T100",
+        "color_purpose": "pale blue (fresh ratio)"
+      },
+      "clip_time_s": 22.546,
+      "image_reference": "csi-vial-fill-dataset/vial_fill/images/vial_fill_20260923_195403_888775.jpg"
+    }
+  ]
+}
