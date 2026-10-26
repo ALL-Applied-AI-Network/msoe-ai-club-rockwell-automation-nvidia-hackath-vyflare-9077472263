@@ -1,0 +1,172 @@
+{
+  "test_frames": 169,
+  "accuracy": 0.3905325443786982,
+  "balanced_accuracy": 0.3458415345143034,
+  "macro_f1": 0.2800341038272073,
+  "per_recipe": {
+    "5": {
+      "support": 13,
+      "precision": 1.0,
+      "recall": 0.07692307692307693,
+      "f1": 0.14285714285714288
+    },
+    "6": {
+      "support": 12,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "7": {
+      "support": 12,
+      "precision": 0.25,
+      "recall": 0.3333333333333333,
+      "f1": 0.28571428571428575
+    },
+    "8": {
+      "support": 18,
+      "precision": 0.3829787234042553,
+      "recall": 1.0,
+      "f1": 0.5538461538461539
+    },
+    "9": {
+      "support": 23,
+      "precision": 0.6206896551724138,
+      "recall": 0.782608695652174,
+      "f1": 0.6923076923076923
+    },
+    "10": {
+      "support": 19,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "11": {
+      "support": 20,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "12": {
+      "support": 22,
+      "precision": 1.0,
+      "recall": 0.3181818181818182,
+      "f1": 0.4827586206896552
+    },
+    "13": {
+      "support": 19,
+      "precision": 0.4864864864864865,
+      "recall": 0.9473684210526315,
+      "f1": 0.6428571428571428
+    },
+    "14": {
+      "support": 11,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  },
+  "seed": 42,
+  "test_vials": [
+    1.0,
+    6.0,
+    8.0,
+    11.0,
+    14.0,
+    18.0,
+    19.0,
+    24.0,
+    25.0,
+    28.0
+  ],
+  "train_vials": [
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    7.0,
+    9.0,
+    10.0,
+    12.0,
+    13.0,
+    15.0,
+    16.0,
+    17.0,
+    20.0,
+    21.0,
+    22.0,
+    23.0,
+    26.0,
+    27.0,
+    29.0,
+    30.0
+  ],
+  "recipe_ids": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "architecture": "two ResNet18 encoders; concatenated features; 10-class head",
+  "inputs": "timestamp-masked vial and matched tank images",
+  "split_source": "vial_resnet18_split.csv (identical for all modalities)",
+  "timestamp_mask": "lower-left 58% width by 8.5% height",
+  "training_history": [
+    {
+      "phase": "fusion_head",
+      "epoch": 1,
+      "train_loss": 2.400376892089844
+    },
+    {
+      "phase": "fusion_head",
+      "epoch": 2,
+      "train_loss": 2.050306742331561
+    },
+    {
+      "phase": "fusion_head",
+      "epoch": 3,
+      "train_loss": 1.8516480544034173
+    },
+    {
+      "phase": "fusion_head",
+      "epoch": 4,
+      "train_loss": 1.6348346752278946
+    },
+    {
+      "phase": "final_blocks",
+      "epoch": 1,
+      "train_loss": 1.1760312697466682
+    },
+    {
+      "phase": "final_blocks",
+      "epoch": 2,
+      "train_loss": 0.34057581757797917
+    },
+    {
+      "phase": "final_blocks",
+      "epoch": 3,
+      "train_loss": 0.1295970680520815
+    },
+    {
+      "phase": "final_blocks",
+      "epoch": 4,
+      "train_loss": 0.09747377322877154
+    },
+    {
+      "phase": "final_blocks",
+      "epoch": 5,
+      "train_loss": 0.06536455524756628
+    },
+    {
+      "phase": "final_blocks",
+      "epoch": 6,
+      "train_loss": 0.19723148025051854
+    }
+  ],
+  "warning": "Small proof-of-concept: three fills per recipe and one held-out fill per recipe, all from one recording. The result is not a robust estimate of performance on new recordings."
+}

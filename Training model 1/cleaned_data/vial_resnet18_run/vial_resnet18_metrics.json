@@ -1,0 +1,170 @@
+{
+  "test_frames": 169,
+  "accuracy": 0.4378698224852071,
+  "balanced_accuracy": 0.39638952453597764,
+  "macro_f1": 0.3420270902501629,
+  "per_recipe": {
+    "5": {
+      "support": 13,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "6": {
+      "support": 12,
+      "precision": 0.21568627450980393,
+      "recall": 0.9166666666666666,
+      "f1": 0.3492063492063492
+    },
+    "7": {
+      "support": 12,
+      "precision": 0.5,
+      "recall": 0.08333333333333333,
+      "f1": 0.14285714285714285
+    },
+    "8": {
+      "support": 18,
+      "precision": 0.5333333333333333,
+      "recall": 0.4444444444444444,
+      "f1": 0.4848484848484848
+    },
+    "9": {
+      "support": 23,
+      "precision": 0.9473684210526315,
+      "recall": 0.782608695652174,
+      "f1": 0.8571428571428571
+    },
+    "10": {
+      "support": 19,
+      "precision": 0.3333333333333333,
+      "recall": 0.3157894736842105,
+      "f1": 0.3243243243243243
+    },
+    "11": {
+      "support": 20,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "12": {
+      "support": 22,
+      "precision": 0.5945945945945946,
+      "recall": 1.0,
+      "f1": 0.7457627118644068
+    },
+    "13": {
+      "support": 19,
+      "precision": 0.6666666666666666,
+      "recall": 0.42105263157894735,
+      "f1": 0.5161290322580646
+    },
+    "14": {
+      "support": 11,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  },
+  "seed": 42,
+  "test_vials": [
+    1.0,
+    6.0,
+    8.0,
+    11.0,
+    14.0,
+    18.0,
+    19.0,
+    24.0,
+    25.0,
+    28.0
+  ],
+  "train_vials": [
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    7.0,
+    9.0,
+    10.0,
+    12.0,
+    13.0,
+    15.0,
+    16.0,
+    17.0,
+    20.0,
+    21.0,
+    22.0,
+    23.0,
+    26.0,
+    27.0,
+    29.0,
+    30.0
+  ],
+  "recipe_ids": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "timestamp_mask": "lower-left 58% width by 8.5% height",
+  "initialization": "ImageNet ResNet18 weights",
+  "training_history": [
+    {
+      "phase": "classifier",
+      "epoch": 1,
+      "train_loss": 2.3136536149417655
+    },
+    {
+      "phase": "classifier",
+      "epoch": 2,
+      "train_loss": 2.0678673281389126
+    },
+    {
+      "phase": "classifier",
+      "epoch": 3,
+      "train_loss": 1.8576580159804401
+    },
+    {
+      "phase": "classifier",
+      "epoch": 4,
+      "train_loss": 1.689086950526518
+    },
+    {
+      "phase": "layer4_finetune",
+      "epoch": 1,
+      "train_loss": 1.3116143815657673
+    },
+    {
+      "phase": "layer4_finetune",
+      "epoch": 2,
+      "train_loss": 0.44546557068824766
+    },
+    {
+      "phase": "layer4_finetune",
+      "epoch": 3,
+      "train_loss": 0.15870912530842948
+    },
+    {
+      "phase": "layer4_finetune",
+      "epoch": 4,
+      "train_loss": 0.09117219425080454
+    },
+    {
+      "phase": "layer4_finetune",
+      "epoch": 5,
+      "train_loss": 0.06793589732226203
+    },
+    {
+      "phase": "layer4_finetune",
+      "epoch": 6,
+      "train_loss": 0.03490328977213186
+    }
+  ],
+  "warning": "Small proof-of-concept: three fills per recipe and one held-out fill per recipe. This is not a robust estimate of deployment performance; use a separate recording for stronger validation."
+}

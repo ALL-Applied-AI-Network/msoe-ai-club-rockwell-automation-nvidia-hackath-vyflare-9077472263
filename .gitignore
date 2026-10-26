@@ -1,0 +1,18 @@
+# Local Python environments and notebook autosaves
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.env
+.env.*
+
+# Bulk datasets, archives, and trained model binaries live outside Git.
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.pth
+*.pt
+*.onnx
