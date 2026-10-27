@@ -2,6 +2,18 @@
 
 This is your team's repository for the four-week physical AI hackathon run by Rockwell Automation, NVIDIA, the MSOE AI Club and UWM's Connected Systems Institute. Build everything here. Sponsors can follow your work as it progresses, and your final submission links straight to this repository.
 
+## Team Vyflare synthetic vial dataset
+
+The `brev-research-dataset` branch contains a 600-image synthetic vial dataset generated with the CSI digital twin in Isaac Sim 6.0.1:
+
+- [`data output/`](data%20output/) contains the extracted images, metadata, verification summary, contact sheet, and dataset-specific README.
+- `data output.zip` contains the same dataset as a developer-download archive and is stored with Git LFS because it exceeds GitHub's normal 100 MiB file limit.
+- After cloning, run `git lfs pull` to download the complete ZIP.
+
+> **SYNTHETIC EXPERIMENT:** Color names and hex values are rendering controls only. They do not represent recipes, chemicals, mixture ratios, quality states, or defects. Animation frames are authored simulation states—not calibrated fill volumes or measured fill percentages.
+
+Use the synthetic data for augmentation, pretraining, pipeline validation, or controlled sensitivity experiments. Evaluate final models on held-out real vials or held-out real acquisition sessions.
+
 **Full event guide** (datasets, compute, rules, judging, prizes): <https://msoe-maic.com/library/?article=Rockwell-NVIDIA-Fall-2026>
 **Your team workspace** (team, repository access, submissions): <https://dashboard.all-ai-network.org/j/L36HEH>
 **Questions:** [join the hackathon Slack](https://join.slack.com/t/rockwellnvidi-wq82211/shared_invite/zt-4bp05nsn9-UW3afFtM9wjzWtZiQoJBHg) and ask in the channel that matches your question. The event guide's "Getting help" section says who to ping for what. HELLO.
