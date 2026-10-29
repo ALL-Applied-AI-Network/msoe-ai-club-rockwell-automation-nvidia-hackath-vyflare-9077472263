@@ -142,3 +142,28 @@ All 30 clips share `group=real-recording-video5` and initially have no split. La
 Audit findings from the supplied workbook: 12/30 recorded model descriptions exactly match human descriptions. Of 17 human descriptions containing transitions, 3 match exactly. These are string-agreement counts, not a fresh controlled model benchmark. The pass/error formula uses at least one dispense-color match although the workbook note describes two. It is a separate rule from agreement between the model and human color descriptions. The workbook calls T200 red; the dataset documentation calls it orange. Resolve that vocabulary difference before using tank-color labels as training targets. A visible mixed color in the vial during a dispense does not identify the incoming tank fluid by itself.
 
 For Isaac Sim additions, retain simulator version, scene ID, seed, camera settings, lighting, material parameters, and label provenance. Keep related synthetic scenes in one split. Compare real-only versus real-plus-synthetic adaptation on the same untouched real test recordings. Avoid hue-altering augmentation when color is the target, and visually validate translucent-liquid rendering before using simulated color labels.
+
+## Single-Spark LoRA pilot
+
+The pilot path uses the existing Spark PyTorch/Transformers/PEFT environment directly, independently of the native four-GPU Framework launcher. Do not run `scripts/train.py` for this pilot.
+
+`prepare_spark_pilot.py` creates 21 training clips and 9 validation clips by holding out ALL vials from recipes 6, 9, and 13. This deliberately permits a **within-session development experiment**, not an independent test. It does not weaken the session-separation requirements of `prepare_data.py`. No unlinked field photos, unlabeled field footage, simulated mixing, recipe appearance guesses, or baseline predictions enter the targets.
+
+`extract_cosmos_reasoner.py` streams the cached omni checkpoint into a Qwen3-VL-shaped reasoner. It maps the Diffusers attention names, checks every expected tensor name and shape, and preserves the original checkpoint. It never initializes missing weights from another model. Its `base_provenance.json` records the source snapshot and source blobs. The diffusion pathway is excluded.
+
+`train_spark_lora.py` trains rank-8 language-attention adapters only, with BF16 base weights, SDPA attention, gradient checkpointing, and assistant-answer-only loss. It rejects any other trainable parameters. Video sampling retains original frame timestamps. The pixel budget is a TOTAL VIDEO budget (default 2,621,440 pixels over 32 frames), which is different from a per-frame budget. At these settings the 640x480 source is reduced to approximately 320x224, so small details and fast transitions can remain unobservable.
+
+Example commands in a compatible GPU environment:
+
+```bash
+python scripts/prepare_spark_pilot.py
+python scripts/extract_cosmos_reasoner.py --source /path/to/cached/Cosmos3-Nano/snapshot --out /path/to/base-reasoner
+python scripts/train_spark_lora.py --checkpoint /path/to/base-reasoner --data data/local/spark-pilot-v1 --output outputs/pilot-v1 --preflight
+python scripts/train_spark_lora.py --checkpoint /path/to/base-reasoner --data data/local/spark-pilot-v1 --output outputs/pilot-v1 --steps 20
+```
+
+The trainer saves base/adapted generation outputs on the same validation clips, exact normalized sequence/final-label metrics, training losses, adapter checkpoints every five updates, script/dataset/source identifiers, and library versions. Invalid JSON counts as an error. These strict label metrics are not chemical-identification accuracy. An adapter is not automatically promoted into the backend.
+
+Repeat training by creating a new versioned dataset and choosing a new output directory. The base remains unchanged. Starting a fresh adapter from the same base is the preferred comparison when labels are corrected; do not blindly continue an adapter trained on incorrect labels. The current pilot runner starts fresh; continuation would need an explicit adapter/optimizer resume implementation. Keep a fixed independent-session test set once one is labeled, and keep a replay sample of older valid data when extending task coverage.
+
+The completed Spark pilot results and remaining failure cases are recorded in [reports/spark-pilot-v1.md](reports/spark-pilot-v1.md).
