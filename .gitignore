@@ -1,0 +1,15 @@
+.local-tools/
+.venv/
+__pycache__/
+*.pyc
+.env
+data/local/
+checkpoints/
+outputs/
+cosmos-model-data/
+cosmos-original-dataset/
+.vscode/
+*.safetensors
+*.pt
+*.pth
+*.distcp

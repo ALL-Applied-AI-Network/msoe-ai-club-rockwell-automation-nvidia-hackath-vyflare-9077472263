@@ -1,0 +1,71 @@
+# Uses the native Cosmos Framework video-conversation experiment.
+# A 20-update SMOKE RUN, not a validated production schedule or LoRA recipe.
+[job]
+task = "vlm"
+experiment = "cosmos_video_conversation"
+project = "vyflare"
+group = "vial_reasoner"
+name = "nano_smoke"
+wandb_mode = "disabled"
+
+[model]
+precision = "bfloat16"
+attn_implementation = "cosmos"
+
+[model.backbone]
+model_name = "${oc.env:VLM_SAFETENSORS_PATH}"
+safetensors_path = "${oc.env:VLM_SAFETENSORS_PATH}"
+
+[model.ema]
+enabled = false
+
+[model.parallelism]
+data_parallel_shard_degree = 4
+data_parallel_replicate_degree = 1
+context_parallel_shard_degree = 1
+cfg_parallel_shard_degree = 1
+
+[model.activation_checkpointing]
+mode = "full"
+
+[optimizer]
+lr = 1.0e-5
+betas = [0.9, 0.999]
+weight_decay = 0.01
+fused = true
+
+[scheduler]
+cycle_lengths = [20]
+warm_up_steps = [2]
+f_start = [0.1]
+f_max = [1.0]
+f_min = [0.1]
+
+[trainer]
+distributed_parallelism = "fsdp"
+grad_accum_iter = 1
+num_epochs = 2
+steps_per_epoch = 10
+max_iter = 20
+logging_iter = 1
+run_validation = true
+run_validation_on_start = false
+validation_iter = 10
+max_val_iter = 10
+validation_freq_in_epoch = 1
+
+[trainer.callbacks.compile_tokenizer]
+enabled = false
+
+[trainer.callbacks.grad_clip]
+clip_norm = 1.0
+force_finite = true
+
+[checkpoint]
+load_path = "???"
+save_iter = 10
+save_freq_in_epoch = 1
+
+[dataloader_train]
+max_samples_per_batch = 1
+max_sequence_length = 81920

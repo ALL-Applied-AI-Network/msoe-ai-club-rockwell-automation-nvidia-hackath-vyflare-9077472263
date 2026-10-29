@@ -1,57 +1,125 @@
-# Rockwell Automation + NVIDIA Innovation Lab · Fall 2026
+# Cosmos3-Nano vial inspection fine-tuning
 
-This is your team's repository for the four-week physical AI hackathon run by Rockwell Automation, NVIDIA, the MSOE AI Club and UWM's Connected Systems Institute. Build everything here. Sponsors can follow your work as it progresses, and your final submission links straight to this repository.
+Minimal **video + question → text** supervised fine-tuning for liquid appearance and filling observations. This branch contains only training preparation, configuration, and launch instructions. The application/backend remains on `implement-backend` at `b9184d9`.
 
-**Full event guide** (datasets, compute, rules, judging, prizes): <https://msoe-maic.com/library/?article=Rockwell-NVIDIA-Fall-2026>
-**Your team workspace** (team, repository access, submissions): <https://dashboard.all-ai-network.org/j/L36HEH>
-**Questions:** [join the hackathon Slack](https://join.slack.com/t/rockwellnvidi-wq82211/shared_invite/zt-4bp05nsn9-UW3afFtM9wjzWtZiQoJBHg) and ask in the channel that matches your question. The event guide's "Getting help" section says who to ping for what. HELLO.
+## Model choice
 
-## Key dates
+Use [nvidia/Cosmos3-Nano](https://huggingface.co/nvidia/Cosmos3-Nano) in **reasoner mode**. The complete omni model is listed as 16B; this recipe trains its extracted Qwen3-VL-shaped reasoner, not the diffusion/generation pathway. NVIDIA's conversion utility preserves the base Nano checkpoint's trained visual tower and language weights. It does not silently substitute an unmodified Qwen checkpoint.
 
-| When | What |
-|---|---|
-| Thu Oct 8, 4:00–6:00 PM | Kickoff at Rockwell Automation HQ, 1201 S 2nd St, Milwaukee |
-| **Wed Oct 14, 11:59 PM CT** | **Team plan due:** [submit it here](https://dashboard.all-ai-network.org/s/V28NHK) |
-| **Sun Nov 1, 11:59 PM CT** | **Final submission due:** [submit it here](https://dashboard.all-ai-network.org/s/V28NHK) |
-| Thu Nov 5, 5:00–8:00 PM | Finals at MSOE Diercks Hall: live presentations and prizes |
+The supplied photos show differences in liquid color/clarity and level: 164006 and 164011 appear colorless, 164119 olive green, and 163859 green/teal. Lighting, reflections, and occlusion limit interpretation. The supplied vial-2/clip.mp4 has 823 frames at 30 fps, 640×480, lasting 27.43 seconds. Six sampled frames show green liquid accumulating in the left tube beneath a nozzle. These observations do **not** establish recipe correctness, chemical identity, calibrated volume, or defect labels.
 
-## First week
+The [linked examples collection](https://huggingface.co/collections/nvidia/cosmos3-examples) contains specialized generation/simulation/policy checkpoints. None is a vial-inspection reasoner specialization. Nano is the recommended starting point for this project's existing inspection objective. Super-Image2Video is relevant if the goal changes to synthetic footage; Sim/Transfer/Policy variants need different targets and data. Edge is a smaller alternative to evaluate if compute is constrained; its accuracy on these vials is untested.
 
-- [ ] Everyone on the team has an ALL AI Network account and has joined this team in the [workspace](https://dashboard.all-ai-network.org/j/L36HEH).
-- [ ] Everyone has connected GitHub and accepted the repository invitation (check your GitHub email, or open the workspace and press the check button).
-- [ ] Pick your dataset. We recommend one strong solution around a single dataset.
-- [ ] Download the data and make sure everyone who needs it can open it.
-- [ ] Read the compute guide and decide what you'll need.
-- [ ] Join Slack, open `#hackathon-announcements`, and find your dataset's channel.
-- [ ] Submit the [team plan](https://dashboard.all-ai-network.org/s/V28NHK) by Wednesday, October 14. It's a short resource request, not a graded paper, and any teammate can update it before the deadline.
+## Contents and limits
 
-## The three datasets
+- `scripts/prepare_data.py`: stage/probe private media, collect editable labels, emit native ShareGPT video JSON arrays. Rejects unreviewed answers, session leakage, changed files, and identical media across splits.
+- `scripts/train.py`: check revision/checkpoint/data, then launch the native trainer.
+- `configs/vial_reasoner.toml`: full reasoner SFT, BF16, four-way FSDP, initial learning rate 1e-5, **20-update smoke run**. This is not a tuned production schedule or LoRA implementation.
+- `framework-revision.txt`: exact upstream revision inspected for this setup.
 
-1. **[Final Vial Inspection](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Vial-Inspection):** find missing caps, crooked caps, damaged vials and unexpected empty positions after the robot fills a fixture.
-2. **[Fluid Mixing Station 3](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Fluid-Mixing):** use synchronized camera views to detect fill and color problems caused by recipes and fluid carryover.
-3. **[Grasping and Sorting](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Grasping-Sorting):** use a digital twin and multiple cameras to make a standalone FANUC arm grasp and sort objects more reliably.
+The native video recipe does not accept still-image records. Inventory keeps the four JPEGs as `usage: reference` for appearance review and evaluation. They are not automatically converted to repeated-frame videos or training labels. Image SFT requires a separate image-data adapter. No ground-truth answers are fabricated. No application, inference server, weights, datasets, or Framework source are committed.
 
-## Read before your team plan
+## 1. Inventory and annotate locally
 
-- **[Compute: Brev, DGX Spark and build.nvidia.com](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Compute).** Brev credits are spent whenever an instance is running, so stop instances you aren't using.
-- **[Collect and test your own data](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Data-Collection):** visits, extra data, digital twins, and booking a supervised test on the real equipment.
-- **[Tools and resources](https://msoe-maic.com/library?article=Rockwell-NVIDIA-Fall-2026-Resources):** AI coding tools, vision-language models, NVIDIA Cosmos and more. Start with a simple baseline.
+Requires Python 3.11+ for these helpers. Install the optional media package in a **separate preparation environment**, not over the Framework environment:
 
-## Final submission (Sun Nov 1)
-
-- A video of about five minutes
-- A one-page project summary
-- A link to this repository
-- References and credits for data, models, code and tools
-
-## Working in this repository
-
-```bash
-git clone <this repository's URL from the green "Code" button>
+```powershell
+py -3.14 -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -r requirements-media.txt
+python scripts/prepare_data.py inventory --group provided-capture --media "C:/Users/vuelu/Downloads/video-5-separated/video-5-separated/vial-2/clip.mp4" "C:/Users/vuelu/Downloads/vialimages/20261028_164006.jpg" "C:/Users/vuelu/Downloads/vialimages/20261028_164011.jpg" "C:/Users/vuelu/Downloads/vialimages/20261028_164119.jpg" "C:/Users/vuelu/Downloads/vialimages/20261028_163859.jpg"
 ```
 
-- Commit early and push often. Mentors and judges see what's here.
-- **Don't commit large datasets or model weights.** Keep them out with `.gitignore` and note in this README where to download them.
-- Before the finals, replace this README with your project: the problem, your approach, results, how to run it, and credits.
+Creates ignored `data/local/media/` and `data/local/annotations.jsonl`, refusing to overwrite existing labels. For more videos, inventory to another root, then merge its rows and media into `data/local/` (media names are content-addressed). `data/annotations.example.jsonl` documents the fields; its empty targets are deliberately unusable.
 
-**Can't push or see this repository?** Open the [team workspace](https://dashboard.all-ai-network.org/j/L36HEH) and press the GitHub check button. If it still doesn't work, ping Brett Storoe in `#hackathon-general` on Slack.
+Edit the private manifest:
+
+1. Assign each training video a `split` of `train` or `val`. Use the **same group for an entire source recording/session**, including nearby clips, crops, synchronized cameras, and photos from that session. All members of a group must remain in one split. Do not divide this single supplied clip into train/validation to manufacture independent data.
+2. Write a short factual `answer` to the `question`, then set `reviewed: true`. Include uncertainty for ambiguous liquid boundaries/colors. Questions may target color, clarity, relative level, or observable changes. For pass/fail, obtain recipe targets/tolerances and verified outcome labels first.
+3. Keep stills as references. Collect independently recorded videos covering expected/abnormal outcomes, lighting, and recipes. One clip plus four similar photos is insufficient for a useful fine-tune. Reserve separate test sessions outside the training manifest.
+
+```powershell
+python scripts/prepare_data.py build
+```
+
+Build requires reviewed videos from different groups in both splits. It writes `train.json` and `val.json` under `data/local/`. Transfer the **whole** private `data/local/` directory to the GPU machine. Relative media paths remain portable. Do not commit it.
+
+## 2. Prepare Linux/NVIDIA training
+
+Training targets Linux/CUDA, not native Windows or macOS. This recipe uses **4 GPUs**; 4×80 GB is a planning starting point, not a measured memory guarantee. NVIDIA's general SFT guide reports testing on 8×H100 80 GB. Actual memory depends on frame/pixel/context budgets. No GPU training has been run on this Windows machine.
+
+From this branch's root on Linux:
+
+```bash
+git clone https://github.com/NVIDIA/cosmos-framework.git .local-tools/cosmos-framework
+git -C .local-tools/cosmos-framework checkout "$(cat framework-revision.txt)"
+```
+
+Follow the [pinned setup guide](https://github.com/NVIDIA/cosmos-framework/blob/1a2f03ab6111b457633827736f94f67d55bd5202/docs/setup.md), including system FFmpeg/media dependencies, driver checks, and required uv version. Synchronize its locked environment (CUDA 13.0 shown; select cu128-train when appropriate):
+
+```bash
+cd .local-tools/cosmos-framework
+uv sync --all-extras --group=cu130-train
+source .venv/bin/activate
+```
+
+Accept model access terms where required and authenticate with Hugging Face tooling. Keep tokens out of Git. Allow disk space for the omni checkpoint and extracted reasoner. The pinned Framework's catalog resolves model revisions; preserve downloaded snapshot IDs in experiment records.
+
+Convert the actual Cosmos base checkpoint using the supported utility:
+
+```bash
+python -m cosmos_framework.scripts.convert_model_to_vlm_safetensors \
+  --checkpoint-path Cosmos3-Nano \
+  -o ../../checkpoints/Cosmos3-Nano-VLM
+cd ../..
+```
+
+Use this activated Framework Python for all remaining commands. Do not install the media requirements into this environment or replace its locked torch/transformers versions.
+
+## 3. Check and launch
+
+```bash
+python scripts/train.py \
+  --framework .local-tools/cosmos-framework \
+  --checkpoint checkpoints/Cosmos3-Nano-VLM --check-only
+
+python scripts/train.py \
+  --framework .local-tools/cosmos-framework \
+  --checkpoint checkpoints/Cosmos3-Nano-VLM
+```
+
+The launcher uses four ranks from the TOML, unique run names, local checkpoints, and disabled W&B upload. `--check-only` validates files/data contracts, not weight contents or GPU compatibility. The Framework validates the TOML and loads actual weights at training startup.
+
+Defaults sample **32 uniformly spaced frames** per clip at a 153,600-pixel per-frame budget. This preserves more appearance detail than upstream smoke defaults, with greater memory cost. Over the supplied 27.4-second video this is approximately 1.2 fps. For fast filling/slosh events, shorten clips with session groups preserved or raise `COSMOS_VIDEO_NUM_FRAMES`; NVIDIA recommends 4 fps for reasoner inputs. Confirm sampled frames cover each labeled event. `COSMOS_VIDEO_MAX_PIXELS` controls detail/memory. CPU TorchCodec decode is initially selected to avoid requiring a verified CUDA decoder.
+
+First verify the 20-update smoke run. For real experiments, adjust `num_epochs`, `steps_per_epoch`, `max_iter`, scheduler cycle/warmup, and validation/checkpoint cadence together for distributed dataset size. Ensure enough videos for the topology. Changing GPU count also requires changing FSDP topology and validating memory/runtime; single-GPU training is not validated.
+
+## 4. Export and evaluate
+
+Runs land in `outputs/vyflare/vial_reasoner/nano_<timestamp>/`. From the activated Framework environment, set the actual run directory:
+
+```bash
+RUN_DIR=/absolute/path/to/outputs/vyflare/vial_reasoner/nano_TIMESTAMP
+CHECKPOINT_ITER=$(cat "$RUN_DIR/checkpoints/latest_checkpoint.txt")
+python -m cosmos_framework.scripts.export_model \
+  --checkpoint-path "$RUN_DIR/checkpoints/$CHECKPOINT_ITER" \
+  --config-file "$RUN_DIR/config.yaml" -o "$RUN_DIR/model"
+```
+
+Compare base and fine-tuned models on untouched test sessions with identical prompts/sampling. Report color/clarity agreement, calibrated level error when available, and precision/recall for verified event/defect labels. Inspect false positives, missed abnormalities, uncertainty, latency, and peak GPU memory. Lower training loss alone does not establish inspection accuracy. This branch does not wire the export into the original backend; validate inference separately with NVIDIA's guide.
+
+## Verification and sources
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Local verification covers data contracts and leakage rejection. GPU loading, training, export, and quality remain unverified until run on the target hardware.
+
+- [Model card](https://huggingface.co/nvidia/Cosmos3-Nano)
+- [Pinned training guide](https://github.com/NVIDIA/cosmos-framework/blob/1a2f03ab6111b457633827736f94f67d55bd5202/docs/training.md)
+- [Native video recipe](https://github.com/NVIDIA/cosmos-framework/blob/1a2f03ab6111b457633827736f94f67d55bd5202/examples/toml/sft_config/video_sft_nano.toml)
+- [Checkpoint conversion](https://github.com/NVIDIA/cosmos-framework/blob/1a2f03ab6111b457633827736f94f67d55bd5202/cosmos_framework/scripts/convert_model_to_vlm_safetensors.py)
+- [Reasoner inference](https://github.com/NVIDIA/cosmos-framework/blob/1a2f03ab6111b457633827736f94f67d55bd5202/docs/inference.md#reasoner)
+
+Respect model/data licenses and retain attribution when distributing derivatives. No upstream implementation or checkpoint is redistributed here.
