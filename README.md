@@ -167,3 +167,7 @@ The trainer saves base/adapted generation outputs on the same validation clips, 
 Repeat training by creating a new versioned dataset and choosing a new output directory. The base remains unchanged. Starting a fresh adapter from the same base is the preferred comparison when labels are corrected; do not blindly continue an adapter trained on incorrect labels. The current pilot runner starts fresh; continuation would need an explicit adapter/optimizer resume implementation. Keep a fixed independent-session test set once one is labeled, and keep a replay sample of older valid data when extending task coverage.
 
 The completed Spark pilot results and remaining failure cases are recorded in [reports/spark-pilot-v1.md](reports/spark-pilot-v1.md).
+
+## Browser testing
+
+The private-network Spark tester supports base/adapter comparisons, video and exploratory photo uploads, result downloads, and optional reviewed feedback. See [reports/model-tester-guide.md](reports/model-tester-guide.md) for access and service instructions.
