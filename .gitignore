@@ -13,3 +13,6 @@ cosmos-original-dataset/
 *.pt
 *.pth
 *.distcp
+
+data/csi-vial-fill-dataset/
+data/video-5-separated/

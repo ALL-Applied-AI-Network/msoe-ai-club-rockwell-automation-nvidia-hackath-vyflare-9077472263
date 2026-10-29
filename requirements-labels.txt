@@ -1,0 +1,2 @@
+# Workbook import only; install in the data-preparation environment.
+openpyxl==3.1.5

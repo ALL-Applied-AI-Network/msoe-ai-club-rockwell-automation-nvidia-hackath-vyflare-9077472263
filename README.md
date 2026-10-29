@@ -123,3 +123,22 @@ Local verification covers data contracts and leakage rejection. GPU loading, tra
 - [Reasoner inference](https://github.com/NVIDIA/cosmos-framework/blob/1a2f03ab6111b457633827736f94f67d55bd5202/docs/inference.md#reasoner)
 
 Respect model/data licenses and retain attribution when distributing derivatives. No upstream implementation or checkpoint is redistributed here.
+
+## Import the team's human verification
+
+The added hackathon data is under ignored `data/csi-vial-fill-dataset/` and the 30 separated clips under ignored `data/video-5-separated/`. The original dataset contains five synchronized recording runs across three camera stations. Video 5 has 30 recipe-labeled vials. Recipe amounts describe dosing targets and do not establish observed liquid colors or measured volumes.
+
+The verification workbook supplies whole-clip human color descriptions. Import it in the preparation environment:
+
+```powershell
+python -m pip install -r requirements-labels.txt
+python scripts/import_verification.py --workbook C:/Users/vuelu/Downloads/vial-verification.xlsx --clips data/video-5-separated/video-5-separated
+```
+
+This creates `data/local/video5/annotations.jsonl` and copies the 30 clips. Human colors become ordered JSON color-sequence targets. Existing model predictions remain metadata and are excluded by the native data builder from both prompts and targets. The original workbook is read without changes. Whole-clip labels must not be assigned to every frame: transition times have not been labeled.
+
+All 30 clips share `group=real-recording-video5` and initially have no split. Label additional independent real recordings before assigning train/validation/test partitions. A within-video experiment can test whether adapters learn, but cannot establish accuracy on independent recording sessions. The existing launcher still uses its four-GPU full-SFT recipe; a single-Spark LoRA configuration requires a separate runtime validation before launch.
+
+Audit findings from the supplied workbook: 12/30 recorded model descriptions exactly match human descriptions. Of 17 human descriptions containing transitions, 3 match exactly. These are string-agreement counts, not a fresh controlled model benchmark. The pass/error formula uses at least one dispense-color match although the workbook note describes two. It is a separate rule from agreement between the model and human color descriptions. The workbook calls T200 red; the dataset documentation calls it orange. Resolve that vocabulary difference before using tank-color labels as training targets. A visible mixed color in the vial during a dispense does not identify the incoming tank fluid by itself.
+
+For Isaac Sim additions, retain simulator version, scene ID, seed, camera settings, lighting, material parameters, and label provenance. Keep related synthetic scenes in one split. Compare real-only versus real-plus-synthetic adaptation on the same untouched real test recordings. Avoid hue-altering augmentation when color is the target, and visually validate translucent-liquid rendering before using simulated color labels.
