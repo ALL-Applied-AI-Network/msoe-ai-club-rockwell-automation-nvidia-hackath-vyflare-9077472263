@@ -242,14 +242,15 @@ class Cosmos3Model:
 
 def load_models(mode):
     from measurements import MeasurementsModel
+    from model4 import Model4Model
     names = [x.strip() for x in os.getenv("ENABLED_MODELS", "measurements").split(",")]
     factories = {"resnet18": ResNet18Model, "cosmos": Cosmos3Model,
                  "cosmos_lite": Cosmos3Model, "cosmos_full": RemoteCosmosModel,
-                 "measurements": MeasurementsModel}
+                 "measurements": MeasurementsModel, "model4": Model4Model}
     if not names or any(name not in factories for name in names):
-        raise ValueError("ENABLED_MODELS supports measurements, resnet18, cosmos_lite, cosmos_full, cosmos")
+        raise ValueError("ENABLED_MODELS supports measurements, model4, resnet18, cosmos_lite, cosmos_full, cosmos")
     if mode == "mock":
-        return {name: MockModel(name) for name in names}
+        return {name: Model4Model(mock=True) if name == "model4" else MockModel(name) for name in names}
     if mode != "real":
         raise ValueError("MODEL_MODE must be mock or real")
     # Fail startup on bad weights/dependencies; never silently switch to fake results.

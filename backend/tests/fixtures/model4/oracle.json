@@ -1,0 +1,29 @@
+{
+  "post_ratios": {
+    "T100": 0.6894818397767346,
+    "T200": 0.3087182601227989,
+    "T400": 0.0017999001004666189
+  },
+  "transition_checkpoint_ratios": {
+    "T100": 0.07098519091707534,
+    "T200": 0.38157961283131697,
+    "T400": 0.5474351962516076
+  },
+  "transition_challenger_ratios": {
+    "T100": 0.6143227105554874,
+    "T200": 0.1685285232390676,
+    "T400": 0.21714876620544504
+  },
+  "transition_duration_s": 7.25,
+  "source_frame_hashes": {
+    "post_1": "66c292055403d26bc7f10a3c270943ef525626c5b66d4ab05c5984f6fcbb7187",
+    "transition_post_1": "b02ecda27db07bf244d9253fe81f708c5265d4adf11978f7c92882f17aee6578",
+    "post_2": "99e602cb0bd35a15afa9383a2028de114c48c90d70eaad22df65087dc01e449a",
+    "transition_post_2": "f3b8824d5fc78838f04bf8edacf74b111e3f8002b3b335beab1dfd5c38297282",
+    "post_3": "68932295bfc138ade6157fc6d8056e4916da73b68bb0c783534a475e33c7a7a1",
+    "transition_post_3": "341403ea62d17c33c5690a9637f611ce645672fcbe906e22a36858b1f3c1b6e2",
+    "transition_before": "3a97a3976659bbbe0f1e4d3f59df90095dfe2e7a45c2833ee50867672e92fea5",
+    "transition_during": "6471136ba8802035a9268e31f279fde7b99bcae9c0b6a70d82e5342750cdf31e"
+  },
+  "basis": "Frozen standalone refitted-model inference, not held-out performance scores. NPZ stores unchanged decoded RGB pixels."
+}

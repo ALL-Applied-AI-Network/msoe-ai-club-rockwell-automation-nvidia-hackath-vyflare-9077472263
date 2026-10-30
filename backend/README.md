@@ -1,5 +1,13 @@
 # VyFlare inference backend
 
+## Model 4 mixture estimates
+
+The frozen Model 4 checkpoint is available through `POST /predict/model4`.
+It returns estimated and expected ingredient proportions, signed/absolute
+differences in percentage points, and a separate optional stream-color
+challenger. First-vial contamination review is independent of either estimate.
+See [the Model 4 API guide](MODEL4_API.md) for startup, uploads and examples.
+
 For the deployed worker and step-by-step laptop startup, see
 [DGX startup instructions](dgx/README.md). The current DGX Framework release
 disables image content classification; the API reports that limitation
