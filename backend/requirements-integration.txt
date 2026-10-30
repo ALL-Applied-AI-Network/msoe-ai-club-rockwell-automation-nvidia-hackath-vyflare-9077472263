@@ -3,3 +3,4 @@ flask-cors>=6,<7
 Pillow>=12,<13
 python-dotenv>=1,<2
 waitress>=3,<4
+numpy>=2.1,<3
