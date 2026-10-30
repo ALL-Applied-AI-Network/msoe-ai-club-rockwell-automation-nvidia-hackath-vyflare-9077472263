@@ -3,8 +3,8 @@
 This preserves the original design outline. `models.py` implements Dispense and
 Recipe; `recipe_repository.py` implements in-memory recipe storage and collection
 change history. Configurable matching, vial-observation snapshots, in-memory inspection storage,
-and the inspection service are implemented. Database integration, HTTP endpoints,
-and live vial tracking remain planned.
+the inspection service, and event-driven live vial tracking are implemented.
+Database integration, HTTP endpoints, and camera/model adapters remain planned.
 
 ## Current repository behavior
 
@@ -126,6 +126,73 @@ observation = VialObservation(
 )
 result = service.inspect(observation, inspection_id="INS-1")
 # With no reference recipes, this records FAIL and learns an UNMATCHED pattern.
+```
+
+## Active vial tracker
+
+`ActiveVialTracker` handles one active vial per station. Use a separate tracker for
+another station, sharing repositories/service as appropriate. No camera, model
+inference, or machine control is started by this module.
+
+- Lifecycle: IDLE -> FILLING -> FINALIZING -> INSPECTED. Start the next vial only
+  after the previous inspection completes. There is no implicit idle-time finish.
+- `start_filling(run_id, vial_id, captured_at, inspection_id=None)` starts a cycle.
+- `submit(TrackerEvent(...))` buffers DISPENSE_STARTED, DISPENSE_STOPPED,
+  DISPENSE_COLOR, FINAL_COLOR, and FILLING_COMPLETED events. Each event identifies
+  its run/vial and a unique event_id; dispense events also identify dispense_id.
+  Producers are responsible for reliable boundary detection and consistent IDs.
+- `finish_filling(captured_at, final_color=None)` supplies whole-vial completion.
+  It cannot be inferred from a dispense pause. Completion triggers FINALIZING.
+- Capture timestamps are finite, nonnegative seconds from ONE source clock
+  (for example video-relative time). Durations use stop minus start, not tick
+  counts, arrival time, or inference latency. Source and scheduler clocks may
+  have different epochs.
+- `TrackerConfig` centrally defines update_interval_ms (default 100) and
+  finalization_grace_ms (default 1000). Configure only between vial cycles.
+  The grace duration is an initial configurable choice; tune it to inference
+  latency. No universal hardware-dependent minimum interval is imposed yet.
+- `update()` rebuilds evidence when due. Empty ticks add no evidence, and active
+  duration-so-far advances only with new capture timestamps for that dispense.
+  Snapshots expose completed dispenses, active dispense progress, quality issues,
+  latest processed capture timestamp, last scheduler update, and inspection.
+- Call update periodically yourself, or run `tracker.run(stop_event)` in a
+  caller-owned thread. The scheduler targets the configured cadence, skipping
+  missed ticks rather than replaying stale data. It does not launch inference.
+  Setting stop_event stops scheduling without declaring a vial complete.
+- Late arrivals are accepted during grace and rebuilt in capture order; exact
+  event retries are ignored, conflicting IDs are rejected. No event may precede
+  filling start or follow the completed filling period. New events after the
+  grace deadline or inspection are rejected; identical delivery retries remain
+  harmless. Within the active cycle, semantic boundary duplicates with distinct
+  IDs are treated as ambiguous rather than counted as extra real dispenses.
+- Finalization waits the full grace period before inspecting once. Missing
+  boundaries/colors, invalid durations, orphan events, and overlapping dispenses
+  prevent a complete observation. An unresolved inspection is saved; no recipe
+  is learned from partial evidence. Missing stop times are never guessed.
+- Late results arriving after grace cannot revise history. Corrected/reinspection
+  records remain future work, as described in the inspection section.
+- Storage errors leave the tracker FINALIZING; a subsequent update retries using
+  the inspection service's idempotency. Scheduler exceptions propagate so the
+  caller can log/retry. Tracker state and event buffering are in memory and do
+  not survive restart. The tracker retains this cycle's events until the next
+  cycle starts; continuous machine acquisition must provide bounded vial cycles.
+
+```python
+from threading import Event, Thread
+from recipes import ActiveVialTracker, TrackerConfig, TrackerEvent
+
+tracker = ActiveVialTracker(service, TrackerConfig(update_interval_ms=100))
+stop = Event()
+thread = Thread(target=tracker.run, args=(stop,), daemon=True)
+thread.start()
+tracker.start_filling("RUN-1", "VIAL-1", captured_at=0.0)
+tracker.submit(TrackerEvent("e1", "RUN-1", "VIAL-1", "DISPENSE_STARTED",
+                            0.0, dispense_id="D1", color="blue"))
+tracker.submit(TrackerEvent("e2", "RUN-1", "VIAL-1", "DISPENSE_STOPPED",
+                            2.0, dispense_id="D1"))
+tracker.finish_filling(2.0, final_color="blue")
+# After the grace period, tracker.snapshot().inspection contains the result.
+# On application shutdown: stop.set(); thread.join()
 ```
 
 ## Original outline
