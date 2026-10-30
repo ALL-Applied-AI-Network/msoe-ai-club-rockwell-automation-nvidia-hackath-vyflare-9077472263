@@ -2,8 +2,8 @@
 
 This preserves the original design outline. `models.py` implements Dispense and
 Recipe; `recipe_repository.py` implements in-memory recipe storage and collection
-change history. Matching, inspections, database persistence, and workflow code
-remain planned.
+change history. Configurable matching and vial-observation snapshots are implemented. Inspection
+persistence, database integration, and workflow code remain planned.
 
 ## Current repository behavior
 
@@ -19,6 +19,66 @@ remain planned.
 - Individual operations are thread-safe. Multi-step matching/creation and
   inspection transactions still require future workflow coordination.
 - Authentication and approval permissions belong to the calling backend workflow.
+
+## Implemented matching rules
+
+`matching_config.py` is the single location for default weights, tolerances,
+and thresholds. Pass one `MatchingConfig` to `RecipeMatcher` to override them.
+Configuration is immutable; replace it between inspections to avoid mixing rules
+within one comparison. Both collections use the same rules and >= 0.90 threshold;
+`unmatched_threshold` optionally overrides only the reuse threshold.
+
+| Feature | Weight | Mandatory rule |
+| --- | --- | --- |
+| Dispense duration | 0.35 | Every paired duration must be within tolerance |
+| Dispense count | 0.30 | Exact equality |
+| Final color | 0.25 | Within final-color tolerance |
+| Dispense color sequence | 0.05 | Supporting evidence |
+| Source/tank sequence | 0.05 | Supporting evidence, when available |
+
+- Duration pairing sorts both sequences by duration independently of observed
+  color/source order. This compares the duration pattern, not material identity.
+  Gate tolerance = max(0.30 seconds, 10% of reference duration) by default.
+  These timing defaults need calibration against actual footage.
+- Each paired duration score = min(expected, observed) / max(expected, observed).
+  Average across the larger dispense count; missing/extra dispenses score zero.
+- Count score = smaller count / larger count, but any inequality blocks a match.
+- Colors: trimmed, case-insensitive labels match exactly. Two `#RRGGBB` values
+  use similarity = 1 - Euclidean RGB distance / (255 * sqrt(3)). Default final
+  color tolerance is zero (exact); increase it centrally for hex-color distance.
+  Labels do not support approximate shades, and label/hex mismatches score zero.
+  RGB distance is an initial metric, not a calibrated perceptual color model.
+- Order scores average per-position similarities across the larger count.
+  Source labels compare exactly, ignoring case/outer whitespace. If either
+  sequence lacks any source labels, omit that feature and renormalize the
+  available weights. Required checks remain mandatory regardless of weights.
+- The score is the weighted average of available feature scores. MATCH requires
+  all mandatory checks AND score >= the applicable threshold. A perfect match
+  on the three mandatory features alone reaches 0.90 when both optional order
+  features are available but disagree.
+- Only completed, nonempty observations with final color are comparable.
+  Missing required evidence returns INSUFFICIENT_DATA, not a new recipe.
+- No candidates returns NO_MATCH for a sufficient observation. References missing
+  final color are skipped; if none of the complete candidates match and any
+  reference was skipped, return INSUFFICIENT_DATA to avoid learning prematurely.
+- Rank qualifying matches before failed candidates, then by score. Equal scores
+  use the lowest recipe ID for deterministic selection. No-match results retain
+  the closest comparable candidate and differences, including tolerated changes.
+- MatchResult retains feature scores, configuration, threshold, and method version.
+  `meets_threshold` means the complete match decision, including mandatory gates.
+- A MATCH in UNMATCHED means reuse that pattern; it is not an intended-recipe pass.
+  The future workflow still performs intended search first and unmatched second.
+
+Example (from the backend directory):
+
+```python
+from recipes import MatchingConfig, RecipeMatcher
+
+matcher = RecipeMatcher(MatchingConfig(duration_absolute_tolerance_seconds=0.4))
+result = matcher.find_best_match(
+    observation, repository.list_recipes("INTENDED"), "INTENDED"
+)
+```
 
 ## Original outline
 

@@ -73,3 +73,32 @@ class Recipe:
     def dispense_count(self) -> int:
         """Number of dispenses, always consistent with the ordered sequence."""
         return len(self.dispenses)
+
+
+@dataclass(frozen=True)
+class VialObservation:
+    """Snapshot supplied by the tracker; missing final data is not a new recipe.
+
+    Partial snapshots may have no dispenses or final color. Individual Dispense
+    objects must contain valid measurements; a tracker must not fabricate them
+    for unavailable duration/color evidence. Mark filling_complete only after
+    all required dispense measurements have been finalized.
+    """
+
+    run_id: str
+    vial_id: str
+    dispenses: tuple[Dispense, ...]
+    final_color: str | None = None
+    filling_complete: bool = False
+
+    def __post_init__(self) -> None:
+        _validate_text("run_id", self.run_id)
+        _validate_text("vial_id", self.vial_id)
+        _validate_text("final_color", self.final_color, optional=True)
+        if not isinstance(self.filling_complete, bool):
+            raise TypeError("filling_complete must be a boolean")
+        if not isinstance(self.dispenses, (list, tuple)):
+            raise TypeError("dispenses must be an ordered list or tuple")
+        if any(not isinstance(dispense, Dispense) for dispense in self.dispenses):
+            raise TypeError("each dispense must be a Dispense object")
+        object.__setattr__(self, "dispenses", tuple(self.dispenses))
