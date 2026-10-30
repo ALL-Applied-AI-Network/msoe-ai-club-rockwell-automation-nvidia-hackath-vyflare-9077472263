@@ -12,12 +12,14 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from werkzeug.exceptions import HTTPException
 
 from models import RemoteInferenceError, SafetyBlocked, load_models
+from recipes.api import create_recipe_blueprint
+from recipes.recipe_repository import RecipeRepository
 
 MAX_IMAGE_PIXELS = 16_000_000
 Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS
 
 
-def create_app(model_registry=None, config=None):
+def create_app(model_registry=None, config=None, *, recipe_repository=None):
     load_dotenv(Path(__file__).with_name(".env"))
     os.environ.setdefault("TORCH_HOME", str(Path(__file__).with_name(".model-cache")))
     app = Flask(__name__)
@@ -31,10 +33,15 @@ def create_app(model_registry=None, config=None):
     if config:
         app.config.update(config)
     CORS(app, origins=app.config["CORS_ORIGINS"], methods=["GET", "POST", "OPTIONS"],
-         allow_headers=["Content-Type"], supports_credentials=False)
+         allow_headers=["Content-Type", "Authorization"], supports_credentials=False)
     registry = model_registry if model_registry is not None else load_models(app.config["MODEL_MODE"])
     gate = threading.Lock()  # One inference total, including across both GPU models.
     app.extensions["inference_gate"] = gate
+    repository = recipe_repository if recipe_repository is not None else RecipeRepository()
+    if not isinstance(repository, RecipeRepository):
+        raise TypeError("recipe_repository must be a RecipeRepository")
+    app.extensions["recipe_repository"] = repository
+    app.register_blueprint(create_recipe_blueprint(repository))
 
     def error(message, code):
         return jsonify(error=message, frame_id=request.form.get("frame_id")), code
@@ -42,7 +49,8 @@ def create_app(model_registry=None, config=None):
     @app.before_request
     def check_origin():
         token = os.getenv("INFERENCE_TOKEN", "")
-        if token and request.path == "/predict":
+        protected = request.path == "/predict" or request.blueprint == "recipe_api"
+        if token and protected and request.method != "OPTIONS":
             import hmac
             if not hmac.compare_digest(request.headers.get("Authorization", ""), f"Bearer {token}"):
                 return jsonify(error="Inference credentials required"), 401

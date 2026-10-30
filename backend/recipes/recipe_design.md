@@ -4,7 +4,8 @@ This preserves the original design outline. `models.py` implements Dispense and
 Recipe; `recipe_repository.py` implements in-memory recipe storage and collection
 change history. Configurable matching, vial-observation snapshots, in-memory inspection storage,
 the inspection service, and event-driven live vial tracking are implemented.
-Database integration, HTTP endpoints, and camera/model adapters remain planned.
+Read-only recipe HTTP endpoints are also implemented. Database integration,
+management/tracker endpoints, and camera/model adapters remain planned.
 
 ## Current repository behavior
 
@@ -194,6 +195,34 @@ tracker.finish_filling(2.0, final_color="blue")
 # After the grace period, tracker.snapshot().inspection contains the result.
 # On application shutdown: stop.set(); thread.join()
 ```
+
+## Read-only recipe API
+
+The Python Flask app registers a recipe blueprint and creates one RecipeRepository
+per app instance, exposed as `app.extensions["recipe_repository"]`. For tests or
+application composition, `create_app(..., recipe_repository=repository)` accepts an
+existing repository. Future inspection/tracker services must use this same instance.
+Default storage starts empty; no recorded/demo recipes are silently imported.
+
+- `GET /api/recipes` defaults to the INTENDED collection.
+- `GET /api/recipes?collection=INTENDED` or `collection=UNMATCHED` selects one
+  collection. Invalid, duplicate, or unknown query parameters return JSON HTTP 400.
+- Response: `{"collection": "INTENDED", "recipes": [...]}`. Empty collections
+  return HTTP 200 with an empty list; recipes are ordered by numeric ID.
+- `GET /api/recipes/<id>` retrieves either collection, returning `{"recipe": ...}`.
+  Positive integer IDs use canonical decimal form (no leading zeros). Invalid
+  IDs return HTTP 400; absent recipes return HTTP 404, both with an `error` field.
+- Each recipe includes id, collection, dispense_count, ordered dispenses (color,
+  duration_seconds, source), and final_color. Missing optional fields are JSON null.
+- Recipes use the existing browser-origin policy. If INFERENCE_TOKEN is configured,
+  send `Authorization: Bearer <token>` on these requests as on /predict. Browser
+  OPTIONS preflight is allowed without credentials and Authorization is an allowed
+  CORS header. This shared token is not user-level approval authorization.
+- Recipe reads do not acquire the inference gate. No write/management, inspection,
+  or tracker endpoints are exposed yet. Storage remains in memory, single-process.
+- These endpoints are on the Python API (port 8000 by default). The Express server's
+  existing /api/recipes still returns its demo schema; it is not switched to these
+  live endpoints in this step. Frontend/proxy integration is subsequent work.
 
 ## Original outline
 

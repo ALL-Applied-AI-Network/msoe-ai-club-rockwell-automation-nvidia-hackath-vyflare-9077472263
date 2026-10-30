@@ -252,3 +252,19 @@ API tests cover model routing, CORS, validation, backpressure, and error/guardra
 - [torchvision ResNet-18](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html)
 - [Cosmos model matrix](https://docs.nvidia.com/cosmos/latest/cosmos3/model_matrix.html)
 - [Cosmos Framework inference and guardrails](https://github.com/NVIDIA/cosmos-framework/blob/main/docs/inference.md)
+
+
+## Read-only recipe endpoints
+
+The Python API now exposes `GET /api/recipes` (intended recipes by default),
+`GET /api/recipes?collection=UNMATCHED`, and `GET /api/recipes/<id>`.
+Lists return `{"collection": "INTENDED", "recipes": [...]}`; detail returns
+`{"recipe": {...}}`. Metadata includes ID, collection, derived dispense count,
+ordered dispenses, and final color. Invalid parameters return 400; unknown IDs
+return 404. If `INFERENCE_TOKEN` is set, include its Bearer authorization header.
+
+One repository is shared across requests through
+`app.extensions["recipe_repository"]`; it starts empty and resets on restart.
+Applications/tests can inject it with `create_app(..., recipe_repository=repo)`.
+These routes are separate from the Express console's existing demo recipe data.
+See [recipe design and API contract](recipes/recipe_design.md) for details.
