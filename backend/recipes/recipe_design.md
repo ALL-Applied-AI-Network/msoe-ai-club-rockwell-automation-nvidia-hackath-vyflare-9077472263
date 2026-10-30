@@ -5,7 +5,8 @@ Recipe; `recipe_repository.py` implements in-memory recipe storage and collectio
 change history. Configurable matching, vial-observation snapshots, in-memory inspection storage,
 the inspection service, and event-driven live vial tracking are implemented.
 Recipe read/management and inspection retrieval HTTP endpoints are implemented.
-Database integration, tracker endpoints, and camera/model adapters remain planned.
+Station tracker endpoints and app-managed scheduling are implemented. Database
+integration and camera/model adapters remain planned.
 
 ## Current repository behavior
 
@@ -219,7 +220,8 @@ Default storage starts empty; no recorded/demo recipes are silently imported.
   OPTIONS preflight is allowed without credentials and Authorization is an allowed
   CORS header. This shared token is not user-level approval authorization.
 - Recipe reads do not acquire the inference gate. Promotion/demotion endpoints
-  and inspection retrieval are described below. Tracker endpoints remain planned. Storage is
+  and inspection retrieval are described below. Station tracker routes are also
+  implemented below. Storage is
   in memory, single-process.
 - These endpoints are on the Python API (port 8000 by default). The Express server's
   existing /api/recipes still returns its demo schema; it is not switched to these
@@ -278,9 +280,50 @@ repository used by recipe routes. No services/repositories are recreated per req
 - Reads return the stored immutable snapshots, not re-evaluated matching or current
   recipe metadata. Existing origin checks and optional INFERENCE_TOKEN Bearer read
   authentication apply to both routes; OPTIONS preflight remains unauthenticated.
-- Recipe inference gates do not block these reads. No inspection submission or
-  tracker HTTP routes are implemented here. Lists are unpaginated and in memory;
+- Recipe inference gates do not block these reads. Inspections are created through the station tracker routes below; there is no
+  direct inspection submission endpoint. Lists are unpaginated and in memory;
   durable storage, frontend integration, and pagination remain future work.
+
+## Station tracker API and app lifecycle
+
+The Flask app creates one TrackerManager in app.extensions, using the same
+VialInspectionService and repositories as inspection retrieval. Trackers are
+station-scoped and created by start/config writes. The manager reserves each
+(run_id, vial_id) for one station and preserves that identity across retries.
+
+Routes under /api/stations/<station_id>/tracker:
+- GET root: station_id, tracker snapshot, config, scheduler status.
+- GET /config: station_id and config.
+- POST /config: partial settings update, between cycles only.
+- POST /start: run_id, vial_id, captured_at; optional inspection_id.
+- POST /events: one TrackerEvent JSON object with IDs and capture timestamp.
+- POST /finish: event_id, run_id, vial_id, captured_at; optional final_color.
+
+POST operations require a configured INFERENCE_TOKEN and its Bearer header; these
+are service-ingestion operations, not recipe approvals. The app's existing CORS
+and origin checks apply. Unknown stations return 404. Malformed fields/types
+return 400, non-JSON bodies 415, lifecycle conflicts 409, and unconfigured writes
+503. Config/start return 200; accepted event/finish requests return 202. Full field
+contracts and examples are in backend/README.md.
+
+A single lazy scheduler thread drives each tracker at its next due update or
+finalization deadline. Reads never call update. Missed ticks are skipped; no model
+requests are launched. A station failure is logged, reported as last_error, and
+retried with backoff without stopping other stations. Start/event/finish writes
+wake scheduling promptly; finalization still honors the configured grace period.
+
+Identical starts return the existing snapshot instead of clearing evidence.
+Event deduplication and run/vial validation prevent delayed retries from changing
+a subsequent vial. Settings remain immutable within a cycle. The snapshot includes
+historical inspection serialization shared with inspection API responses.
+
+The launcher shuts down the manager in finally; normal process exit also triggers
+cleanup. Embedded hosts must call manager.shutdown at host shutdown (not request
+teardown). Shutdown never declares filling complete. TESTING defaults to manual
+update_all with injected tracker_clock; an explicit TRACKER_SCHEDULER_ENABLED=True
+enables real scheduling. Do not run ActiveVialTracker.run in parallel with the
+manager. One process/no reloader is required for in-memory station ownership.
+Database durability, model adapters, and frontend integration remain follow-ups.
 
 ## Original outline
 

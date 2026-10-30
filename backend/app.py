@@ -17,12 +17,15 @@ from recipes.recipe_repository import RecipeRepository
 from recipes.inspection_api import create_inspection_blueprint
 from recipes.inspection_repository import InspectionRepository
 from recipes.vial_inspection_service import VialInspectionService
+from recipes.tracker_api import create_tracker_blueprint
+from recipes.tracker_manager import TrackerManager
 
 MAX_IMAGE_PIXELS = 16_000_000
 Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS
 
 
-def create_app(model_registry=None, config=None, *, recipe_repository=None, inspection_repository=None):
+def create_app(model_registry=None, config=None, *, recipe_repository=None, inspection_repository=None,
+               tracker_clock=time.monotonic):
     load_dotenv(Path(__file__).with_name(".env"))
     os.environ.setdefault("TORCH_HOME", str(Path(__file__).with_name(".model-cache")))
     app = Flask(__name__)
@@ -30,6 +33,7 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
         MAX_CONTENT_LENGTH=5 * 1024 * 1024,
         MODEL_MODE=os.getenv("MODEL_MODE", "real"),
         RECIPE_MANAGEMENT_ACTOR=os.getenv("RECIPE_MANAGEMENT_ACTOR", ""),
+        TRACKER_SCHEDULER_ENABLED=None,
         CORS_ORIGINS=[x.strip() for x in os.getenv(
             "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
         ).split(",") if x.strip()],
@@ -52,6 +56,13 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
     app.extensions["inspection_repository"] = inspections
     app.extensions["vial_inspection_service"] = VialInspectionService(repository, inspections)
     app.register_blueprint(create_inspection_blueprint(repository, inspections))
+    scheduler_enabled = app.config["TRACKER_SCHEDULER_ENABLED"]
+    if scheduler_enabled is None:
+        scheduler_enabled = not app.testing
+    trackers = TrackerManager(app.extensions["vial_inspection_service"],
+                              scheduler_enabled=scheduler_enabled, clock=tracker_clock)
+    app.extensions["tracker_manager"] = trackers
+    app.register_blueprint(create_tracker_blueprint(trackers))
 
     def error(message, code):
         return jsonify(error=message, frame_id=request.form.get("frame_id")), code
@@ -59,7 +70,7 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
     @app.before_request
     def check_origin():
         token = os.getenv("INFERENCE_TOKEN", "")
-        protected = request.path == "/predict" or request.blueprint in ("recipe_api", "inspection_api")
+        protected = request.path == "/predict" or request.blueprint in ("recipe_api", "inspection_api", "tracker_api")
         if token and protected and request.method != "OPTIONS":
             import hmac
             if not hmac.compare_digest(request.headers.get("Authorization", ""), f"Bearer {token}"):
@@ -156,5 +167,8 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", "8000"))
     print(f"API: http://127.0.0.1:{port} | mode={application.config['MODEL_MODE']}", flush=True)
     # One process: no reloader or multiple workers duplicating model weights.
-    serve(application, host=os.getenv("HOST", "127.0.0.1"), port=port, threads=4,
-          max_request_body_size=5 * 1024 * 1024)
+    try:
+        serve(application, host=os.getenv("HOST", "127.0.0.1"), port=port, threads=4,
+              max_request_body_size=5 * 1024 * 1024)
+    finally:
+        application.extensions["tracker_manager"].shutdown()

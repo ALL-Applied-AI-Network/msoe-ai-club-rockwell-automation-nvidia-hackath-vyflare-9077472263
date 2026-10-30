@@ -16,7 +16,7 @@ class TrackerConfig:
                 raise TypeError(f"{name} must be a number")
             if not math.isfinite(value) or value < 0:
                 raise ValueError(f"{name} must be finite and nonnegative")
-        if self.update_interval_ms == 0:
+        if self.update_interval_seconds == 0:
             raise ValueError("update_interval_ms must be positive")
 
     @property

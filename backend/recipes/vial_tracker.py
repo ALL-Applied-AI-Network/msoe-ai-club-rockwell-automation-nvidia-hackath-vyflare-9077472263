@@ -120,6 +120,7 @@ class ActiveVialTracker:
         self._completion = None
         self._inspection = None
         self._inspection_id = None
+        self._start_request = None
 
     @property
     def config(self) -> TrackerConfig:
@@ -140,11 +141,17 @@ class ActiveVialTracker:
         observation = VialObservation(run_id, vial_id, ())
         _validate_text("inspection_id", inspection_id, optional=True)
         with self._lock:
+            start_request = (run_id, vial_id, captured_at, inspection_id)
+            if self._start_request == start_request:
+                return self.snapshot()
             if self._state not in ("IDLE", "INSPECTED"):
                 raise RuntimeError("A vial is already active")
             if self._service.inspections.get_for_vial(run_id, vial_id) is not None:
                 raise ValueError("This run/vial already has an inspection")
+            if inspection_id is not None and self._service.inspections.get_inspection(inspection_id) is not None:
+                raise ValueError("Inspection ID already belongs to another inspection")
             now = self._now()
+            self._start_request = start_request
             self._state = "FILLING"
             self._observation = observation
             self._started_at = captured_at
@@ -229,6 +236,14 @@ class ActiveVialTracker:
             return TrackerSnapshot(self._state, self._observation, self._active, self._issues,
                                    self._last_capture, self._last_update, self._inspection,
                                    self._active_details)
+
+    def next_update_delay(self) -> float | None:
+        """Seconds until the next update/finalization, or None while inactive."""
+        with self._lock:
+            if self._state in ("IDLE", "INSPECTED"):
+                return None
+            due = min(self._next_update, self._deadline) if self._deadline is not None else self._next_update
+            return max(0.0, due - self._now())
 
     def run(self, stop_event: Event) -> None:
         """Blocking scheduler for a caller-owned thread; stop does not finish a vial.

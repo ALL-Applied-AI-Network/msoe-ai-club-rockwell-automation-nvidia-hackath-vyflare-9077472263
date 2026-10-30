@@ -306,10 +306,85 @@ policy. All storage remains in memory; no frontend actions are connected yet.
 
 Both routes use the existing origin and optional Bearer-token read policy. They
 return stored historical results; recipe promotions, demotions, and metadata edits
-never rewrite them. No inspection-creation or tracker HTTP routes are added yet.
+never rewrite them. Inspections are produced through the tracker routes below;
+there is no direct inspection-creation endpoint.
 
 The app owns one shared `inspection_repository` and `vial_inspection_service` in
 `app.extensions`, using the same `recipe_repository` as the recipe routes. Tests
 or application composition can inject `inspection_repository=...` into create_app.
 Storage starts empty and resets on restart. These endpoints are on Python's API;
 the Express console is not wired to them yet. Lists are currently unpaginated.
+
+
+## Station tracker API and scheduler
+
+The Python app owns `app.extensions["tracker_manager"]`, sharing the existing
+inspection service. One scheduler thread starts lazily when a vial is started and
+updates all stations independently of status requests. No camera or model is run.
+
+For each route, replace `<station>` with 1-64 letters/digits/underscores/hyphens:
+
+| Method | Route | JSON body |
+| --- | --- | --- |
+| GET | `/api/stations/<station>/tracker` | None; live snapshot and inspection |
+| GET | `/api/stations/<station>/tracker/config` | None; station settings |
+| POST | `/api/stations/<station>/tracker/config` | One or both of `update_interval_ms`, `finalization_grace_ms` |
+| POST | `/api/stations/<station>/tracker/start` | `run_id`, `vial_id`, `captured_at`; optional `inspection_id` |
+| POST | `/api/stations/<station>/tracker/events` | `event_id`, `run_id`, `vial_id`, `kind`, `captured_at`; optional `dispense_id`, `color`, `source` |
+| POST | `/api/stations/<station>/tracker/finish` | `event_id`, `run_id`, `vial_id`, `captured_at`; optional `final_color` |
+
+All POST routes require a configured `INFERENCE_TOKEN` and its Bearer header;
+no recipe-approval actor is required for tracker ingestion. Existing origin checks
+apply. Reads use the existing optional-token policy. Configure/start creates a
+station; reads and event submissions for unknown stations return 404. Config and
+start return 200; event/finish acceptance returns 202, not a final verdict. Invalid
+payloads return JSON 400 (415 for non-JSON); lifecycle conflicts return 409; missing
+write-token configuration returns 503. Settings can change only between cycles.
+
+Event kinds: `DISPENSE_STARTED`, `DISPENSE_STOPPED`, `DISPENSE_COLOR`, `FINAL_COLOR`,
+and `FILLING_COMPLETED`. Dispense events require a stable dispense_id. Supply
+source capture timestamps in seconds using one clock per vial. IDs deduplicate
+identical retries; conflicting event IDs are rejected. Identical start retries
+return the current cycle snapshot instead of resetting it. A run/vial pair can be
+assigned to only one station. Finish includes run/vial IDs so a delayed request
+cannot finalize the next vial accidentally.
+
+Example sequence of JSON bodies for one station (send each to its route above):
+
+```json
+{"run_id":"RUN-1","vial_id":"VIAL-1","captured_at":0,"inspection_id":"INS-1"}
+```
+
+```json
+{"event_id":"e1","run_id":"RUN-1","vial_id":"VIAL-1","kind":"DISPENSE_STARTED","captured_at":0,"dispense_id":"D1","color":"blue"}
+```
+
+```json
+{"event_id":"e2","run_id":"RUN-1","vial_id":"VIAL-1","kind":"DISPENSE_STOPPED","captured_at":2,"dispense_id":"D1"}
+```
+
+```json
+{"event_id":"done","run_id":"RUN-1","vial_id":"VIAL-1","captured_at":2,"final_color":"blue"}
+```
+
+After the configured finalization grace (default 1000 ms), GET status returns the
+stored inspection, also available through the inspection retrieval endpoints.
+Without any intended recipes this example learns an unmatched pattern and FAILs
+intended verification. Missing evidence produces INSUFFICIENT_DATA, not learning.
+Status responses contain station_id, tracker snapshot, config, and scheduler
+(enabled/running/last_error/closed). GET never advances the workflow.
+
+Scheduler failures are logged, visible in station status, and retried with backoff;
+one failing station does not terminate scheduling for others. The launcher stops
+the scheduler in a finally block; normal process exit also stops it. Embedded
+hosts should call `app.extensions["tracker_manager"].shutdown()` on shutdown, not
+on per-request teardown. Stopping scheduling never implies filling completion.
+Use one Python process with no reloader; memory and station ownership are not
+shared between processes and are lost on restart. Express/frontend and inference
+integration remain separate.
+
+For deterministic tests, TESTING disables the scheduler by default. Inject a
+monotonic `tracker_clock` into create_app and call manager.update_all explicitly.
+Set `TRACKER_SCHEDULER_ENABLED=True` in app configuration to exercise the actual
+scheduler in tests. Production enables it by default. Do not also call tracker.run
+on app-managed trackers; the manager already owns their scheduling.
