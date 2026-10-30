@@ -1,11 +1,12 @@
 """In-memory recipe storage. Contents and change history are lost on restart."""
 
+from contextlib import contextmanager
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from threading import RLock
 from uuid import uuid4
 
-from .models import Recipe, RecipeCollection
+from .models import Dispense, Recipe, RecipeCollection
 
 
 @dataclass(frozen=True)
@@ -28,15 +29,39 @@ class RecipeRepository:
     belongs to exactly one collection. IDs are supplied by the caller and must
     be unique within this repository. Returned recipes and history are immutable.
 
-    Methods are thread-safe individually. A future inspection workflow must
-    coordinate multi-step matching/creation with collection moves separately;
-    this class does not implement workflow transactions or authentication.
+    Methods are thread-safe. Use transaction() to serialize matching/creation
+    with collection moves and roll back on failure. Acquire recipe transactions
+    before inspection transactions. Coordination is in-process only; database
+    transactions and authentication remain outside this implementation.
     """
 
     def __init__(self) -> None:
         self._recipes: dict[int, Recipe] = {}
         self._changes: dict[int, tuple[RecipeCollectionChange, ...]] = {}
         self._lock = RLock()
+
+    @contextmanager
+    def transaction(self):
+        """Hold the shared lock across workflow operations; restore on failure."""
+        with self._lock:
+            recipes, changes = self._recipes.copy(), self._changes.copy()
+            try:
+                yield self
+            except BaseException:
+                self._recipes, self._changes = recipes, changes
+                raise
+
+    def create_unmatched_recipe(self, dispenses: tuple[Dispense, ...], final_color: str) -> Recipe:
+        """Allocate an ID unique across both collections and store a pattern.
+
+        The inspection service must establish NO_MATCH against both collections
+        before calling. IDs are local to this in-memory repository instance.
+        """
+        if final_color is None:
+            raise ValueError("A learned recipe requires final_color")
+        with self._lock:
+            identifier = max(self._recipes, default=0) + 1
+            return self.add_recipe(Recipe(identifier, "UNMATCHED", dispenses, final_color))
 
     def add_recipe(self, recipe: Recipe) -> Recipe:
         """Store a recipe; raise ValueError if its ID already exists."""

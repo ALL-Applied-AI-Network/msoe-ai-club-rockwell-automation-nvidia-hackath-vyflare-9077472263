@@ -2,22 +2,27 @@
 
 This preserves the original design outline. `models.py` implements Dispense and
 Recipe; `recipe_repository.py` implements in-memory recipe storage and collection
-change history. Configurable matching and vial-observation snapshots are implemented. Inspection
-persistence, database integration, and workflow code remain planned.
+change history. Configurable matching, vial-observation snapshots, in-memory inspection storage,
+and the inspection service are implemented. Database integration, HTTP endpoints,
+and live vial tracking remain planned.
 
 ## Current repository behavior
 
 - Recipes and collection-change history are held in memory and lost on restart.
 - Intended and unmatched collections are logical partitions of one ID map.
-- Recipe IDs are caller-supplied positive integers, unique within a repository.
+- Reference recipe IDs are caller-supplied positive integers. The inspection
+  service allocates learned IDs through the repository above the highest existing
+  ID across both collections; uniqueness is local to that repository instance.
 - `get_recipe` returns `None` for an absent ID. Update, move, and history lookup
   raise `KeyError` for an absent ID; invalid values raise `ValueError` or `TypeError`.
 - Collection moves preserve ID/measurements and append history atomically.
   Repeating a move to the current collection creates no additional history entry.
 - Metadata updates require a replacement Recipe in the same collection.
 - Recipe and history objects are immutable; list methods return tuple snapshots.
-- Individual operations are thread-safe. Multi-step matching/creation and
-  inspection transactions still require future workflow coordination.
+- Individual operations are thread-safe. The inspection service acquires a recipe
+  transaction before an inspection transaction, serializing matching/creation with
+  collection changes. Both repositories restore their prior state on failure.
+  This is in-process coordination; durable/multi-process transactions need a database.
 - Authentication and approval permissions belong to the calling backend workflow.
 
 ## Implemented matching rules
@@ -78,6 +83,49 @@ matcher = RecipeMatcher(MatchingConfig(duration_absolute_tolerance_seconds=0.4))
 result = matcher.find_best_match(
     observation, repository.list_recipes("INTENDED"), "INTENDED"
 )
+```
+
+## Implemented inspection workflow
+
+`VialInspectionService.inspect(observation, inspection_id=None)` searches intended
+recipes first. An intended match produces PASS and skips unmatched search. On
+NO_MATCH it searches unmatched patterns; a reuse or newly learned pattern produces
+FAIL. INSUFFICIENT_DATA at either stage saves an unresolved inspection without
+creating a recipe. Comparisons retain the closest candidate and field differences.
+
+Each result stores the immutable observation, recipe ID, collection at inspection
+time, recipe snapshot, both available comparisons, creation flag, and UTC timestamp.
+Promotions/demotions or recipe edits affect future inspections only.
+
+`InspectionRepository` provides save/get, run/vial lookup, and occurrence listing by
+recipe ID. Each (run_id, vial_id) has one inspection. Identical retries return the
+existing record, even if recipes or matching configuration have since changed.
+Reusing an ID for different content, changing a saved observation, or assigning a
+second ID to the same vial raises ValueError. Historical results are never silently
+overwritten. Explicit reinspection/versioning of unresolved results is future work.
+
+The repositories must be shared across service instances in the same process.
+Matching, learned ID allocation, recipe insertion, and inspection saving run under
+coordinated rollback-capable transactions. A storage failure leaves neither an
+orphan recipe nor a partial inspection. Always acquire recipe transactions before
+inspection transactions. Memory is lost on restart; no API route or camera/model
+connection is added here.
+
+```python
+from recipes import (
+    Dispense, InspectionRepository, MatchingConfig, RecipeMatcher,
+    RecipeRepository, VialInspectionService, VialObservation,
+)
+
+recipes = RecipeRepository()
+inspections = InspectionRepository()
+service = VialInspectionService(recipes, inspections, RecipeMatcher(MatchingConfig()))
+observation = VialObservation(
+    run_id="RUN-1", vial_id="VIAL-1",
+    dispenses=(Dispense("blue", 2.0),), final_color="blue", filling_complete=True,
+)
+result = service.inspect(observation, inspection_id="INS-1")
+# With no reference recipes, this records FAIL and learns an UNMATCHED pattern.
 ```
 
 ## Original outline
