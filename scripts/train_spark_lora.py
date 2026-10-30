@@ -1,7 +1,8 @@
 """Single-Spark BF16 LoRA pilot on strictly extracted Cosmos3-Nano reasoner.
 
 Uses HF/PEFT directly in the existing Spark environment; no full-model updates.
-The validation partition is within one recording session, not an independent test.
+Supports explicit image render-control targets and reviewed video color targets.
+Development metrics do not establish independent real-world performance.
 """
 import argparse
 import copy
@@ -46,10 +47,13 @@ def main():
     parser.add_argument('--accumulation',type=int,default=4)
     parser.add_argument('--eval-limit',type=int,default=0)
     parser.add_argument('--preflight',action='store_true')
+    parser.add_argument('--initial-adapter',type=Path,help='Continue adapter weights with a fresh optimizer; never overwrite source')
+    parser.add_argument('--balance-modalities',action='store_true',help='Alternate image/video microbatches for real replay')
+    parser.add_argument('--image-max-pixels',type=int,default=262144)
     args=parser.parse_args()
     if args.output.exists():
         parser.error('Output exists; choose a new experiment version')
-    if args.steps<1 or args.frames<2 or args.accumulation<1:
+    if args.steps<1 or args.frames<2 or args.accumulation<1 or args.image_max_pixels<1024 or args.eval_limit<0:
         parser.error('Invalid training budget')
     import cv2
     import numpy as np
@@ -61,16 +65,17 @@ def main():
     description=json.loads((args.data/'experiment.json').read_text())
     train=json.loads((args.data/'train.json').read_text())
     val=json.loads((args.data/'val.json').read_text())
-    if {r['recipe_id'] for r in train}&{r['recipe_id'] for r in val}:
-        raise ValueError('Recipe-group overlap')
-    for row in train+val:
-        path=(args.data/row['media']).resolve()
-        if not path.is_relative_to(args.data.resolve()):
-            raise ValueError('Media path escapes dataset')
-        with path.open('rb') as stream:
-            actual=hashlib.file_digest(stream,'sha256').hexdigest()
-        if actual!=row['sha256']:
-            raise ValueError(f"Changed media: {row['id']}")
+    from multimodal_contract import validate_partition,eval_subset,mixed_metrics,TrainingOrder
+    mixed=description.get('split_contract')=='mixed-modality-v1'
+    validate_partition(train,val,args.data,mixed=mixed)
+    initial_hash=None
+    if args.initial_adapter:
+        initial_hash=hashlib.sha256((args.initial_adapter/'adapter_model.safetensors').read_bytes()).hexdigest()
+        parent_run=args.initial_adapter.parent/'run.json'
+        if not parent_run.exists():raise ValueError('Initial adapter needs parent run provenance')
+        previous=json.loads(parent_run.read_text())
+        if previous['base']['source_snapshot']!=provenance['source_snapshot']:
+            raise ValueError('Initial adapter base snapshot mismatch')
     processor=AutoProcessor.from_pretrained(args.checkpoint,local_files_only=True,fix_mistral_regex=True)
     random.seed(42);np.random.seed(42);torch.manual_seed(42)
 
@@ -94,12 +99,22 @@ def main():
             cap.release()
 
     def encode(row,with_answer):
-        frames,metadata=video(row['media'])
-        messages=[dict(role='user',content=[dict(type='video'),dict(type='text',text=row['question'])])]
+        modality=row.get('modality','video')
+        if modality=='image':
+            from PIL import Image,ImageOps
+            with Image.open(args.data/row['media']) as source:
+                if source.width*source.height>20000000:raise ValueError('Image exceeds 20 megapixels')
+                picture=ImageOps.exif_transpose(source).convert('RGB')
+            make_kwargs=lambda:dict(images=[picture],return_tensors='pt',images_kwargs=dict(
+                size=dict(shortest_edge=args.image_max_pixels,longest_edge=args.image_max_pixels)))
+        elif modality=='video':
+            frames,metadata=video(row['media'])
+            make_kwargs=lambda:dict(videos=[frames],return_tensors='pt',videos_kwargs=dict(
+                do_sample_frames=False,video_metadata=[copy.deepcopy(metadata)],
+                size=dict(shortest_edge=args.max_pixels,longest_edge=args.max_pixels)))
+        else:raise ValueError('Unsupported modality')
+        messages=[dict(role='user',content=[dict(type=modality),dict(type='text',text=row['question'])])]
         prompt=processor.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
-        make_kwargs=lambda:dict(videos=[frames],return_tensors='pt',videos_kwargs=dict(
-            do_sample_frames=False,video_metadata=[copy.deepcopy(metadata)],
-            size=dict(shortest_edge=args.max_pixels,longest_edge=args.max_pixels)))
         prefix=processor(text=[prompt],**make_kwargs())
         if not with_answer:
             return {k:v for k,v in prefix.items() if torch.is_tensor(v)}
@@ -118,9 +133,10 @@ def main():
         full['labels']=labels
         return full
 
-    first=encode(train[0],True)
-    print(json.dumps(dict(event='data_preflight_passed',tokens=int(first['input_ids'].shape[1]),
-        supervised_tokens=int((first['labels']!=-100).sum()),video_grid=first['video_grid_thw'].tolist(),frames=args.frames,train=len(train),val=len(val))),flush=True)
+    for modality in sorted({r.get('modality','video') for r in train}):
+        first=encode(next(r for r in train if r.get('modality','video')==modality),True)
+        print(json.dumps(dict(event='data_preflight_passed',modality=modality,tokens=int(first['input_ids'].shape[1]),
+            supervised_tokens=int((first['labels']!=-100).sum()),grid=first['image_grid_thw' if modality=='image' else 'video_grid_thw'].tolist(),frames=args.frames,train=len(train),val=len(val))),flush=True)
     if args.preflight:
         return
     if not torch.cuda.is_available():
@@ -131,7 +147,9 @@ def main():
     record=dict(arguments={k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()},
         dataset=description,base=provenance,versions=dict(torch=torch.__version__,transformers=transformers.__version__,
         peft=peft.__version__,python=platform.python_version()),gpu=torch.cuda.get_device_name(0),seed=42,
-        script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),status='loading')
+        script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        contract_sha256=hashlib.sha256((Path(__file__).parent/'multimodal_contract.py').read_bytes()).hexdigest(),
+        initial_adapter_sha256=initial_hash,optimizer_resume=False,status='loading')
     def status(state,**values):
         record.update(status=state,elapsed_seconds=time.time()-started,**values)
         (args.output/'run.json').write_text(json.dumps(record,indent=2))
@@ -139,7 +157,8 @@ def main():
     model=Qwen3VLForConditionalGeneration.from_pretrained(args.checkpoint,dtype=torch.bfloat16,
         local_files_only=True,attn_implementation='sdpa').to('cuda')
     model.config.use_cache=False
-    selected_val=val[:args.eval_limit] if args.eval_limit else val
+    selected_val=eval_subset(val,args.eval_limit)
+    record['evaluation_ids']=[r['id'] for r in selected_val]
 
     def evaluate(label):
         model.eval();predictions=[]
@@ -148,36 +167,37 @@ def main():
                 inputs={k:v.to('cuda') for k,v in encode(row,False).items()}
                 generated=model.generate(**inputs,max_new_tokens=96,do_sample=False,use_cache=True)
                 answer=processor.batch_decode(generated[:,inputs['input_ids'].shape[1]:],skip_special_tokens=True)[0]
-                item=dict(id=row['id'],target=row['answer'],prediction=answer)
+                item=dict(id=row['id'],target_kind=row.get('target_kind','observed_color'),target=row['answer'],prediction=answer)
                 predictions.append(item)
                 print(json.dumps(dict(event='prediction',stage=label,**item)),flush=True)
                 del inputs,generated
-        result=dict(metrics=score_predictions(predictions),predictions=predictions)
+        result=dict(metrics=mixed_metrics(predictions) if mixed else score_predictions(predictions),predictions=predictions)
         (args.output/f'{label}.json').write_text(json.dumps(result,indent=2))
         print(json.dumps(dict(event='evaluation',stage=label,metrics=result['metrics'])),flush=True)
         return result['metrics']
 
     status('baseline_evaluation')
     baseline=evaluate('base')
-    from peft import LoraConfig,get_peft_model
+    from peft import LoraConfig,get_peft_model,PeftModel
     config=LoraConfig(r=8,lora_alpha=16,lora_dropout=0.05,bias='none',task_type='CAUSAL_LM',
         target_modules=r'.*language_model\.layers\.\d+\.self_attn\.(q_proj|k_proj|v_proj|o_proj)$')
-    model=get_peft_model(model,config)
+    model=PeftModel.from_pretrained(model,args.initial_adapter,is_trainable=True) if args.initial_adapter else get_peft_model(model,config)
+    initial=evaluate('initial_adapter') if args.initial_adapter else None
     trainable=[(n,p) for n,p in model.named_parameters() if p.requires_grad]
     if not trainable or any('lora_' not in n or 'language_model' not in n for n,p in trainable):
         raise RuntimeError('Only language attention adapters may train')
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant':False})
     model.enable_input_require_grads()
     optimizer=torch.optim.AdamW([p for n,p in trainable],lr=5e-5,weight_decay=0.01)
-    status('training',trainable_parameters=sum(p.numel() for n,p in trainable),baseline=baseline)
-    order=list(range(len(train)));random.shuffle(order);cursor=0
+    status('training',trainable_parameters=sum(p.numel() for n,p in trainable),baseline=baseline,initial_adapter_metrics=initial)
+    order=TrainingOrder(train,random,args.balance_modalities)
+    presentations={}
     model.train();optimizer.zero_grad(set_to_none=True)
     for step in range(1,args.steps+1):
         begin=time.time();loss_sum=0.0
         for _ in range(args.accumulation):
-            if cursor==len(order):
-                random.shuffle(order);cursor=0
-            row=train[order[cursor]];cursor+=1
+            row=train[order.next()]
+            key=row.get('modality','video');presentations[key]=presentations.get(key,0)+1
             inputs={k:v.to('cuda') for k,v in encode(row,True).items()}
             output=model(**inputs,use_cache=False)
             if not torch.isfinite(output.loss):
@@ -192,7 +212,7 @@ def main():
         print(json.dumps(dict(event='optimizer_step',**event)),flush=True)
         with (args.output/'training.jsonl').open('a') as stream:
             stream.write(json.dumps(event)+'\n')
-        status('training',**event)
+        status('training',presentations=presentations,**event)
         if step%5==0 or step==args.steps:
             destination=args.output/f'adapter-step-{step:03d}'
             model.save_pretrained(destination,safe_serialization=True)
@@ -200,8 +220,8 @@ def main():
     status('adapted_evaluation')
     adapted=evaluate('adapted')
     status('complete',adapted=adapted,adapter=str(destination),
-        comparison_scope='Same-session recipe-group holdout; NOT field-test accuracy.',
-        accuracy_improved_on_pilot=adapted['sequence_exact']>baseline['sequence_exact'])
+        comparison_scope=description.get('evaluation_scope','Same-session development; NOT field-test accuracy.'),
+        initial_adapter_unchanged=(hashlib.sha256((args.initial_adapter/'adapter_model.safetensors').read_bytes()).hexdigest()==initial_hash) if args.initial_adapter else None)
     print(json.dumps(dict(event='complete',baseline=baseline,adapted=adapted)),flush=True)
 
 

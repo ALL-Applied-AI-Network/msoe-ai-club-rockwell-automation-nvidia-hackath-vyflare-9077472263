@@ -1,0 +1,2 @@
+# Synthetic archive decoding/preparation only, not a replacement GPU environment.
+Pillow==12.3.0

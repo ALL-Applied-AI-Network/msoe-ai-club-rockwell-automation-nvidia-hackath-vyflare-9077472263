@@ -1,6 +1,6 @@
 # Cosmos3-Nano vial inspection fine-tuning
 
-Minimal **video + question → text** supervised fine-tuning for liquid appearance and filling observations. This branch contains only training preparation, configuration, and launch instructions. The application/backend remains on `implement-backend` at `b9184d9`.
+Minimal **image/video + question → text** supervised fine-tuning for liquid appearance and synthetic render-control classification. This branch contains training preparation, configuration, launch instructions, and the separate pilot tester. The original application/backend remains on `implement-backend` at `b9184d9`.
 
 ## Model choice
 
@@ -164,10 +164,57 @@ python scripts/train_spark_lora.py --checkpoint /path/to/base-reasoner --data da
 
 The trainer saves base/adapted generation outputs on the same validation clips, exact normalized sequence/final-label metrics, training losses, adapter checkpoints every five updates, script/dataset/source identifiers, and library versions. Invalid JSON counts as an error. These strict label metrics are not chemical-identification accuracy. An adapter is not automatically promoted into the backend.
 
-Repeat training by creating a new versioned dataset and choosing a new output directory. The base remains unchanged. Starting a fresh adapter from the same base is the preferred comparison when labels are corrected; do not blindly continue an adapter trained on incorrect labels. The current pilot runner starts fresh; continuation would need an explicit adapter/optimizer resume implementation. Keep a fixed independent-session test set once one is labeled, and keep a replay sample of older valid data when extending task coverage.
+Repeat training by creating a new versioned dataset and choosing a new output directory. The base remains unchanged. Starting a fresh adapter from the same base is the preferred comparison when labels are corrected; do not blindly continue an adapter trained on incorrect labels. The runner now supports `--initial-adapter` for continuing adapter weights with a **fresh optimizer**, not resuming optimizer state or the original schedule. It checks the parent's base snapshot and records the source adapter hash. Keep a fixed independent-session test set once one is labeled, and keep a replay sample of older valid data when extending task coverage.
 
 The completed Spark pilot results and remaining failure cases are recorded in [reports/spark-pilot-v1.md](reports/spark-pilot-v1.md).
 
 ## Browser testing
 
 The private-network Spark tester supports base/adapter comparisons, video and exploratory photo uploads, result downloads, and optional reviewed feedback. See [reports/model-tester-guide.md](reports/model-tester-guide.md) for access and service instructions.
+
+## Synthetic image and real-video adaptation
+
+The earlier image exclusions describe the original native video-only recipe.
+The custom Spark runner now accepts image render-control targets and verified
+video appearance targets in the same experiment. It uses the real Cosmos
+vision encoder for images rather than turning stills into repeated-frame videos.
+
+`scripts/prepare_synthetic.py` verifies all archive images, retains label
+provenance, and prepares an explicit frame-block development partition. The last
+20% of authored frame settings are held out, two frame settings form a gap, and
+identical-image hashes are deduplicated and purged across partitions. The fixed
+scene is still shared; this does not constitute independent-scene validation.
+It includes the original 21 reviewed real training clips and nine regression
+clips. Provisional field labels never enter this dataset.
+
+Install `requirements-synthetic.txt` only in the local preparation environment
+if Pillow is missing. The Spark training environment already supplies Pillow;
+do not replace its existing Torch/Transformers/PEFT stack with preparation dependencies.
+
+```bash
+python scripts/prepare_synthetic.py --archive /path/to/brev-research-dataset.zip --real-pilot data/local/spark-pilot-v1 --out data/local/synthetic-mixed-v1
+python scripts/train_spark_lora.py --checkpoint /path/to/base-reasoner --data data/local/synthetic-mixed-v1 --output outputs/synthetic-mixed-v1 --initial-adapter /path/to/pilot-v1/adapter-step-020 --balance-modalities --eval-limit 21 --preflight
+python scripts/train_spark_lora.py --checkpoint /path/to/base-reasoner --data data/local/synthetic-mixed-v1 --output outputs/synthetic-mixed-v1 --initial-adapter /path/to/pilot-v1/adapter-step-020 --balance-modalities --eval-limit 21 --steps 20 --accumulation 4
+```
+
+Synthetic images use a separate `render_color_class` JSON-string target from a
+12-class palette. This predicts a renderer's control class, not chemical identity
+or measured composition. Real videos retain `observed_color_sequence` lists.
+`--balance-modalities` alternates image/video microbatches; at 20 updates and
+accumulation four, each modality has 40 presentations. Dataset size does not
+mean every record is presented during this pilot.
+
+Image pixel budget defaults to 262,144 separately from the total-video pixel
+budget. Preflight checks both modalities, assistant-only loss boundaries, media
+hashes, split groups, and duplicate leakage. With `--initial-adapter`, evaluation
+records base, initial adapter, and continued adapter results on identical inputs.
+For this 21-case diagnostic, all nine real regression clips and 12 synthetic
+holdout images (one per color at the first held-out frame) are evaluated; the
+other prepared validation images are not scored. Omit `--eval-limit` to evaluate
+the full prepared development set. Synthetic and real metrics are reported
+separately. The existing browser tester is not automatically changed and its
+color-list parser does not implement the new render-control task.
+
+The completed continuation pilot and its measured regression are documented in
+[reports/synthetic-training-v1.md](reports/synthetic-training-v1.md). It remains
+experimental; the browser tester continues using Version 1.
