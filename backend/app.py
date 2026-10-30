@@ -26,6 +26,7 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None):
     app.config.update(
         MAX_CONTENT_LENGTH=5 * 1024 * 1024,
         MODEL_MODE=os.getenv("MODEL_MODE", "real"),
+        RECIPE_MANAGEMENT_ACTOR=os.getenv("RECIPE_MANAGEMENT_ACTOR", ""),
         CORS_ORIGINS=[x.strip() for x in os.getenv(
             "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
         ).split(",") if x.strip()],

@@ -268,3 +268,25 @@ One repository is shared across requests through
 Applications/tests can inject it with `create_app(..., recipe_repository=repo)`.
 These routes are separate from the Express console's existing demo recipe data.
 See [recipe design and API contract](recipes/recipe_design.md) for details.
+
+
+## Recipe promotion, demotion, and history
+
+- `POST /api/recipes/<id>/promote` approves an unmatched recipe as intended.
+- `POST /api/recipes/<id>/demote` moves an intended recipe to unmatched.
+- `GET /api/recipes/<id>/history` returns collection-change history.
+
+POST requests require JSON containing only `{"reason": "Explanation"}` and return
+`{"recipe": {...}}`. Configure both `INFERENCE_TOKEN` and
+`RECIPE_MANAGEMENT_ACTOR` on the server, then send `Authorization: Bearer <token>`.
+Without that configuration, writes are disabled (503); invalid credentials return
+401. The configured actor identifies the calling service, not an individual user.
+Every holder of this shared token has management access. Per-user approval roles
+remain a future authentication integration. Never send `changed_by` from the UI.
+
+History returns `{"recipe_id": 1, "history": [...]}` with actor, reason, UTC time,
+old/new collections, and unique change ID. Moves preserve recipe IDs and metadata;
+repeating a move to the current collection does not duplicate history. Historical
+vial inspections are unchanged. Missing recipes return 404; invalid IDs/bodies
+return 400; non-JSON requests return 415. History follows the existing read-token
+policy. All storage remains in memory; no frontend actions are connected yet.

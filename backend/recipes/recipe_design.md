@@ -4,8 +4,8 @@ This preserves the original design outline. `models.py` implements Dispense and
 Recipe; `recipe_repository.py` implements in-memory recipe storage and collection
 change history. Configurable matching, vial-observation snapshots, in-memory inspection storage,
 the inspection service, and event-driven live vial tracking are implemented.
-Read-only recipe HTTP endpoints are also implemented. Database integration,
-management/tracker endpoints, and camera/model adapters remain planned.
+Recipe read/management HTTP endpoints are also implemented. Database integration,
+inspection/tracker endpoints, and camera/model adapters remain planned.
 
 ## Current repository behavior
 
@@ -218,11 +218,39 @@ Default storage starts empty; no recorded/demo recipes are silently imported.
   send `Authorization: Bearer <token>` on these requests as on /predict. Browser
   OPTIONS preflight is allowed without credentials and Authorization is an allowed
   CORS header. This shared token is not user-level approval authorization.
-- Recipe reads do not acquire the inference gate. No write/management, inspection,
-  or tracker endpoints are exposed yet. Storage remains in memory, single-process.
+- Recipe reads do not acquire the inference gate. Promotion/demotion endpoints
+  are described below. Inspection/tracker endpoints remain planned. Storage is
+  in memory, single-process.
 - These endpoints are on the Python API (port 8000 by default). The Express server's
   existing /api/recipes still returns its demo schema; it is not switched to these
   live endpoints in this step. Frontend/proxy integration is subsequent work.
+
+## Recipe-management API
+
+- `POST /api/recipes/<id>/promote` and `/demote` call the existing atomic repository
+  collection moves. Body must be a JSON object containing only a nonblank `reason`.
+  Responds HTTP 200 with `{"recipe": ...}`; reason whitespace is trimmed.
+- `GET /api/recipes/<id>/history` returns `{"recipe_id": ..., "history": [...]}`.
+  Each change includes change_id, recipe_id, previous_collection, new_collection,
+  changed_by, changed_at (ISO 8601 UTC), and reason, in recorded operation order.
+  An existing recipe without changes returns an empty history list.
+- Shared-token service authentication is the current management policy:
+  INFERENCE_TOKEN and a nonblank RECIPE_MANAGEMENT_ACTOR must be configured.
+  Missing credentials return 401 when token authentication is enabled. Missing
+  management configuration returns 503 after authentication, without mutation.
+  The actor comes from server configuration, never request bodies or forwarded
+  user headers. Every token holder can perform both actions as that service actor.
+  This does not establish individual operator identity or per-user permissions.
+  Replace the centralized actor-resolution boundary when user auth is integrated.
+- Unknown recipe IDs return 404; malformed IDs or invalid bodies return 400;
+  non-JSON content returns 415. Responses use the existing JSON error handler.
+  Existing origin/CORS checks apply, including unauthenticated OPTIONS preflight.
+- Repeating a move to the current collection returns the recipe without another
+  history entry. Recipe IDs/reference measurements and prior inspections remain
+  unchanged. The new collection affects subsequent inspections only.
+- These routes do not create/delete recipes, change recipe metadata, connect the
+  frontend, or introduce durable storage. History follows the existing read-token
+  policy, while writes always require the configured token and audit actor.
 
 ## Original outline
 
