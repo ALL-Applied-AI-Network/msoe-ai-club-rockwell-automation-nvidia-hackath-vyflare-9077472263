@@ -290,3 +290,26 @@ repeating a move to the current collection does not duplicate history. Historica
 vial inspections are unchanged. Missing recipes return 404; invalid IDs/bodies
 return 400; non-JSON requests return 415. History follows the existing read-token
 policy. All storage remains in memory; no frontend actions are connected yet.
+
+
+## Inspection retrieval endpoints
+
+- `GET /api/inspections/<inspection_id>` returns `{"inspection": {...}}` with
+  observed vial metadata, verification status, historical recipe link/snapshot,
+  intended and unmatched comparisons, field differences, feature scores, matching
+  configuration, and an ISO 8601 UTC inspection timestamp. Missing links/results
+  are JSON null; similarity scores are fractions from 0 to 1.
+- `GET /api/recipes/<recipe_id>/inspections` returns
+  `{"recipe_id": 1, "count": 0, "inspections": []}` for an existing recipe without
+  occurrences, or the linked inspection records in insertion order. Retries do
+  not count as new occurrences. Unknown recipes/inspections return JSON 404.
+
+Both routes use the existing origin and optional Bearer-token read policy. They
+return stored historical results; recipe promotions, demotions, and metadata edits
+never rewrite them. No inspection-creation or tracker HTTP routes are added yet.
+
+The app owns one shared `inspection_repository` and `vial_inspection_service` in
+`app.extensions`, using the same `recipe_repository` as the recipe routes. Tests
+or application composition can inject `inspection_repository=...` into create_app.
+Storage starts empty and resets on restart. These endpoints are on Python's API;
+the Express console is not wired to them yet. Lists are currently unpaginated.

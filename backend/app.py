@@ -14,12 +14,15 @@ from werkzeug.exceptions import HTTPException
 from models import RemoteInferenceError, SafetyBlocked, load_models
 from recipes.api import create_recipe_blueprint
 from recipes.recipe_repository import RecipeRepository
+from recipes.inspection_api import create_inspection_blueprint
+from recipes.inspection_repository import InspectionRepository
+from recipes.vial_inspection_service import VialInspectionService
 
 MAX_IMAGE_PIXELS = 16_000_000
 Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS
 
 
-def create_app(model_registry=None, config=None, *, recipe_repository=None):
+def create_app(model_registry=None, config=None, *, recipe_repository=None, inspection_repository=None):
     load_dotenv(Path(__file__).with_name(".env"))
     os.environ.setdefault("TORCH_HOME", str(Path(__file__).with_name(".model-cache")))
     app = Flask(__name__)
@@ -43,6 +46,12 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None):
         raise TypeError("recipe_repository must be a RecipeRepository")
     app.extensions["recipe_repository"] = repository
     app.register_blueprint(create_recipe_blueprint(repository))
+    inspections = inspection_repository if inspection_repository is not None else InspectionRepository()
+    if not isinstance(inspections, InspectionRepository):
+        raise TypeError("inspection_repository must be an InspectionRepository")
+    app.extensions["inspection_repository"] = inspections
+    app.extensions["vial_inspection_service"] = VialInspectionService(repository, inspections)
+    app.register_blueprint(create_inspection_blueprint(repository, inspections))
 
     def error(message, code):
         return jsonify(error=message, frame_id=request.form.get("frame_id")), code
@@ -50,7 +59,7 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None):
     @app.before_request
     def check_origin():
         token = os.getenv("INFERENCE_TOKEN", "")
-        protected = request.path == "/predict" or request.blueprint == "recipe_api"
+        protected = request.path == "/predict" or request.blueprint in ("recipe_api", "inspection_api")
         if token and protected and request.method != "OPTIONS":
             import hmac
             if not hmac.compare_digest(request.headers.get("Authorization", ""), f"Bearer {token}"):

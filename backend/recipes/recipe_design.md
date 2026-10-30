@@ -4,8 +4,8 @@ This preserves the original design outline. `models.py` implements Dispense and
 Recipe; `recipe_repository.py` implements in-memory recipe storage and collection
 change history. Configurable matching, vial-observation snapshots, in-memory inspection storage,
 the inspection service, and event-driven live vial tracking are implemented.
-Recipe read/management HTTP endpoints are also implemented. Database integration,
-inspection/tracker endpoints, and camera/model adapters remain planned.
+Recipe read/management and inspection retrieval HTTP endpoints are implemented.
+Database integration, tracker endpoints, and camera/model adapters remain planned.
 
 ## Current repository behavior
 
@@ -219,7 +219,7 @@ Default storage starts empty; no recorded/demo recipes are silently imported.
   OPTIONS preflight is allowed without credentials and Authorization is an allowed
   CORS header. This shared token is not user-level approval authorization.
 - Recipe reads do not acquire the inference gate. Promotion/demotion endpoints
-  are described below. Inspection/tracker endpoints remain planned. Storage is
+  and inspection retrieval are described below. Tracker endpoints remain planned. Storage is
   in memory, single-process.
 - These endpoints are on the Python API (port 8000 by default). The Express server's
   existing /api/recipes still returns its demo schema; it is not switched to these
@@ -248,9 +248,39 @@ Default storage starts empty; no recorded/demo recipes are silently imported.
 - Repeating a move to the current collection returns the recipe without another
   history entry. Recipe IDs/reference measurements and prior inspections remain
   unchanged. The new collection affects subsequent inspections only.
-- These routes do not create/delete recipes, change recipe metadata, connect the
-  frontend, or introduce durable storage. History follows the existing read-token
+- These management routes do not create/delete recipes, change recipe metadata,
+  connect the frontend, or introduce durable storage. History follows the existing read-token
   policy, while writes always require the configured token and audit actor.
+
+## Inspection retrieval API
+
+`create_app(..., inspection_repository=...)` accepts an optional existing in-memory
+InspectionRepository. Otherwise it creates one per app. Both that repository and
+VialInspectionService are stored in app.extensions; the service shares the recipe
+repository used by recipe routes. No services/repositories are recreated per request.
+
+- GET /api/inspections/<inspection_id> returns {"inspection": ...}. Inspection IDs
+  are opaque, nonblank strings (including generated UUIDs); recipe IDs retain their
+  positive-integer format. Unknown IDs return JSON 404; blank IDs return 400.
+- GET /api/recipes/<recipe_id>/inspections returns recipe_id, count, and inspections.
+  Existing recipes without occurrences return 200 with an empty list. Unknown
+  recipes return 404; malformed recipe IDs return 400. Records are returned in
+  insertion order and are linked by persistent recipe identity, across promotions.
+- Each inspection includes observation (run/vial IDs, ordered dispenses, derived
+  count, final color, completion flag), historical recipe_id/recipe_collection,
+  verification_status, recipe_snapshot, intended_comparison, unmatched_comparison,
+  created_new_recipe, and inspected_at (ISO 8601 UTC).
+- Comparison results include score (0..1), status, mandatory-gate decision,
+  reasons, per-field expected/observed differences including missing/extra dispenses,
+  feature_scores as a named JSON object, threshold, configuration, and method version.
+  Unavailable values remain null. Missing/extra Dispense objects serialize as JSON
+  objects, not Python representations. Serialization is shared between both routes.
+- Reads return the stored immutable snapshots, not re-evaluated matching or current
+  recipe metadata. Existing origin checks and optional INFERENCE_TOKEN Bearer read
+  authentication apply to both routes; OPTIONS preflight remains unauthenticated.
+- Recipe inference gates do not block these reads. No inspection submission or
+  tracker HTTP routes are implemented here. Lists are unpaginated and in memory;
+  durable storage, frontend integration, and pagination remain future work.
 
 ## Original outline
 
