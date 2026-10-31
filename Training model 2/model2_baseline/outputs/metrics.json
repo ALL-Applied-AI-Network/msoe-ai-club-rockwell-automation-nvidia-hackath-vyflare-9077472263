@@ -2218,6 +2218,1114 @@
       }
     }
   },
+  "below": {
+    "A_good_known_recipe_cv": {
+      "independent_vials": 40,
+      "frames": 120,
+      "accuracy_top1": 0.85,
+      "macro_f1_top1": 0.8107,
+      "coverage_at_0.90": 0.675,
+      "accepted_vials": 27,
+      "accepted_prediction_accuracy": 0.963,
+      "per_recipe": {
+        "5": {
+          "vials": 2,
+          "correct": 2,
+          "accepted_correct": 1
+        },
+        "6": {
+          "vials": 2,
+          "correct": 2,
+          "accepted_correct": 2
+        },
+        "7": {
+          "vials": 2,
+          "correct": 1,
+          "accepted_correct": 1
+        },
+        "8": {
+          "vials": 2,
+          "correct": 1,
+          "accepted_correct": 0
+        },
+        "9": {
+          "vials": 2,
+          "correct": 2,
+          "accepted_correct": 1
+        },
+        "10": {
+          "vials": 2,
+          "correct": 2,
+          "accepted_correct": 2
+        },
+        "11": {
+          "vials": 2,
+          "correct": 2,
+          "accepted_correct": 1
+        },
+        "12": {
+          "vials": 2,
+          "correct": 2,
+          "accepted_correct": 2
+        },
+        "13": {
+          "vials": 2,
+          "correct": 1,
+          "accepted_correct": 0
+        },
+        "14": {
+          "vials": 2,
+          "correct": 1,
+          "accepted_correct": 0
+        },
+        "41": {
+          "vials": 4,
+          "correct": 4,
+          "accepted_correct": 4
+        },
+        "50": {
+          "vials": 3,
+          "correct": 2,
+          "accepted_correct": 1
+        },
+        "60": {
+          "vials": 4,
+          "correct": 3,
+          "accepted_correct": 2
+        },
+        "99": {
+          "vials": 9,
+          "correct": 9,
+          "accepted_correct": 9
+        }
+      },
+      "confusion_matrix": {
+        "labels": [
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "41",
+          "50",
+          "60",
+          "99"
+        ],
+        "rows_true_cols_pred": [
+          [
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            3,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            9
+          ]
+        ]
+      },
+      "calibration_check": {
+        "mean_top_score": 0.8927,
+        "top1_accuracy": 0.85,
+        "note": "uncalibrated; no separate calibration data"
+      }
+    },
+    "B_unfamiliar_good_recipes": {
+      "independent_vials": 40,
+      "frames": 120,
+      "false_acceptances_at_0.90": 19,
+      "false_acceptance_rate": 0.475,
+      "accepted_as_intended_recipe": 0,
+      "top1_names_intended_recipe": 0,
+      "vials": [
+        {
+          "vial_key": "v5_e02",
+          "intended_recipe_id": "5",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "11",
+          "top_score": "0.3825",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e03",
+          "intended_recipe_id": "5",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "10",
+          "top_score": "0.4301",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e11",
+          "intended_recipe_id": "8",
+          "batch_preceded_by_recipe_id": "7",
+          "predicted_recipe_id": "9",
+          "top_score": "0.9677",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e12",
+          "intended_recipe_id": "8",
+          "batch_preceded_by_recipe_id": "7",
+          "predicted_recipe_id": "11",
+          "top_score": "0.7966",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e05",
+          "intended_recipe_id": "6",
+          "batch_preceded_by_recipe_id": "5",
+          "predicted_recipe_id": "12",
+          "top_score": "0.9217",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e06",
+          "intended_recipe_id": "6",
+          "batch_preceded_by_recipe_id": "5",
+          "predicted_recipe_id": "12",
+          "top_score": "0.9792",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e08",
+          "intended_recipe_id": "7",
+          "batch_preceded_by_recipe_id": "6",
+          "predicted_recipe_id": "11",
+          "top_score": "0.9291",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e09",
+          "intended_recipe_id": "7",
+          "batch_preceded_by_recipe_id": "6",
+          "predicted_recipe_id": "11",
+          "top_score": "1.0",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e14",
+          "intended_recipe_id": "9",
+          "batch_preceded_by_recipe_id": "8",
+          "predicted_recipe_id": "8",
+          "top_score": "0.8013",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e15",
+          "intended_recipe_id": "9",
+          "batch_preceded_by_recipe_id": "8",
+          "predicted_recipe_id": "8",
+          "top_score": "0.8937",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e17",
+          "intended_recipe_id": "10",
+          "batch_preceded_by_recipe_id": "9",
+          "predicted_recipe_id": "9",
+          "top_score": "0.573",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e18",
+          "intended_recipe_id": "10",
+          "batch_preceded_by_recipe_id": "9",
+          "predicted_recipe_id": "8",
+          "top_score": "0.9678",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e20",
+          "intended_recipe_id": "11",
+          "batch_preceded_by_recipe_id": "10",
+          "predicted_recipe_id": "7",
+          "top_score": "0.9201",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e21",
+          "intended_recipe_id": "11",
+          "batch_preceded_by_recipe_id": "10",
+          "predicted_recipe_id": "8",
+          "top_score": "0.9033",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e23",
+          "intended_recipe_id": "12",
+          "batch_preceded_by_recipe_id": "11",
+          "predicted_recipe_id": "13",
+          "top_score": "0.9709",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e24",
+          "intended_recipe_id": "12",
+          "batch_preceded_by_recipe_id": "11",
+          "predicted_recipe_id": "13",
+          "top_score": "0.926",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e26",
+          "intended_recipe_id": "13",
+          "batch_preceded_by_recipe_id": "12",
+          "predicted_recipe_id": "12",
+          "top_score": "0.9661",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e27",
+          "intended_recipe_id": "13",
+          "batch_preceded_by_recipe_id": "12",
+          "predicted_recipe_id": "12",
+          "top_score": "0.6124",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e29",
+          "intended_recipe_id": "14",
+          "batch_preceded_by_recipe_id": "13",
+          "predicted_recipe_id": "10",
+          "top_score": "0.4317",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "v5_e30",
+          "intended_recipe_id": "14",
+          "batch_preceded_by_recipe_id": "13",
+          "predicted_recipe_id": "60",
+          "top_score": "0.6417",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v02",
+          "intended_recipe_id": "41",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "12",
+          "top_score": "0.9269",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v03",
+          "intended_recipe_id": "41",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "12",
+          "top_score": "0.9396",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v04",
+          "intended_recipe_id": "41",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "13",
+          "top_score": "0.5436",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v05",
+          "intended_recipe_id": "41",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "12",
+          "top_score": "0.7878",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v23",
+          "intended_recipe_id": "50",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "60",
+          "top_score": "0.5377",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v24",
+          "intended_recipe_id": "50",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "60",
+          "top_score": "0.5401",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v25",
+          "intended_recipe_id": "50",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "60",
+          "top_score": "0.977",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v12",
+          "intended_recipe_id": "60",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "50",
+          "top_score": "0.9606",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v13",
+          "intended_recipe_id": "60",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "14",
+          "top_score": "0.8207",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v14",
+          "intended_recipe_id": "60",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "8",
+          "top_score": "0.3827",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v15",
+          "intended_recipe_id": "60",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "8",
+          "top_score": "0.3399",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v07",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "41",
+          "predicted_recipe_id": "41",
+          "top_score": "0.504",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v08",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "41",
+          "predicted_recipe_id": "14",
+          "top_score": "0.9566",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v09",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "41",
+          "predicted_recipe_id": "14",
+          "top_score": "0.5019",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v10",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "41",
+          "predicted_recipe_id": "14",
+          "top_score": "0.5861",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v18",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "60",
+          "predicted_recipe_id": "14",
+          "top_score": "0.996",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v19",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "60",
+          "predicted_recipe_id": "14",
+          "top_score": "0.9361",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v20",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "60",
+          "predicted_recipe_id": "14",
+          "top_score": "0.4814",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v29",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "50",
+          "predicted_recipe_id": "14",
+          "top_score": "0.8886",
+          "status": "unknown_uncertain",
+          "intended_in_training": "False"
+        },
+        {
+          "vial_key": "field_v30",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "50",
+          "predicted_recipe_id": "14",
+          "top_score": "0.9509",
+          "status": "accepted_observation",
+          "intended_in_training": "False"
+        }
+      ]
+    },
+    "B_by_withheld_group": {
+      "withheld_5+8": {
+        "vials": 4,
+        "false_acceptances": 1,
+        "max_score": 0.9677
+      },
+      "withheld_6": {
+        "vials": 2,
+        "false_acceptances": 2,
+        "max_score": 0.9792
+      },
+      "withheld_7": {
+        "vials": 2,
+        "false_acceptances": 2,
+        "max_score": 1.0
+      },
+      "withheld_9": {
+        "vials": 2,
+        "false_acceptances": 0,
+        "max_score": 0.8937
+      },
+      "withheld_10": {
+        "vials": 2,
+        "false_acceptances": 1,
+        "max_score": 0.9678
+      },
+      "withheld_11": {
+        "vials": 2,
+        "false_acceptances": 2,
+        "max_score": 0.9201
+      },
+      "withheld_12": {
+        "vials": 2,
+        "false_acceptances": 2,
+        "max_score": 0.9709
+      },
+      "withheld_13": {
+        "vials": 2,
+        "false_acceptances": 1,
+        "max_score": 0.9661
+      },
+      "withheld_14": {
+        "vials": 2,
+        "false_acceptances": 0,
+        "max_score": 0.6417
+      },
+      "withheld_41": {
+        "vials": 4,
+        "false_acceptances": 2,
+        "max_score": 0.9396
+      },
+      "withheld_50": {
+        "vials": 3,
+        "false_acceptances": 1,
+        "max_score": 0.977
+      },
+      "withheld_60": {
+        "vials": 4,
+        "false_acceptances": 1,
+        "max_score": 0.9606
+      },
+      "withheld_99": {
+        "vials": 9,
+        "false_acceptances": 4,
+        "max_score": 0.996
+      }
+    },
+    "C_bad_first_vials": {
+      "independent_vials": 15,
+      "frames": 45,
+      "false_acceptances_at_0.90": 2,
+      "false_acceptance_rate": 0.1333,
+      "accepted_as_intended_recipe": 0,
+      "top1_names_intended_recipe": 2,
+      "vials": [
+        {
+          "vial_key": "v5_e01",
+          "intended_recipe_id": "5",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "5",
+          "top_score": "0.5445",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e04",
+          "intended_recipe_id": "6",
+          "batch_preceded_by_recipe_id": "5",
+          "predicted_recipe_id": "9",
+          "top_score": "0.5531",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e07",
+          "intended_recipe_id": "7",
+          "batch_preceded_by_recipe_id": "6",
+          "predicted_recipe_id": "8",
+          "top_score": "0.6564",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e10",
+          "intended_recipe_id": "8",
+          "batch_preceded_by_recipe_id": "7",
+          "predicted_recipe_id": "11",
+          "top_score": "0.7462",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e13",
+          "intended_recipe_id": "9",
+          "batch_preceded_by_recipe_id": "8",
+          "predicted_recipe_id": "10",
+          "top_score": "0.4986",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e16",
+          "intended_recipe_id": "10",
+          "batch_preceded_by_recipe_id": "9",
+          "predicted_recipe_id": "8",
+          "top_score": "0.5505",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e19",
+          "intended_recipe_id": "11",
+          "batch_preceded_by_recipe_id": "10",
+          "predicted_recipe_id": "8",
+          "top_score": "0.6926",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e22",
+          "intended_recipe_id": "12",
+          "batch_preceded_by_recipe_id": "11",
+          "predicted_recipe_id": "9",
+          "top_score": "0.9942",
+          "status": "accepted_observation",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e25",
+          "intended_recipe_id": "13",
+          "batch_preceded_by_recipe_id": "12",
+          "predicted_recipe_id": "12",
+          "top_score": "0.5868",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "v5_e28",
+          "intended_recipe_id": "14",
+          "batch_preceded_by_recipe_id": "13",
+          "predicted_recipe_id": "10",
+          "top_score": "0.8712",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v01",
+          "intended_recipe_id": "41",
+          "batch_preceded_by_recipe_id": "unknown",
+          "predicted_recipe_id": "41",
+          "top_score": "0.5563",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v06",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "41",
+          "predicted_recipe_id": "41",
+          "top_score": "0.9937",
+          "status": "accepted_observation",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v11",
+          "intended_recipe_id": "60",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "14",
+          "top_score": "0.6031",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v16",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "60",
+          "predicted_recipe_id": "60",
+          "top_score": "0.4734",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v21",
+          "intended_recipe_id": "50",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "41",
+          "top_score": "0.7287",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        }
+      ]
+    },
+    "C_bad_later_vials": {
+      "independent_vials": 4,
+      "frames": 12,
+      "false_acceptances_at_0.90": 2,
+      "false_acceptance_rate": 0.5,
+      "accepted_as_intended_recipe": 2,
+      "top1_names_intended_recipe": 4,
+      "vials": [
+        {
+          "vial_key": "field_v17",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "60",
+          "predicted_recipe_id": "99",
+          "top_score": "0.999",
+          "status": "accepted_observation",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v22",
+          "intended_recipe_id": "50",
+          "batch_preceded_by_recipe_id": "99",
+          "predicted_recipe_id": "50",
+          "top_score": "0.8935",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v27",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "50",
+          "predicted_recipe_id": "99",
+          "top_score": "0.6256",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v28",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "50",
+          "predicted_recipe_id": "99",
+          "top_score": "0.9974",
+          "status": "accepted_observation",
+          "intended_in_training": "True"
+        }
+      ]
+    },
+    "C_first_vials_labeled_good": {
+      "independent_vials": 1,
+      "frames": 3,
+      "false_acceptances_at_0.90": 0,
+      "false_acceptance_rate": 0.0,
+      "accepted_as_intended_recipe": 0,
+      "top1_names_intended_recipe": 0,
+      "vials": [
+        {
+          "vial_key": "field_v26",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "50",
+          "predicted_recipe_id": "50",
+          "top_score": "0.7564",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        }
+      ]
+    },
+    "D_recording_holdout_recipe99": {
+      "heldout_20261028_205337_785081": {
+        "independent_vials": 4,
+        "frames": 12,
+        "accuracy_top1": 1.0,
+        "macro_f1_top1": 1.0,
+        "coverage_at_0.90": 1.0,
+        "accepted_vials": 4,
+        "accepted_prediction_accuracy": 1.0,
+        "per_recipe": {
+          "99": {
+            "vials": 4,
+            "correct": 4,
+            "accepted_correct": 4
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "99"
+          ],
+          "rows_true_cols_pred": [
+            [
+              4
+            ]
+          ]
+        },
+        "calibration_check": {
+          "mean_top_score": 0.9978,
+          "top1_accuracy": 1.0,
+          "note": "uncalibrated; no separate calibration data"
+        }
+      },
+      "heldout_20261028_210516_104156": {
+        "independent_vials": 3,
+        "frames": 9,
+        "accuracy_top1": 1.0,
+        "macro_f1_top1": 1.0,
+        "coverage_at_0.90": 1.0,
+        "accepted_vials": 3,
+        "accepted_prediction_accuracy": 1.0,
+        "per_recipe": {
+          "99": {
+            "vials": 3,
+            "correct": 3,
+            "accepted_correct": 3
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "99"
+          ],
+          "rows_true_cols_pred": [
+            [
+              3
+            ]
+          ]
+        },
+        "calibration_check": {
+          "mean_top_score": 0.9818,
+          "top1_accuracy": 1.0,
+          "note": "uncalibrated; no separate calibration data"
+        }
+      },
+      "heldout_20261028_211517_586312": {
+        "independent_vials": 2,
+        "frames": 6,
+        "accuracy_top1": 1.0,
+        "macro_f1_top1": 1.0,
+        "coverage_at_0.90": 1.0,
+        "accepted_vials": 2,
+        "accepted_prediction_accuracy": 1.0,
+        "per_recipe": {
+          "99": {
+            "vials": 2,
+            "correct": 2,
+            "accepted_correct": 2
+          }
+        },
+        "confusion_matrix": {
+          "labels": [
+            "99"
+          ],
+          "rows_true_cols_pred": [
+            [
+              2
+            ]
+          ]
+        },
+        "calibration_check": {
+          "mean_top_score": 0.9993,
+          "top1_accuracy": 1.0,
+          "note": "uncalibrated; no separate calibration data"
+        }
+      }
+    },
+    "unknown_quality_predictions_no_metrics": [],
+    "head_train_frame_accuracy_by_fold": {
+      "fold1": "1.0",
+      "fold2": "1.0",
+      "fold3": "1.0",
+      "fold4": "1.0",
+      "fold5": "1.0"
+    },
+    "phone_photos_separate": {
+      "A_good_known": {
+        "photos": 20,
+        "accepted": 4,
+        "top1_matches_intended": 3,
+        "accepted_and_matches_intended": 2
+      },
+      "C_bad_first": {
+        "photos": 5,
+        "accepted": 1,
+        "top1_matches_intended": 0,
+        "accepted_and_matches_intended": 0
+      },
+      "C_bad_later": {
+        "photos": 4,
+        "accepted": 1,
+        "top1_matches_intended": 0,
+        "accepted_and_matches_intended": 0
+      },
+      "C_first_vial_labeled_good": {
+        "photos": 1,
+        "accepted": 0,
+        "top1_matches_intended": 0,
+        "accepted_and_matches_intended": 0
+      }
+    }
+  },
   "full": {
     "A_good_known_recipe_cv": {
       "independent_vials": 40,

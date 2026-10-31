@@ -31,7 +31,7 @@ FIELD_RECORDINGS = [
 
 # Decisions fixed before any evaluation (see README).
 CONFIG = {
-    "config_version": "model2-baseline-v5",
+    "config_version": "model2-baseline-v6",
     "seed": 20261031,
     "post_flow_offsets_s": [0.05, 0.15, 0.25],
     "frame_label": "early post-flow (not settled)",

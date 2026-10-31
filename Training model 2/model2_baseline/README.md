@@ -15,8 +15,8 @@ Current version: `model2-baseline-v4` (2026-10-31), retrained on workbook `771c8
 Relative to v3, vial 28 changed good → bad (it left training, now 40 vials) and first
 vial 26 changed bad → good (it stays out of training and is reported as a transition
 vial). Earlier versions are in Git history: v1 `777e6a1`, v2 `052cb35`, v3 `669b3c2`.
-v5 adds the holder-crop test (see "Holder-crop test" below); it does not change the v4
-results or the deployed model.
+v5 adds the holder-crop test and v6 the label-removal (below-holder) test, described
+below. Neither changes the v4 results or the deployed model.
 
 ## Operator decisions applied
 
@@ -210,11 +210,53 @@ rejection, but it accepts every bad later vial and still sees vial labels. It is
 usable as supporting evidence. Next steps: confirm on new recordings with several recipes
 per recording, and remove or standardize the vial labels (or the label strip) at capture time.
 
+## Label-removal test (v6)
+
+v5 was saved first (`checkpoints/v5-holder-crop/`, tag `model2-v5-holder-crop`). Physically
+removing labels needs new recordings, so this test removes them from the image at
+capture-time preprocessing instead. `station-below-holder-crop-v1` crops x 250–390,
+**y 265–430**. The holder's bottom edge was measured at y 258–262 in all 120 frames, and a
+visual check of all 60 vials found no label below it. Everything else is unchanged.
+The same caveat applies: this is a same-data comparison.
+
+| Test (per vial, CV, 0.90) | Full vial (v4) | Holder and below (v5) | Below holder, no labels (v6) |
+|---|---|---|---|
+| A. Top-1 accuracy (40 good vials) | 0.775 | **0.875** | 0.850 |
+| A. Macro F1 | 0.682 | **0.849** | 0.811 |
+| A. Coverage | 0.650 | 0.675 | 0.675 |
+| A. Accuracy when answered | 0.962 | **1.000** | 0.963 |
+| B. Unfamiliar recipes falsely accepted | 13/40 | **6/40** | 19/40 |
+| C. Bad first vials accepted | 5/15 | 3/15 | **2/15** |
+| C. Bad later vials accepted | 3/4 | 4/4 | **2/4** |
+| C. First vial labeled good accepted | 0/1 | 0/1 | 0/1 |
+| D. Recipe 99 held-out recordings | 9/9 | 9/9 | 9/9 |
+| Phone photos accepted (good / bad) | 9 / 4 | 0 / 0 | 4 / 2 |
+
+Below-holder failures:
+
+- **Confident error on a good vial:** `v5_e11` (8 → 9, 0.93).
+- **Bad vials accepted:** `v5_e22` (as 9), `field_v06` (99 after 41, as 41), `field_v17` and `v28` (99).
+- **Unfamiliar recipes:** most become look-alike colors: 12 → 13, 6 → 12, 7 → 11, 11 → 7/8, 10 → 8, and clear 99 → pale 14 (4 of 9).
+
+Interpretation:
+
+- **Without labels, the model sees the liquid.** Grad-CAM (`gradcam_below_model.png`) is mostly on the liquid column and base, and fewer bad vials are accepted.
+- **It cannot tell when a mixture is new.** With only the liquid colour below the holder, an unfamiliar mixture looks like the nearest known colour and gets a high score. The v5 crop's better unfamiliar rejection therefore partly depended on the label strip and the high fill line in the holder hole, not only on the liquid.
+- **Fill height is weaker.** Fills of 60 mL and more fill the whole crop, so their heights cannot be compared; 30–50 mL levels remain visible.
+- **One cue remains.** A few maps (`v5_e15`, `v5_e22`, `field_v22`) use the dark background or metal post at the crop's side edges, which differs between Video 5 and the field recordings.
+
+**Assessment:** no crop is usable as supporting evidence yet. Each trades one failure for
+another. The real fix is at capture: record without visible labels (remove them, or turn
+them to face away from the camera), and keep the full vial so the fill line stays visible.
+Then retrain the full-vial or holder crop on those recordings, with several recipes per
+recording.
+
 ## Artifacts (`outputs/model/`)
 
 `model2_head_crop.json`: classes 5–14, 41, 50, 60, 99 in the head's stored order
 (string-sorted, `10, 11, …, 9, 99`; always read the order from `classes`), scaler, coefficients,
 preprocessing `station-crop-v1`, threshold, backbone hash and `calibrated: false`.
 `model2_head_holder.json`: the same for `station-holder-crop-v1` (v5 test; not deployed).
+`model2_head_below_holder.json`: the same for `station-below-holder-crop-v1` (v6 test; not deployed).
 `model2_head_fullframe_comparison.json` is for the shortcut comparison only.
 Saved v4 model: `checkpoints/v4-station-crop/`.

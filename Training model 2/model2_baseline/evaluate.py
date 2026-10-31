@@ -67,7 +67,7 @@ def main():
                                                             else "no valid early post-flow frame (stream visible)"])),
                           "valid_frames": valid.get(v["vial_key"], 0)}
                          for v in vials if v["quarantine"] or valid.get(v["vial_key"], 0) == 0]
-    for mode in ("crop", "holder", "full"):
+    for mode in ("crop", "holder", "below", "full"):
         m = {}
         cv = [r for r in preds if r["experiment"] == "cv_physical_vial" and r["mode"] == mode]
         good = [r for r in cv if r["eval_role"] == "A_good_known"]
@@ -99,7 +99,7 @@ def main():
         out[mode] = m
     write_json(OUT / "metrics.json", out)
 
-    for mode in ("crop", "holder", "full"):
+    for mode in ("crop", "holder", "below", "full"):
         m = out[mode]
         a = m["A_good_known_recipe_cv"]
         print(f"== {mode}")

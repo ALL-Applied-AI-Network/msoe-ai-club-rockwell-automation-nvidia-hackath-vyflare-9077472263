@@ -19,11 +19,13 @@ MEAN_RGB = (124, 116, 104)                 # ImageNet mean, used for padding and
 # x0, y0, x1, y1 on the 640x480 station frame, with the preprocessing version each defines.
 CROPS = {
     "crop": ((250, 40, 390, 430), "station-crop-v1"),            # whole vial (v1-v4 primary)
-    "holder": ((250, 200, 390, 430), "station-holder-crop-v1"),  # holder band and below (proposed fix)
+    "holder": ((250, 200, 390, 430), "station-holder-crop-v1"),  # holder band and below (v5 test)
+    # Below the holder's bottom edge (measured y 258-262 in every frame): no vial label visible.
+    "below": ((250, 265, 390, 430), "station-below-holder-crop-v1"),
 }
 CROP = CROPS["crop"][0]
 OVERLAY_Y = 435                            # rows from here down carry the burned-in timestamp
-MODES = ("crop", "holder", "full")         # full frame is the shortcut comparison
+MODES = ("crop", "holder", "below", "full")  # full frame is the shortcut comparison
 SEED = CONFIG["seed"]
 
 
@@ -255,6 +257,7 @@ def main():
                                             list(clf.classes_), score(scaler, clf, fx)[1], acc))
     export_head(*final_heads["crop"][:2], eligible, OUT / "model" / "model2_head_crop.json", "crop")
     export_head(*final_heads["holder"][:2], eligible, OUT / "model" / "model2_head_holder.json", "holder")
+    export_head(*final_heads["below"][:2], eligible, OUT / "model" / "model2_head_below_holder.json", "below")
     export_head(*final_heads["full"][:2], eligible, OUT / "model" / "model2_head_fullframe_comparison.json", "full")
 
     for name, rows in (("predictions_per_vial.csv", preds), ("predictions_phone_photos.csv", phone_eval(final_heads, backbone, vials))):
