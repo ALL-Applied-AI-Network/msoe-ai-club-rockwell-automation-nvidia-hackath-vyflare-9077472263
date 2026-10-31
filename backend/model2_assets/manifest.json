@@ -1,0 +1,26 @@
+{
+  "model_id": "model2-baseline-v2-crop",
+  "sha256": {
+    "head.json": "d604131d2dfdb293ab0dd79f9b3f0d9eb1ee3cc76cbb02d6ba67f825309922f5"
+  },
+  "source": "Training model 2/model2_baseline (config model2-baseline-v2)",
+  "camera_profile": "vial-fill-640x480",
+  "frames_required": "three early post-flow frames: +0.05, +0.15, +0.25 s after the no-flow boundary",
+  "stream_rule": {
+    "rows": [
+      90,
+      145
+    ],
+    "center_limit": 20.0,
+    "profile_limit": 30.0
+  },
+  "approved_for_supporting_evidence": false,
+  "validation": {
+    "report": "Training model 2/model2_baseline/README.md",
+    "good_known_cv_accepted_accuracy": 0.963,
+    "unfamiliar_false_acceptance_rate": 0.3171,
+    "bad_first_false_acceptance_rate": 0.25,
+    "bad_later_false_acceptance_rate": 0.5,
+    "known_issue": "recording-context shortcut on field recipes (see report)"
+  }
+}

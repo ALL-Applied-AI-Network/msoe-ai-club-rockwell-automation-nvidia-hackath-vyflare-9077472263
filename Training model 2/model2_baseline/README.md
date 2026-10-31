@@ -47,7 +47,13 @@ Run from this folder, in order:
 ..\..\.venv\Scripts\python.exe run_baseline.py      # features, heads, all predictions (~5 min CPU; delete artifacts/features.npz after re-extracting)
 ..\..\.venv\Scripts\python.exe evaluate.py          # outputs/metrics.json
 ..\..\.venv\Scripts\python.exe analysis.py          # Grad-CAM, occlusion, head weights
+..\..\.venv\Scripts\python.exe export_backend_assets.py  # backend/model2_assets + parity fixture
 ```
+
+The v2 run used Pillow 13.0.0. Installing `backend/requirements-integration.lock.txt`
+afterwards pins Pillow 12.3.0 in the same venv. The backend parity test still matches
+the training oracle to 5 decimal places on the exported PNG frames. Backend usage is in
+`backend/MODEL2_API.md`.
 
 Inputs: `Training model 2/recipes.xlsx`, `video5_vial_recipes.csv`, `vial_fill_video_5.mp4`
 and `data/` (hashes in `outputs/media_manifest.csv`). Source files are only read.

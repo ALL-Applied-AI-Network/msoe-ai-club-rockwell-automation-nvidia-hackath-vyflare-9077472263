@@ -1,5 +1,7 @@
 # For ResNet-only environments; install torch/torchvision for your platform.
 torch>=2.9,<3
 torchvision>=0.24,<1
+# Model 2 preprocessing (INTER_AREA resize must match training).
+opencv-python-headless>=5,<6
 # For Cosmos, use the official Cosmos Framework locked environment instead.
 # Do not install an unrelated Transformers version over that environment.
