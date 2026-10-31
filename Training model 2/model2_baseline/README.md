@@ -15,6 +15,8 @@ Current version: `model2-baseline-v4` (2026-10-31), retrained on workbook `771c8
 Relative to v3, vial 28 changed good → bad (it left training, now 40 vials) and first
 vial 26 changed bad → good (it stays out of training and is reported as a transition
 vial). Earlier versions are in Git history: v1 `777e6a1`, v2 `052cb35`, v3 `669b3c2`.
+v5 adds the holder-crop test (see "Holder-crop test" below); it does not change the v4
+results or the deployed model.
 
 ## Operator decisions applied
 
@@ -159,17 +161,60 @@ Occlusion on the 40 held-out good vials (same fold heads, regions masked at test
 - The full frame identifies 11 of 40 recipes with the vial hidden, so it stays a comparison only.
 - Heads fit training frames at 100% in every fold. Class weight vectors are nearly orthogonal (max cosine 0.19). The weights do not reveal composition.
 
-## Proposed next experiment (not run; needs approval)
+## Holder-crop test (v5, run at operator request)
 
-Pre-register a crop that starts at the holder band (y ≥ 200), which removes labels, nozzle
-and background, and evaluate it **only on new recordings**. The current folds have already
-been seen, so they can no longer give a clean comparison. Recording several recipes per
-field recording, and repeating recipes across recordings, would break the recording–recipe
-confound.
+The v4 full-vial model was saved first (`checkpoints/v4-station-crop/`, tag
+`model2-v4-station-crop`) and still serves the backend. v5 adds a second input,
+`station-holder-crop-v1`: crop x 250–390, **y 200–430** (holder band and below), as proposed
+above. Everything else is identical: same 40 training vials, folds, augmentation, head and
+0.90 threshold. Full-vial results reproduce v4 exactly.
+
+**Caveat:** these folds were already used to find the shortcut, so this is a same-data
+comparison, not an independent test. It needs confirming on new recordings.
+
+| Test (per vial, CV, 0.90) | Full vial (v4) | Holder and below (v5) |
+|---|---|---|
+| A. Good known: top-1 accuracy | 0.775 (31/40) | **0.875 (35/40)** |
+| A. Macro F1 | 0.682 | **0.849** |
+| A. Coverage (answered) | 0.650 (26) | 0.675 (27) |
+| A. Accuracy when answered | 0.962 (25/26) | **1.000 (27/27)** |
+| B. Unfamiliar good recipes falsely accepted | 13/40 (0.325) | **6/40 (0.150)** |
+| C. Bad first vials accepted | 5/15 (0.333) | **3/15 (0.200)** |
+| C. Bad later vials accepted | 3/4 (0.75) | **4/4 (1.00)**, worse |
+| C. First vial labeled good (v26) accepted | 0/1 | 0/1 |
+| D. Recipe 99 held-out recordings | 9/9, coverage 0.5/1/1 | 9/9, coverage 1/1/1 |
+| Phone photos accepted (good / bad) | 9 / 4 | 0 / 0 |
+
+Holder per recipe (correct / vials): 5 2/2, 6 2/2, 7 1/2, 8 1/2, 9 1/2, 10 2/2, 11 2/2, 12 2/2,
+13 2/2, 14 2/2, 41 4/4, 50 2/3, 60 3/4, 99 9/9. Recipes 8, 9 and 14 improve from 0/2.
+
+Remaining holder failures:
+
+- **Unfamiliar recipes falsely accepted:** 7 → 11 (0.9999), 13 → 12, 14 → 50, 41 → 12 twice, 50 → 60. The 60 ↔ 50 swap and clear water accepted as green (v4 failures) now abstain.
+- **Bad first vials accepted:** `v5_e16` (as 9), `v5_e19` (11), `v5_e22` (as 9).
+- **Bad later vials accepted:** all four: `field_v17`, `v27`, `v28` as 99 (0.99–1.00) and `field_v22` as 11 (0.91). Three of these are recipe 99 vials whose defect is not visible to the classifier as a different recipe.
+
+What it uses (occlusion on 40 held-out good vials):
+
+| Holder model, mask | Top-1 correct | Accepted (correct) |
+|---|---|---|
+| None | 35 | 27 (27) |
+| Holder band (label residue and high fill line) | 30 | 14 (14) |
+| Liquid column below holder | 13 | 1 (0) |
+
+- The liquid column now drives the decision: masking it removes almost every acceptance.
+- **A shortcut remains: label stickers.** The bottom of each vial's label (printed `VIAL - NN`) sits inside y 200–225, together with the fill line of 60–80 mL vials. Grad-CAM (`outputs/analysis/gradcam_holder_model.png`) peaks on that label strip for `v5_e15`, `v5_e22`, `field_v11`, `v22`, `v07` and `v12`, including the bad later vial `field_v22` accepted as 11. Labels identify physical vials, not recipes.
+
+**Assessment:** the holder crop is better on good-vial recognition and unfamiliar-recipe
+rejection, but it accepts every bad later vial and still sees vial labels. It is not yet
+usable as supporting evidence. Next steps: confirm on new recordings with several recipes
+per recording, and remove or standardize the vial labels (or the label strip) at capture time.
 
 ## Artifacts (`outputs/model/`)
 
 `model2_head_crop.json`: classes 5–14, 41, 50, 60, 99 in the head's stored order
 (string-sorted, `10, 11, …, 9, 99`; always read the order from `classes`), scaler, coefficients,
 preprocessing `station-crop-v1`, threshold, backbone hash and `calibrated: false`.
+`model2_head_holder.json`: the same for `station-holder-crop-v1` (v5 test; not deployed).
 `model2_head_fullframe_comparison.json` is for the shortcut comparison only.
+Saved v4 model: `checkpoints/v4-station-crop/`.

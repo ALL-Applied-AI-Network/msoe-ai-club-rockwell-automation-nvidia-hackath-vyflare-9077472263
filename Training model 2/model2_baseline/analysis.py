@@ -77,6 +77,8 @@ def main():
     # Occlusion / shortcut tests on held-out good vials, per fold.
     folds = sorted({usable[k]["cv_fold"] for k in usable}, key=int)
     tests = {"crop": [("none", None)] + list(REGIONS.items()),
+             "holder": [("none", None), ("holder_band (label residue and high fill line)", REGIONS["holder_band"]),
+                        ("liquid_column_below_holder", REGIONS["liquid_column_below_holder"])],
              "full": [("none", None), ("vial_crop_region (background only)", CROP)]}
     occl = {}
     for mode, variants in tests.items():
@@ -96,15 +98,16 @@ def main():
                     d["accepted_correct"] += s >= CONFIG["accept_threshold"] and top == v["intended_recipe_id"]
     result["occlusion_cv_good_vials"] = occl
 
-    # Head weights of the final crop model.
-    scaler, clf, train_acc = fit_head(eligible, vials, frames, feats, "crop")
-    coef = clf.coef_
-    norms = {c: round(float(np.linalg.norm(w)), 3) for c, w in zip(clf.classes_, coef)}
-    cos = coef @ coef.T / np.outer(np.linalg.norm(coef, axis=1), np.linalg.norm(coef, axis=1))
-    pairs = sorted(((float(cos[i, j]), clf.classes_[i], clf.classes_[j]) for i in range(len(coef)) for j in range(i + 1, len(coef))), reverse=True)
-    result["head"] = {"train_frame_accuracy": train_acc, "classes": list(clf.classes_), "coef_l2_norm": norms,
-                      "most_similar_class_weight_pairs": [{"pair": f"{a}-{b}", "cosine": round(c, 3)} for c, a, b in pairs[:5]],
-                      "backbone_frozen": True, "backbone_state_sha256_before": before}
+    # Head weights of the final models ("head" is the full-vial crop).
+    for mode, key in (("crop", "head"), ("holder", "head_holder")):
+        scaler, clf, train_acc = fit_head(eligible, vials, frames, feats, mode)
+        coef = clf.coef_
+        norms = {c: round(float(np.linalg.norm(w)), 3) for c, w in zip(clf.classes_, coef)}
+        cos = coef @ coef.T / np.outer(np.linalg.norm(coef, axis=1), np.linalg.norm(coef, axis=1))
+        pairs = sorted(((float(cos[i, j]), clf.classes_[i], clf.classes_[j]) for i in range(len(coef)) for j in range(i + 1, len(coef))), reverse=True)
+        result[key] = {"train_frame_accuracy": train_acc, "classes": list(clf.classes_), "coef_l2_norm": norms,
+                       "most_similar_class_weight_pairs": [{"pair": f"{a}-{b}", "cosine": round(c, 3)} for c, a, b in pairs[:5]]}
+    result["head"].update(backbone_frozen=True, backbone_state_sha256_before=before)
 
     # Grad-CAM panels: (vial, class to explain, head trained without a group or None, caption).
     cases = [
@@ -114,29 +117,30 @@ def main():
         ("v5_e15", None, "good 9, CV fold"),
         ("field_v25", None, "good 50, CV fold"),
         ("field_v17", None, "bad later 99, CV fold"),
+        ("field_v22", None, "bad later 50, CV fold"),
         ("field_v11", None, "bad first 60, CV fold"),
         ("v5_e22", None, "bad first 12, CV fold"),
-        ("v5_e25", None, "bad first 13, CV fold"),
         ("field_v07", ["99"], "good 99, recipe 99 withheld"),
         ("field_v12", ["60"], "good 60, recipe 60 withheld"),
     ]
-    tiles = []
-    for key, withheld, caption in cases:
-        if withheld:
-            sc, cl, _ = fit_head([k for k in eligible if usable[k]["intended_recipe_id"] not in withheld], vials, frames, feats, "crop")
-        else:
-            fold = usable[key]["cv_fold"]
-            sc, cl, _ = fit_head([k for k in eligible if usable[k]["cv_fold"] != fold], vials, frames, feats, "crop")
-        image = station_input(frame_rgb(by_vial[key][0]), "crop")
-        top, s = score(sc, cl, backbone([image]))[1][0]
-        tile = np.hstack([image, gradcam(backbone, sc, cl, image, top)])
-        tile = cv2.copyMakeBorder(tile, 34, 0, 0, 0, cv2.BORDER_CONSTANT, value=(255, 255, 255))
-        cv2.putText(tile, f"{key}: {caption}", (4, 13), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 0), 1)
-        cv2.putText(tile, f"frame {by_vial[key][0]['tag']}: top {top} score {s:.3f}", (4, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 0), 1)
-        tiles.append(tile)
     AN.mkdir(parents=True, exist_ok=True)
-    grid = np.vstack([np.hstack(tiles[i:i + 2]) for i in range(0, len(tiles), 2)])
-    cv2.imwrite(str(AN / "gradcam_crop_model.png"), cv2.cvtColor(grid, cv2.COLOR_RGB2BGR))
+    for mode in ("crop", "holder"):
+        tiles = []
+        for key, withheld, caption in cases:
+            if withheld:
+                train = [k for k in eligible if usable[k]["intended_recipe_id"] not in withheld]
+            else:
+                train = [k for k in eligible if usable[k]["cv_fold"] != usable[key]["cv_fold"]]
+            sc, cl, _ = fit_head(train, vials, frames, feats, mode)
+            image = station_input(frame_rgb(by_vial[key][0]), mode)
+            top, s = score(sc, cl, backbone([image]))[1][0]
+            tile = np.hstack([image, gradcam(backbone, sc, cl, image, top)])
+            tile = cv2.copyMakeBorder(tile, 34, 0, 0, 0, cv2.BORDER_CONSTANT, value=(255, 255, 255))
+            cv2.putText(tile, f"{key}: {caption}", (4, 13), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 0), 1)
+            cv2.putText(tile, f"frame {by_vial[key][0]['tag']}: top {top} score {s:.3f}", (4, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 0), 1)
+            tiles.append(tile)
+        grid = np.vstack([np.hstack(tiles[i:i + 2]) for i in range(0, len(tiles), 2)])
+        cv2.imwrite(str(AN / f"gradcam_{mode}_model.png"), cv2.cvtColor(grid, cv2.COLOR_RGB2BGR))
 
     result["head"]["backbone_state_sha256_after"] = state_hash(backbone.net)
     result["head"]["backbone_unchanged"] = result["head"]["backbone_state_sha256_before"] == result["head"]["backbone_state_sha256_after"]

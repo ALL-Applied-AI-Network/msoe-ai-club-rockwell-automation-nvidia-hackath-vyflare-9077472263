@@ -16,9 +16,14 @@ from sklearn.preprocessing import StandardScaler
 from common import ART, CONFIG, DATA, OUT, write_json
 
 MEAN_RGB = (124, 116, 104)                 # ImageNet mean, used for padding and masks
-CROP = (250, 40, 390, 430)                 # x0, y0, x1, y1 on the 640x480 station frame
+# x0, y0, x1, y1 on the 640x480 station frame, with the preprocessing version each defines.
+CROPS = {
+    "crop": ((250, 40, 390, 430), "station-crop-v1"),            # whole vial (v1-v4 primary)
+    "holder": ((250, 200, 390, 430), "station-holder-crop-v1"),  # holder band and below (proposed fix)
+}
+CROP = CROPS["crop"][0]
 OVERLAY_Y = 435                            # rows from here down carry the burned-in timestamp
-MODES = ("crop", "full")                   # crop is primary; full frame is the shortcut comparison
+MODES = ("crop", "holder", "full")         # full frame is the shortcut comparison
 SEED = CONFIG["seed"]
 
 
@@ -32,15 +37,15 @@ def letterbox(img, size=CONFIG["input_size"]):
 
 
 def station_input(rgb, mode, rng=None):
-    """Mask the overlay, optionally augment, crop (crop mode) and letterbox."""
+    """Mask the overlay, optionally augment, crop (crop modes) and letterbox."""
     rgb = rgb.copy()
     rgb[OVERLAY_Y:] = MEAN_RGB
-    x0, y0, x1, y1 = CROP if mode == "crop" else (0, 0, rgb.shape[1], rgb.shape[0])
+    x0, y0, x1, y1 = CROPS[mode][0] if mode in CROPS else (0, 0, rgb.shape[1], rgb.shape[0])
     dx = dy = 0
     if rng is not None:
         dx = int(round(rng.uniform(-0.04, 0.04) * (x1 - x0)))
         dy = int(round(rng.uniform(-0.04, 0.04) * (y1 - y0)))
-    if mode == "crop":
+    if mode in CROPS:
         img = rgb[y0 + dy:y1 + dy, x0 + dx:x1 + dx]
     else:
         img = cv2.warpAffine(rgb, np.float32([[1, 0, dx], [0, 1, dy]]), (rgb.shape[1], rgb.shape[0]),
@@ -82,13 +87,13 @@ def load_inputs():
 
 def compute_features(frames, backbone):
     cache = ART / "features.npz"
-    if cache.exists():
-        data = np.load(cache, allow_pickle=True)
-        return data["feats"].item()
-    feats = {}
+    feats = np.load(cache, allow_pickle=True)["feats"].item() if cache.exists() else {}
+    missing = [m for m in MODES if any((f["vial_key"], f["tag"], m) not in feats for f in frames)]
+    if not missing:
+        return feats
     for i, f in enumerate(frames):
         rgb = cv2.cvtColor(cv2.imread(str(ART / f["image"])), cv2.COLOR_BGR2RGB)
-        for mode in MODES:
+        for mode in missing:
             rng = np.random.default_rng(SEED + i)
             images = [station_input(rgb, mode)] + [station_input(rgb, mode, rng) for _ in range(CONFIG["augment_copies"])]
             feats[(f["vial_key"], f["tag"], mode)] = backbone(images)
@@ -214,13 +219,14 @@ def phone_eval(final_heads, backbone, vials):
     return rows
 
 
-def export_head(scaler, clf, eligible, path):
+def export_head(scaler, clf, eligible, path, mode):
+    crop, version = CROPS.get(mode, ((0, 0, 640, 480), "station-fullframe-comparison-v1"))
     write_json(path, {
         "model": "Model 2 recipe classifier baseline", "config_version": CONFIG["config_version"],
         "backbone": CONFIG["backbone"], "backbone_weights_url": torchvision.models.ResNet18_Weights.IMAGENET1K_V1.url,
         "backbone_sha256": CONFIG["backbone_sha256"],
-        "preprocessing": {"version": "station-crop-v1", "input": "640x480 station frame, RGB",
-                          "overlay_mask_rows_from": OVERLAY_Y, "crop_xyxy": list(CROP), "letterbox_fill_rgb": list(MEAN_RGB),
+        "preprocessing": {"version": version, "input": "640x480 station frame, RGB",
+                          "overlay_mask_rows_from": OVERLAY_Y, "crop_xyxy": list(crop), "letterbox_fill_rgb": list(MEAN_RGB),
                           "resize": [CONFIG["input_size"], CONFIG["input_size"]], "interpolation": "INTER_AREA",
                           "normalize_mean": [0.485, 0.456, 0.406], "normalize_std": [0.229, 0.224, 0.225],
                           "frames": "early post-flow +0.05/+0.15/+0.25 s after end of flow; frames with visible stream rejected"},
@@ -247,8 +253,9 @@ def main():
                 fx = vial_features(k, frames, feats, mode, augmented=False)
                 preds.append(prediction_row("final_model_all_eligible", mode, "trained_on_all_eligible", v, len(fx),
                                             list(clf.classes_), score(scaler, clf, fx)[1], acc))
-    export_head(*final_heads["crop"][:2], eligible, OUT / "model" / "model2_head_crop.json")
-    export_head(*final_heads["full"][:2], eligible, OUT / "model" / "model2_head_fullframe_comparison.json")
+    export_head(*final_heads["crop"][:2], eligible, OUT / "model" / "model2_head_crop.json", "crop")
+    export_head(*final_heads["holder"][:2], eligible, OUT / "model" / "model2_head_holder.json", "holder")
+    export_head(*final_heads["full"][:2], eligible, OUT / "model" / "model2_head_fullframe_comparison.json", "full")
 
     for name, rows in (("predictions_per_vial.csv", preds), ("predictions_phone_photos.csv", phone_eval(final_heads, backbone, vials))):
         with open(OUT / name, "w", newline="", encoding="utf-8") as fh:
