@@ -1,0 +1,265 @@
+experiment,mode,split,vial_key,intended_recipe_id,visual_quality_label,eval_role,first_vial_flag,batch_preceded_by_recipe_id,recording_id,batch_position,n_valid_frames,intended_in_training,training_classes,predicted_recipe_id,top_score,second_recipe_id,second_score,status,matches_intended,accepted_and_matches,head_train_frame_accuracy
+cv_physical_vial,crop,fold1,v5_e01,5,bad,C_bad_first,True,unknown,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.7339,8,0.2361,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold1,v5_e04,6,bad,C_bad_first,True,5,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.5854,8,0.3677,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold1,v5_e07,7,bad,C_bad_first,True,6,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.3528,14,0.1299,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold1,v5_e10,8,bad,C_bad_first,True,7,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.5162,14,0.3014,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold1,v5_e13,9,bad,C_bad_first,True,8,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.6651,8,0.2586,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold1,v5_e16,10,bad,C_bad_first,True,9,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.816,8,0.1723,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold1,v5_e19,11,bad,C_bad_first,True,10,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9914,8,0.0055,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold1,v5_e22,12,bad,C_bad_first,True,11,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.9898,11,0.0086,accepted_observation,False,False,1.0
+cv_physical_vial,crop,fold1,v5_e25,13,bad,C_bad_first,True,12,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.8599,41,0.0915,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold1,v5_e28,14,bad,C_bad_first,True,13,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.7864,8,0.1317,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold1,field_v06,99,bad,C_bad_first,True,41,20261028_205337_785081,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.696,41,0.302,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold1,field_v16,99,bad,C_bad_first,True,60,20261028_210516_104156,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9328,14,0.0503,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold1,field_v26,99,unlabeled,unknown_quality,True,50,20261028_211517_586312,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9477,9,0.0414,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold2,v5_e02,5,good,A_good_known,False,unknown,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.6123,5,0.2909,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold2,v5_e05,6,good,A_good_known,False,5,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.8747,12,0.0454,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold2,v5_e08,7,good,A_good_known,False,6,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.4699,14,0.4493,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold2,v5_e11,8,good,A_good_known,False,7,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.6598,11,0.3076,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold2,v5_e14,9,good,A_good_known,False,8,vial_fill_video_5,2,2,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.6243,5,0.1705,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold2,v5_e17,10,good,A_good_known,False,9,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.8472,99,0.0442,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold2,v5_e20,11,good,A_good_known,False,10,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9911,9,0.0069,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold2,v5_e23,12,good,A_good_known,False,11,vial_fill_video_5,2,1,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.9342,7,0.0214,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold2,v5_e26,13,good,A_good_known,False,12,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.3903,10,0.3033,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold2,v5_e29,14,good,A_good_known,False,13,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.6596,14,0.1043,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold2,field_v02,41,good,A_good_known,False,unknown,20261028_204828_798377,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9717,6,0.0107,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold2,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9759,5,0.0202,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold2,field_v17,99,bad,C_bad_later,False,60,20261028_210516_104156,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9996,5,0.0001,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold2,field_v27,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.987,5,0.0068,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.5736,99,0.1512,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold3,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.9798,41,0.0073,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.9812,12,0.0129,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,v5_e12,8,good,A_good_known,False,7,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,14,0.9155,10,0.0426,accepted_observation,False,False,1.0
+cv_physical_vial,crop,fold3,v5_e15,9,good,A_good_known,False,8,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.9163,11,0.0726,accepted_observation,False,False,1.0
+cv_physical_vial,crop,fold3,v5_e18,10,good,A_good_known,False,9,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.6062,10,0.309,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold3,v5_e21,11,good,A_good_known,False,10,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9499,8,0.0309,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,v5_e24,12,good,A_good_known,False,11,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.9913,6,0.002,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,v5_e27,13,good,A_good_known,False,12,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.6289,14,0.2641,unknown_uncertain,True,False,1.0
+cv_physical_vial,crop,fold3,v5_e30,14,good,A_good_known,False,13,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.6802,5,0.2374,unknown_uncertain,False,False,1.0
+cv_physical_vial,crop,fold3,field_v03,41,good,A_good_known,False,unknown,20261028_204828_798377,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9785,12,0.0148,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9165,14,0.038,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9342,41,0.0532,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold3,field_v28,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9801,14,0.0119,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold4,field_v04,41,good,A_good_known,False,unknown,20261028_204828_798377,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9917,13,0.0062,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold4,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9998,41,0.0001,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold4,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9994,5,0.0002,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold4,field_v29,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9997,9,0.0001,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold5,field_v05,41,good,A_good_known,False,unknown,20261028_204828_798377,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9933,99,0.0037,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold5,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9702,14,0.0272,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold5,field_v30,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9957,14,0.002,accepted_observation,True,True,1.0
+unfamiliar_recipe,crop,withheld_5+8,v5_e02,5,good,A_good_known,False,unknown,vial_fill_video_5,2,3,False,10 11 12 13 14 41 6 7 9 99,14,0.3675,9,0.227,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_5+8,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,False,10 11 12 13 14 41 6 7 9 99,9,0.3784,14,0.3403,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_5+8,v5_e11,8,good,A_good_known,False,7,vial_fill_video_5,2,3,False,10 11 12 13 14 41 6 7 9 99,9,0.675,11,0.3024,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_5+8,v5_e12,8,good,A_good_known,False,7,vial_fill_video_5,3,2,False,10 11 12 13 14 41 6 7 9 99,14,0.955,10,0.0359,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_6,v5_e05,6,good,A_good_known,False,5,vial_fill_video_5,2,3,False,10 11 12 13 14 41 5 7 8 9 99,5,0.9357,12,0.0417,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_6,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,False,10 11 12 13 14 41 5 7 8 9 99,5,0.4129,12,0.34,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_7,v5_e08,7,good,A_good_known,False,6,vial_fill_video_5,2,3,False,10 11 12 13 14 41 5 6 8 9 99,14,0.9322,11,0.0536,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_7,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,False,10 11 12 13 14 41 5 6 8 9 99,11,0.9661,14,0.0147,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_9,v5_e14,9,good,A_good_known,False,8,vial_fill_video_5,2,2,False,10 11 12 13 14 41 5 6 7 8 99,5,0.8239,10,0.1036,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_9,v5_e15,9,good,A_good_known,False,8,vial_fill_video_5,3,3,False,10 11 12 13 14 41 5 6 7 8 99,8,0.9938,11,0.0051,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_10,v5_e17,10,good,A_good_known,False,9,vial_fill_video_5,2,3,False,11 12 13 14 41 5 6 7 8 9 99,9,0.4536,5,0.1647,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_10,v5_e18,10,good,A_good_known,False,9,vial_fill_video_5,3,3,False,11 12 13 14 41 5 6 7 8 9 99,5,0.6209,9,0.3268,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_11,v5_e20,11,good,A_good_known,False,10,vial_fill_video_5,2,3,False,10 12 13 14 41 5 6 7 8 9 99,8,0.542,7,0.3706,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_11,v5_e21,11,good,A_good_known,False,10,vial_fill_video_5,3,3,False,10 12 13 14 41 5 6 7 8 9 99,8,0.5734,7,0.402,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_12,v5_e23,12,good,A_good_known,False,11,vial_fill_video_5,2,1,False,10 11 13 14 41 5 6 7 8 9 99,13,0.5916,7,0.1399,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_12,v5_e24,12,good,A_good_known,False,11,vial_fill_video_5,3,2,False,10 11 13 14 41 5 6 7 8 9 99,13,0.6281,41,0.1541,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_13,v5_e26,13,good,A_good_known,False,12,vial_fill_video_5,2,3,False,10 11 12 14 41 5 6 7 8 9 99,12,0.478,10,0.3102,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_13,v5_e27,13,good,A_good_known,False,12,vial_fill_video_5,3,2,False,10 11 12 14 41 5 6 7 8 9 99,12,0.6882,41,0.1383,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_14,v5_e29,14,good,A_good_known,False,13,vial_fill_video_5,2,3,False,10 11 12 13 41 5 6 7 8 9 99,8,0.9202,7,0.0312,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_14,v5_e30,14,good,A_good_known,False,13,vial_fill_video_5,3,3,False,10 11 12 13 41 5 6 7 8 9 99,7,0.8629,5,0.1184,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_41,field_v02,41,good,A_good_known,False,unknown,20261028_204828_798377,2,3,False,10 11 12 13 14 5 6 7 8 9 99,13,0.8231,6,0.1215,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_41,field_v03,41,good,A_good_known,False,unknown,20261028_204828_798377,3,3,False,10 11 12 13 14 5 6 7 8 9 99,12,0.9752,11,0.0151,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_41,field_v04,41,good,A_good_known,False,unknown,20261028_204828_798377,4,3,False,10 11 12 13 14 5 6 7 8 9 99,13,0.9352,6,0.0463,accepted_observation,False,False,1.0
+unfamiliar_recipe,crop,withheld_41,field_v05,41,good,A_good_known,False,unknown,20261028_204828_798377,5,3,False,10 11 12 13 14 5 6 7 8 9 99,12,0.5241,11,0.2794,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_99,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,False,10 11 12 13 14 41 5 6 7 8 9,5,0.3692,9,0.3684,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_99,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,False,10 11 12 13 14 41 5 6 7 8 9,14,0.5772,5,0.1953,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_99,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,False,10 11 12 13 14 41 5 6 7 8 9,41,0.7385,9,0.1785,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_99,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,False,10 11 12 13 14 41 5 6 7 8 9,41,0.8136,9,0.1641,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_99,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,False,10 11 12 13 14 41 5 6 7 8 9,5,0.3352,14,0.2473,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,crop,withheld_99,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,False,10 11 12 13 14 41 5 6 7 8 9,14,0.9384,9,0.0473,accepted_observation,False,False,1.0
+recording_holdout_99,crop,heldout_20261028_205337_785081,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9735,5,0.0146,accepted_observation,True,True,1.0
+recording_holdout_99,crop,heldout_20261028_205337_785081,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9556,14,0.0143,accepted_observation,True,True,1.0
+recording_holdout_99,crop,heldout_20261028_205337_785081,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9981,41,0.001,accepted_observation,True,True,1.0
+recording_holdout_99,crop,heldout_20261028_210516_104156,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9099,41,0.0756,accepted_observation,True,True,1.0
+recording_holdout_99,crop,heldout_20261028_210516_104156,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9992,5,0.0002,accepted_observation,True,True,1.0
+recording_holdout_99,crop,heldout_20261028_210516_104156,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.944,14,0.0498,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold1,v5_e01,5,bad,C_bad_first,True,unknown,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.4447,7,0.2251,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold1,v5_e04,6,bad,C_bad_first,True,5,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.8808,10,0.0827,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold1,v5_e07,7,bad,C_bad_first,True,6,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.532,5,0.2305,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold1,v5_e10,8,bad,C_bad_first,True,7,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.5472,5,0.2248,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold1,v5_e13,9,bad,C_bad_first,True,8,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.6746,9,0.1878,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold1,v5_e16,10,bad,C_bad_first,True,9,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.6852,10,0.1419,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold1,v5_e19,11,bad,C_bad_first,True,10,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9954,10,0.0032,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold1,v5_e22,12,bad,C_bad_first,True,11,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.924,11,0.0699,accepted_observation,False,False,1.0
+cv_physical_vial,full,fold1,v5_e25,13,bad,C_bad_first,True,12,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.6359,13,0.3135,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold1,v5_e28,14,bad,C_bad_first,True,13,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.9866,8,0.0071,accepted_observation,False,False,1.0
+cv_physical_vial,full,fold1,field_v06,99,bad,C_bad_first,True,41,20261028_205337_785081,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.8482,99,0.1458,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold1,field_v16,99,bad,C_bad_first,True,60,20261028_210516_104156,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9981,8,0.0016,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold1,field_v26,99,unlabeled,unknown_quality,True,50,20261028_211517_586312,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9941,8,0.0044,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold2,v5_e02,5,good,A_good_known,False,unknown,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.8812,8,0.0515,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold2,v5_e05,6,good,A_good_known,False,5,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.3788,13,0.2143,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold2,v5_e08,7,good,A_good_known,False,6,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.8837,11,0.0521,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold2,v5_e11,8,good,A_good_known,False,7,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.3059,9,0.1376,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold2,v5_e14,9,good,A_good_known,False,8,vial_fill_video_5,2,2,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.7656,5,0.0872,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold2,v5_e17,10,good,A_good_known,False,9,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.8899,8,0.0966,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold2,v5_e20,11,good,A_good_known,False,10,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9965,10,0.0014,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold2,v5_e23,12,good,A_good_known,False,11,vial_fill_video_5,2,1,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.6391,12,0.2639,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold2,v5_e26,13,good,A_good_known,False,12,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.8803,12,0.0985,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold2,v5_e29,14,good,A_good_known,False,13,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.5872,5,0.1572,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold2,field_v02,41,good,A_good_known,False,unknown,20261028_204828_798377,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9981,11,0.0008,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold2,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9975,5,0.0008,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold2,field_v17,99,bad,C_bad_later,False,60,20261028_210516_104156,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9999,41,0.0,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold2,field_v27,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9905,13,0.0067,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.9938,9,0.0045,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.9895,13,0.0046,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.9734,5,0.0165,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,v5_e12,8,good,A_good_known,False,7,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,14,0.7388,8,0.1043,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold3,v5_e15,9,good,A_good_known,False,8,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.5999,11,0.288,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold3,v5_e18,10,good,A_good_known,False,9,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.5506,10,0.3891,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold3,v5_e21,11,good,A_good_known,False,10,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9179,5,0.0587,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,v5_e24,12,good,A_good_known,False,11,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.6668,13,0.3033,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold3,v5_e27,13,good,A_good_known,False,12,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.961,12,0.019,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,v5_e30,14,good,A_good_known,False,13,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,14,0.6212,7,0.192,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold3,field_v03,41,good,A_good_known,False,unknown,20261028_204828_798377,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9774,12,0.0188,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9937,5,0.0043,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9995,8,0.0002,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold3,field_v28,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9976,5,0.0011,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold4,field_v04,41,good,A_good_known,False,unknown,20261028_204828_798377,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9996,13,0.0003,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold4,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.8557,9,0.1326,unknown_uncertain,True,False,1.0
+cv_physical_vial,full,fold4,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9991,8,0.0008,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold4,field_v29,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9989,8,0.0008,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold5,field_v05,41,good,A_good_known,False,unknown,20261028_204828_798377,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.992,12,0.0068,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold5,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9994,10,0.0002,accepted_observation,True,True,1.0
+cv_physical_vial,full,fold5,field_v30,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9705,8,0.0264,accepted_observation,True,True,1.0
+unfamiliar_recipe,full,withheld_5+8,v5_e02,5,good,A_good_known,False,unknown,vial_fill_video_5,2,3,False,10 11 12 13 14 41 6 7 9 99,9,0.8324,10,0.0681,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_5+8,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,False,10 11 12 13 14 41 6 7 9 99,9,0.9559,11,0.0149,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_5+8,v5_e11,8,good,A_good_known,False,7,vial_fill_video_5,2,3,False,10 11 12 13 14 41 6 7 9 99,9,0.5728,13,0.2205,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_5+8,v5_e12,8,good,A_good_known,False,7,vial_fill_video_5,3,2,False,10 11 12 13 14 41 6 7 9 99,14,0.9334,13,0.0396,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_6,v5_e05,6,good,A_good_known,False,5,vial_fill_video_5,2,3,False,10 11 12 13 14 41 5 7 8 9 99,12,0.5161,13,0.2355,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_6,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,False,10 11 12 13 14 41 5 7 8 9 99,12,0.7658,14,0.2252,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_7,v5_e08,7,good,A_good_known,False,6,vial_fill_video_5,2,3,False,10 11 12 13 14 41 5 6 8 9 99,11,0.5654,14,0.3935,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_7,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,False,10 11 12 13 14 41 5 6 8 9 99,11,0.7143,8,0.1986,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_9,v5_e14,9,good,A_good_known,False,8,vial_fill_video_5,2,2,False,10 11 12 13 14 41 5 6 7 8 99,10,0.7241,5,0.1593,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_9,v5_e15,9,good,A_good_known,False,8,vial_fill_video_5,3,3,False,10 11 12 13 14 41 5 6 7 8 99,11,0.9385,5,0.041,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_10,v5_e17,10,good,A_good_known,False,9,vial_fill_video_5,2,3,False,11 12 13 14 41 5 6 7 8 9 99,8,0.7637,9,0.149,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_10,v5_e18,10,good,A_good_known,False,9,vial_fill_video_5,3,3,False,11 12 13 14 41 5 6 7 8 9 99,9,0.9597,8,0.0158,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_11,v5_e20,11,good,A_good_known,False,10,vial_fill_video_5,2,3,False,10 12 13 14 41 5 6 7 8 9 99,9,0.9794,12,0.0088,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_11,v5_e21,11,good,A_good_known,False,10,vial_fill_video_5,3,3,False,10 12 13 14 41 5 6 7 8 9 99,9,0.8202,5,0.1208,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_12,v5_e23,12,good,A_good_known,False,11,vial_fill_video_5,2,1,False,10 11 13 14 41 5 6 7 8 9 99,13,0.8554,6,0.065,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_12,v5_e24,12,good,A_good_known,False,11,vial_fill_video_5,3,2,False,10 11 13 14 41 5 6 7 8 9 99,13,0.8835,6,0.0683,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_13,v5_e26,13,good,A_good_known,False,12,vial_fill_video_5,2,3,False,10 11 12 14 41 5 6 7 8 9 99,12,0.9685,8,0.0131,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_13,v5_e27,13,good,A_good_known,False,12,vial_fill_video_5,3,2,False,10 11 12 14 41 5 6 7 8 9 99,12,0.6937,6,0.1258,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_14,v5_e29,14,good,A_good_known,False,13,vial_fill_video_5,2,3,False,10 11 12 13 41 5 6 7 8 9 99,8,0.5804,5,0.156,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_14,v5_e30,14,good,A_good_known,False,13,vial_fill_video_5,3,3,False,10 11 12 13 41 5 6 7 8 9 99,8,0.5046,6,0.2336,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_41,field_v02,41,good,A_good_known,False,unknown,20261028_204828_798377,2,3,False,10 11 12 13 14 5 6 7 8 9 99,12,0.8388,11,0.0788,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_41,field_v03,41,good,A_good_known,False,unknown,20261028_204828_798377,3,3,False,10 11 12 13 14 5 6 7 8 9 99,12,0.8303,13,0.1624,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_41,field_v04,41,good,A_good_known,False,unknown,20261028_204828_798377,4,3,False,10 11 12 13 14 5 6 7 8 9 99,13,0.8966,11,0.0494,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_41,field_v05,41,good,A_good_known,False,unknown,20261028_204828_798377,5,3,False,10 11 12 13 14 5 6 7 8 9 99,12,0.9745,13,0.0093,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_99,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,False,10 11 12 13 14 41 5 6 7 8 9,8,0.4535,5,0.4466,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_99,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,False,10 11 12 13 14 41 5 6 7 8 9,5,0.5285,8,0.3637,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_99,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,False,10 11 12 13 14 41 5 6 7 8 9,9,0.9265,41,0.0692,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_99,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,False,10 11 12 13 14 41 5 6 7 8 9,8,0.6614,9,0.1761,unknown_uncertain,False,False,1.0
+unfamiliar_recipe,full,withheld_99,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,False,10 11 12 13 14 41 5 6 7 8 9,8,0.9917,13,0.0028,accepted_observation,False,False,1.0
+unfamiliar_recipe,full,withheld_99,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,False,10 11 12 13 14 41 5 6 7 8 9,8,0.8757,10,0.0652,unknown_uncertain,False,False,1.0
+recording_holdout_99,full,heldout_20261028_205337_785081,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9782,5,0.019,accepted_observation,True,True,1.0
+recording_holdout_99,full,heldout_20261028_205337_785081,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9652,5,0.0312,accepted_observation,True,True,1.0
+recording_holdout_99,full,heldout_20261028_205337_785081,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.5524,9,0.4187,unknown_uncertain,True,False,1.0
+recording_holdout_99,full,heldout_20261028_210516_104156,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9998,41,0.0001,accepted_observation,True,True,1.0
+recording_holdout_99,full,heldout_20261028_210516_104156,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9958,8,0.004,accepted_observation,True,True,1.0
+recording_holdout_99,full,heldout_20261028_210516_104156,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9969,8,0.0017,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e01,5,bad,C_bad_first,True,unknown,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.7339,8,0.2361,unknown_uncertain,True,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e01,5,bad,C_bad_first,True,unknown,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.4447,7,0.2251,unknown_uncertain,True,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e02,5,good,A_good_known,False,unknown,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.9998,6,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e02,5,good,A_good_known,False,unknown,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.9977,9,0.0009,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.9994,8,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.9993,9,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e04,6,bad,C_bad_first,True,5,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.5854,8,0.3677,unknown_uncertain,False,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e04,6,bad,C_bad_first,True,5,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,5,0.8808,10,0.0827,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e05,6,good,A_good_known,False,5,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.9992,5,0.0005,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e05,6,good,A_good_known,False,5,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.9973,12,0.0008,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.9996,12,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,6,0.9988,12,0.0006,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e07,7,bad,C_bad_first,True,6,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.3528,14,0.1299,unknown_uncertain,True,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e07,7,bad,C_bad_first,True,6,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.532,5,0.2305,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e08,7,good,A_good_known,False,6,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.9989,14,0.0007,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e08,7,good,A_good_known,False,6,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.9984,14,0.0008,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.9995,11,0.0003,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.9995,8,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e10,8,bad,C_bad_first,True,7,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.5162,14,0.3014,unknown_uncertain,False,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e10,8,bad,C_bad_first,True,7,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,7,0.5472,5,0.2248,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e11,8,good,A_good_known,False,7,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.9992,9,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e11,8,good,A_good_known,False,7,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.9976,9,0.001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e12,8,good,A_good_known,False,7,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.9999,10,0.0,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e12,8,good,A_good_known,False,7,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,8,0.9977,14,0.0016,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e13,9,bad,C_bad_first,True,8,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.6651,8,0.2586,unknown_uncertain,True,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e13,9,bad,C_bad_first,True,8,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.6746,9,0.1878,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e14,9,good,A_good_known,False,8,vial_fill_video_5,2,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.9993,5,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e14,9,good,A_good_known,False,8,vial_fill_video_5,2,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.9935,10,0.0031,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e15,9,good,A_good_known,False,8,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.999,8,0.0009,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e15,9,good,A_good_known,False,8,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.9989,11,0.0007,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e16,10,bad,C_bad_first,True,9,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.816,8,0.1723,unknown_uncertain,False,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e16,10,bad,C_bad_first,True,9,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.6852,10,0.1419,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e17,10,good,A_good_known,False,9,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.9991,9,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e17,10,good,A_good_known,False,9,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.9979,8,0.0012,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e18,10,good,A_good_known,False,9,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.9987,5,0.0006,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e18,10,good,A_good_known,False,9,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,10,0.9958,9,0.0032,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e19,11,bad,C_bad_first,True,10,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9914,8,0.0055,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e19,11,bad,C_bad_first,True,10,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9954,10,0.0032,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e20,11,good,A_good_known,False,10,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9989,9,0.0005,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e20,11,good,A_good_known,False,10,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9996,9,0.0003,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e21,11,good,A_good_known,False,10,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9988,7,0.0005,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e21,11,good,A_good_known,False,10,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,11,0.9978,5,0.001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e22,12,bad,C_bad_first,True,11,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.9898,11,0.0086,accepted_observation,False,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e22,12,bad,C_bad_first,True,11,vial_fill_video_5,1,2,True,10 11 12 13 14 41 5 6 7 8 9 99,9,0.924,11,0.0699,accepted_observation,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e23,12,good,A_good_known,False,11,vial_fill_video_5,2,1,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.9997,7,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e23,12,good,A_good_known,False,11,vial_fill_video_5,2,1,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.9977,13,0.0011,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e24,12,good,A_good_known,False,11,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.9999,6,0.0,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e24,12,good,A_good_known,False,11,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.9993,13,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e25,13,bad,C_bad_first,True,12,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.8599,41,0.0915,unknown_uncertain,True,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e25,13,bad,C_bad_first,True,12,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,12,0.6359,13,0.3135,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e26,13,good,A_good_known,False,12,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.9987,12,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e26,13,good,A_good_known,False,12,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.9986,12,0.0011,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e27,13,good,A_good_known,False,12,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.9992,12,0.0003,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e27,13,good,A_good_known,False,12,vial_fill_video_5,3,2,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.9996,14,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e28,14,bad,C_bad_first,True,13,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.7864,8,0.1317,unknown_uncertain,False,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e28,14,bad,C_bad_first,True,13,vial_fill_video_5,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,13,0.9866,8,0.0071,accepted_observation,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e29,14,good,A_good_known,False,13,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,14,0.9975,8,0.0012,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e29,14,good,A_good_known,False,13,vial_fill_video_5,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,14,0.9984,5,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,v5_e30,14,good,A_good_known,False,13,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,14,0.9983,7,0.0013,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,v5_e30,14,good,A_good_known,False,13,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,14,0.9998,6,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v02,41,good,A_good_known,False,unknown,20261028_204828_798377,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.999,13,0.0005,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v02,41,good,A_good_known,False,unknown,20261028_204828_798377,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9995,12,0.0003,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v03,41,good,A_good_known,False,unknown,20261028_204828_798377,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.999,12,0.0008,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v03,41,good,A_good_known,False,unknown,20261028_204828_798377,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9995,12,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v04,41,good,A_good_known,False,unknown,20261028_204828_798377,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9996,13,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v04,41,good,A_good_known,False,unknown,20261028_204828_798377,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9998,13,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v05,41,good,A_good_known,False,unknown,20261028_204828_798377,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9994,11,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v05,41,good,A_good_known,False,unknown,20261028_204828_798377,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.9987,12,0.0011,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v06,99,bad,C_bad_first,True,41,20261028_205337_785081,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.696,41,0.302,unknown_uncertain,True,False,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v06,99,bad,C_bad_first,True,41,20261028_205337_785081,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,41,0.8482,99,0.1458,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9995,5,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v07,99,good,A_good_known,False,41,20261028_205337_785081,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9997,5,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9962,5,0.001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v08,99,good,A_good_known,False,41,20261028_205337_785081,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9997,5,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9999,41,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v09,99,good,A_good_known,False,41,20261028_205337_785081,4,1,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9983,9,0.0015,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v16,99,bad,C_bad_first,True,60,20261028_210516_104156,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9328,14,0.0503,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v16,99,bad,C_bad_first,True,60,20261028_210516_104156,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9981,8,0.0016,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v17,99,bad,C_bad_later,False,60,20261028_210516_104156,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9997,6,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v17,99,bad,C_bad_later,False,60,20261028_210516_104156,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,1.0,41,0.0,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9996,41,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v18,99,good,A_good_known,False,60,20261028_210516_104156,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9999,41,0.0,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9997,5,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v19,99,good,A_good_known,False,60,20261028_210516_104156,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9999,8,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9992,14,0.0005,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v20,99,good,A_good_known,False,60,20261028_210516_104156,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,1.0,14,0.0,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v26,99,unlabeled,unknown_quality,True,50,20261028_211517_586312,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9477,9,0.0414,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v26,99,unlabeled,unknown_quality,True,50,20261028_211517_586312,1,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9941,8,0.0044,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v27,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9941,5,0.0029,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v27,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9974,13,0.0014,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v28,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9983,8,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v28,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,3,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9998,5,0.0001,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v29,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9997,9,0.0002,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v29,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,4,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9994,8,0.0004,accepted_observation,True,True,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v30,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.9977,5,0.001,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v30,99,unlabeled,unknown_quality,False,50,20261028_211517_586312,5,3,True,10 11 12 13 14 41 5 6 7 8 9 99,99,0.996,8,0.0037,accepted_observation,True,True,1.0
