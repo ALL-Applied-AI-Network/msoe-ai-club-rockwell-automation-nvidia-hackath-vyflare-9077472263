@@ -1,0 +1,8 @@
+# Model 3 v2. Tested with Python 3.13.18 and the versions in the comments (Linux x86_64, CPU only).
+# Inference needs numpy + pillow only. Dataset building also needs opencv, pandas and openpyxl.
+numpy>=1.26          # tested 2.5.3
+pillow>=10           # tested 12.3.0
+pandas>=2.2          # tested 3.0.5
+opencv-python-headless>=4.9   # tested 5.0.0
+openpyxl>=3.1        # tested 3.1.5 (reads recipes.xlsx)
+tabulate>=0.9        # tested 0.10.0 (markdown tables in the evaluation report)

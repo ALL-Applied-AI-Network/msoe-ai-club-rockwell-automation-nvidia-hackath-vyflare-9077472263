@@ -1,0 +1,10 @@
+scheme,method,vials,coverage,MAE_pp_all,MAE_pp_predicted_only,MAE_pp_t100,MAE_pp_t200,MAE_pp_t400,MAE_pp_pos1,MAE_pp_pos2,MAE_pp_pos3plus,MAE_pp_frame_level,raw_valid_rate,output_valid_rate
+cross_session,colour_linear,30.0,1.0,14.35,14.35,21.05,8.52,13.48,29.35,10.16,10.74,14.44,0.73,1.0
+cross_session,mean_composition,30.0,1.0,31.25,31.25,45.25,20.84,27.68,31.25,31.25,31.25,31.25,1.0,1.0
+cross_session,model3_absorbance,30.0,0.83,16.47,14.63,24.13,13.17,12.11,30.38,13.14,12.94,17.02,0.8,1.0
+loro_v5,colour_linear,30.0,1.0,15.67,15.67,18.55,16.09,12.38,22.94,11.66,12.41,15.57,0.73,1.0
+loro_v5,mean_composition,30.0,1.0,22.12,22.12,25.25,21.55,19.57,22.12,22.12,22.12,22.12,1.0,1.0
+loro_v5,model3_absorbance,30.0,1.0,11.69,11.69,13.41,11.13,10.54,22.35,6.73,5.99,11.6,0.77,1.0
+vial3fold_v5,colour_linear,30.0,1.0,12.78,12.78,15.14,12.19,11.03,21.96,8.66,7.73,12.84,0.87,1.0
+vial3fold_v5,mean_composition,30.0,1.0,19.91,19.91,22.72,19.4,17.61,19.91,19.91,19.91,19.91,1.0,1.0
+vial3fold_v5,model3_absorbance,30.0,1.0,11.31,11.31,13.65,10.18,10.1,22.19,6.41,5.32,11.21,0.83,1.0

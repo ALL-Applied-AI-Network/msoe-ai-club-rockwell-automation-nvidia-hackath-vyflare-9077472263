@@ -1,0 +1,66 @@
+{
+  "model_id": "model3-absorbance-linear",
+  "model_version": "2.0.0",
+  "features": [
+    "A_R",
+    "A_G",
+    "A_B"
+  ],
+  "targets": [
+    "t200",
+    "t400"
+  ],
+  "derived": "t100 = 1 - t200 - t400, then Euclidean projection onto the unit simplex",
+  "coef": [
+    [
+      -0.527336,
+      1.711422,
+      -0.747612
+    ],
+    [
+      0.288626,
+      0.61329,
+      -0.483068
+    ]
+  ],
+  "intercept": [
+    0.03657,
+    -0.024459
+  ],
+  "sha256_of_weights": "f995c510f6375c83b63ae369d0a9af0e894e39320c6ed1b933cafa95d932db31",
+  "training_feature_min": [
+    0.0559,
+    0.1914,
+    0.0518
+  ],
+  "training_feature_max": [
+    1.742,
+    1.1258,
+    1.2343
+  ],
+  "trained_on": "video 5, training-eligible vials (2nd and 3rd of each recipe batch), 4 finished frames each",
+  "training_vials": [
+    "video5:v02",
+    "video5:v03",
+    "video5:v05",
+    "video5:v06",
+    "video5:v08",
+    "video5:v09",
+    "video5:v11",
+    "video5:v12",
+    "video5:v14",
+    "video5:v15",
+    "video5:v17",
+    "video5:v18",
+    "video5:v20",
+    "video5:v21",
+    "video5:v23",
+    "video5:v24",
+    "video5:v26",
+    "video5:v27",
+    "video5:v29",
+    "video5:v30"
+  ],
+  "training_rows": 80,
+  "created_utc": "2026-10-30T23:04:19+00:00"
+}

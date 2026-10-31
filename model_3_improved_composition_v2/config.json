@@ -1,0 +1,42 @@
+{
+  "model_id": "model3-absorbance-linear",
+  "model_version": "2.0.0",
+  "task": "mixture_composition",
+  "output_order": ["t100", "t200", "t400"],
+  "output_units": "volume fractions of the commanded recipe (sum to 1); not millilitres, not measured composition",
+  "checkpoint": "artifacts/checkpoint.json",
+
+  "camera": {
+    "frame_size_wh": [640, 480],
+    "note": "ROI is calibrated to the vial_fill station view at 640x480. Other sizes or poses are rejected, not resized."
+  },
+  "preprocessing": {
+    "liquid_roi_xyxy": [295, 275, 335, 412],
+    "colour_space": "sRGB -> linear light (IEC 61966-2-1)",
+    "absorbance": "A = -log10((full_linear + 1e-3) / (empty_linear + 1e-3)) per channel",
+    "liquid_pixel_min_mean_absorbance": 0.05,
+    "pixel_aggregation": "median over liquid pixels",
+    "frame_aggregation": "median absorbance over all finished frames supplied for one vial"
+  },
+  "quality": {
+    "black_floor_srgb": 15.0,
+    "saturation_headroom_linear": 2.0,
+    "too_dark_min_saturated_channels": 2,
+    "min_liquid_coverage": 0.5,
+    "max_frame_spread_absorbance": 0.15,
+    "training_range_margin_absorbance": 0.15,
+    "max_raw_simplex_violation": 0.10,
+    "notes": "black_floor_srgb is a camera property: ~15 for the Oct 28 field camera, ~2 for the video 5 camera. Set it per station."
+  },
+  "segmentation": {
+    "motion_box_xyxy": [280, 250, 350, 420],
+    "motion_spike": 12.0,
+    "min_vial_seconds": 15.0,
+    "empty_window_seconds_after_arrival": [1.0, 4.0],
+    "finished_window_seconds": 1.0,
+    "finished_window_end_before_move_seconds": 0.3,
+    "finished_window_max_colour_range_srgb": 6.0,
+    "min_colour_change_srgb": 5.0
+  },
+  "device": "cpu (NumPy only; no GPU needed)"
+}
