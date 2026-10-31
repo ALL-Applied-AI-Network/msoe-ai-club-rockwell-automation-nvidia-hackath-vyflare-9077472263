@@ -21,16 +21,18 @@ correction targets the real `RemoteCosmosModel` client in `backend/models.py`.
 | Gateway-specific context and media fields | `image`, `frame_id`, `model`, `prompt` multipart fields | Match the reference backend without copying its measurement models |
 | Fixed appearance question | Forward the caller's prompt into inference | Preserve the backend's requested inspection task |
 | Custom evidence envelope | Echoed IDs, `mode=real`, text and actual execution metadata | Satisfy the client's real-worker validation |
-| Separate integration terminology tied to Amy | Pinned reference branch and commit, updated guides | Make ownership and implementation target explicit |
+| Ambiguous integration reference | Pinned reference branch and commit, updated guides | Make ownership and implementation target explicit |
 | Separate inference request paths | One shared nonblocking inference gate | Prevent overlapping inference on the same resident model |
 
 `scripts/model4_worker_contract.py` registers the route. Changes to
 `serve_spark_adapter.py` collect runtime metadata and support explicit prompt
 overrides while keeping the browser tester's original prompts. Input validation,
 image cleanup, busy responses and inference errors are covered by tests.
-The optional gateway source uses `model4` / `model4_response` naming; it is not
-required by the reference backend. The older deployed gateway is not promoted
-as the current integration route.
+The subsequent branch cleanup removed the obsolete gateway, client, context
+configuration and associated tests and guides. Only the direct reference-client
+integration remains. The consolidated PDF describing the retired gateway was
+also removed; prior revisions remain available through Git history. Other
+training reports remain because they describe the actual Cosmos experiments.
 
 ## Model and hardware impact
 
@@ -56,7 +58,7 @@ alternative, not a claim of feature parity with the native worker.
 
 ## Validation
 
-All **45 local tests passed**, including five new worker-contract tests. The
+Before cleanup, all **45 local tests passed**, including five new worker-contract tests. The
 tests cover request validation, prompt preservation, expected response fields,
 verified hardware requirements, shared concurrency exclusion, cleanup and
 failure recovery. Tests initially encountered Windows sandbox temporary-file
@@ -90,14 +92,32 @@ The direct client accepted the response, establishing protocol compatibility
 with the pinned implementation. The check does not exercise the frontend or
 the reference backend's complete Model 4 route.
 
-## Remaining boundaries
+## Branch cleanup verification
+
+The cleanup removed three obsolete gateway/client modules, their example context,
+13 gateway-specific tests, two retired guides and the consolidated PDF describing
+that integration. Worker HTTP dependencies are now `requirements-worker.txt`.
+The remaining **32 tests passed**, including all five direct-worker contract
+tests. The actual reference branch client check passed again after cleanup,
+with evidence in `outputs/model4-backend-contract/client-cleanup-check.json`.
+The earlier count of 45 includes the 13 deliberately removed gateway tests.
+
+The reference was freshly fetched and remains at commit `956d5d2`. Both paths
+derive from Cosmos3-Nano, but the reference defaults to the native Framework
+worker while this branch serves an extracted reasoner with our Version 1 LoRA.
+Request/response compatibility is confirmed; identical weights, guardrails and
+prediction behavior are not claimed. No model retraining was performed during
+cleanup. Retained text and PDF reports were checked for retired integration
+references. Git history remains intact for auditability.
+
+## Application verification remaining
 
 The team's complete Model 4 backend/frontend handoff remains untested because
 its running URL was unavailable and the user deferred that check. Direct worker
 compatibility does not establish a combined application deployment or factory
 accuracy. No Model 4 implementation, calibration or decision policy was copied,
-retrained or replaced. Earlier unmerged Amy prototype work remains parked and
-excluded from these changes.
+retrained or replaced. Separate unmerged prototype worktrees are outside the
+tracked branch contents and were not imported into this integration.
 
 Cosmos still supplies appearance observations rather than measured ingredient
 identity, delivery amount, full event history or a release decision. The next

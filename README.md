@@ -183,9 +183,8 @@ available on the same service. No new weights or Model 4 measurement code are
 introduced by this interface change.
 
 See [the current integration guide](reports/model4-backend-integration-guide.md)
-and [the correction report](reports/model4-integration-correction.md). Earlier
-Amy companion reports are historical and superseded for deployment. The optional
-companion gateway is not needed by the reference backend. This LoRA worker is an
+and [the correction report](reports/model4-integration-correction.md).
+The branch contains the direct worker integration only. This LoRA worker is an
 experimental alternative to its native Cosmos worker; it does not supply the
 native worker's Framework guardrail screening.
 

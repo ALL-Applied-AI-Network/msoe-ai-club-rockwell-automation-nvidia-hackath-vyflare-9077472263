@@ -1,7 +1,7 @@
 # Cosmos worker for the recipe-detection backend
 
 Integration target: [model4/recipe-detection-backend-integration](https://github.com/ALL-Applied-AI-Network/msoe-ai-club-rockwell-automation-nvidia-hackath-vyflare-9077472263/tree/model4/recipe-detection-backend-integration), commit `956d5d24d19f80b99f85d4841e678d20d533e0fb`.
-This is the current reference, replacing the earlier Amy companion direction.
+This is the sole integration reference for this branch.
 
 ## Connect the existing backend
 
@@ -70,11 +70,10 @@ Single-frame inspection also cannot recover a full dispensing history. Photo
 behavior remains exploratory because the active Version 1 adapter trained on
 videos.
 
-The previous port 7866 companion gateway is not required for this connection.
-Its local source now uses `model4` and `model4_response` terminology; an older
-deployed instance may still expose the historical schema. Do not configure the
-reference backend to use that gateway. Historical reports and their PDF remain
-records of earlier work, not the current deployment instructions.
+Use the direct worker on port 7865. The obsolete port 7866 gateway, its client,
+configuration, tests and deployment guides have been removed from this branch.
+Earlier revisions remain recoverable through Git history. An older deployment
+outside this checkout may still exist; it is not the integration endpoint.
 
 ## Verification boundary
 
@@ -90,6 +89,7 @@ To repeat the actual reference-client check from the repository root, fetch the
 reference branch first, then use a Python environment with Flask and Pillow:
 
 ```bash
+python -m pip install -r requirements-worker.txt
 python scripts/check_model4_reference_client.py --output outputs/contract-check-new.json
 python scripts/check_model4_reference_client.py --url http://127.0.0.1:8002/backend/predict --image /path/to/vial.png --output outputs/live-check-new.json
 ```
