@@ -172,6 +172,17 @@ The completed Spark pilot results and remaining failure cases are recorded in [r
 
 The private-network Spark tester supports base/adapter comparisons, video and exploratory photo uploads, result downloads, and optional reviewed feedback. See [reports/model-tester-guide.md](reports/model-tester-guide.md) for access and service instructions.
 
+## Cosmos alongside Amy's models
+
+The separate lightweight companion gateway attaches appearance observations to
+caller-provided vial/batch IDs and recording time windows. It delegates inference
+to the existing Version 1 worker, retains raw output and provenance, and can
+attach the existing Model 4 response without changing its measurements or review
+flags. It does not implement Amy's measurement models, tracking, tank identity,
+calibrated doses, volume estimates, production verdicts, or recipe learning.
+See [the companion guide](reports/cosmos-amy-companion-guide.md) and
+[implementation report](reports/cosmos-amy-companion-implementation.md).
+
 ## Synthetic image and real-video adaptation
 
 The earlier image exclusions describe the original native video-only recipe.

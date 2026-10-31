@@ -1,0 +1,10 @@
+{
+  "run_id": "example-run",
+  "vial_id": "example-vial",
+  "batch_id": "example-batch",
+  "camera_id": "vial-fill-camera",
+  "timebase_id": "source-video-elapsed-seconds",
+  "stage": "filling",
+  "clip_start_s": 0,
+  "binding_verified": false
+}
