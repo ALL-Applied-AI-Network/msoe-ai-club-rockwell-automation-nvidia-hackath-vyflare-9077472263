@@ -13,13 +13,15 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r backend/requirements-integration.lock.txt
 pnpm install --frozen-lockfile
 .\.venv\Scripts\Activate.ps1
+$env:MODEL_MODE = "real"
+$env:ENABLED_MODELS = "measurements,model4"
 pnpm run dev:integrated
 ```
 
-Open http://localhost:5173/analyze or http://localhost:5173/experiments.
-No `.env` is needed: Python defaults to real CPU measurements on port 8000,
-Express to port 8787, and Vite to port 5173. If an old `backend/.env` exists,
-set `MODEL_MODE=real` and `ENABLED_MODELS=measurements` for the CPU workflow.
+Open http://localhost:5173/inspect. The original `/analyze` and `/experiments`
+workflows remain available. No `.env` is needed: the commands above enable real
+CPU measurements and Model 4 on port 8000, Express uses port 8787, and Vite uses
+port 5173. Without the environment settings, Python defaults to measurements only.
 
 Without PowerShell activation, start two terminals:
 
@@ -30,16 +32,44 @@ Without PowerShell activation, start two terminals:
 pnpm run dev
 ```
 
-On macOS/Linux use `.venv/bin/python` and `source .venv/bin/activate`.
+On macOS/Linux use `.venv/bin/python` and `source .venv/bin/activate`, then run
+`MODEL_MODE=real ENABLED_MODELS=measurements,model4 pnpm run dev:integrated`.
 Set `INFERENCE_URL` on Express when Python runs elsewhere (default:
 `http://127.0.0.1:8000`). Keep the gateway private or use its optional shared
 `INFERENCE_TOKEN`, configured identically on Node and Python.
 
 ## Available workflows
 
+- **Solution overview (`/overview`):** actual installed evidence counts, full
+  reference-bank size, current model configuration, and workflow links. Simulated
+  six-case totals are excluded. Workspace comparison results are not stored as runs.
+- **Recipe library (`/recipes`):** all 52 integrity-checked nominal references,
+  including 41, 50, 60 and 99, plus a separate unmatched-candidate collection read
+  from the Python observation service. Candidates are in memory and disappear on
+  restart. The reference-bank dosing schema and observed dispense-pattern schema
+  remain distinct; video/model observation ingestion is pending. No automatic
+  promotion or recipe discovery is performed by the Model 4 comparison panel.
+- **Inspection workspace (`/inspect`):** Recorded mode reviews videos 1–2 with
+  sampled visual annotations for 22 fill sequences, native playback, and extraction
+  of three post-fill frames. Original videos must be installed in
+  `cosmos-original-dataset/videos`; an uploaded video can also be reviewed locally.
+  Recipes remain unknown until a reference is explicitly selected for comparison.
+  Video sequence IDs do not establish batch position.
+- **Model 4 comparison:** enable `ENABLED_MODELS=measurements,model4` with
+  `MODEL_MODE=real` in Python before startup. Supply reliable vial/batch IDs and
+  batch position, a comparison recipe, and three registered 640×480 images.
+  The UI shows estimated proportions and differences from the selected reference,
+  flags the first vial separately, and requires review. It does not identify a
+  recipe, establish delivered volume, or automatically release a vial.
+- **Live mode:** camera selection, preview, and disconnect controls. Browser camera
+  access requires localhost or HTTPS and permission. Automated tracking, fill-end
+  detection, and live frame capture are pending integration. Model 2 is pending;
+  Model 3 is not connected; Cosmos retains its existing prompt-analysis workflow.
 - **Analyze an image:** real upload through React -> Express -> Python. The CPU
   method measures average RGB in a user-selected region. It requires no weights
   or GPU, does not segment liquid, and abstains from defect and volume judgments.
+  Mouse/touch rectangle drawing and numeric coordinates update each other; new
+  image uploads reset the selection. The selected area is sent to real analysis.
 - **Recorded experiments:** 30 saved anomaly results, thumbnail images, and Cosmos
   clip observations joined by vial ID. These come from different data pipelines;
   they are saved evidence, not new inference or a jointly validated model.
@@ -49,6 +79,15 @@ Set `INFERENCE_URL` on Express when Python runs elsewhere (default:
 
 Uploads/results are not persisted by this console. A remote Cosmos runtime can
 retain its own inference artifacts; inspect its runtime policy before using it.
+
+Recorded-video geometry tools add manual vial boxes and sloped dashed surface
+guides at explicit timestamps. Reuse a saved box, mark the surface in another
+frame, save, and optionally interpolate between keyframes. Guides are scoped to
+the reviewed vial and hidden outside saved time ranges, with coordinates mapped
+to the visible video content even when it is letterboxed. They are not object
+detection, liquid segmentation, camera registration, or volume calibration. They
+do not crop/resize or draw into Model 4 input images. Guides live only in the
+current recorded-video page and reset on video/mode changes or navigation.
 
 ## Connect the vial-only recipe classifier
 
@@ -94,7 +133,8 @@ pnpm run test:integration
 
 The integration smoke test needs a production build and uses temporary ports 18000
 and 18787. It tests a known red image through the actual HTTP proxy into real Python
-code, plus recorded evidence, thumbnails and SPA routes. Set `PYTHON` to the Python
+code, plus frozen Model 4 inference through the proxy, normal/first-vial review,
+recipe references, recorded evidence, thumbnails and SPA routes. Set `PYTHON` to the Python
 executable if your environment differs from `.venv`. CI uses the same workflow.
 
 ## Deployment and branch scope

@@ -4,12 +4,16 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { appData, cases, recipes } from "./data.js";
 import { inferenceRouter } from "./inference.js";
+import { inspectionRouter } from "./inspection.js";
+import { recipeLibraryRouter } from "./recipe-library.js";
 import { readFileSync } from "node:fs";
 
 const app = express();
 const port = Number(process.env.PORT ?? 8787);
 app.use(cors());
 app.use("/api/inference", inferenceRouter());
+app.use("/api/inspection", inspectionRouter());
+app.use("/api/recipe-library", recipeLibraryRouter());
 app.use(express.json());
 
 app.get("/api/experiments", (_req, res) => {
@@ -24,7 +28,7 @@ app.get("/api/experiments", (_req, res) => {
   });
 });
 
-app.get("/api/health", (_req, res) => res.json({ status: "ok", mode: "experimental-workspace", inspectionMode: "recorded-demo", machineControl: false }));
+app.get("/api/health", (_req, res) => res.json({ status: "ok", mode: "experimental-workspace", inspectionMode: "recorded-review-and-camera-preview", automaticInspection: false, machineControl: false }));
 app.get("/api/bootstrap", (_req, res) => res.json(appData));
 app.get("/api/cases", (_req, res) => res.json(cases));
 app.get("/api/cases/:id", (req, res) => {
@@ -38,6 +42,6 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const clientDist = path.resolve(here, "../../../../client/dist");
 app.use("/experiment-thumbs", express.static(path.resolve("fluid-mixing-anomaly-detection/demo/thumbs")));
 app.use(express.static(clientDist));
-app.get("/{*splat}", (_req, res) => res.sendFile(path.join(clientDist, "index.html")));
+app.get("/{*splat}", (_req, res) => res.sendFile("index.html", { root: clientDist }));
 
 app.listen(port, "0.0.0.0", () => console.log(`Vyflare API listening on port ${port}`));

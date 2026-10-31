@@ -23,12 +23,12 @@ export const recipes: Recipe[] = [
 }));
 
 const profiles: Array<[number,number,string,string,Decision,string,string,number|null,string,string]> = [
-  [1,5,"vial-01.jpg","2026-09-23T19:47:11.630429","MATCH","Balanced violet","#6e5c89",0.62,"CONFIRMED","Recorded frame aligns with the predefined simulated recipe fixture."],
-  [4,6,"vial-04.jpg","2026-09-23T19:49:28.350582","MISMATCH","Deep orange","#a9511e",0.66,"IN_REVIEW","Observed color differs from the documented pale-orange appearance."],
-  [10,8,"vial-10.jpg","2026-09-23T19:54:26.002825","MISMATCH","Muted violet","#665b78",0.38,"UNREVIEWED","Estimated liquid-height ratio is below the predefined demo expectation."],
-  [16,10,"vial-16.jpg","2026-09-23T20:00:48.210606","UNABLE_TO_DECIDE","Unavailable","#5d5d65",null,"UNREVIEWED","Glare obscures the liquid boundary; fill comparison cannot be completed."],
-  [22,12,"vial-22.jpg","2026-09-23T20:06:50.289027","MISMATCH","Orange dominant","#bd5b22",0.71,"IN_REVIEW","Color is orange-dominant; the documented expected appearance is unavailable."],
-  [28,14,"vial-28.jpg","2026-09-23T20:13:30.512836","MATCH","Pale blue","#7892a7",0.73,"CONFIRMED","The predefined simulated comparison found no mismatch."],
+  [1,5,"vial-01.jpg","2026-09-23T19:47:11.630429","MATCH","Balanced violet","#6e5c89",0.62,"CONFIRMED","Recorded Frame Aligns with the Predefined Simulated Recipe Fixture."],
+  [4,6,"vial-04.jpg","2026-09-23T19:49:28.350582","MISMATCH","Deep orange","#a9511e",0.66,"IN_REVIEW","Observed Color Differs from the Documented Pale-Orange Appearance."],
+  [10,8,"vial-10.jpg","2026-09-23T19:54:26.002825","MISMATCH","Muted violet","#665b78",0.38,"UNREVIEWED","Estimated Liquid-Height Ratio Is Below the Predefined Demo Expectation."],
+  [16,10,"vial-16.jpg","2026-09-23T20:00:48.210606","UNABLE_TO_DECIDE","Unavailable","#5d5d65",null,"UNREVIEWED","Glare Obscures the Liquid Boundary; Fill Comparison Cannot Be Completed."],
+  [22,12,"vial-22.jpg","2026-09-23T20:06:50.289027","MISMATCH","Orange dominant","#bd5b22",0.71,"IN_REVIEW","Color Is Orange-Dominant; the Documented Expected Appearance Is Unavailable."],
+  [28,14,"vial-28.jpg","2026-09-23T20:13:30.512836","MATCH","Pale blue","#7892a7",0.73,"CONFIRMED","The Predefined Simulated Comparison Found No Mismatch."],
 ];
 
 export const cases: InspectionCase[] = profiles.map((p, index) => {
@@ -57,15 +57,15 @@ export const cases: InspectionCase[] = profiles.map((p, index) => {
     decisionProvenance: "SIMULATED_DEMO_RESULT",
     finding,
     evidence: [
-      { label: "Source frame", value: file, source: "CSI Vial-Fill dataset / video 5", provenance: "DATASET_RECORD" },
-      { label: "Recipe record", value: `Recipe ${recipeId}`, source: "video5_vial_recipes.csv", provenance: "DATASET_RECORD" },
+      { label: "Source Frame", value: file, source: "CSI Vial-Fill dataset / video 5", provenance: "DATASET_RECORD" },
+      { label: "Recipe Record", value: `Recipe ${recipeId}`, source: "video5_vial_recipes.csv", provenance: "DATASET_RECORD" },
       { label: "Comparison", value: "Deterministic presentation fixture", source: "Vyflare demo adapter", provenance: "SIMULATED_DEMO_RESULT" }
     ],
     qualityFlags: blocking
       ? [{ code: "BOUNDARY_OCCLUDED", severity: "BLOCKING", message: "Glare prevents a reliable liquid-boundary estimate." }]
       : [{ code: "UNCALIBRATED", severity: "INFO", message: "Fill is image-relative; physical volume is not established." }],
     hypotheses: decision === "MISMATCH" && index > 0 ? [{
-      label: "Possible recipe-transition carryover",
+      label: "Possible Recipe-Transition Carryover",
       supportingEvidence: [`Previous included case used Recipe ${profiles[index - 1][1]}.`],
       missingEvidence: ["No residue or line-state sensor measurement is available."]
     }] : [],
@@ -75,8 +75,8 @@ export const cases: InspectionCase[] = profiles.map((p, index) => {
     reviewStatus: reviewStatus as InspectionCase["reviewStatus"],
     methodVersion: "demo-fixture/1.0",
     overlays: blocking ? [] : [
-      { id: `roi-${vial}`, kind: "REGION", label: "Vial measurement region", coordinates: { x: .42, y: .2, width: .18, height: .64 }, coordinateReference: "NORMALIZED_SOURCE_IMAGE_TOP_LEFT", provenance: "ILLUSTRATIVE_OVERLAY" },
-      { id: `boundary-${vial}`, kind: "BOUNDARY", label: "Estimated liquid boundary", coordinates: { x: .42, y: 1 - (fillRatio ?? 0), width: .18 }, coordinateReference: "NORMALIZED_SOURCE_IMAGE_TOP_LEFT", provenance: "ILLUSTRATIVE_OVERLAY" }
+      { id: `roi-${vial}`, kind: "REGION", label: "Vial Measurement Region", coordinates: { x: .42, y: .2, width: .18, height: .64 }, coordinateReference: "NORMALIZED_SOURCE_IMAGE_TOP_LEFT", provenance: "ILLUSTRATIVE_OVERLAY" },
+      { id: `boundary-${vial}`, kind: "BOUNDARY", label: "Estimated Liquid Boundary", coordinates: { x: .42, y: 1 - (fillRatio ?? 0), width: .18 }, coordinateReference: "NORMALIZED_SOURCE_IMAGE_TOP_LEFT", provenance: "ILLUSTRATIVE_OVERLAY" }
     ]
   };
 });

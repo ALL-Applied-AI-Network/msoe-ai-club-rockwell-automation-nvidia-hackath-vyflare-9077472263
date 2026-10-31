@@ -1,0 +1,605 @@
+{
+  "provenance": "sampled_visual_review",
+  "timingBasis": "encoded_video_seconds",
+  "note": "Local IDs identify reviewed fill sequences, not confirmed batch positions. Timing boundaries are sampling brackets. Recipe identities and quality are unknown.",
+  "videos": [
+    {
+      "id": "video-1",
+      "name": "Video 1",
+      "filename": "vial_fill_video_1.mp4",
+      "url": "/api/inspection/videos/video-1",
+      "duration": 1122.167,
+      "vials": [
+        {
+          "id": "V1-V01",
+          "label": "Video 1 \u00b7 Vial 1",
+          "appearance": "Blue",
+          "finalSampleSeconds": 28,
+          "flowEndUpper": 27.75,
+          "stationaryUntil": 30.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 6.5,
+              "startUpper": 6.75,
+              "endLower": 19.5,
+              "endUpper": 19.75,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 26,
+              "startUpper": 26.25,
+              "endLower": 27.5,
+              "endUpper": 27.75,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V02",
+          "label": "Video 1 \u00b7 Vial 2",
+          "appearance": "Blue",
+          "finalSampleSeconds": 82,
+          "flowEndUpper": 80.75,
+          "stationaryUntil": 82.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 58.5,
+              "startUpper": 59.75,
+              "endLower": 72,
+              "endUpper": 74,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 79,
+              "startUpper": 79.75,
+              "endLower": 79.75,
+              "endUpper": 80.75,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V03",
+          "label": "Video 1 \u00b7 Vial 3",
+          "appearance": "Blue",
+          "finalSampleSeconds": 136,
+          "flowEndUpper": 136,
+          "stationaryUntil": 136.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 112,
+              "startUpper": 114,
+              "endLower": 126,
+              "endUpper": 128,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 132,
+              "startUpper": 133.5,
+              "endLower": 133.5,
+              "endUpper": 136,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V04",
+          "label": "Video 1 \u00b7 Vial 4",
+          "appearance": "Blue",
+          "finalSampleSeconds": 190,
+          "flowEndUpper": 189.25,
+          "stationaryUntil": 192.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 166,
+              "startUpper": 168,
+              "endLower": 180,
+              "endUpper": 182,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 187.5,
+              "startUpper": 188,
+              "endLower": 188,
+              "endUpper": 189.25,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V05",
+          "label": "Video 1 \u00b7 Vial 5",
+          "appearance": "Blue",
+          "finalSampleSeconds": 246,
+          "flowEndUpper": 245,
+          "stationaryUntil": 246.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 222,
+              "startUpper": 224,
+              "endLower": 234,
+              "endUpper": 236,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 241.5,
+              "startUpper": 242.75,
+              "endLower": 242.75,
+              "endUpper": 245,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V06",
+          "label": "Video 1 \u00b7 Vial 6",
+          "appearance": "Dark teal/green",
+          "finalSampleSeconds": 306,
+          "flowEndUpper": 305,
+          "stationaryUntil": 308.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 270,
+              "startUpper": 272,
+              "endLower": 290,
+              "endUpper": 292,
+              "appearance": "Blue/cyan changing to pale amber"
+            },
+            {
+              "order": 2,
+              "startLower": 301.5,
+              "startUpper": 302.75,
+              "endLower": 302.75,
+              "endUpper": 305,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V07",
+          "label": "Video 1 \u00b7 Vial 7",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 364,
+          "flowEndUpper": 363.5,
+          "stationaryUntil": 364.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 330,
+              "startUpper": 332,
+              "endLower": 346,
+              "endUpper": 348,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 360,
+              "startUpper": 361.75,
+              "endLower": 361.75,
+              "endUpper": 363.5,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V08",
+          "label": "Video 1 \u00b7 Vial 8",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 424,
+          "flowEndUpper": 424,
+          "stationaryUntil": 424.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 388,
+              "startUpper": 390,
+              "endLower": 408,
+              "endUpper": 410,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 420,
+              "startUpper": 421.75,
+              "endLower": 421.75,
+              "endUpper": 424,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V09",
+          "label": "Video 1 \u00b7 Vial 9",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 484,
+          "flowEndUpper": 484,
+          "stationaryUntil": 484.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 448,
+              "startUpper": 450,
+              "endLower": 468,
+              "endUpper": 470,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 480,
+              "startUpper": 482,
+              "endLower": 482,
+              "endUpper": 484,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V10",
+          "label": "Video 1 \u00b7 Vial 10",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 544,
+          "flowEndUpper": 543,
+          "stationaryUntil": 544.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 508,
+              "startUpper": 510,
+              "endLower": 526,
+              "endUpper": 528,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 540.5,
+              "startUpper": 541.5,
+              "endLower": 541.5,
+              "endUpper": 543,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V11",
+          "label": "Video 1 \u00b7 Vial 11",
+          "appearance": "Dark green/teal",
+          "finalSampleSeconds": 596,
+          "flowEndUpper": 596.5,
+          "stationaryUntil": 596.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 574,
+              "startUpper": 576,
+              "endLower": 586,
+              "endUpper": 588,
+              "appearance": "Amber/orange changing to blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 593.5,
+              "startUpper": 594.5,
+              "endLower": 594.5,
+              "endUpper": 596.5,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V12",
+          "label": "Video 1 \u00b7 Vial 12",
+          "appearance": "Dark teal/green",
+          "finalSampleSeconds": 654,
+          "flowEndUpper": 655,
+          "stationaryUntil": 654.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 622,
+              "startUpper": 624,
+              "endLower": 640,
+              "endUpper": 642,
+              "appearance": "Blue/cyan changing to pale amber"
+            },
+            {
+              "order": 2,
+              "startLower": 652.5,
+              "startUpper": 653.25,
+              "endLower": 653.25,
+              "endUpper": 655,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V13",
+          "label": "Video 1 \u00b7 Vial 13",
+          "appearance": "Dark green/teal",
+          "finalSampleSeconds": 710,
+          "flowEndUpper": 709,
+          "stationaryUntil": 710.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 684,
+              "startUpper": 686,
+              "endLower": 698,
+              "endUpper": 700,
+              "appearance": "Amber/orange changing to blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 705.5,
+              "startUpper": 706.5,
+              "endLower": 706.5,
+              "endUpper": 709,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V14",
+          "label": "Video 1 \u00b7 Vial 14",
+          "appearance": "Blue",
+          "finalSampleSeconds": 764,
+          "flowEndUpper": 763,
+          "stationaryUntil": 764.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 740,
+              "startUpper": 742,
+              "endLower": 752,
+              "endUpper": 754,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 759.5,
+              "startUpper": 760.75,
+              "endLower": 760.75,
+              "endUpper": 763,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V1-V15",
+          "label": "Video 1 \u00b7 Vial 15",
+          "appearance": "Dark teal/green",
+          "finalSampleSeconds": 822,
+          "flowEndUpper": 820.5,
+          "stationaryUntil": 822.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 786,
+              "startUpper": 788,
+              "endLower": 804,
+              "endUpper": 806,
+              "appearance": "Blue/cyan changing to pale amber"
+            },
+            {
+              "order": 2,
+              "startLower": 818,
+              "startUpper": 819,
+              "endLower": 819,
+              "endUpper": 820.5,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V16",
+          "label": "Video 1 \u00b7 Vial 16",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 894,
+          "flowEndUpper": 888,
+          "stationaryUntil": 894.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 848,
+              "startUpper": 850,
+              "endLower": 866,
+              "endUpper": 868,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 878,
+              "startUpper": 880,
+              "endLower": 886,
+              "endUpper": 888,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V17",
+          "label": "Video 1 \u00b7 Vial 17",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 968,
+          "flowEndUpper": 962,
+          "stationaryUntil": 968.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 918,
+              "startUpper": 920,
+              "endLower": 938,
+              "endUpper": 940,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 952,
+              "startUpper": 954,
+              "endLower": 960,
+              "endUpper": 962,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V18",
+          "label": "Video 1 \u00b7 Vial 18",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 1040,
+          "flowEndUpper": 1034,
+          "stationaryUntil": 1040.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 992,
+              "startUpper": 994,
+              "endLower": 1010,
+              "endUpper": 1012,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 1024,
+              "startUpper": 1026,
+              "endLower": 1032,
+              "endUpper": 1034,
+              "appearance": "Amber/orange"
+            }
+          ]
+        },
+        {
+          "id": "V1-V19",
+          "label": "Video 1 \u00b7 Vial 19",
+          "appearance": "Orange/red",
+          "finalSampleSeconds": 1114,
+          "flowEndUpper": 1108,
+          "stationaryUntil": 1114.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 1064,
+              "startUpper": 1066,
+              "endLower": 1084,
+              "endUpper": 1086,
+              "appearance": "Amber/orange"
+            },
+            {
+              "order": 2,
+              "startLower": 1096,
+              "startUpper": 1098,
+              "endLower": 1106,
+              "endUpper": 1108,
+              "appearance": "Amber/orange"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "video-2",
+      "name": "Video 2",
+      "filename": "vial_fill_video_2.mp4",
+      "url": "/api/inspection/videos/video-2",
+      "duration": 160.1,
+      "vials": [
+        {
+          "id": "V2-V01",
+          "label": "Video 2 \u00b7 Vial 1",
+          "appearance": "Blue",
+          "finalSampleSeconds": 44,
+          "flowEndUpper": 42.25,
+          "stationaryUntil": 44.75,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 21,
+              "startUpper": 21.25,
+              "endLower": 34,
+              "endUpper": 34.25,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 40.5,
+              "startUpper": 40.75,
+              "endLower": 42,
+              "endUpper": 42.25,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        },
+        {
+          "id": "V2-V02",
+          "label": "Video 2 \u00b7 Vial 2",
+          "appearance": "Dark teal/green",
+          "finalSampleSeconds": 102,
+          "flowEndUpper": 100,
+          "stationaryUntil": 102.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 64,
+              "startUpper": 66,
+              "endLower": 70,
+              "endUpper": 72,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 84,
+              "startUpper": 86,
+              "endLower": 88,
+              "endUpper": 90,
+              "appearance": "Blue/cyan"
+            },
+            {
+              "order": 3,
+              "startLower": 96,
+              "startUpper": 98,
+              "endLower": 98,
+              "endUpper": 100,
+              "appearance": "Amber/yellowish"
+            }
+          ]
+        },
+        {
+          "id": "V2-V03",
+          "label": "Video 2 \u00b7 Vial 3",
+          "appearance": "Dark teal/green",
+          "finalSampleSeconds": 156,
+          "flowEndUpper": 156,
+          "stationaryUntil": 156.0,
+          "pulses": [
+            {
+              "order": 1,
+              "startLower": 132,
+              "startUpper": 134,
+              "endLower": 146,
+              "endUpper": 148,
+              "appearance": "Pale amber changing to blue/cyan"
+            },
+            {
+              "order": 2,
+              "startLower": 152,
+              "startUpper": 154,
+              "endLower": 154,
+              "endUpper": 156,
+              "appearance": "Blue/cyan"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
