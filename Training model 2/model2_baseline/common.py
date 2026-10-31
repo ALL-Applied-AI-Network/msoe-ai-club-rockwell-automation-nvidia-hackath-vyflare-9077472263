@@ -31,7 +31,7 @@ FIELD_RECORDINGS = [
 
 # Decisions fixed before any evaluation (see README).
 CONFIG = {
-    "config_version": "model2-baseline-v2",
+    "config_version": "model2-baseline-v3",
     "seed": 20261031,
     "post_flow_offsets_s": [0.05, 0.15, 0.25],
     "frame_label": "early post-flow (not settled)",
@@ -51,10 +51,9 @@ CONFIG = {
     "quarantine_recordings": [],
     # A recipe is supported only when it has training-eligible vials with valid frames.
     "unsupported_recipes": [],
-    # Held out of training and labeled metrics until the operator resolves the conflict.
-    "label_conflicts": {
-        "field_v27": "workbook labels vial 27 good; operator described its photo (99/50-flush/99-2.jpg) as a bad vial",
-    },
+    # Vials held out of training and labeled metrics until the operator resolves a conflict.
+    # field_v27 resolved 2026-10-31: workbook f98b3a74 labels it bad, matching its photo.
+    "label_conflicts": {},
     # Recipes with identical nominal proportions are withheld together.
     "proportion_groups": [[5, 8]],
 }

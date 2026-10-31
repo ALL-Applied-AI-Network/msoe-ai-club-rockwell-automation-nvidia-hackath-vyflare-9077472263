@@ -5,30 +5,30 @@ At the fixed 0.90 threshold (cross-validation, crop model) it confidently accept
 
 - 32% of good vials whose recipe was withheld from training,
 - 4 of 16 bad first vials,
-- 1 of 2 bad later vials.
+- 2 of 3 bad later vials.
 
 Attribution and occlusion indicate a recording-context shortcut for the field recipes.
 Scores are uncalibrated recipe-resemblance values. They are not probabilities of
 correctness and say nothing about whether a vial is good.
 
-Current version: `model2-baseline-v2` (2026-10-31), using the operator answers below.
-v1 results are in Git history (commit `777e6a1`).
+Current version: `model2-baseline-v3` (2026-10-31), using the operator answers below.
+v3 differs from v2 only in vial 27's label: the training set, head weights and the
+A, B and D results are unchanged. v1 and v2 results are in Git history (commits `777e6a1`, `052cb35`).
 
-## Operator decisions applied in v2
+## Operator decisions applied
 
 | Item | Decision | Evidence check |
 |---|---|---|
 | Photo/clip suffix `k` | Batch position k | Every first-vial photo shows carryover matching its station frame |
 | Field order | 41 → 99/41-flush → 60 → 99/60-flush → 50 → 99/50-flush | Concatenated video is frame-identical to the six recordings in this order |
 | Recipe-60 recording | Correct; sidecar `rec #99` is a sync error | 36–45 s blue-then-green pours of about 70 mL (recipe 99 is a clear ~7 s pour) |
-| `99/50-flush/99-2.jpg` | Vial 27 (position 2) | Photo is deep orange; station frames of vial 27 are pale yellow. Recorded, not resolved |
+| `99/50-flush/99-2.jpg` | Vial 27 (position 2), a bad vial | Photo is deep orange; station frames of vial 27 are pale yellow. Workbook now labels vial 27 bad |
 | Timing, recipes 5–14 | `video5_vial_recipes.csv` | 0 of 90 post-flow frames show a stream (vs 9 with `Recipes_5_to_14` end_s); no movement |
 | Field end of flow | Measured from video when the stream continues past workbook `end_s` | v01, v09, v10, v21–v25 moved 0.2–4.1 s later (`outputs/flow_boundaries.csv`) |
-| Labels | Workbook `336b6c09…0a05` (vials 23–25 and 27–30 good, 26 bad) | Only column S rows 24–31 changed |
+| Labels | Workbook `f98b3a74…cce2`: vials 23–25 and 28–30 good, 26 and 27 bad | Only column S changed (rows 24–31) |
 
-**Open: `field_v27`.** The workbook labels vial 27 good, but the operator described its
-photo as a bad vial. Excel row 27 holds vial 26, which is labeled bad. Until this is
-resolved, vial 27 is excluded from training and from labeled metrics (`label_conflict`).
+Vial 27 is a bad later vial. Following the rule to train only on explicitly good vials,
+it is used in bad-vial evaluation, not as a training example.
 
 ## Reproduce
 
@@ -80,8 +80,7 @@ Seed: `20261031`.
 |---|---|
 | Training-eligible good vials | 41: 20 from Video 5 (recipes 5–14, positions 2–3); field 41 (v02–05), 60 (v12–15), 50 (v23–25), 99 (v07–10, v18–20, v28–30) |
 | Bad first vials | 16: `v5_e01, e04, …, e28`; `field_v01, v06, v11, v16, v21, v26` |
-| Bad later vials | 2: `field_v17` (99), `field_v22` (50) |
-| Label conflict | `field_v27` |
+| Bad later vials | 3: `field_v17` (99), `field_v22` (50), `field_v27` (99) |
 | Not used | 5–14 per-vial clips (same frames as Video 5); 640×480 stills (capture time unknown) |
 | Phone photos | 30, one per field vial; evaluation only |
 
@@ -122,7 +121,7 @@ were never confused with each other; with two vials each, that does not show the
 | Set | Vials | Accepted at 0.90 | Accepted as intended recipe |
 |---|---|---|---|
 | Bad first vials | 16 | 4 (0.25): `v5_e19` (11), `v5_e22` (as 9, intended 12), `v5_e25` (13), `field_v11` (as 99, intended 60) | 2 |
-| Bad later vials | 2 | 1: `field_v17` (99, 0.998); `field_v22` abstained | 1 |
+| Bad later vials | 3 | 2: `field_v17` (99, 0.998), `field_v27` (99, 0.924); `field_v22` abstained | 2 |
 
 **D. Recording generalization (recipe 99, three recordings):** each recording held out in turn,
 10/10 correct, coverage 0.5, 1.0 and 1.0. Recipes 5–14 (one Video 5 recording) and 41, 50 and 60
@@ -132,7 +131,7 @@ recording are fully confounded.
 **Phone photos** (whole photo, letterboxed, scored by the final head; each vial's station
 frames trained that head, so this is a camera-transfer check, not held-out data): good vials
 21 photos, 6 top-1 matches, 9 accepted (3 correct); bad first 6 photos, 3 accepted; bad later
-2 photos, 1 accepted. Phone photos are not a usable input.
+3 photos, 1 accepted. Phone photos are not a usable input.
 
 Per-vial context (intended recipe, preceding recipe, batch position, recording, scores) is
 in `outputs/predictions_per_vial.csv`. Counts per context cell are 1–4 vials, too few for rates.

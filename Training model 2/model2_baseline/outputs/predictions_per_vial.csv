@@ -30,7 +30,7 @@ cv_physical_vial,crop,fold2,field_v07,99,good,A_good_known,False,41,20261028_205
 cv_physical_vial,crop,fold2,field_v12,60,good,A_good_known,False,99,20261028_205922_757261,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.584,60,0.359,unknown_uncertain,False,False,1.0
 cv_physical_vial,crop,fold2,field_v17,99,bad,C_bad_later,False,60,20261028_210516_104156,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.9983,50,0.0012,accepted_observation,True,True,1.0
 cv_physical_vial,crop,fold2,field_v22,50,bad,C_bad_later,False,99,20261028_210906_318043,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,9,0.5288,99,0.3027,unknown_uncertain,False,False,1.0
-cv_physical_vial,crop,fold2,field_v27,99,good,label_conflict,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.9237,50,0.0425,accepted_observation,True,True,1.0
+cv_physical_vial,crop,fold2,field_v27,99,bad,C_bad_later,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.9237,50,0.0425,accepted_observation,True,True,1.0
 cv_physical_vial,crop,fold3,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,5,0.7975,9,0.0662,unknown_uncertain,True,False,1.0
 cv_physical_vial,crop,fold3,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,6,0.9656,41,0.0133,accepted_observation,True,True,1.0
 cv_physical_vial,crop,fold3,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,7,0.991,12,0.0037,accepted_observation,True,True,1.0
@@ -141,7 +141,7 @@ cv_physical_vial,full,fold2,field_v07,99,good,A_good_known,False,41,20261028_205
 cv_physical_vial,full,fold2,field_v12,60,good,A_good_known,False,99,20261028_205922_757261,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,60,0.6608,50,0.2997,unknown_uncertain,True,False,1.0
 cv_physical_vial,full,fold2,field_v17,99,bad,C_bad_later,False,60,20261028_210516_104156,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.9991,50,0.0005,accepted_observation,True,True,1.0
 cv_physical_vial,full,fold2,field_v22,50,bad,C_bad_later,False,99,20261028_210906_318043,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.8632,99,0.052,unknown_uncertain,True,False,1.0
-cv_physical_vial,full,fold2,field_v27,99,good,label_conflict,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.751,99,0.2198,unknown_uncertain,False,False,1.0
+cv_physical_vial,full,fold2,field_v27,99,bad,C_bad_later,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.751,99,0.2198,unknown_uncertain,False,False,1.0
 cv_physical_vial,full,fold3,v5_e03,5,good,A_good_known,False,unknown,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,5,0.9964,9,0.0021,accepted_observation,True,True,1.0
 cv_physical_vial,full,fold3,v5_e06,6,good,A_good_known,False,5,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,6,0.9839,12,0.0064,accepted_observation,True,True,1.0
 cv_physical_vial,full,fold3,v5_e09,7,good,A_good_known,False,6,vial_fill_video_5,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,7,0.9862,5,0.007,accepted_observation,True,True,1.0
@@ -333,8 +333,8 @@ final_model_all_eligible,crop,trained_on_all_eligible,field_v25,50,good,A_good_k
 final_model_all_eligible,full,trained_on_all_eligible,field_v25,50,good,A_good_known,False,99,20261028_210906_318043,5,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.9998,99,0.0001,accepted_observation,True,True,1.0
 final_model_all_eligible,crop,trained_on_all_eligible,field_v26,99,bad,C_bad_first,True,50,20261028_211517_586312,1,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.8389,9,0.0744,unknown_uncertain,True,False,1.0
 final_model_all_eligible,full,trained_on_all_eligible,field_v26,99,bad,C_bad_first,True,50,20261028_211517_586312,1,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.9174,99,0.0622,accepted_observation,False,False,1.0
-final_model_all_eligible,crop,trained_on_all_eligible,field_v27,99,good,label_conflict,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.972,50,0.0112,accepted_observation,True,True,1.0
-final_model_all_eligible,full,trained_on_all_eligible,field_v27,99,good,label_conflict,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.6117,99,0.3783,unknown_uncertain,False,False,1.0
+final_model_all_eligible,crop,trained_on_all_eligible,field_v27,99,bad,C_bad_later,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.972,50,0.0112,accepted_observation,True,True,1.0
+final_model_all_eligible,full,trained_on_all_eligible,field_v27,99,bad,C_bad_later,False,50,20261028_211517_586312,2,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,50,0.6117,99,0.3783,unknown_uncertain,False,False,1.0
 final_model_all_eligible,crop,trained_on_all_eligible,field_v28,99,good,A_good_known,False,50,20261028_211517_586312,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.9997,7,0.0001,accepted_observation,True,True,1.0
 final_model_all_eligible,full,trained_on_all_eligible,field_v28,99,good,A_good_known,False,50,20261028_211517_586312,3,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.9998,50,0.0001,accepted_observation,True,True,1.0
 final_model_all_eligible,crop,trained_on_all_eligible,field_v29,99,good,A_good_known,False,50,20261028_211517_586312,4,3,True,10 11 12 13 14 41 5 50 6 60 7 8 9 99,99,0.9998,9,0.0001,accepted_observation,True,True,1.0

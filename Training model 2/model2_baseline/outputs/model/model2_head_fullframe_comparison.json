@@ -1,6 +1,6 @@
 {
   "model": "Model 2 recipe classifier baseline",
-  "config_version": "model2-baseline-v2",
+  "config_version": "model2-baseline-v3",
   "backbone": "torchvision resnet18 IMAGENET1K_V1, frozen, global-average-pool 512-d",
   "backbone_weights_url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
   "backbone_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",

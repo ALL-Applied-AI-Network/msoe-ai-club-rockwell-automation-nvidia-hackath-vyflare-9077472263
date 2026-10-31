@@ -934,12 +934,12 @@
       ]
     },
     "C_bad_later_vials": {
-      "independent_vials": 2,
-      "frames": 6,
-      "false_acceptances_at_0.90": 1,
-      "false_acceptance_rate": 0.5,
-      "accepted_as_intended_recipe": 1,
-      "top1_names_intended_recipe": 1,
+      "independent_vials": 3,
+      "frames": 9,
+      "false_acceptances_at_0.90": 2,
+      "false_acceptance_rate": 0.6667,
+      "accepted_as_intended_recipe": 2,
+      "top1_names_intended_recipe": 2,
       "vials": [
         {
           "vial_key": "field_v17",
@@ -957,6 +957,15 @@
           "predicted_recipe_id": "9",
           "top_score": "0.5288",
           "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v27",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "50",
+          "predicted_recipe_id": "99",
+          "top_score": "0.9237",
+          "status": "accepted_observation",
           "intended_in_training": "True"
         }
       ]
@@ -1078,14 +1087,8 @@
         "accepted_and_matches_intended": 0
       },
       "C_bad_later": {
-        "photos": 2,
+        "photos": 3,
         "accepted": 1,
-        "top1_matches_intended": 0,
-        "accepted_and_matches_intended": 0
-      },
-      "label_conflict": {
-        "photos": 1,
-        "accepted": 0,
         "top1_matches_intended": 0,
         "accepted_and_matches_intended": 0
       }
@@ -2023,10 +2026,10 @@
       ]
     },
     "C_bad_later_vials": {
-      "independent_vials": 2,
-      "frames": 6,
+      "independent_vials": 3,
+      "frames": 9,
       "false_acceptances_at_0.90": 1,
-      "false_acceptance_rate": 0.5,
+      "false_acceptance_rate": 0.3333,
       "accepted_as_intended_recipe": 1,
       "top1_names_intended_recipe": 2,
       "vials": [
@@ -2045,6 +2048,15 @@
           "batch_preceded_by_recipe_id": "99",
           "predicted_recipe_id": "50",
           "top_score": "0.8632",
+          "status": "unknown_uncertain",
+          "intended_in_training": "True"
+        },
+        {
+          "vial_key": "field_v27",
+          "intended_recipe_id": "99",
+          "batch_preceded_by_recipe_id": "50",
+          "predicted_recipe_id": "50",
+          "top_score": "0.751",
           "status": "unknown_uncertain",
           "intended_in_training": "True"
         }
@@ -2173,13 +2185,7 @@
         "accepted_and_matches_intended": 0
       },
       "C_bad_later": {
-        "photos": 2,
-        "accepted": 0,
-        "top1_matches_intended": 0,
-        "accepted_and_matches_intended": 0
-      },
-      "label_conflict": {
-        "photos": 1,
+        "photos": 3,
         "accepted": 1,
         "top1_matches_intended": 0,
         "accepted_and_matches_intended": 0

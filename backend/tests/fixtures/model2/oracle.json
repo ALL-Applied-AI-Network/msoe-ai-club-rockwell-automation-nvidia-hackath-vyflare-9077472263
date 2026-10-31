@@ -15,7 +15,7 @@
     "9",
     "99"
   ],
-  "config_version": "model2-baseline-v2",
+  "config_version": "model2-baseline-v3",
   "vials": {
     "field_v04": {
       "frame_probabilities": [
