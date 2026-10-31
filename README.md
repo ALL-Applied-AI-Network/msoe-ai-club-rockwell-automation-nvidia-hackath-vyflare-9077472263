@@ -1,6 +1,8 @@
 # Cosmos3-Nano vial inspection fine-tuning
 
-Minimal **image/video + question → text** supervised fine-tuning for liquid appearance and synthetic render-control classification. This branch contains training preparation, configuration, launch instructions, and the separate pilot tester. The original application/backend remains on `implement-backend` at `b9184d9`.
+Minimal **image/video + question → text** supervised fine-tuning for liquid appearance and synthetic render-control classification. This branch contains training preparation, configuration, launch instructions, the pilot tester, and a direct worker interface for `model4/recipe-detection-backend-integration` at `956d5d2`.
+
+The [current technical report](reports/cosmos-technical-report-2026-10-31.md) covers training results, data exclusions, measured Spark usage, backend compatibility, screening limitations and remaining acceptance work. A [shareable PDF](output/pdf/Cosmos_Vial_Inspection_Technical_Report_2026-10-31.pdf) contains the same report.
 
 ## Model choice
 
