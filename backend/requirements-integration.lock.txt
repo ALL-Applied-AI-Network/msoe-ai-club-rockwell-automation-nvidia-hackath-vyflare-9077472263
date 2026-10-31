@@ -9,3 +9,4 @@ pillow==12.3.0
 python-dotenv==1.2.4
 waitress==3.0.2
 Werkzeug==3.1.9
+numpy==2.5.4

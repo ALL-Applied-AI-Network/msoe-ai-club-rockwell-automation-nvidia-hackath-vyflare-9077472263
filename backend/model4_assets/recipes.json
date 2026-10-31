@@ -1,0 +1,717 @@
+{
+  "source_workbook": "recipes.xlsx",
+  "source_sheet": "Recipe_Bank",
+  "source_workbook_sha256": "e95239f57cbe69835c136be1f98f4086b0cf3844654d12a4b58161c43b173b57",
+  "recipes": {
+    "1": {
+      "amounts_ml": {
+        "T100": 35.0,
+        "T200": 10.0,
+        "T400": 35.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "2": {
+      "amounts_ml": {
+        "T100": 35.0,
+        "T200": 35.0,
+        "T400": 10.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "3": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 10.0,
+        "T400": 30.0
+      },
+      "total_ml": 50.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "4": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 30.0,
+        "T400": 10.0
+      },
+      "total_ml": 50.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "5": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 10.0,
+        "T400": 10.0
+      },
+      "total_ml": 30.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "6": {
+      "amounts_ml": {
+        "T100": 30.0,
+        "T200": 10.0,
+        "T400": 0.0
+      },
+      "total_ml": 40.0,
+      "expected_order": [
+        "T200",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "7": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 0.0,
+        "T400": 50.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "8": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 20.0,
+        "T400": 20.0
+      },
+      "total_ml": 60.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "9": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 35.0,
+        "T400": 35.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "10": {
+      "amounts_ml": {
+        "T100": 45.0,
+        "T200": 15.0,
+        "T400": 15.0
+      },
+      "total_ml": 75.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "11": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 10.0,
+        "T400": 50.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "12": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 50.0,
+        "T400": 10.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "13": {
+      "amounts_ml": {
+        "T100": 0.0,
+        "T200": 50.0,
+        "T400": 20.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T200",
+        "T400"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "14": {
+      "amounts_ml": {
+        "T100": 60.0,
+        "T200": 0.0,
+        "T400": 10.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "15": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 20.0,
+        "T400": 40.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "16": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 40.0,
+        "T400": 20.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "17": {
+      "amounts_ml": {
+        "T100": 30.0,
+        "T200": 10.0,
+        "T400": 15.0
+      },
+      "total_ml": 55.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "18": {
+      "amounts_ml": {
+        "T100": 35.0,
+        "T200": 20.0,
+        "T400": 25.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "19": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 25.0,
+        "T400": 25.0
+      },
+      "total_ml": 60.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "20": {
+      "amounts_ml": {
+        "T100": 25.0,
+        "T200": 25.0,
+        "T400": 10.0
+      },
+      "total_ml": 60.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "21": {
+      "amounts_ml": {
+        "T100": 25.0,
+        "T200": 15.0,
+        "T400": 30.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "22": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 25.0,
+        "T400": 45.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "23": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 45.0,
+        "T400": 25.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "24": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 30.0,
+        "T400": 30.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "25": {
+      "amounts_ml": {
+        "T100": 25.0,
+        "T200": 10.0,
+        "T400": 45.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "26": {
+      "amounts_ml": {
+        "T100": 25.0,
+        "T200": 45.0,
+        "T400": 10.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "27": {
+      "amounts_ml": {
+        "T100": 30.0,
+        "T200": 30.0,
+        "T400": 20.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "28": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 15.0,
+        "T400": 20.0
+      },
+      "total_ml": 45.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "29": {
+      "amounts_ml": {
+        "T100": 15.0,
+        "T200": 20.0,
+        "T400": 10.0
+      },
+      "total_ml": 45.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "30": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 15.0,
+        "T400": 40.0
+      },
+      "total_ml": 65.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "31": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 35.0,
+        "T400": 20.0
+      },
+      "total_ml": 65.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "32": {
+      "amounts_ml": {
+        "T100": 15.0,
+        "T200": 40.0,
+        "T400": 10.0
+      },
+      "total_ml": 65.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "33": {
+      "amounts_ml": {
+        "T100": 35.0,
+        "T200": 20.0,
+        "T400": 10.0
+      },
+      "total_ml": 65.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "34": {
+      "amounts_ml": {
+        "T100": 40.0,
+        "T200": 10.0,
+        "T400": 25.0
+      },
+      "total_ml": 75.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "35": {
+      "amounts_ml": {
+        "T100": 55.0,
+        "T200": 10.0,
+        "T400": 10.0
+      },
+      "total_ml": 75.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "36": {
+      "amounts_ml": {
+        "T100": 45.0,
+        "T200": 25.0,
+        "T400": 10.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "37": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 10.0,
+        "T400": 10.0
+      },
+      "total_ml": 40.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "38": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 10.0,
+        "T400": 20.0
+      },
+      "total_ml": 50.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "39": {
+      "amounts_ml": {
+        "T100": 45.0,
+        "T200": 10.0,
+        "T400": 0.0
+      },
+      "total_ml": 55.0,
+      "expected_order": [
+        "T200",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "40": {
+      "amounts_ml": {
+        "T100": 25.0,
+        "T200": 35.0,
+        "T400": 0.0
+      },
+      "total_ml": 60.0,
+      "expected_order": [
+        "T200",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "41": {
+      "amounts_ml": {
+        "T100": 50.0,
+        "T200": 20.0,
+        "T400": 0.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T200",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "42": {
+      "amounts_ml": {
+        "T100": 35.0,
+        "T200": 45.0,
+        "T400": 0.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T200",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "43": {
+      "amounts_ml": {
+        "T100": 55.0,
+        "T200": 0.0,
+        "T400": 25.0
+      },
+      "total_ml": 80.0,
+      "expected_order": [
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "44": {
+      "amounts_ml": {
+        "T100": 40.0,
+        "T200": 0.0,
+        "T400": 10.0
+      },
+      "total_ml": 50.0,
+      "expected_order": [
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "45": {
+      "amounts_ml": {
+        "T100": 20.0,
+        "T200": 0.0,
+        "T400": 35.0
+      },
+      "total_ml": 55.0,
+      "expected_order": [
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "46": {
+      "amounts_ml": {
+        "T100": 10.0,
+        "T200": 0.0,
+        "T400": 20.0
+      },
+      "total_ml": 30.0,
+      "expected_order": [
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "47": {
+      "amounts_ml": {
+        "T100": 0.0,
+        "T200": 20.0,
+        "T400": 10.0
+      },
+      "total_ml": 30.0,
+      "expected_order": [
+        "T200",
+        "T400"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "48": {
+      "amounts_ml": {
+        "T100": 0.0,
+        "T200": 40.0,
+        "T400": 10.0
+      },
+      "total_ml": 50.0,
+      "expected_order": [
+        "T200",
+        "T400"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "49": {
+      "amounts_ml": {
+        "T100": 0.0,
+        "T200": 25.0,
+        "T400": 35.0
+      },
+      "total_ml": 60.0,
+      "expected_order": [
+        "T200",
+        "T400"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "50": {
+      "amounts_ml": {
+        "T100": 0.0,
+        "T200": 30.0,
+        "T400": 40.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T200",
+        "T400"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "60": {
+      "amounts_ml": {
+        "T100": 30.0,
+        "T200": 10.0,
+        "T400": 30.0
+      },
+      "total_ml": 70.0,
+      "expected_order": [
+        "T200",
+        "T400",
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    },
+    "99": {
+      "amounts_ml": {
+        "T100": 50.0,
+        "T200": 0.0,
+        "T400": 0.0
+      },
+      "total_ml": 50.0,
+      "expected_order": [
+        "T100"
+      ],
+      "basis": "recipe_settings_not_measured_delivery"
+    }
+  }
+}
