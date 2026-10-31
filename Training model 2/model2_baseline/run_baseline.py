@@ -4,7 +4,6 @@ Usage: python run_baseline.py
 All hyperparameters come from common.CONFIG and were fixed before evaluation.
 """
 import csv
-import json
 
 import cv2
 import numpy as np
@@ -12,10 +11,9 @@ import torch
 import torchvision
 from PIL import Image, ImageOps
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import f1_score
 from sklearn.preprocessing import StandardScaler
 
-from common import ART, CONFIG, DATA, OUT, sha256, write_json
+from common import ART, CONFIG, DATA, OUT, write_json
 
 MEAN_RGB = (124, 116, 104)                 # ImageNet mean, used for padding and masks
 CROP = (250, 40, 390, 430)                 # x0, y0, x1, y1 on the 640x480 station frame
@@ -190,26 +188,28 @@ def run(vials, frames, feats):
     return preds, eligible
 
 
-def phone_eval(final_heads, backbone):
+def phone_eval(final_heads, backbone, vials):
+    """Phone photos scored by the final heads; the same physical vials are in training."""
     rows = []
-    quarantine = set(CONFIG["quarantine_media"])
+    media = {m["path"]: m for m in csv.DictReader(open(OUT / "media_manifest.csv", encoding="utf-8"))}
     for path in sorted(DATA.rglob("*.jpg")):
         rel = path.relative_to(DATA).as_posix()
-        img = Image.open(path)
-        if img.getexif().get(272) is None or rel in quarantine:
+        m = media["data/" + rel]
+        if m["use"] != "separate phone-camera evaluation":
             continue
-        folder_recipe = rel.split("/")[0]
+        v = vials[m["mapped_vial_keys"]]
         fx = backbone([phone_input(path)])
         for mode, (scaler, clf, _) in final_heads.items():
             ranked = score(scaler, clf, fx)[1]
-            in_training = folder_recipe in clf.classes_
             rows.append({
-                "photo": "data/" + rel, "photo_sha256": sha256(path), "model_mode": mode, "folder_recipe_id": folder_recipe,
-                "batch_folder": rel.rsplit("/", 1)[0], "vial_key": "unmapped (filename mapping not operator-confirmed)",
-                "test_type": "camera transfer" if in_training else "camera transfer + unfamiliar recipe",
+                "photo": "data/" + rel, "photo_sha256": m["sha256"], "model_mode": mode, "vial_key": v["vial_key"],
+                "intended_recipe_id": v["intended_recipe_id"], "visual_quality_label": v["visual_quality_label"],
+                "eval_role": v["eval_role"], "first_vial_flag": v["first_vial_flag"],
+                "test_type": "camera transfer (vial's station frames were in training)" if v["train_eligible"] == "True"
+                else "camera transfer (vial never trained on)",
                 "predicted_recipe_id": ranked[0][0], "top_score": round(ranked[0][1], 4),
                 "status": "accepted_observation" if ranked[0][1] >= CONFIG["accept_threshold"] else "unknown_uncertain",
-                "matches_folder_recipe": ranked[0][0] == folder_recipe,
+                "matches_intended": ranked[0][0] == v["intended_recipe_id"],
             })
     return rows
 
@@ -250,7 +250,7 @@ def main():
     export_head(*final_heads["crop"][:2], eligible, OUT / "model" / "model2_head_crop.json")
     export_head(*final_heads["full"][:2], eligible, OUT / "model" / "model2_head_fullframe_comparison.json")
 
-    for name, rows in (("predictions_per_vial.csv", preds), ("predictions_phone_photos.csv", phone_eval(final_heads, backbone))):
+    for name, rows in (("predictions_per_vial.csv", preds), ("predictions_phone_photos.csv", phone_eval(final_heads, backbone, vials))):
         with open(OUT / name, "w", newline="", encoding="utf-8") as fh:
             w = csv.DictWriter(fh, fieldnames=list(rows[0]))
             w.writeheader()

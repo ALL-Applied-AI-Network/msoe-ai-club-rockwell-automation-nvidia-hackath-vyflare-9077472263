@@ -89,11 +89,12 @@ def main():
             for r in cv if r["eval_role"] == "unknown_quality"]
         m["head_train_frame_accuracy_by_fold"] = {r["split"]: r["head_train_frame_accuracy"] for r in cv}
         ph = [r for r in phone if r["model_mode"] == mode]
+        # One photo per vial; these physical vials' station frames trained the final head.
         m["phone_photos_separate"] = {
-            t: {"photos": len(rs), "accepted": sum(r["status"] == "accepted_observation" for r in rs),
-                "top1_matches_folder_recipe": sum(truthy(r["matches_folder_recipe"]) for r in rs),
-                "accepted_and_matches_folder_recipe": sum(r["status"] == "accepted_observation" and truthy(r["matches_folder_recipe"]) for r in rs)}
-            for t, rs in ((t, [r for r in ph if r["test_type"] == t]) for t in sorted({r["test_type"] for r in ph}))}
+            role: {"photos": len(rs), "accepted": sum(r["status"] == "accepted_observation" for r in rs),
+                   "top1_matches_intended": sum(truthy(r["matches_intended"]) for r in rs),
+                   "accepted_and_matches_intended": sum(r["status"] == "accepted_observation" and truthy(r["matches_intended"]) for r in rs)}
+            for role, rs in ((role, [r for r in ph if r["eval_role"] == role]) for role in sorted({r["eval_role"] for r in ph}))}
         out[mode] = m
     write_json(OUT / "metrics.json", out)
 

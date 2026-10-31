@@ -108,16 +108,17 @@ def main():
 
     # Grad-CAM panels: (vial, class to explain, head trained without a group or None, caption).
     cases = [
-        ("field_v04", None, "good 41, accepted correct"),
-        ("v5_e06", None, "good 6, accepted correct"),
-        ("v5_e12", None, "good 8, CV: accepted wrong as 14"),
-        ("v5_e29", None, "good 14, CV: wrong as 8"),
-        ("field_v17", None, "bad later 99, accepted"),
-        ("v5_e19", None, "bad first 11, accepted"),
-        ("v5_e22", None, "bad first 12, accepted as 9"),
-        ("field_v16", None, "bad first 99, accepted"),
-        ("v5_e09", ["7"], "unfamiliar 7 withheld, accepted as 11"),
-        ("field_v03", ["41"], "unfamiliar 41 withheld, accepted as 12"),
+        # Captions give the role only; the tile prints the computed outcome.
+        ("field_v04", None, "good 41, CV fold"),
+        ("field_v14", None, "good 60, CV fold"),
+        ("v5_e15", None, "good 9, CV fold"),
+        ("field_v25", None, "good 50, CV fold"),
+        ("field_v17", None, "bad later 99, CV fold"),
+        ("field_v11", None, "bad first 60, CV fold"),
+        ("v5_e22", None, "bad first 12, CV fold"),
+        ("v5_e25", None, "bad first 13, CV fold"),
+        ("field_v07", ["99"], "good 99, recipe 99 withheld"),
+        ("field_v12", ["60"], "good 60, recipe 60 withheld"),
     ]
     tiles = []
     for key, withheld, caption in cases:

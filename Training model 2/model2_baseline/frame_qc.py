@@ -16,19 +16,13 @@ from common import ART, OUT
 
 CENTER_LIMIT, PROFILE_LIMIT = 20.0, 30.0
 
-# Visual review of enlarged stream-region crops (Claude review, not operator-confirmed).
+# Visual review (Claude, not operator-confirmed). With the v2 boundaries
+# (flow_boundaries.csv) no movement, occlusion or stream was seen in any of the
+# 60 vials. Under the v1 workbook end_s the rule flagged streams in 17 vials; for
+# v5_e27 and field_v09/v10 (thin clear streams) it was confirmed on enlarged crops.
 VISUAL_REVIEW = {
-    "v5_e27": "thin stream at +0.05 s; +0.15/+0.25 s show drops at nozzle only",
     "field_v02": "no stream; elevated profile score from vial edge",
     "field_v04": "no stream; elevated profile score from vial edge",
-    "field_v09": "thin clear stream at +0.05/+0.15 s; none at +0.25 s",
-    "field_v10": "thin clear stream in all post-flow frames",
-    "field_v01": "stream continues through all post-flow frames: end_s precedes end of flow",
-    "field_v21": "stream continues through all post-flow frames: end_s precedes end of flow",
-    "field_v22": "stream continues through all post-flow frames: end_s precedes end of flow",
-    "field_v23": "stream continues through all post-flow frames: end_s precedes end of flow",
-    "field_v24": "stream continues through all post-flow frames: end_s precedes end of flow",
-    "field_v25": "stream continues through all post-flow frames: end_s precedes end of flow",
 }
 
 

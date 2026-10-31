@@ -31,7 +31,7 @@ FIELD_RECORDINGS = [
 
 # Decisions fixed before any evaluation (see README).
 CONFIG = {
-    "config_version": "model2-baseline-v1",
+    "config_version": "model2-baseline-v2",
     "seed": 20261031,
     "post_flow_offsets_s": [0.05, 0.15, 0.25],
     "frame_label": "early post-flow (not settled)",
@@ -45,9 +45,16 @@ CONFIG = {
     "input_size": 224,
     "aggregation": "mean of per-frame softmax over valid frames of one vial",
     "accept_threshold": 0.90,
-    "quarantine_media": ["99/50-flush/99-2.jpg", "60/60-video.mp4", "60/60-video.json"],
-    "quarantine_recordings": ["20261028_205922_757261"],
-    "unsupported_recipes": [50],
+    # Operator confirmed 2026-10-31: recipe-60 recording is correct (sidecar "rec #99" is a
+    # sync error) and 99/50-flush/99-2.jpg is batch position 2. Nothing is quarantined.
+    "quarantine_media": [],
+    "quarantine_recordings": [],
+    # A recipe is supported only when it has training-eligible vials with valid frames.
+    "unsupported_recipes": [],
+    # Held out of training and labeled metrics until the operator resolves the conflict.
+    "label_conflicts": {
+        "field_v27": "workbook labels vial 27 good; operator described its photo (99/50-flush/99-2.jpg) as a bad vial",
+    },
     # Recipes with identical nominal proportions are withheld together.
     "proportion_groups": [[5, 8]],
 }

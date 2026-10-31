@@ -2,40 +2,40 @@
   "caveat": "attribution shows sensitivity, not causal reliance; weights do not reveal ingredient composition",
   "occlusion_cv_good_vials": {
     "crop: mask none": {
-      "vials": 30,
-      "top1_correct": 22,
-      "accepted": 18,
-      "accepted_correct": 16
+      "vials": 41,
+      "top1_correct": 33,
+      "accepted": 27,
+      "accepted_correct": 26
     },
     "crop: mask above_holder (tube, label, nozzle)": {
-      "vials": 30,
-      "top1_correct": 17,
-      "accepted": 12,
-      "accepted_correct": 9
+      "vials": 41,
+      "top1_correct": 19,
+      "accepted": 16,
+      "accepted_correct": 14
     },
     "crop: mask holder_band": {
-      "vials": 30,
-      "top1_correct": 20,
-      "accepted": 9,
-      "accepted_correct": 9
-    },
-    "crop: mask liquid_column_below_holder": {
-      "vials": 30,
-      "top1_correct": 8,
-      "accepted": 2,
-      "accepted_correct": 2
-    },
-    "full: mask none": {
-      "vials": 30,
-      "top1_correct": 25,
+      "vials": 41,
+      "top1_correct": 29,
       "accepted": 15,
       "accepted_correct": 15
     },
+    "crop: mask liquid_column_below_holder": {
+      "vials": 41,
+      "top1_correct": 18,
+      "accepted": 4,
+      "accepted_correct": 3
+    },
+    "full: mask none": {
+      "vials": 41,
+      "top1_correct": 34,
+      "accepted": 25,
+      "accepted_correct": 25
+    },
     "full: mask vial_crop_region (background only)": {
-      "vials": 30,
-      "top1_correct": 11,
+      "vials": 41,
+      "top1_correct": 12,
       "accepted": 8,
-      "accepted_correct": 6
+      "accepted_correct": 5
     }
   },
   "head": {
@@ -48,46 +48,50 @@
       "14",
       "41",
       "5",
+      "50",
       "6",
+      "60",
       "7",
       "8",
       "9",
       "99"
     ],
     "coef_l2_norm": {
-      "10": 0.838,
-      "11": 0.7,
-      "12": 0.649,
-      "13": 0.696,
-      "14": 0.866,
-      "41": 0.735,
-      "5": 0.834,
-      "6": 0.659,
-      "7": 0.724,
-      "8": 0.936,
-      "9": 0.937,
-      "99": 0.864
+      "10": 0.805,
+      "11": 0.701,
+      "12": 0.679,
+      "13": 0.712,
+      "14": 0.873,
+      "41": 0.754,
+      "5": 0.808,
+      "50": 0.982,
+      "6": 0.701,
+      "60": 0.932,
+      "7": 0.732,
+      "8": 0.949,
+      "9": 0.955,
+      "99": 1.032
     },
     "most_similar_class_weight_pairs": [
       {
         "pair": "11-7",
-        "cosine": 0.154
+        "cosine": 0.192
       },
       {
         "pair": "41-6",
-        "cosine": 0.102
-      },
-      {
-        "pair": "11-41",
-        "cosine": 0.07
+        "cosine": 0.118
       },
       {
         "pair": "12-6",
-        "cosine": 0.063
+        "cosine": 0.09
       },
       {
         "pair": "12-9",
-        "cosine": 0.063
+        "cosine": 0.07
+      },
+      {
+        "pair": "12-7",
+        "cosine": 0.069
       }
     ],
     "backbone_frozen": true,

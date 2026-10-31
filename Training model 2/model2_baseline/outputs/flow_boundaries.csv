@@ -1,0 +1,61 @@
+vial_key,workbook_end_s,end_s_used,start_s_used,boundary_source
+v5_e01,,26.894,0.0,video5_vial_recipes.csv end_s
+v5_e02,,73.645,46.204,video5_vial_recipes.csv end_s
+v5_e03,,120.503,91.72,video5_vial_recipes.csv end_s
+v5_e04,,161.318,138.25,video5_vial_recipes.csv end_s
+v5_e05,,203.085,179.096,video5_vial_recipes.csv end_s
+v5_e06,,246.39,221.015,video5_vial_recipes.csv end_s
+v5_e07,,308.023,284.669,video5_vial_recipes.csv end_s
+v5_e08,,360.979,336.839,video5_vial_recipes.csv end_s
+v5_e09,,414.236,391.343,video5_vial_recipes.csv end_s
+v5_e10,,472.752,434.761,video5_vial_recipes.csv end_s
+v5_e11,,528.275,491.795,video5_vial_recipes.csv end_s
+v5_e12,,586.539,548.774,video5_vial_recipes.csv end_s
+v5_e13,,656.353,609.721,video5_vial_recipes.csv end_s
+v5_e14,,725.968,679.525,video5_vial_recipes.csv end_s
+v5_e15,,797.504,749.5,video5_vial_recipes.csv end_s
+v5_e16,,855.988,817.671,video5_vial_recipes.csv end_s
+v5_e17,,913.594,875.566,video5_vial_recipes.csv end_s
+v5_e18,,969.911,932.431,video5_vial_recipes.csv end_s
+v5_e19,,1030.938,989.484,video5_vial_recipes.csv end_s
+v5_e20,,1092.239,1050.381,video5_vial_recipes.csv end_s
+v5_e21,,1153.286,1110.856,video5_vial_recipes.csv end_s
+v5_e22,,1220.602,1179.569,video5_vial_recipes.csv end_s
+v5_e23,,1289.899,1246.409,video5_vial_recipes.csv end_s
+v5_e24,,1359.865,1316.497,video5_vial_recipes.csv end_s
+v5_e25,,1423.66,1384.465,video5_vial_recipes.csv end_s
+v5_e26,,1487.312,1451.327,video5_vial_recipes.csv end_s
+v5_e27,,1551.569,1514.322,video5_vial_recipes.csv end_s
+v5_e28,,1601.142,1579.512,video5_vial_recipes.csv end_s
+v5_e29,,1646.633,1625.047,video5_vial_recipes.csv end_s
+v5_e30,,1693.804,1671.265,video5_vial_recipes.csv end_s
+field_v01,45.0,45.6667,12.0,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v02,107.0,107.0,73.0,workbook end_s (no stream after it)
+field_v03,169.0,169.0,134.0,workbook end_s (no stream after it)
+field_v04,230.0,230.0,195.0,workbook end_s (no stream after it)
+field_v05,291.0,291.0,256.0,workbook end_s (no stream after it)
+field_v06,325.634,325.634,317.634,workbook end_s (no stream after it)
+field_v07,370.634,370.634,364.634,workbook end_s (no stream after it)
+field_v08,415.634,415.634,408.634,workbook end_s (no stream after it)
+field_v09,458.634,458.8673,451.634,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v10,503.634,504.3673,496.634,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v11,567.334,567.334,531.334,workbook end_s (no stream after it)
+field_v12,636.334,636.334,591.334,workbook end_s (no stream after it)
+field_v13,706.334,706.334,661.334,workbook end_s (no stream after it)
+field_v14,777.334,777.334,733.334,workbook end_s (no stream after it)
+field_v15,847.334,847.334,803.334,workbook end_s (no stream after it)
+field_v16,880.968,880.968,872.968,workbook end_s (no stream after it)
+field_v17,923.968,923.968,917.968,workbook end_s (no stream after it)
+field_v18,966.968,966.968,960.968,workbook end_s (no stream after it)
+field_v19,1010.968,1010.968,1003.968,workbook end_s (no stream after it)
+field_v20,1055.968,1055.968,1048.968,workbook end_s (no stream after it)
+field_v21,1109.335,1112.3016,1069.335,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v22,1185.335,1187.3016,1146.335,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v23,1260.335,1264.435,1222.335,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v24,1338.335,1339.535,1297.335,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v25,1412.335,1414.535,1372.335,measured: last visible-stream frame (stream continued past workbook end_s)
+field_v26,1444.635,1444.635,1437.635,workbook end_s (no stream after it)
+field_v27,1487.635,1487.635,1480.635,workbook end_s (no stream after it)
+field_v28,1531.635,1531.635,1525.635,workbook end_s (no stream after it)
+field_v29,1575.635,1575.635,1568.635,workbook end_s (no stream after it)
+field_v30,1618.635,1618.635,1612.635,workbook end_s (no stream after it)
