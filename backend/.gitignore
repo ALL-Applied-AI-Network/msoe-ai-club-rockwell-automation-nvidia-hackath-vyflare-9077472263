@@ -1,0 +1,33 @@
+# Local configuration and environments
+.env
+.env.*
+!.env.example
+.venv/
+
+# Python caches and test artifacts
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# Model files and caches
+*.bin
+*.pt
+*.pth
+*.safetensors
+models/
+.model-cache/
+
+# Logs and operating-system files
+*.log
+.DS_Store
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/

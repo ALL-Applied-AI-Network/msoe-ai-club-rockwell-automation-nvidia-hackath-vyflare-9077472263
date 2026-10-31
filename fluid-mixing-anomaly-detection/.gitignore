@@ -1,0 +1,3 @@
+# Raw dataset stays out of git — download csi_vial_ai_dataset_v1.zip and
+# csi-vial-fill-dataset.zip from the shared drive and extract here.
+data/

@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-24m11s327-24m47s312",
+  "vial": 26,
+  "recipe_id": 13,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and is filled with a dark brown liquid. The liquid level rises steadily over time, and the nozzle is later seen dispensing a lighter brown liquid into the same vial.",
+  "liquid_color_in_vial": "Dark brown, then lighter brown",
+  "dispensed_liquid_color": "Dark brown, then lighter brown",
+  "visibility": "clear",
+  "schema_errors": []
+}

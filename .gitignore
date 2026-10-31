@@ -1,0 +1,30 @@
+node_modules/
+client/dist/
+server/dist/
+.env
+.env.*
+*.log
+coverage/
+
+# Keep delivered and generated heavyweight artifacts outside Git.
+datasets/
+models/
+artifacts/
+generated/
+*.mp4
+*.usd
+*.usda
+*.usdc
+*.pt
+*.pth
+*.onnx
+
+# Python development and model inputs
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.zip
+.model-cache/
+!**/.env.example

@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-15m32s431-16m09s911",
+  "vial": 18,
+  "recipe_id": 10,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a yellow liquid is poured into it. The vial gradually fills with the same yellow liquid over the course of the video.",
+  "liquid_color_in_vial": "Yellow",
+  "dispensed_liquid_color": "Yellow",
+  "visibility": "clear",
+  "schema_errors": []
+}

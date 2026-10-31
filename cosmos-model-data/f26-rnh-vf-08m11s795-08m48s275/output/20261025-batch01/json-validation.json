@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-08m11s795-08m48s275",
+  "vial": 11,
+  "recipe_id": 8,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is held stationary under a dispensing nozzle while a green liquid is poured into it, gradually filling the vial.",
+  "liquid_color_in_vial": "green",
+  "dispensed_liquid_color": "green",
+  "visibility": "clear",
+  "schema_errors": []
+}

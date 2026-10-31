@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial positioned beneath a dispensing nozzle receives a green liquid, which gradually fills it over time.",
+  "target_vial": "The vial on the left, mounted on a black clamp, receives the green liquid from the nozzle above.",
+  "observed_stages": [
+    "The vial is empty and waiting beneath the nozzle.",
+    "A green liquid begins dispensing into the vial.",
+    "The vial fills with the green liquid.",
+    "The dispensing stops, and the vial contains the green liquid."
+  ],
+  "dispensed_liquid_color": "Green",
+  "liquid_color_in_vial": "Green",
+  "color_changes": "The vial starts empty and becomes filled with green liquid.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

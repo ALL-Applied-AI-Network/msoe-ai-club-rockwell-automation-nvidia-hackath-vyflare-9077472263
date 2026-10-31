@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-09m08s774-09m46s539",
+  "vial": 12,
+  "recipe_id": 8,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial is positioned under a dispensing nozzle and is filled with a green liquid. The vial remains stationary while the liquid level rises steadily. After filling, the vial moves out of frame, and a new empty vial enters from the right.",
+  "liquid_color_in_vial": "Green",
+  "dispensed_liquid_color": "Green",
+  "visibility": "clear",
+  "schema_errors": []
+}

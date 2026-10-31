@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial is held stationary under a dispensing nozzle. An orange liquid is dispensed into it, gradually filling the vial from empty to a partially filled state.",
+  "target_vial": "A transparent cylindrical vial mounted on a metal stand, positioned directly beneath the dispensing nozzle. It contains an orange liquid that increases in volume over time.",
+  "observed_stages": [
+    "The vial is empty and positioned under the nozzle.",
+    "An orange liquid begins dispensing into the vial.",
+    "The vial fills with orange liquid, reaching a partially filled state.",
+    "The dispensing stops, and the vial remains stationary with the collected liquid."
+  ],
+  "dispensed_liquid_color": "Orange",
+  "liquid_color_in_vial": "Orange",
+  "color_changes": "The liquid inside the vial changes from empty to a uniform orange color as it is filled.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}

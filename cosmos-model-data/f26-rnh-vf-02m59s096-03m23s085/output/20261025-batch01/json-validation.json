@@ -1,0 +1,13 @@
+{
+  "clip_id": "f26-rnh-vf-02m59s096-03m23s085",
+  "vial": 5,
+  "recipe_id": 6,
+  "json_valid": true,
+  "schema_valid": true,
+  "inference_status": "success",
+  "event_summary": "A vial positioned beneath a dispensing nozzle receives a continuous stream of orange liquid, which gradually fills the vial. A neighboring vial remains empty and stationary throughout the sequence.",
+  "liquid_color_in_vial": "Orange",
+  "dispensed_liquid_color": "Orange",
+  "visibility": "clear",
+  "schema_errors": []
+}

@@ -1,0 +1,29 @@
+{
+  "checkpoint_id": "model4-kernel-ridge-2026-10-30-before-improvements",
+  "challenger_id": "model4-stream-color-2026-10-30",
+  "sha256": {
+    "recipes.json": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63",
+    "checkpoint.json": "449cd01fbbec7f7d54b0bbd38797c62e838595282b8410cf874c855cc5d47d38",
+    "stream_challenger.json": "e64e302981bb691f6744c8e0f63c81284245f4e106160b5d46c639a5254f1bf7"
+  },
+  "camera_profile": "vial-fill-640x480",
+  "expected_image_size": [
+    640,
+    480
+  ],
+  "post_fill_sampling": "three original video frames approximately .05/.15/.25 seconds after reviewed upper no-flow boundary",
+  "liquid_roi_xyxy": [
+    299,
+    370,
+    325,
+    394
+  ],
+  "stream_roi_xyxy": [
+    304,
+    88,
+    316,
+    145
+  ],
+  "default_model": "frozen_checkpoint",
+  "challenger_promoted": false
+}

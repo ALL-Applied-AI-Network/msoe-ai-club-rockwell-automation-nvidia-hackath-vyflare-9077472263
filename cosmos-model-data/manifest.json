@@ -1,0 +1,353 @@
+{
+  "source_video_sha256": "6f87cec1aeec3b2bae6dac639a317c077a3f175f27abd5fc8430d6953d9d05b9",
+  "source_video_metadata": {
+    "ffmpeg_version": "7.1 built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)",
+    "codec": "h264",
+    "pix_fmt": "yuv420p(progressive)",
+    "fps": 30.0,
+    "source_size": [
+      640,
+      480
+    ],
+    "size": [
+      640,
+      480
+    ],
+    "rotate": 0,
+    "duration": 1698.07
+  },
+  "clips": [
+    {
+      "clip_id": "f26-rnh-vf-00m00s000-00m26s894",
+      "vial": 1,
+      "recipe_id": 5,
+      "start_s": 0.0,
+      "end_s": 26.894,
+      "duration_s": 26.9,
+      "image_label_count": 13,
+      "clip_sha256": "9cfece20a7a2aa615c368a8b6077b9a2156ecb5c501e0bf6fdd8aae8fdad7b3d",
+      "clip_bytes": 831980
+    },
+    {
+      "clip_id": "f26-rnh-vf-00m46s204-01m13s645",
+      "vial": 2,
+      "recipe_id": 5,
+      "start_s": 46.204,
+      "end_s": 73.645,
+      "duration_s": 27.43,
+      "image_label_count": 13,
+      "clip_sha256": "ea0d3dab1c3cc7293da74d858cc771cd3855a20dfbee5532ec981cf8632274e8",
+      "clip_bytes": 869034
+    },
+    {
+      "clip_id": "f26-rnh-vf-01m31s720-02m00s503",
+      "vial": 3,
+      "recipe_id": 5,
+      "start_s": 91.72,
+      "end_s": 120.503,
+      "duration_s": 28.8,
+      "image_label_count": 15,
+      "clip_sha256": "d7902a8499a4e0f2881d524534b5e049f540a04ea2ddf78f92afff5459925998",
+      "clip_bytes": 995449
+    },
+    {
+      "clip_id": "f26-rnh-vf-02m18s250-02m41s318",
+      "vial": 4,
+      "recipe_id": 6,
+      "start_s": 138.25,
+      "end_s": 161.318,
+      "duration_s": 23.07,
+      "image_label_count": 12,
+      "clip_sha256": "3284c1f8fcf8552c5a970cff01c92f710d71d9751e527330311abab74fab5a2f",
+      "clip_bytes": 697319
+    },
+    {
+      "clip_id": "f26-rnh-vf-02m59s096-03m23s085",
+      "vial": 5,
+      "recipe_id": 6,
+      "start_s": 179.096,
+      "end_s": 203.085,
+      "duration_s": 24.0,
+      "image_label_count": 12,
+      "clip_sha256": "32de1303e31a6517f1020700f9197d328f66dea290d1a5473db07429c5b9ff9f",
+      "clip_bytes": 740556
+    },
+    {
+      "clip_id": "f26-rnh-vf-03m41s015-04m06s390",
+      "vial": 6,
+      "recipe_id": 6,
+      "start_s": 221.015,
+      "end_s": 246.39,
+      "duration_s": 25.37,
+      "image_label_count": 12,
+      "clip_sha256": "a5ad66f0336498b27bcd666502f419eb30f1d9eb77b71253f26c3af300ad0202",
+      "clip_bytes": 843433
+    },
+    {
+      "clip_id": "f26-rnh-vf-04m44s669-05m08s023",
+      "vial": 7,
+      "recipe_id": 7,
+      "start_s": 284.669,
+      "end_s": 308.023,
+      "duration_s": 23.33,
+      "image_label_count": 12,
+      "clip_sha256": "fb5412775c6c52255d20608a6834b7a0a16e259544432d3d82f9fec119402538",
+      "clip_bytes": 740754
+    },
+    {
+      "clip_id": "f26-rnh-vf-05m36s839-06m00s979",
+      "vial": 8,
+      "recipe_id": 7,
+      "start_s": 336.839,
+      "end_s": 360.979,
+      "duration_s": 24.13,
+      "image_label_count": 12,
+      "clip_sha256": "39e0e3bd272658e231f7789b0d18e8c9f7319fa8a043a035f2fb74b3da85a27b",
+      "clip_bytes": 760215
+    },
+    {
+      "clip_id": "f26-rnh-vf-06m31s343-06m54s236",
+      "vial": 9,
+      "recipe_id": 7,
+      "start_s": 391.343,
+      "end_s": 414.236,
+      "duration_s": 22.87,
+      "image_label_count": 12,
+      "clip_sha256": "8784660d1492d7eade3101867b609d5f6e479c6fda661c421434360bc496e014",
+      "clip_bytes": 781946
+    },
+    {
+      "clip_id": "f26-rnh-vf-07m14s761-07m52s752",
+      "vial": 10,
+      "recipe_id": 8,
+      "start_s": 434.761,
+      "end_s": 472.752,
+      "duration_s": 38.0,
+      "image_label_count": 19,
+      "clip_sha256": "7a7c4fe68ddc303781862f4d392ee12f2ef6152f2b61400bf90a9ec4ea6310ed",
+      "clip_bytes": 1241979
+    },
+    {
+      "clip_id": "f26-rnh-vf-08m11s795-08m48s275",
+      "vial": 11,
+      "recipe_id": 8,
+      "start_s": 491.795,
+      "end_s": 528.275,
+      "duration_s": 36.5,
+      "image_label_count": 18,
+      "clip_sha256": "0b554c2f93cdafa027438bac1e6d2c34364a9095a74c76873320fd1a4a99e8b8",
+      "clip_bytes": 1106751
+    },
+    {
+      "clip_id": "f26-rnh-vf-09m08s774-09m46s539",
+      "vial": 12,
+      "recipe_id": 8,
+      "start_s": 548.774,
+      "end_s": 586.539,
+      "duration_s": 37.73,
+      "image_label_count": 18,
+      "clip_sha256": "c5252bdb07162abd771060e3cf4599a88fa04dbb6a51c10fd6f066b09d161919",
+      "clip_bytes": 1282260
+    },
+    {
+      "clip_id": "f26-rnh-vf-10m09s721-10m56s353",
+      "vial": 13,
+      "recipe_id": 9,
+      "start_s": 609.721,
+      "end_s": 656.353,
+      "duration_s": 46.63,
+      "image_label_count": 23,
+      "clip_sha256": "2300749f19eea33b9b4bb8472541a804d81f44cb015e5efafec13ebe7adf135c",
+      "clip_bytes": 1414550
+    },
+    {
+      "clip_id": "f26-rnh-vf-11m19s525-12m05s968",
+      "vial": 14,
+      "recipe_id": 9,
+      "start_s": 679.525,
+      "end_s": 725.968,
+      "duration_s": 46.47,
+      "image_label_count": 23,
+      "clip_sha256": "feb499f9105a6b4fd18a951e639c6128f23c1fe53dff3e22bbe10fb21913f8d3",
+      "clip_bytes": 1503582
+    },
+    {
+      "clip_id": "f26-rnh-vf-12m29s500-13m17s504",
+      "vial": 15,
+      "recipe_id": 9,
+      "start_s": 749.5,
+      "end_s": 797.504,
+      "duration_s": 48.03,
+      "image_label_count": 24,
+      "clip_sha256": "6495dc91c1bf8a2281a23d1144ac6ddf476fb41e6e9d7e205c4315b3f7da1dac",
+      "clip_bytes": 1671683
+    },
+    {
+      "clip_id": "f26-rnh-vf-13m37s671-14m15s988",
+      "vial": 16,
+      "recipe_id": 10,
+      "start_s": 817.671,
+      "end_s": 855.988,
+      "duration_s": 38.3,
+      "image_label_count": 19,
+      "clip_sha256": "883e6e1e4fb304e0ab303bf5970ed10145bb7cd81417af00996fdecae194bf0f",
+      "clip_bytes": 1264668
+    },
+    {
+      "clip_id": "f26-rnh-vf-14m35s566-15m13s594",
+      "vial": 17,
+      "recipe_id": 10,
+      "start_s": 875.566,
+      "end_s": 913.594,
+      "duration_s": 38.03,
+      "image_label_count": 19,
+      "clip_sha256": "68885bcf8e6d4282b756a6aacf4330b0ceb4d59313e45c726af18e6ffb7b656f",
+      "clip_bytes": 1133959
+    },
+    {
+      "clip_id": "f26-rnh-vf-15m32s431-16m09s911",
+      "vial": 18,
+      "recipe_id": 10,
+      "start_s": 932.431,
+      "end_s": 969.911,
+      "duration_s": 37.5,
+      "image_label_count": 19,
+      "clip_sha256": "310e8bc32edb91d9035cbb87362708605bf807f0ef0d1d753282577a9b590634",
+      "clip_bytes": 1363008
+    },
+    {
+      "clip_id": "f26-rnh-vf-16m29s484-17m10s938",
+      "vial": 19,
+      "recipe_id": 11,
+      "start_s": 989.484,
+      "end_s": 1030.938,
+      "duration_s": 41.47,
+      "image_label_count": 20,
+      "clip_sha256": "37761d31d7abdb8f7eed96a2d71cc943a69e33413961bd3a25382f5be7094e90",
+      "clip_bytes": 1499213
+    },
+    {
+      "clip_id": "f26-rnh-vf-17m30s381-18m12s239",
+      "vial": 20,
+      "recipe_id": 11,
+      "start_s": 1050.381,
+      "end_s": 1092.239,
+      "duration_s": 41.83,
+      "image_label_count": 21,
+      "clip_sha256": "ad4ad40ddbfdb5797ea528e816c7a2827f51d51f11c190e40cd14ea9e64872ab",
+      "clip_bytes": 1389325
+    },
+    {
+      "clip_id": "f26-rnh-vf-18m30s856-19m13s286",
+      "vial": 21,
+      "recipe_id": 11,
+      "start_s": 1110.856,
+      "end_s": 1153.286,
+      "duration_s": 42.43,
+      "image_label_count": 21,
+      "clip_sha256": "bbe7e6cf14c2fb9441be556cc317ab02e830b799ce3bd8de9739c68331175209",
+      "clip_bytes": 1526939
+    },
+    {
+      "clip_id": "f26-rnh-vf-19m39s569-20m20s602",
+      "vial": 22,
+      "recipe_id": 12,
+      "start_s": 1179.569,
+      "end_s": 1220.602,
+      "duration_s": 41.0,
+      "image_label_count": 21,
+      "clip_sha256": "fa087a4c4dad0da2297a153e5c50cab9f6cf86af381563e30cbda48a4a15472c",
+      "clip_bytes": 1345446
+    },
+    {
+      "clip_id": "f26-rnh-vf-20m46s409-21m29s899",
+      "vial": 23,
+      "recipe_id": 12,
+      "start_s": 1246.409,
+      "end_s": 1289.899,
+      "duration_s": 43.47,
+      "image_label_count": 22,
+      "clip_sha256": "af2f084c85c99e1cf28a747fe762a381cf5c7fea82b15fbec47dc47fc0606c35",
+      "clip_bytes": 1414836
+    },
+    {
+      "clip_id": "f26-rnh-vf-21m56s497-22m39s865",
+      "vial": 24,
+      "recipe_id": 12,
+      "start_s": 1316.497,
+      "end_s": 1359.865,
+      "duration_s": 43.4,
+      "image_label_count": 22,
+      "clip_sha256": "e659ecde8fa4313b7c89afc4ec560160491bb7f3b06641816d30793dbfe43925",
+      "clip_bytes": 1516396
+    },
+    {
+      "clip_id": "f26-rnh-vf-23m04s465-23m43s660",
+      "vial": 25,
+      "recipe_id": 13,
+      "start_s": 1384.465,
+      "end_s": 1423.66,
+      "duration_s": 39.2,
+      "image_label_count": 19,
+      "clip_sha256": "dff649464f024ff5af07b66fb5e03dd05581aa16c4128f1216ec12bc3dae387c",
+      "clip_bytes": 1221223
+    },
+    {
+      "clip_id": "f26-rnh-vf-24m11s327-24m47s312",
+      "vial": 26,
+      "recipe_id": 13,
+      "start_s": 1451.327,
+      "end_s": 1487.312,
+      "duration_s": 36.0,
+      "image_label_count": 18,
+      "clip_sha256": "6b9f2c40e40000ffddd1dedf44621e2dde09b0cd15db4f990164c6a2ec77eaab",
+      "clip_bytes": 1081853
+    },
+    {
+      "clip_id": "f26-rnh-vf-25m14s322-25m51s569",
+      "vial": 27,
+      "recipe_id": 13,
+      "start_s": 1514.322,
+      "end_s": 1551.569,
+      "duration_s": 37.27,
+      "image_label_count": 18,
+      "clip_sha256": "467271e9892b8fc8e364b58148fd50185466cd21b7b689f1e4172ca8df5a1fe2",
+      "clip_bytes": 1281189
+    },
+    {
+      "clip_id": "f26-rnh-vf-26m19s512-26m41s142",
+      "vial": 28,
+      "recipe_id": 14,
+      "start_s": 1579.512,
+      "end_s": 1601.142,
+      "duration_s": 21.6,
+      "image_label_count": 11,
+      "clip_sha256": "b0d46907cd4976a2620931e43240551cd240e536c5ca2b0adfb36501d3d9a00f",
+      "clip_bytes": 767575
+    },
+    {
+      "clip_id": "f26-rnh-vf-27m05s047-27m26s633",
+      "vial": 29,
+      "recipe_id": 14,
+      "start_s": 1625.047,
+      "end_s": 1646.633,
+      "duration_s": 21.57,
+      "image_label_count": 10,
+      "clip_sha256": "e9149b379968687d1d5ccf7b14494bcda989f42c7640a224e1b70b3a130db66b",
+      "clip_bytes": 728232
+    },
+    {
+      "clip_id": "f26-rnh-vf-27m51s265-28m13s804",
+      "vial": 30,
+      "recipe_id": 14,
+      "start_s": 1671.265,
+      "end_s": 1693.804,
+      "duration_s": 22.57,
+      "image_label_count": 11,
+      "clip_sha256": "ceac57ab55a5c3f9de123de25b323fe49f00e8fc0f816ff372e20e3871423bf6",
+      "clip_bytes": 828439
+    }
+  ],
+  "excluded_frame_labels_outside_clips": 336,
+  "validation": "Every clip fully decoded; JSON parsed; launchers passed bash -n; output folders empty"
+}

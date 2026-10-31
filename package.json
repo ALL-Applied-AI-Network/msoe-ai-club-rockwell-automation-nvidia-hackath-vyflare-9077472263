@@ -1,0 +1,45 @@
+{
+  "name": "vyflare-inspection-console",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24.19.0 <25",
+    "pnpm": ">=11.25.0 <12"
+  },
+  "scripts": {
+    "dev": "concurrently -n API,UI -c red,blue \"tsx watch server/src/index.ts\" \"vite --config client/vite.config.ts\"",
+    "dev:client": "vite --config client/vite.config.ts",
+    "dev:server": "tsx watch server/src/index.ts",
+    "build": "tsc -p server/tsconfig.json && vite build --config client/vite.config.ts",
+    "start": "node server/dist/server/src/index.js",
+    "typecheck": "tsc -p server/tsconfig.json --noEmit && tsc -p client/tsconfig.json --noEmit",
+    "test": "vitest run server/src --exclude \"**/dist/**\"",
+    "check": "pnpm run typecheck && pnpm test && pnpm run build",
+    "test:integration": "node scripts/smoke-integration.mjs",
+    "dev:integrated": "concurrently -k -n PYTHON,API,UI \"python backend/app.py\" \"tsx watch server/src/index.ts\" \"vite --config client/vite.config.ts\""
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "cors": "latest",
+    "express": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "concurrently": "latest",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "vitest": "latest"
+  }
+}

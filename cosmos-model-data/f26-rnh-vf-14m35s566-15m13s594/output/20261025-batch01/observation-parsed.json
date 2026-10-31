@@ -1,0 +1,17 @@
+{
+  "event_summary": "A vial is positioned beneath a dispensing nozzle and receives a continuous stream of yellow liquid, which gradually fills the vial.",
+  "target_vial": "The vial on the left, mounted on a metal stand with a black clamp, receives the liquid stream.",
+  "observed_stages": [
+    "Waiting: The vial is empty and positioned under the nozzle.",
+    "Dispensing: A steady stream of yellow liquid enters the vial.",
+    "Filling: The vial gradually fills with the yellow liquid.",
+    "Movement: The vial is moved away from the nozzle after filling."
+  ],
+  "dispensed_liquid_color": "Yellow",
+  "liquid_color_in_vial": "Yellow",
+  "color_changes": "The liquid inside the vial changes from clear to yellow as it is filled.",
+  "visible_anomalies": [],
+  "visibility": "clear",
+  "limitations": [],
+  "recipe_assessment": "not assessed \u2014 no expected recipe supplied"
+}
