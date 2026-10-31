@@ -159,6 +159,7 @@ confound.
 
 ## Artifacts (`outputs/model/`)
 
-`model2_head_crop.json`: ordered classes `5…14, 41, 50, 60, 99`, scaler, coefficients,
+`model2_head_crop.json`: classes 5–14, 41, 50, 60, 99 in the head's stored order
+(string-sorted, `10, 11, …, 9, 99`; always read the order from `classes`), scaler, coefficients,
 preprocessing `station-crop-v1`, threshold, backbone hash and `calibrated: false`.
 `model2_head_fullframe_comparison.json` is for the shortcut comparison only.
