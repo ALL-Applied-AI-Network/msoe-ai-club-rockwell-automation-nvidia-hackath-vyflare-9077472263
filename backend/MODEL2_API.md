@@ -6,8 +6,8 @@ estimate composition, never clears another model's flag and never releases a via
 
 **Status: not approved as supporting evidence.** `model2_assets/manifest.json` sets
 `approved_for_supporting_evidence: false`. The reason is the validation in
-`Training model 2/model2_baseline/README.md`: at 0.90 it falsely accepted 32% of good
-unfamiliar recipes and 6 of 19 bad vials, and it shows a recording-context shortcut.
+`Training model 2/model2_baseline/README.md`: at 0.90 it falsely accepted 33% of good
+unfamiliar recipes and 8 of 19 bad vials, and it shows a recording-context shortcut.
 While unapproved, matches are reported but never counted as evidence.
 
 ## Start

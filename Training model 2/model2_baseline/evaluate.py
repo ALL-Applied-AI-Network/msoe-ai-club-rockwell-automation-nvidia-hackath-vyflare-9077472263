@@ -82,6 +82,7 @@ def main():
                                         "max_score": max(float(r["top_score"]) for r in rs)} for g, rs in by_group.items()}
         m["C_bad_first_vials"] = acceptance([r for r in cv if r["eval_role"] == "C_bad_first"])
         m["C_bad_later_vials"] = acceptance([r for r in cv if r["eval_role"] == "C_bad_later"])
+        m["C_first_vials_labeled_good"] = acceptance([r for r in cv if r["eval_role"] == "C_first_vial_labeled_good"])
         rec = [r for r in preds if r["experiment"] == "recording_holdout_99" and r["mode"] == mode]
         m["D_recording_holdout_recipe99"] = {s: recognition([r for r in rec if r["split"] == s]) for s in sorted({r["split"] for r in rec})}
         m["unknown_quality_predictions_no_metrics"] = [
@@ -104,7 +105,7 @@ def main():
         print(f"== {mode}")
         print(f" A good known: vials {a['independent_vials']} frames {a['frames']} acc {a['accuracy_top1']} macroF1 {a['macro_f1_top1']} "
               f"coverage {a['coverage_at_0.90']} accepted-acc {a['accepted_prediction_accuracy']} mean score {a['calibration_check']['mean_top_score']}")
-        for key in ("B_unfamiliar_good_recipes", "C_bad_first_vials", "C_bad_later_vials"):
+        for key in ("B_unfamiliar_good_recipes", "C_bad_first_vials", "C_bad_later_vials", "C_first_vials_labeled_good"):
             b = m[key]
             print(f" {key}: vials {b['independent_vials']} FA {b['false_acceptances_at_0.90']} rate {b['false_acceptance_rate']} accepted-as-intended {b['accepted_as_intended_recipe']}")
         for s, d in m["D_recording_holdout_recipe99"].items():

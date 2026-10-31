@@ -1,7 +1,7 @@
 {
   "model_id": "model2-baseline-v2-crop",
   "sha256": {
-    "head.json": "5ac770c7102addeee4b5d61fa6bff00b153a3ba2f162f47192dec838c85c5766"
+    "head.json": "b9f44f920aa48cd42d57c631117dab339ac3563e5c588f4df8dd9ddeb41fbdd6"
   },
   "source": "Training model 2/model2_baseline (config model2-baseline-v2)",
   "camera_profile": "vial-fill-640x480",
@@ -17,10 +17,10 @@
   "approved_for_supporting_evidence": false,
   "validation": {
     "report": "Training model 2/model2_baseline/README.md",
-    "good_known_cv_accepted_accuracy": 0.963,
-    "unfamiliar_false_acceptance_rate": 0.3171,
-    "bad_first_false_acceptance_rate": 0.25,
-    "bad_later_false_acceptance_rate": 0.6667,
+    "good_known_cv_accepted_accuracy": 0.9615,
+    "unfamiliar_false_acceptance_rate": 0.325,
+    "bad_first_false_acceptance_rate": 0.3333,
+    "bad_later_false_acceptance_rate": 0.75,
     "known_issue": "recording-context shortcut on field recipes (see report)"
   }
 }

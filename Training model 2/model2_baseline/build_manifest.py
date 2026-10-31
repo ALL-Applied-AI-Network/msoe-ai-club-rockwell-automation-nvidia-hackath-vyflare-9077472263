@@ -82,6 +82,9 @@ def vial_rows():
             role = "unknown_quality"
         elif label == "bad":
             role = "C_bad_first" if row["first_vial_flag"] else "C_bad_later"
+        elif row["first_vial_flag"]:
+            # Labeled good but still contaminated by carryover: transition challenge set.
+            role = "C_first_vial_labeled_good"
         else:
             role = "A_good_known"
         row["eval_role"] = role

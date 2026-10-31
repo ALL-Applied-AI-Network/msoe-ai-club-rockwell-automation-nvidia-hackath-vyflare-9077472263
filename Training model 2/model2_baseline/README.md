@@ -3,17 +3,18 @@
 **Recommendation: needs further work. Do not count this model's scores as verification evidence yet.**
 At the fixed 0.90 threshold (cross-validation, crop model) it confidently accepted:
 
-- 32% of good vials whose recipe was withheld from training,
-- 4 of 16 bad first vials,
-- 2 of 3 bad later vials.
+- 33% of good vials whose recipe was withheld from training,
+- 5 of 15 bad first vials,
+- 3 of 4 bad later vials.
 
 Attribution and occlusion indicate a recording-context shortcut for the field recipes.
 Scores are uncalibrated recipe-resemblance values. They are not probabilities of
 correctness and say nothing about whether a vial is good.
 
-Current version: `model2-baseline-v3` (2026-10-31), using the operator answers below.
-v3 differs from v2 only in vial 27's label: the training set, head weights and the
-A, B and D results are unchanged. v1 and v2 results are in Git history (commits `777e6a1`, `052cb35`).
+Current version: `model2-baseline-v4` (2026-10-31), retrained on workbook `771c86ea…6aea`.
+Relative to v3, vial 28 changed good → bad (it left training, now 40 vials) and first
+vial 26 changed bad → good (it stays out of training and is reported as a transition
+vial). Earlier versions are in Git history: v1 `777e6a1`, v2 `052cb35`, v3 `669b3c2`.
 
 ## Operator decisions applied
 
@@ -25,10 +26,12 @@ A, B and D results are unchanged. v1 and v2 results are in Git history (commits 
 | `99/50-flush/99-2.jpg` | Vial 27 (position 2), a bad vial | Photo is deep orange; station frames of vial 27 are pale yellow. Workbook now labels vial 27 bad |
 | Timing, recipes 5–14 | `video5_vial_recipes.csv` | 0 of 90 post-flow frames show a stream (vs 9 with `Recipes_5_to_14` end_s); no movement |
 | Field end of flow | Measured from video when the stream continues past workbook `end_s` | v01, v09, v10, v21–v25 moved 0.2–4.1 s later (`outputs/flow_boundaries.csv`) |
-| Labels | Workbook `f98b3a74…cce2`: vials 23–25 and 28–30 good, 26 and 27 bad | Only column S changed (rows 24–31) |
+| Labels | Workbook `771c86ea…6aea`: vials 23–26 and 29–30 good, 27 and 28 bad | Only column S changed (rows 24–31) |
 
-Vial 27 is a bad later vial. Following the rule to train only on explicitly good vials,
-it is used in bad-vial evaluation, not as a training example.
+Vials 27 and 28 are bad later vials. Following the rule to train only on explicitly good
+vials, they are used in bad-vial evaluation, not as training examples. Vial 26 is labeled
+good but is a first vial: it keeps its contamination flag, is never trained on, and is
+reported separately (`C_first_vial_labeled_good`).
 
 ## Reproduce
 
@@ -50,7 +53,7 @@ Run from this folder, in order:
 ..\..\.venv\Scripts\python.exe export_backend_assets.py  # backend/model2_assets + parity fixture
 ```
 
-The v2 run used Pillow 13.0.0. Installing `backend/requirements-integration.lock.txt`
+The v1 and v2 runs used Pillow 13.0.0; v3 and v4 ran with 12.3.0. Installing `backend/requirements-integration.lock.txt`
 afterwards pins Pillow 12.3.0 in the same venv. The backend parity test still matches
 the training oracle to 5 decimal places on the exported PNG frames. Backend usage is in
 `backend/MODEL2_API.md`.
@@ -78,9 +81,10 @@ Seed: `20261031`.
 
 | Group | Vials |
 |---|---|
-| Training-eligible good vials | 41: 20 from Video 5 (recipes 5–14, positions 2–3); field 41 (v02–05), 60 (v12–15), 50 (v23–25), 99 (v07–10, v18–20, v28–30) |
-| Bad first vials | 16: `v5_e01, e04, …, e28`; `field_v01, v06, v11, v16, v21, v26` |
-| Bad later vials | 3: `field_v17` (99), `field_v22` (50), `field_v27` (99) |
+| Training-eligible good vials | 40: 20 from Video 5 (recipes 5–14, positions 2–3); field 41 (v02–05), 60 (v12–15), 50 (v23–25), 99 (v07–10, v18–20, v29–30) |
+| Bad first vials | 15: `v5_e01, e04, …, e28`; `field_v01, v06, v11, v16, v21` |
+| Bad later vials | 4: `field_v17` (99), `field_v22` (50), `field_v27` (99), `field_v28` (99) |
+| First vial labeled good | 1: `field_v26` (99 after 50); contamination flag retained |
 | Not used | 5–14 per-vial clips (same frames as Video 5); 640×480 stills (capture time unknown) |
 | Phone photos | 30, one per field vial; evaluation only |
 
@@ -90,26 +94,26 @@ augmentations of a vial together. Recipes 5–14 train on one good vial per reci
 
 ## Results (crop model, per independent vial, threshold 0.90)
 
-**A. Good known recipes, cross-validation** (41 vials, 123 frames; cross-validation, not an independent test):
-top-1 accuracy 0.805, macro F1 0.716, coverage 0.659 (27 vials), accepted-prediction accuracy 0.963 (26/27).
-The one confident error is `v5_e15`: recipe 9 → 8 at 0.952. Mean top score is 0.851 against
-0.805 accuracy, so the scores are overconfident and uncalibrated.
+**A. Good known recipes, cross-validation** (40 vials, 120 frames; cross-validation, not an independent test):
+top-1 accuracy 0.775, macro F1 0.682, coverage 0.650 (26 vials), accepted-prediction accuracy 0.962 (25/26).
+The one confident error is `v5_e15`: recipe 9 → 8 at 0.952. Mean top score is 0.846 against
+0.775 accuracy, so the scores are overconfident and uncalibrated.
 
 | Recipe | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 41 | 50 | 60 | 99 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Correct / vials | 2/2 | 2/2 | 2/2 | 0/2 | 0/2 | 2/2 | 2/2 | 2/2 | 2/2 | 0/2 | 4/4 | 2/3 | 3/4 | 10/10 |
-| Accepted and correct | 0 | 1 | 1 | 0 | 0 | 1 | 2 | 2 | 0 | 0 | 4 | 2 | 3 | 10 |
+| Correct / vials | 2/2 | 2/2 | 2/2 | 0/2 | 0/2 | 2/2 | 2/2 | 2/2 | 1/2 | 0/2 | 4/4 | 2/3 | 3/4 | 9/9 |
+| Accepted and correct | 0 | 1 | 1 | 0 | 0 | 1 | 2 | 2 | 0 | 0 | 4 | 2 | 3 | 9 |
 
-Errors (true → predicted): 8→9, 8→14, 9→10, 9→8, 14→8, 14→7, 50→60, 60→50. Recipes 5 and 8
-were never confused with each other; with two vials each, that does not show they can be told apart.
+Errors (true → predicted): 8→9, 8→14, 9→10, 9→8, 13→10, 14→8, 14→7, 50→60, 60→50. Recipes 5
+and 8 were never confused with each other; with two vials each, that does not show they can be told apart.
 
-**B. Good unfamiliar recipes** (each recipe withheld; 5 and 8 withheld together; 41 vials):
-**13 false acceptances (0.317)**.
+**B. Good unfamiliar recipes** (each recipe withheld; 5 and 8 withheld together; 40 vials):
+**13 false acceptances (0.325)**.
 
 | Withheld | Falsely accepted |
 |---|---|
 | 60 | all 4, as 50 (0.95–0.99) |
-| 99 | 3 of 10, as 60 or 50: clear water accepted as green recipes |
+| 99 | 3 of 9, as 60 or 50: clear water accepted as green recipes |
 | 7 | 2 of 2, as 14 and 11 |
 | 9 | 2 of 2, as 5 and 8 |
 | 41 | 1 of 4, as 12 |
@@ -120,38 +124,39 @@ were never confused with each other; with two vials each, that does not show the
 
 | Set | Vials | Accepted at 0.90 | Accepted as intended recipe |
 |---|---|---|---|
-| Bad first vials | 16 | 4 (0.25): `v5_e19` (11), `v5_e22` (as 9, intended 12), `v5_e25` (13), `field_v11` (as 99, intended 60) | 2 |
-| Bad later vials | 3 | 2: `field_v17` (99, 0.998), `field_v27` (99, 0.924); `field_v22` abstained | 2 |
+| Bad first vials | 15 | 5 (0.33): `v5_e04` (as 9, intended 6, 0.901), `v5_e19` (11), `v5_e22` (as 9, intended 12), `v5_e25` (13), `field_v11` (as 99, intended 60) | 2 |
+| Bad later vials | 4 | 3 (0.75): `field_v17` (99, 0.998), `field_v27` (99, 0.920), `field_v28` (99, 0.998); `field_v22` abstained | 3 |
+| First vial labeled good | 1 | 0: `field_v26` abstained (99, 0.854) | 0 |
 
 **D. Recording generalization (recipe 99, three recordings):** each recording held out in turn,
-10/10 correct, coverage 0.5, 1.0 and 1.0. Recipes 5–14 (one Video 5 recording) and 41, 50 and 60
+9/9 correct, coverage 0.5, 1.0 and 1.0. Recipes 5–14 (one Video 5 recording) and 41, 50 and 60
 (one field recording each) cannot be tested across recordings, so for them recipe and
 recording are fully confounded.
 
 **Phone photos** (whole photo, letterboxed, scored by the final head; each vial's station
 frames trained that head, so this is a camera-transfer check, not held-out data): good vials
-21 photos, 6 top-1 matches, 9 accepted (3 correct); bad first 6 photos, 3 accepted; bad later
-3 photos, 1 accepted. Phone photos are not a usable input.
+20 photos, 7 top-1 matches, 9 accepted (3 correct); bad first 5 photos, 3 accepted; bad later
+4 photos, 1 accepted; first vial labeled good 1 photo, not accepted. Phone photos are not a usable input.
 
 Per-vial context (intended recipe, preceding recipe, batch position, recording, scores) is
 in `outputs/predictions_per_vial.csv`. Counts per context cell are 1–4 vials, too few for rates.
 
 ## What the model uses (`outputs/analysis/`)
 
-Occlusion on the 41 held-out good vials (same fold heads, regions masked at test time):
+Occlusion on the 40 held-out good vials (same fold heads, regions masked at test time):
 
 | Mask | Top-1 correct | Accepted (correct) |
 |---|---|---|
-| None (crop) | 33 | 27 (26) |
-| Liquid column below holder | 18 | 4 (3) |
-| Tube, label and nozzle above holder | 19 | 16 (14) |
-| Holder band | 29 | 15 (15) |
-| Full frame, no mask | 34 | 25 (25) |
-| Full frame with the vial masked (background only) | 12 | 8 (5) |
+| None (crop) | 31 | 26 (25) |
+| Liquid column below holder | 17 | 4 (3) |
+| Tube, label and nozzle above holder | 19 | 15 (13) |
+| Holder band | 27 | 15 (15) |
+| Full frame, no mask | 33 | 25 (25) |
+| Full frame with the vial masked (background only) | 11 | 6 (4) |
 
 - Liquid matters: masking the liquid column removes almost all acceptances.
 - **Shortcut:** the region above the holder, which holds no liquid at these fills, is nearly as influential for top-1. Grad-CAM for field vials (`field_v07, v11, v12, v14, v25`) peaks at the top of the tube and nozzle, including clear water accepted as 60 and green carryover accepted as 99. With one recording per field recipe, recording-specific scenery there can identify the recipe.
-- The full frame identifies 12 of 41 recipes with the vial hidden, so it stays a comparison only.
+- The full frame identifies 11 of 40 recipes with the vial hidden, so it stays a comparison only.
 - Heads fit training frames at 100% in every fold. Class weight vectors are nearly orthogonal (max cosine 0.19). The weights do not reveal composition.
 
 ## Proposed next experiment (not run; needs approval)
