@@ -62,11 +62,11 @@ class ContractTests(unittest.TestCase):
     def test_model4_review_and_estimate_preserved_without_fusion(self):
         record=observation(result(),CONTEXT,hashlib.sha256(DATA).hexdigest());other=amy()
         combined=combine_with_model4(record,other)
-        self.assertEqual(combined['amy_response'],other)
-        self.assertTrue(combined['amy_response']['result']['review']['expected_transition_contamination'])
+        self.assertEqual(combined['model4_response'],other)
+        self.assertTrue(combined['model4_response']['result']['review']['expected_transition_contamination'])
         self.assertIsNone(combined['combined_verdict'])
         self.assertFalse(combined['recipe_learning_performed'])
-        combined['amy_response']['result']['review']['required']=False
+        combined['model4_response']['result']['review']['required']=False
         self.assertTrue(other['result']['review']['required'])
 
     def test_cross_vial_and_batch_evidence_rejected(self):
@@ -115,9 +115,9 @@ class GatewayTests(unittest.TestCase):
 
     def test_existing_model4_envelope_roundtrip(self):
         record=self.submit().json
-        response=self.client.post('/v1/cosmos/combine-model4',json={'cosmos':record,'amy':amy()})
+        response=self.client.post('/v1/cosmos/combine-model4',json={'cosmos':record,'model4':amy()})
         self.assertEqual(response.status_code,200)
-        self.assertEqual(response.json['amy_response'],amy())
+        self.assertEqual(response.json['model4_response'],amy())
 
     def test_invalid_and_oversized_uploads(self):
         self.assertEqual(self.client.post('/v1/cosmos/observe').status_code,400)

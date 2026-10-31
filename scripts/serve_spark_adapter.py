@@ -45,8 +45,11 @@ class ModelRuntime:
             local_files_only=True,attn_implementation='sdpa').to('cuda')
         self.model=PeftModel.from_pretrained(base,adapter,is_trainable=False).eval()
         self.identity=dict(base_snapshot=provenance['source_snapshot'],adapter=str(adapter),frames=32,total_video_pixels=2621440)
+        import platform,socket
+        self.execution=dict(hostname=socket.gethostname(),system=platform.system(),machine=platform.machine(),
+                            gpu=torch.cuda.get_device_name(torch.cuda.current_device()))
 
-    def predict(self,path,mode):
+    def predict(self,path,mode,prompt_override=None):
         import cv2
         import numpy as np
         from PIL import Image,ImageOps
@@ -63,7 +66,7 @@ class ModelRuntime:
                     cap.set(cv2.CAP_PROP_POS_FRAMES,index);ok,frame=cap.read()
                     if not ok:raise ValueError('A sampled video frame could not be decoded.')
                     frames.append(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB))
-                messages=[dict(role='user',content=[dict(type='video'),dict(type='text',text=QUESTION)])]
+                messages=[dict(role='user',content=[dict(type='video'),dict(type='text',text=prompt_override if prompt_override is not None else QUESTION)])]
                 text=self.processor.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
                 encoded=self.processor(text=[text],videos=[np.stack(frames)],return_tensors='pt',videos_kwargs=dict(
                     do_sample_frames=False,video_metadata=[dict(total_num_frames=count,fps=fps,frames_indices=indices)],
@@ -75,6 +78,7 @@ class ModelRuntime:
                 if source.width*source.height>20000000:raise ValueError('Photo exceeds 20 megapixels.')
                 image=ImageOps.exif_transpose(source).convert('RGB');image.thumbnail((1280,1280))
             prompt='Inspect the visible liquid in this single vial photo. Return only JSON with observed_color_sequence containing one observed color or shade. Do not infer past color changes from a still image.'
+            if prompt_override is not None:prompt=prompt_override
             messages=[dict(role='user',content=[dict(type='image'),dict(type='text',text=prompt)])]
             text=self.processor.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)
             encoded=self.processor(text=[text],images=[image],return_tensors='pt',images_kwargs=dict(size=dict(shortest_edge=262144,longest_edge=262144)))
@@ -101,10 +105,14 @@ class ModelRuntime:
 def create_app(runtime,feedback_dir):
     app=Flask(__name__);app.config['MAX_CONTENT_LENGTH']=100*1024*1024
     gate=threading.Lock();records=OrderedDict();records_lock=threading.Lock()
+    from model4_worker_contract import register_model4_worker
+    register_model4_worker(app,runtime,gate)
     @app.get('/')
     def home():return HTML
     @app.get('/health')
-    def health():return jsonify(ready=True,busy=gate.locked(),model=runtime.identity)
+    def health():return jsonify(ready=True,busy=gate.locked(),model=runtime.identity,
+        execution=getattr(runtime,'execution',None),backend_predict_path='/backend/predict',
+        integration_target='model4/recipe-detection-backend-integration')
     @app.errorhandler(413)
     def too_large(error):return jsonify(error='Upload exceeds 100 MiB.'),413
     @app.post('/predict')

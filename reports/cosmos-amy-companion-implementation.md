@@ -1,5 +1,11 @@
 # Cosmos/Amy companion implementation - October 30, 2026
 
+> Historical implementation record, superseded for integration October 31.
+> See the [correction report](model4-integration-correction.md) and
+> [current reference-branch guide](model4-backend-integration-guide.md).
+> This record documents the earlier custom gateway, not compatibility with the
+> reference branch's native `RemoteCosmosModel` contract.
+
 ## Scope and decision
 
 The latest user instruction separates ownership: teammates work on Amy's models;

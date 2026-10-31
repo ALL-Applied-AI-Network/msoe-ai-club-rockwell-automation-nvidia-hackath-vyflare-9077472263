@@ -71,7 +71,7 @@ def create_app(client):
         try:
             data=request.get_json(silent=True)
             if not isinstance(data,dict):raise ValueError('Expected JSON object')
-            return jsonify(combine_with_model4(data.get('cosmos'),data.get('amy')))
+            return jsonify(combine_with_model4(data.get('cosmos'),data.get('model4')))
         except (ValueError,KeyError,TypeError) as error:return jsonify(error=str(error)),400
     return app
 

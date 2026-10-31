@@ -1,5 +1,11 @@
 # Cosmos alongside Amy's models
 
+> Historical guide, superseded October 31, 2026. The integration target is now
+> `model4/recipe-detection-backend-integration`. Follow the
+> [current guide](model4-backend-integration-guide.md), not this deployment path.
+> The optional gateway source now uses `model4` / `model4_response` and
+> `--model4-result`; the old Amy names below describe the earlier revision.
+
 This work is on `codex/cosmos3-nano-finetune`. It does not merge, replace or
 retrain Amy's models. Earlier process-verification prototype work remains in an
 isolated, unmerged local worktree; nothing from that worktree was pushed to Amy's

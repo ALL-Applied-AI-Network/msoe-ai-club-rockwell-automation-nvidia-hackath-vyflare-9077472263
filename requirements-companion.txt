@@ -1,3 +1,4 @@
 # Lightweight gateway/client tests only. Do not replace the existing GPU stack.
 Flask==3.1.3
 waitress==3.0.2
+Pillow==13.0.0

@@ -1,4 +1,4 @@
-"""Cosmos-only appearance evidence for Amy's measurement pipeline.
+"""Optional appearance evidence for model4/recipe-detection-backend-integration.
 
 No recipe lookup, tank inference, metrology, tracking or verdict fusion occurs.
 Context is caller metadata and is never included in the model prompt.
@@ -76,17 +76,17 @@ def observation(worker_result,context,input_sha256):
         raw_output=output.get('raw_text'),output_schema_valid=bool(valid),limitations=limitations)
 
 
-def combine_with_model4(cosmos,amy):
-    """Attach independent evidence without changing any Amy decision or review."""
+def combine_with_model4(cosmos,model4):
+    """Attach independent evidence without changing the reference backend result."""
     if not isinstance(cosmos,dict) or cosmos.get('schema_version')!=SCHEMA:raise ValueError('Unsupported Cosmos observation contract')
     context=validate_context(cosmos.get('context'))
     if cosmos.get('status')!='advisory_only' or context['binding_verified'] is not True or cosmos.get('output_schema_valid') is not True:
         raise ValueError('Only schema-valid, caller-bound Cosmos evidence can be combined')
-    if not isinstance(amy,dict) or not isinstance(amy.get('result'),dict):raise ValueError('Expected the existing Model 4 API response envelope')
+    if not isinstance(model4,dict) or not isinstance(model4.get('result'),dict):raise ValueError('Expected the existing Model 4 API response envelope')
     for name in ('vial_id','batch_id'):
-        if text(amy.get(name),'Amy '+name)!=context[name]:raise ValueError('Cross-vial or cross-batch evidence mismatch')
-    if 'run_id' in amy and amy['run_id']!=context['run_id']:raise ValueError('Run identity mismatch')
+        if text(model4.get(name),'Model 4 '+name)!=context[name]:raise ValueError('Cross-vial or cross-batch evidence mismatch')
+    if 'run_id' in model4 and model4['run_id']!=context['run_id']:raise ValueError('Run identity mismatch')
     return dict(schema_version='vial-companion-evidence/1.0',vial_id=context['vial_id'],batch_id=context['batch_id'],
-                run_id=context['run_id'],amy_response=copy.deepcopy(amy),cosmos_observation=copy.deepcopy(cosmos),
-                decision_authority='Amy/backend policy; Cosmos is supporting appearance evidence only',
+                run_id=context['run_id'],model4_response=copy.deepcopy(model4),cosmos_observation=copy.deepcopy(cosmos),
+                decision_authority='Reference Model 4 backend policy; Cosmos is supporting appearance evidence only',
                 combined_verdict=None,recipe_learning_performed=False)

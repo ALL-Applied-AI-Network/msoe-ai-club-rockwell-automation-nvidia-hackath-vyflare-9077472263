@@ -172,16 +172,22 @@ The completed Spark pilot results and remaining failure cases are recorded in [r
 
 The private-network Spark tester supports base/adapter comparisons, video and exploratory photo uploads, result downloads, and optional reviewed feedback. See [reports/model-tester-guide.md](reports/model-tester-guide.md) for access and service instructions.
 
-## Cosmos alongside Amy's models
+## Cosmos interface for the Model 4 backend
 
-The separate lightweight companion gateway attaches appearance observations to
-caller-provided vial/batch IDs and recording time windows. It delegates inference
-to the existing Version 1 worker, retains raw output and provenance, and can
-attach the existing Model 4 response without changing its measurements or review
-flags. It does not implement Amy's measurement models, tracking, tank identity,
-calibrated doses, volume estimates, production verdicts, or recipe learning.
-See [the companion guide](reports/cosmos-amy-companion-guide.md) and
-[implementation report](reports/cosmos-amy-companion-implementation.md).
+The integration reference is `model4/recipe-detection-backend-integration`, pinned
+to commit `956d5d24d19f80b99f85d4841e678d20d533e0fb`. The existing Version 1
+worker now exposes `POST /backend/predict` for that branch's `RemoteCosmosModel`
+client. It accepts the client's image, prompt, frame ID and worker model name,
+and returns text with actual Spark execution metadata. The browser tester remains
+available on the same service. No new weights or Model 4 measurement code are
+introduced by this interface change.
+
+See [the current integration guide](reports/model4-backend-integration-guide.md)
+and [the correction report](reports/model4-integration-correction.md). Earlier
+Amy companion reports are historical and superseded for deployment. The optional
+companion gateway is not needed by the reference backend. This LoRA worker is an
+experimental alternative to its native Cosmos worker; it does not supply the
+native worker's Framework guardrail screening.
 
 ## Synthetic image and real-video adaptation
 
