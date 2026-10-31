@@ -1,7 +1,8 @@
 # Visual-quality label updates affecting Model 4
 
 Source: `Training model 2/recipes.xlsx`
-SHA-256 `1160090945b6b1f1d806576d47079e7c3baf79bd8897492c81b0d8c9b592121a`,
+SHA-256 `336b6c09bac5587a4473fcb5dcf19a040cd79e08809c1418dec996fa0e900a05`
+(updated 2026-10-31; previous `1160090945b6…121a`, see "Workbook revision" below),
 sheets `Recipes_5_to_14` and `Recipes_41_50_60_99`, column with header `bad or good`.
 This is the workbook selected for Model 2. It differs from the workbook recorded
 in `backend/model4_assets/recipes.json` (`e95239f5…3b57`, sheet `Recipe_Bank`,
@@ -45,12 +46,21 @@ Impact:
 
 Not part of the requested change list, recorded so the integration owner sees them:
 
-- `field_v01`, `v06`, `v11`, `v16`, `v21`: first vials labeled bad; already
+- `field_v01`, `v06`, `v11`, `v16`, `v21`, `v26`: first vials labeled bad; already
   excluded from the Model 4 fit.
-- `field_v26`: first vial with a blank label; excluded from the fit. The
-  contamination flag still applies; no human annotation was supplied.
-- `field_v23`–`v25` (recipe 50) and `field_v27`–`v30` (recipe 99): blank labels,
-  meaning visual quality is unknown, not good. Model 4 trained on all seven.
+
+## Workbook revision (2026-10-31)
+
+The only change from `1160090945b6…121a` is column S of `Recipes_41_50_60_99`, rows
+24–31, which were previously blank:
+
+| Vial | Recipe | Batch position | New label | Model 4 fit |
+|---|---|---|---|---|
+| 23, 24, 25 | 50 | 3, 4, 5 | good | trained on; now confirmed good |
+| 26 | 99 (after 50) | 1 | bad | excluded as first vial |
+| 27, 28, 29, 30 | 99 (after 50) | 2–5 | good | trained on; now confirmed good |
+
+No timing cells changed.
 
 ## Not done here
 

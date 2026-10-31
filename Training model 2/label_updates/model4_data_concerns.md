@@ -4,12 +4,15 @@ Found during the Model 2 baseline (`Training model 2/model2_baseline/`). Model 4
 unchanged. The integration owner should review these before retraining or relabeling.
 Label changes are listed separately in `README.md` and the CSVs in this folder.
 
-## Recording with conflicting metadata
+## Recording with conflicting metadata (resolved)
 
-`data/60/60-video.json` (recording `20261028_205922_757261`, the workbook's recipe 60
-vials `field_v11–15`) records `notes: "rec #99"` and 50 mL water, not recipe 60. The
-recording is quarantined for Model 2 until an operator confirms it. **Model 4 trained on
-`field_v12–v15`** from this recording.
+`data/60/60-video.json` (recording `20261028_205922_757261`, vials `field_v11–15`)
+records `notes: "rec #99"` and 50 mL water. The operator confirmed the recording is
+recipe 60 and that the sidecar note is a sync error. The video agrees: each vial gets a
+36–45 s multi-ingredient pour that turns blue, then green, and fills to about 70 mL,
+whereas recipe 99 is a clear 50 mL pour of about 7 s. Model 4's use of `field_v12–v15`
+is therefore consistent with the workbook. The sidecar still needs correcting at the
+source.
 
 ## Flow still visible at early post-flow times
 
