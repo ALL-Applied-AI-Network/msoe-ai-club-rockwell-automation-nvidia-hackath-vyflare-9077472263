@@ -1,0 +1,102 @@
+{
+  "caveat": "attribution shows sensitivity, not causal reliance; weights do not reveal ingredient composition",
+  "occlusion_cv_good_vials": {
+    "crop: mask none": {
+      "vials": 40,
+      "top1_correct": 31,
+      "accepted": 26,
+      "accepted_correct": 25
+    },
+    "crop: mask above_holder (tube, label, nozzle)": {
+      "vials": 40,
+      "top1_correct": 19,
+      "accepted": 15,
+      "accepted_correct": 13
+    },
+    "crop: mask holder_band": {
+      "vials": 40,
+      "top1_correct": 27,
+      "accepted": 15,
+      "accepted_correct": 15
+    },
+    "crop: mask liquid_column_below_holder": {
+      "vials": 40,
+      "top1_correct": 17,
+      "accepted": 4,
+      "accepted_correct": 3
+    },
+    "full: mask none": {
+      "vials": 40,
+      "top1_correct": 33,
+      "accepted": 25,
+      "accepted_correct": 25
+    },
+    "full: mask vial_crop_region (background only)": {
+      "vials": 40,
+      "top1_correct": 11,
+      "accepted": 6,
+      "accepted_correct": 4
+    }
+  },
+  "head": {
+    "train_frame_accuracy": 1.0,
+    "classes": [
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "41",
+      "5",
+      "50",
+      "6",
+      "60",
+      "7",
+      "8",
+      "9",
+      "99"
+    ],
+    "coef_l2_norm": {
+      "10": 0.802,
+      "11": 0.694,
+      "12": 0.676,
+      "13": 0.707,
+      "14": 0.868,
+      "41": 0.751,
+      "5": 0.802,
+      "50": 0.975,
+      "6": 0.696,
+      "60": 0.925,
+      "7": 0.729,
+      "8": 0.944,
+      "9": 0.949,
+      "99": 1.007
+    },
+    "most_similar_class_weight_pairs": [
+      {
+        "pair": "11-7",
+        "cosine": 0.187
+      },
+      {
+        "pair": "41-6",
+        "cosine": 0.115
+      },
+      {
+        "pair": "12-6",
+        "cosine": 0.088
+      },
+      {
+        "pair": "12-7",
+        "cosine": 0.069
+      },
+      {
+        "pair": "12-9",
+        "cosine": 0.069
+      }
+    ],
+    "backbone_frozen": true,
+    "backbone_state_sha256_before": "747fd559bc95f542ba100b983101e73ee479d0a7046709b704fba5820e8ac7a7",
+    "backbone_state_sha256_after": "747fd559bc95f542ba100b983101e73ee479d0a7046709b704fba5820e8ac7a7",
+    "backbone_unchanged": true
+  }
+}
