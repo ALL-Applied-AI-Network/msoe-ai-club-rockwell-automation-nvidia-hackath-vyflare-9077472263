@@ -1,8 +1,9 @@
 # Visual-quality label updates affecting Model 4
 
 Source: `Training model 2/recipes.xlsx`
-SHA-256 `336b6c09bac5587a4473fcb5dcf19a040cd79e08809c1418dec996fa0e900a05`
-(updated 2026-10-31; previous `1160090945b6…121a`, see "Workbook revision" below),
+SHA-256 `f98b3a74464cb7f575e894c5bd09675a738a481f6fb224a9ac24dfba6b86cce2`
+(revised twice on 2026-10-31; earlier `336b6c09…0a05` and `1160090945b6…121a`, see
+"Workbook revisions" below),
 sheets `Recipes_5_to_14` and `Recipes_41_50_60_99`, column with header `bad or good`.
 This is the workbook selected for Model 2. It differs from the workbook recorded
 in `backend/model4_assets/recipes.json` (`e95239f5…3b57`, sheet `Recipe_Bank`,
@@ -31,14 +32,18 @@ Regenerate with `python "Training model 2/label_updates/build_label_updates.py"`
 | v5_e28 | Recipes_5_to_14 | 14 | 28 | 1 | 13 | excluded as first vial, not a defect label | bad |
 | field_v17 | Recipes_41_50_60_99 | 99 | 17 | 2 | 60 | **in Model 4 training fit** | bad |
 | field_v22 | Recipes_41_50_60_99 | 50 | 22 | 2 | 99 | **in Model 4 training fit** | bad |
+| field_v27 | Recipes_41_50_60_99 | 99 | 27 | 2 | 50 | **in Model 4 training fit** | bad |
+
+The list holds every bad first vial in `Recipes_5_to_14` and every bad later vial in
+`Recipes_41_50_60_99`.
 
 Impact:
 
 - The ten `Recipes_5_to_14` first vials were already outside the Model 4 fit, so
   the fit is unchanged. Their status changes from a process rule to an explicit
   human visual label. The first-vial contamination flag stays independent of it.
-- `field_v17` and `field_v22` are later vials labeled bad. Bad vials are therefore
-  not limited to first vials. Model 4 trained on both as acceptable recipe
+- `field_v17`, `field_v22` and `field_v27` are later vials labeled bad. Bad vials are
+  therefore not limited to first vials. Model 4 trained on all three as acceptable recipe
   examples, so published Model 4 metrics used the earlier eligibility rule and
   are not an evaluation against these labels.
 
@@ -49,10 +54,10 @@ Not part of the requested change list, recorded so the integration owner sees th
 - `field_v01`, `v06`, `v11`, `v16`, `v21`, `v26`: first vials labeled bad; already
   excluded from the Model 4 fit.
 
-## Workbook revision (2026-10-31)
+## Workbook revisions (2026-10-31)
 
-The only change from `1160090945b6…121a` is column S of `Recipes_41_50_60_99`, rows
-24–31, which were previously blank:
+`1160090945b6…121a` → `336b6c09…0a05`: column S of `Recipes_41_50_60_99`, rows 24–31,
+previously blank:
 
 | Vial | Recipe | Batch position | New label | Model 4 fit |
 |---|---|---|---|---|
@@ -60,7 +65,10 @@ The only change from `1160090945b6…121a` is column S of `Recipes_41_50_60_99`,
 | 26 | 99 (after 50) | 1 | bad | excluded as first vial |
 | 27, 28, 29, 30 | 99 (after 50) | 2–5 | good | trained on; now confirmed good |
 
-No timing cells changed.
+`336b6c09…0a05` → `f98b3a74…cce2`: vial 27 (row 28) good → **bad**. This matches the
+operator's description of its photo (`99/50-flush/99-2.jpg`, deep orange).
+
+No timing cells changed in either revision.
 
 ## Not done here
 

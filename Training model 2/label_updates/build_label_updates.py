@@ -108,8 +108,10 @@ def main():
                 "model4_in_training_fit": in_fit, "previous_label": previous,
                 "new_label": r["label"], "new_label_raw": r["label_raw"],
             }
-            requested = (sheet == "Recipes_5_to_14" and r["batch_position"] == 1 and r["label"] == "bad") or \
-                        (sheet == "Recipes_41_50_60_99" and r["vial_id"] in (17, 22))
+            # First-sheet first vials labeled bad, and every bad later vial in the field sheet.
+            requested = r["label"] == "bad" and (
+                (sheet == "Recipes_5_to_14" and r["batch_position"] == 1)
+                or (sheet == "Recipes_41_50_60_99" and r["batch_position"] > 1))
             if requested:
                 if r["batch_position"] == 1:
                     row["reason"] = (f"Column '{LABEL_HEADER}' = bad. First vial after recipe change; now an explicit "
