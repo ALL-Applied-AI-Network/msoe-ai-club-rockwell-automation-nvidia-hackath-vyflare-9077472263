@@ -24,9 +24,12 @@ def observation_geometry(observation,frames):
     tracked=[f for f in samples if any(d['position']=='Filling Position' and d['status']=='TRACKING' for d in f['detections'])]
     surfaces=[f for f in tracked if any(d['position']=='Filling Position' and d['surface'] is not None for d in f['detections'])]
     ids=sorted({d['track_id'] for f in tracked for d in f['detections'] if d['position']=='Filling Position'})
+    recoveries=[e for f in samples for e in f.get('identity_events',[]) if e['event']=='DETECTION_LOSS_REASSOCIATED']
+    resets=[e for f in samples for e in f.get('identity_events',[]) if e['event']=='DETECTION_LOSS_IDENTITY_RESET']
     return {'vial_id':observation.get('vial_id'),'observation_id':observation['observation_id'],
             'sample_count':len(samples),'tracked_samples':len(tracked),'visible_surface_samples':len(surfaces),
-            'track_ids':ids,'identity_continuous':len(ids)==1 and len(tracked)==len(samples) and bool(samples),
+            'track_ids':ids,'bounded_detection_recoveries':recoveries,'identity_reset_events':resets,
+            'identity_continuous':len(ids)==1 and len(tracked)==len(samples) and bool(samples),
             'issues':(['TRACK_ID_CHANGED_WITHIN_FILL'] if len(ids)>1 else [])+(['TRACKING_VISIBILITY_GAPS'] if len(tracked)<len(samples) else [])+(['NO_GEOMETRY_SAMPLES'] if not samples else []),
             'status':'SUPPLEMENTAL_EXPERIMENTAL_EVIDENCE','affects_recipe_decision':False}
 
@@ -76,6 +79,23 @@ class GeometryService:
             self.jobs[video]={'state':'processing','progress':0,'frames':[]}
             self.executor.submit(self._run,video,source)
         return self.get(video)
+    def publish(self,video,source,source_sha,frames):
+        """Publish the producer's same-pass geometry; never derive recipe decisions from this cache."""
+        from .recorded_producer import file_sha
+        if Path(source).resolve()!=self.source(video).resolve() or file_sha(source)!=source_sha:
+            raise ValueError('Recorded geometry source changed')
+        if not frames or any(f['version']!=VERSION for f in frames):raise ValueError('Recorded geometry revision mismatch')
+        result={'state':'complete','progress':100,'version':VERSION,'implementation_sha256':IMPLEMENTATION_SHA,
+                'source_sha256':source_sha,'frames':deepcopy(frames),'recipe_writes':0}
+        self.cache_root.mkdir(parents=True,exist_ok=True)
+        cache=self.cache_root/(video+'-'+source_sha[:16]+'-'+IMPLEMENTATION_SHA[:12]+'.json')
+        temporary=cache.with_name(cache.name+'.'+uuid4().hex+'.tmp')
+        try:
+            temporary.write_text(json.dumps(result,allow_nan=False));temporary.replace(cache)
+        finally:temporary.unlink(missing_ok=True)
+        stat=Path(source).stat();result['source_revision']=[stat.st_size,stat.st_mtime_ns]
+        with self.lock:self.jobs[video]=result
+
     def _run(self,video,source):
         from .recorded_producer import NativeDecoder,file_sha
         try:

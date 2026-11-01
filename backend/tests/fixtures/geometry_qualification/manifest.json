@@ -1,0 +1,415 @@
+{
+  "scope": "Source-linked development regression clips; not independent external validation",
+  "clips": [
+    {
+      "name": "v1-vial7-short-edge-loss",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "expected": "REASSOCIATE",
+      "frames": [
+        {
+          "file": "v1-event_0346.75.jpg",
+          "seconds": 346.76666666666665,
+          "sha256": "2796eabb9cb7fd14f2f9b940e612c34dc65732483817b75365c44141cd542da8"
+        },
+        {
+          "file": "v1-event_0347.00.jpg",
+          "seconds": 347,
+          "sha256": "3400644977331e9b7c0d3cab997a24ca2498d63276906f5e21ad68cf30ca82b3"
+        },
+        {
+          "file": "v1-event_0347.25.jpg",
+          "seconds": 347.26666666666665,
+          "sha256": "f1a8109debce6fa8c8ca8d804e644554b32d5a3dd4b9376e9b63407345eca8b4"
+        },
+        {
+          "file": "v1-event_0347.50.jpg",
+          "seconds": 347.5,
+          "sha256": "01d0b4040167fe7779017b369ec6114e30ac9e6bff7a3d84f20917a0561cd30d"
+        },
+        {
+          "file": "v1-event_0347.75.jpg",
+          "seconds": 347.76666666666665,
+          "sha256": "d2a4bfbda1fdebc4f23f57790b3af6d511fd9a28e94c178f85964956210965dc"
+        },
+        {
+          "file": "v1-event_0348.00.jpg",
+          "seconds": 348,
+          "sha256": "8266cee0218cb5f7d71159bb61441f7a9d51acd797032d5f5b7653efa295510d"
+        },
+        {
+          "file": "v1-event_0348.25.jpg",
+          "seconds": 348.26666666666665,
+          "sha256": "6043075b632c4b5c78b339943e469344671ac0c0e4c3a47c7c3d9fa186fc7a73"
+        }
+      ]
+    },
+    {
+      "name": "v1-vial16-first-edge-loss",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "expected": "REASSOCIATE",
+      "frames": [
+        {
+          "file": "v1-event_0865.75.jpg",
+          "seconds": 865.7666666666667,
+          "sha256": "305e9266cb36dfee52cbdc1a62a3e255186ad134ba732cbc15f0213dfa3f42ac"
+        },
+        {
+          "file": "v1-event_0866.00.jpg",
+          "seconds": 866,
+          "sha256": "bea1f10cb2aa1ef13ba1abfdd422fd401192efe97bf70df80c3addc4bdb5d014"
+        },
+        {
+          "file": "v1-event_0866.25.jpg",
+          "seconds": 866.2666666666667,
+          "sha256": "155b37edf09d2a32e92681a255fe0af3ef32ed3b357c1bdd7577df511c90c5c6"
+        },
+        {
+          "file": "v1-event_0866.50.jpg",
+          "seconds": 866.5,
+          "sha256": "c8475e3031f26eb917545d1c3b1a1392e6fdea21e1424de0ceff538269176464"
+        },
+        {
+          "file": "v1-event_0866.75.jpg",
+          "seconds": 866.7666666666667,
+          "sha256": "85375b8ace654011b276c8a4d7a9af036fc959937318a21e60581a3d4a46d2b1"
+        },
+        {
+          "file": "v1-event_0867.00.jpg",
+          "seconds": 867,
+          "sha256": "93ba7b5644c28272176c6a749cce7ba8c11d25b72e5b361b30f532169a0abea1"
+        },
+        {
+          "file": "v1-event_0867.25.jpg",
+          "seconds": 867.2666666666667,
+          "sha256": "7598d92aff7ed9fa3111bbe315238155f1332496be27237a1241304c31d06662"
+        }
+      ]
+    },
+    {
+      "name": "v1-vial16-repeated-edge-loss",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "expected": "REASSOCIATE",
+      "frames": [
+        {
+          "file": "v1-event_0883.00.jpg",
+          "seconds": 883,
+          "sha256": "af20eea777910de95353902b35632c7718c4c4895159c5ffe47cf16432248f24"
+        },
+        {
+          "file": "v1-event_0883.25.jpg",
+          "seconds": 883.2666666666667,
+          "sha256": "9fe919eb5ebf9fe290287248b92f59d68b5760d530d2cf6db44e5accd2d75aa0"
+        },
+        {
+          "file": "v1-event_0883.50.jpg",
+          "seconds": 883.5,
+          "sha256": "88a66546236392ce9fc667e0a19cfa253784a8c5e9234726fd57c6f4758a3f78"
+        },
+        {
+          "file": "v1-event_0883.75.jpg",
+          "seconds": 883.7666666666667,
+          "sha256": "a1425c08cf21401b1c0701a72e833dda1f7870a08584b388c15128897d9d8ace"
+        },
+        {
+          "file": "v1-event_0884.00.jpg",
+          "seconds": 884,
+          "sha256": "5249b860fbaba13dc8b9bf280c41b2206d8dea19993ce8b04a3a974d9bf6a9f6"
+        },
+        {
+          "file": "v1-event_0884.25.jpg",
+          "seconds": 884.2666666666667,
+          "sha256": "f3265ae09f4c75b980d4e9a9af05821fe6df046bbe6d35fda7dd1de8812dbbc6"
+        },
+        {
+          "file": "v1-event_0884.50.jpg",
+          "seconds": 884.5,
+          "sha256": "b92969d5a2c18a76053947f6fa319862cc13ac0d145e5d79ec9727bf295f7d40"
+        },
+        {
+          "file": "v1-event_0884.75.jpg",
+          "seconds": 884.7666666666667,
+          "sha256": "0d1e2f3211c3a9dbbc4d30898205951490067f9a0c0c802d86f79b13a4546d9a"
+        },
+        {
+          "file": "v1-event_0885.00.jpg",
+          "seconds": 885,
+          "sha256": "d5f5ff8456bb74f57c09b467b5acff0ed57e31281d4babad98fb10b56e554322"
+        },
+        {
+          "file": "v1-event_0885.25.jpg",
+          "seconds": 885.2666666666667,
+          "sha256": "1ae3bd68729e9cd1d0fde6fcafe26e430a791904ce041b84eafc6f140759c125"
+        },
+        {
+          "file": "v1-event_0885.50.jpg",
+          "seconds": 885.5,
+          "sha256": "74ef8402ba5a7105992452d68aeba037d25e00dd959f8d13852ff8a05ce0efc4"
+        },
+        {
+          "file": "v1-event_0885.75.jpg",
+          "seconds": 885.7666666666667,
+          "sha256": "e3f8959508d149387255af2ee4a949a8f05a4e95762f47f561a2e2785face3dd"
+        },
+        {
+          "file": "v1-event_0886.00.jpg",
+          "seconds": 886,
+          "sha256": "49c08dbe42f016ce12360772525b99e40ebfff9ba9aeedfc87bad8a7e021c13c"
+        },
+        {
+          "file": "v1-event_0886.25.jpg",
+          "seconds": 886.2666666666667,
+          "sha256": "f86920abc8fcf904da2192de01f0b8537b84aebad680565143b6de5b2b83c2aa"
+        },
+        {
+          "file": "v1-event_0886.50.jpg",
+          "seconds": 886.5,
+          "sha256": "85b8d67b33db2944ecdfedefb58f82aea19ffed568647fe38147a5b67dd63e31"
+        },
+        {
+          "file": "v1-event_0886.75.jpg",
+          "seconds": 886.7666666666667,
+          "sha256": "67dcf2ea24ed96b71a25dd89f6caf59fd86433e4a0bdc57d63130e48db2605a4"
+        },
+        {
+          "file": "v1-event_0887.00.jpg",
+          "seconds": 887,
+          "sha256": "b9814f5528d9458d6680ccbc4aeaacc1a423554e3589da171643aa342a091116"
+        },
+        {
+          "file": "v1-event_0887.25.jpg",
+          "seconds": 887.2666666666667,
+          "sha256": "df3fabfcfa06f306c4dacc2b2d17c638bb1ee70ad53b9a0c69b06e0c71b299c0"
+        },
+        {
+          "file": "v1-event_0887.50.jpg",
+          "seconds": 887.5,
+          "sha256": "2df6117603aebdac21618fdb3fb04fba7bdacb9b78fb4ac3de9e755e18882b9c"
+        },
+        {
+          "file": "v1-event_0887.75.jpg",
+          "seconds": 887.7666666666667,
+          "sha256": "7b24488a756de8336e4d51b8bd4603079f8ed9a6a9184d1de89025e8131cd398"
+        },
+        {
+          "file": "v1-event_0888.00.jpg",
+          "seconds": 888,
+          "sha256": "84be131f90baf5e21484b3a1d99f23af9f8378025f8a11d673b4444826c312b2"
+        },
+        {
+          "file": "v1-event_0888.25.jpg",
+          "seconds": 888.2666666666667,
+          "sha256": "0e339d29089629fd3808034b5221a0cd157738985e519624064212c384409958"
+        },
+        {
+          "file": "v1-event_0888.50.jpg",
+          "seconds": 888.5,
+          "sha256": "2b41db87a09839bddc8fac813ef5d90d728ecb2b759fc3e6eec2efbd17767097"
+        },
+        {
+          "file": "v1-event_0888.75.jpg",
+          "seconds": 888.7666666666667,
+          "sha256": "5b3108084802eb0ef13631930170c2c7fe43583543a03523fb70749ed5f4dc68"
+        },
+        {
+          "file": "v1-event_0889.00.jpg",
+          "seconds": 889,
+          "sha256": "de125d41ce00ff2f35022340a93adf194d900804620012e38467c3c0a00a249f"
+        },
+        {
+          "file": "v1-event_0889.25.jpg",
+          "seconds": 889.2666666666667,
+          "sha256": "bb6da009a6f6cdd0fa820e1bd891925c2458e65e27f1f560bf6bbab076cc47ea"
+        }
+      ]
+    },
+    {
+      "name": "v2-vial1-longest-edge-loss",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "expected": "REASSOCIATE",
+      "frames": [
+        {
+          "file": "v2-event_0031.25.jpg",
+          "seconds": 31.266666666666666,
+          "sha256": "5e595549b5bc4dd7ffe8dd308587d2e9eeafd8bbb32855f7507f507aa3520a22"
+        },
+        {
+          "file": "v2-event_0031.50.jpg",
+          "seconds": 31.5,
+          "sha256": "608096347d20e5a78ca2d91dedc418533b7a24034186b9a23a91577098e75f6a"
+        },
+        {
+          "file": "v2-event_0031.75.jpg",
+          "seconds": 31.766666666666666,
+          "sha256": "b77d3217bf3805bb12e7caf80c5c1c88738202664ec648cc454551de3c5f3f87"
+        },
+        {
+          "file": "v2-event_0032.00.jpg",
+          "seconds": 32,
+          "sha256": "7df1e3dd85d08c09b062d263b9c2f8ec33fd9569bea1e895f642d970896adace"
+        },
+        {
+          "file": "v2-event_0032.25.jpg",
+          "seconds": 32.266666666666666,
+          "sha256": "fe51eba8eee993fc2280fca08cd3e3a56b73c4596fd73a1d3ad9473f0655624e"
+        },
+        {
+          "file": "v2-event_0032.50.jpg",
+          "seconds": 32.5,
+          "sha256": "1976be38b701cc20dcb6a7421bce4248bea481b0cb627f94b36d5f7962c55718"
+        },
+        {
+          "file": "v2-event_0032.75.jpg",
+          "seconds": 32.766666666666666,
+          "sha256": "26f7a5eed0710d19b9ae2c1801e9f0e7916c6772d6484390329b4f345935b4d1"
+        },
+        {
+          "file": "v2-event_0033.00.jpg",
+          "seconds": 33,
+          "sha256": "228d776d392ca166d1192de21d734c821e2d30cbdfb173e287af7abac4dd8443"
+        },
+        {
+          "file": "v2-event_0033.25.jpg",
+          "seconds": 33.266666666666666,
+          "sha256": "e3fe8b572ba016ba3348ef99cd8a09fe0053127ff5b0d2bd1740df51d0e2ecf6"
+        },
+        {
+          "file": "v2-event_0033.50.jpg",
+          "seconds": 33.5,
+          "sha256": "d292fc8bb9e071d8dfea96757624c22fa1f3e4e9c7c93e60eb785ad3cc4bf6ae"
+        },
+        {
+          "file": "v2-event_0033.75.jpg",
+          "seconds": 33.766666666666666,
+          "sha256": "9664a77adcb045bcc3dd9fda2caf3a9b4be27d386b1dd3f66ab19335f6769b59"
+        },
+        {
+          "file": "v2-event_0034.00.jpg",
+          "seconds": 34,
+          "sha256": "3a87a4ed9b7b75b8719eda65e556c041fa61d777446e789954920c5af3a6f0b8"
+        },
+        {
+          "file": "v2-event_0034.25.jpg",
+          "seconds": 34.266666666666666,
+          "sha256": "5056029560b0ebcfab135e717a66467d61600579776249fc5474f7089f37504a"
+        },
+        {
+          "file": "v2-event_0034.50.jpg",
+          "seconds": 34.5,
+          "sha256": "faf4115fb50fee48495f88d66521c54ba9e079198ce35177f6617df0e2bcc2bc"
+        },
+        {
+          "file": "v2-event_0034.75.jpg",
+          "seconds": 34.766666666666666,
+          "sha256": "232ca86941603bc7b77e789646148a7476941ee4306eae015609e1a46d078428"
+        },
+        {
+          "file": "v2-event_0035.00.jpg",
+          "seconds": 35,
+          "sha256": "b160c08d015cece1ad7acdb29a8f91a25309087baf21cd295e5f06df9c63482c"
+        },
+        {
+          "file": "v2-event_0035.25.jpg",
+          "seconds": 35.266666666666666,
+          "sha256": "de65e798465316acdf84e8070fdb5a7e956f27b1092747172790670ac3e20efb"
+        }
+      ]
+    },
+    {
+      "name": "v1-genuine-departure",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "expected": "RESET",
+      "frames": [
+        {
+          "file": "v1-event_0029.00.jpg",
+          "seconds": 29,
+          "sha256": "f6fc702eebeda38161b13626d2a45745bb75c7b42d1e9eb80332b225f00f6206"
+        },
+        {
+          "file": "v1-event_0029.25.jpg",
+          "seconds": 29.266666666666666,
+          "sha256": "a90d7d032d26b81d9316d607ad1a379e2f4c99e0e339da9a0734840e4825e189"
+        },
+        {
+          "file": "v1-event_0029.50.jpg",
+          "seconds": 29.5,
+          "sha256": "1dc4a0d115aa4d8e1b1200e4365882a45171fe39b0d638b36775012e5527c787"
+        },
+        {
+          "file": "v1-event_0029.75.jpg",
+          "seconds": 29.766666666666666,
+          "sha256": "16adcf81b8343ab157f22b2da557955bba9d88956006209ebaf862bfa550d173"
+        },
+        {
+          "file": "v1-event_0030.00.jpg",
+          "seconds": 30,
+          "sha256": "b2627b97b3dc452986d0994165f05250a60ca9fda57d2fd5a41ce5fee51be8e4"
+        },
+        {
+          "file": "v1-event_0030.25.jpg",
+          "seconds": 30.266666666666666,
+          "sha256": "7ac65663322410e3bc69f5a8e2bd2e69645366c3f8d14b98db7d547ffdc4e066"
+        },
+        {
+          "file": "v1-event_0030.50.jpg",
+          "seconds": 30.5,
+          "sha256": "80a63447e2490d8aa01ab8226a95732ec505717978377b589bf266f43cda9d5f"
+        },
+        {
+          "file": "v1-event_0030.75.jpg",
+          "seconds": 30.766666666666666,
+          "sha256": "1fc4d524dc85cc212b7c26a9590200745b438c0fb6096d5bf391d182890eba00"
+        },
+        {
+          "file": "v1-event_0031.00.jpg",
+          "seconds": 31,
+          "sha256": "d3c77916ab29f844a3171f47875523078b074c4da374b55de1110bd92198786e"
+        },
+        {
+          "file": "v1-event_0031.25.jpg",
+          "seconds": 31.266666666666666,
+          "sha256": "7ddb8f062bd1804a7dadaa2f3c8b19e3a3571b2f74522afa7f1bf63127a1c7fa"
+        },
+        {
+          "file": "v1-event_0031.50.jpg",
+          "seconds": 31.5,
+          "sha256": "e85cdbac70d0b0cc8c8c79259f118cad14fd13eb242229123867caa63f1b7bd1"
+        },
+        {
+          "file": "v1-event_0031.75.jpg",
+          "seconds": 31.766666666666666,
+          "sha256": "e4057d66fc7ea57b074d9d04de9e4320b28250cfaec94b4a13eb47b5a0a70ceb"
+        },
+        {
+          "file": "v1-event_0032.00.jpg",
+          "seconds": 32,
+          "sha256": "4de984ca928c4ad08914fb08e5c679958d3633d1fa04280b448c31e084eaa4a3"
+        },
+        {
+          "file": "v1-event_0032.25.jpg",
+          "seconds": 32.266666666666666,
+          "sha256": "6ae286a3822d57b18a41ffa02bf129e8ecfff5911ba6a1a004b4d31258328cd8"
+        },
+        {
+          "file": "v1-event_0032.50.jpg",
+          "seconds": 32.5,
+          "sha256": "e5db1bbf4a7abd7699b1b5e339ee6cb106e6cbeb5764e26a85d98b466a79150e"
+        },
+        {
+          "file": "v1-event_0032.75.jpg",
+          "seconds": 32.766666666666666,
+          "sha256": "dcb2a70ddbe65a888cdce1a679981ba7edfadb528f240cccc2948057cb1eb49b"
+        },
+        {
+          "file": "v1-event_0033.00.jpg",
+          "seconds": 33,
+          "sha256": "c9b0500d17c4eabd30f1819d2cbaeec067fee502d2c0226410fe7a5148171299"
+        }
+      ]
+    }
+  ]
+}

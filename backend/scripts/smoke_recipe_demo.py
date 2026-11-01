@@ -47,14 +47,15 @@ def main():
             second=call("/videos/video-2/assessments","POST")
             results=first["results"]+second["results"]
             counts=dict(Counter(r["assessment"]["action"] for r in results))
-            assert counts=={"UNRESOLVED":18,"CREATE_DISCOVERED_PATTERN":2,"REUSE_DISCOVERED_PATTERN":1,"REUSE_REFERENCE_PATTERN":1}
+            assert counts=={"UNRESOLVED":22}
+            assert all("TRACKING_EVIDENCE_MISSING" in r["assessment"]["hold_reasons"] for r in results)
             patterns=call("/recipes")["recipes"]
-            assert [(p["recipe_id"],p["occurrence_count"]) for p in patterns]==[(100,2),(101,1)]
+            assert patterns==[]
             again=[call(f"/videos/video-{v}/assessments","POST") for v in (1,2)]
             assert sum(r["replayed_assessments"] for r in again)==22
             assert all(r["new_patterns"]==r["new_assessments"]==0 for r in again)
             final=call("/status")
-            assert final["counts"]=={"discovered_patterns":2,"saved_assessments":22,"linked_occurrences":4}
+            assert final["counts"]=={"discovered_patterns":0,"saved_assessments":22,"linked_occurrences":0}
             assert store.connection.execute("SELECT payload FROM recipe_state").fetchone()[0]==normal_before
             assert store.connection.execute("SELECT COUNT(*) FROM recipe_trial_assessments").fetchone()[0]==0
             print(json.dumps({"real_loopback_http":True,"temporary_databases_only":True,"model_weights_loaded":False,

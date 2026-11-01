@@ -40,3 +40,22 @@ describe("Observed pattern presentation", () => {
     expect(html).toContain("Nominal identity remains unconfirmed");
   });
 });
+
+describe("Recorded tracking eligibility presentation", () => {
+  it("does not count an identity link when current tracking evidence is held", () => {
+    const a = assessment("DISCOVERED_UNVERIFIED");
+    a.recorded_tracking = { status: "HELD", track_id: null, hold_reasons: ["TRACKING_FINAL_COLOUR_VISIBILITY_UNCONFIRMED"], numeric_surface_used: false };
+    expect(effectiveRecipeId(a)).toBeNull();expect(detectedRecipeLabel(a)).toBe("Unresolved · Tracking Evidence Held");
+    const html = renderToStaticMarkup(<RecordedObserverPanel name="Video 1" onSeek={() => {}} observer={{
+      job: { state: "saved", progress: 100, assessments: [a] }, status: { enabled: true, available: true, reason: null },
+      error: "", busy: false, start: async () => {}, reload: () => {}
+    }} />);
+    expect(html).toContain("0 recipe links");expect(html).toContain("1 unresolved");
+    expect(html).toContain("Tracking Eligibility: Held");expect(html).toContain("Numeric Liquid Level Excluded");
+  });
+  it("preserves the pattern link and review flag for supported recovery", () => {
+    const a = assessment("DISCOVERED_UNVERIFIED");
+    a.recorded_tracking = { status: "SUPPORTED_WITH_RECOVERY", track_id: "Vial 13", hold_reasons: [], numeric_surface_used: false };
+    expect(effectiveRecipeId(a)).toBe(102);expect(detectedRecipeLabel(a)).toContain("Color Review Flag");
+  });
+});

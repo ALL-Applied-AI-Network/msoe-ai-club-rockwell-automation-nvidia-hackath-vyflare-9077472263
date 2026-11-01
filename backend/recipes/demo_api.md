@@ -97,3 +97,7 @@ Reference-color qualification is enabled in recorded engine 1.1. Color exclusion
 Fresh recorded producer 2 now performs bounded contained timing refinement; packaged snapshot observations remain the frozen comparison input. Recorded engine 1.2 requires a fresh separately configured demo filename for older pinned banks. See the contained timing section of [recorded_producer.md](recorded_producer.md#contained-timing-refinement-producer-2--engine-12).
 
 Engine 1.3 adds persistent two-fill pending groups and versioned membership projections. `GET /patterns` returns groups and discovered recipes in one snapshot; `GET /patterns/<group_id>/history` returns the member revision history. Effective membership is additive under `assessment.pattern_membership`; the original baseline decision remains unchanged. Older pinned banks require a preserved archive and a new separate demo filename. See the persistent membership section of [recorded_producer.md](recorded_producer.md#persistent-pending-patterns-and-membership-history-engine-13).
+
+## Engine 1.4 — Recorded Tracking Eligibility
+
+Fresh recorded assessments now require source-bound tracking and direct final-color visibility evidence before any recipe action. Packaged historical snapshots are retained as tracking-held assessments and cannot create/reuse patterns or vote. Use a new, separately configured demo filename for 1.4; older pinned stores remain unchanged. See [recorded_workflow_integration.md](recorded_workflow_integration.md). The actual environment is not modified automatically.

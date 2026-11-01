@@ -7,6 +7,7 @@ import unittest
 from tempfile import TemporaryDirectory
 from recipes.reference_color import qualified_color,rejection_reasons
 from recipes.demo_store import DemoBank
+from recorded_tracking_fixtures import with_tracking
 REPO=Path(__file__).resolve().parents[2]
 
 def run_bank(observations,profiles,rules,catalog_ids,variant):
@@ -84,12 +85,12 @@ class ReferenceQualityTests(unittest.TestCase):
   self.assertEqual((profiles,q,RULES),before)
 
  def test_no_timing_candidate_still_allows_existing_discovery_path(self):
-  o=source_fixture()
+  o=with_tracking(source_fixture())
   result=run_bank([o],[],RULES,{7},True)
   self.assertEqual(result['results'][0]['assessment']['action'],'CREATE_DISCOVERED_PATTERN')
 
  def test_timing_match_with_no_qualified_color_cannot_create_or_reuse_id(self):
-  o=source_fixture()
+  o=with_tracking(source_fixture())
   p=profile(temporal=12);p['duration_bounds_s']=o['duration_bounds_seconds'];p['raw_rgb']['nominal']=o['raw_rgb']['nominal']
   result=run_bank([o],[p],RULES,{7},True)
   a=result['results'][0]['assessment'];self.assertEqual(a['timing']['possible_recipe_ids'],[7])

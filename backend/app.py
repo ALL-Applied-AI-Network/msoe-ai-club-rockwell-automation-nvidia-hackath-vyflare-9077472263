@@ -96,14 +96,15 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
                 store.close()
             raise
     app.extensions["recipe_demo_service"] = demo_service
-    producer = RecordedVideoProducer(demo_service.bank,
-        app.config.get('RECORDED_VIDEO_ROOT', Path(__file__).resolve().parents[1] / 'cosmos-original-dataset' / 'videos')) if demo_service else None
-    app.extensions['recorded_video_producer'] = producer
-    app.register_blueprint(create_demo_blueprint(demo_service, producer))
     geometry = GeometryService(app.config.get("RECORDED_VIDEO_ROOT", Path(__file__).resolve().parents[1] / "cosmos-original-dataset" / "videos"),
         app.config.get("GEOMETRY_CACHE_ROOT", Path(__file__).resolve().parent / ".data" / "geometry"), demo_service.bank if demo_service else None)
     app.extensions["geometry_service"] = geometry
     app.register_blueprint(create_geometry_blueprint(geometry))
+    producer = RecordedVideoProducer(demo_service.bank,
+        app.config.get('RECORDED_VIDEO_ROOT', Path(__file__).resolve().parents[1] / 'cosmos-original-dataset' / 'videos'),
+        geometry_service=geometry) if demo_service else None
+    app.extensions['recorded_video_producer'] = producer
+    app.register_blueprint(create_demo_blueprint(demo_service, producer))
     scheduler_enabled = app.config["TRACKER_SCHEDULER_ENABLED"]
     if scheduler_enabled is None:
         scheduler_enabled = not app.testing
@@ -234,6 +235,8 @@ if __name__ == "__main__":
     finally:
         if application.extensions["recipe_demo_service"]:
             application.extensions['recorded_video_producer'].close()
+        application.extensions["geometry_service"].close()
+        if application.extensions["recipe_demo_service"]:
             application.extensions["recipe_demo_service"].bank.close()
         application.extensions["tracker_manager"].shutdown()
         if application.extensions["recipe_store"]:

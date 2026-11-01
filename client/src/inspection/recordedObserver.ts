@@ -11,6 +11,7 @@ export type PatternGroup = {
   members: { label: string; observation_key: string }[];
 };
 export type DetectedAssessment = {
+  recorded_tracking?: { status: "HELD" | "SUPPORTED" | "SUPPORTED_WITH_RECOVERY"; track_id: string | null; hold_reasons: string[]; numeric_surface_used: false };
   pattern_membership?: PatternMembership;
   observation_id: string; action: string; recipe_id: number | null; reason: string; hold_reasons: string[];
   timing: { possible_recipe_ids: number[] }; color: { status: string };
@@ -24,10 +25,12 @@ export type ProducerJob = { state: "idle" | "processing" | "completed" | "saved"
   held_visits?: { label: string; hold_reasons: string[] }[]; assessments: DetectedAssessment[] };
 export type ProducerStatus = { enabled: boolean; available: boolean; reason: string | null; coverage?: { nominal_recipe_count: number; observed_recipe_count: number; observed_profile_count: number; missing_recipe_ids: number[] } };
 export function effectiveRecipeId(assessment: DetectedAssessment) {
+  if (assessment.recorded_tracking?.status === "HELD") return null;
   return assessment.pattern_membership?.recipe_id ?? assessment.recipe_id;
 }
 export function detectedRecipeLabel(assessment?: DetectedAssessment) {
   if (!assessment) return "Not Yet Observed";
+  if (assessment.recorded_tracking?.status === "HELD") return "Unresolved · Tracking Evidence Held";
   if (assessment.pattern_membership?.status === "DISCOVERED_UNVERIFIED") return `Observed Recipe ${assessment.pattern_membership.recipe_id} · Unverified · Color Review Flag`;
   if (assessment.pattern_membership?.status === "PENDING_REPEAT") return `Pending Pattern · ${assessment.pattern_membership.qualifying_fill_count}/${assessment.pattern_membership.required_fill_count} Qualifying Fills · Color Review Flag`;
   if (assessment.action === "CREATE_DISCOVERED_PATTERN") return `Discovered Recipe ${assessment.recipe_id} · Unverified`;

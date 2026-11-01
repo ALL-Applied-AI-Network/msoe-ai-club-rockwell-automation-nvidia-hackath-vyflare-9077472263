@@ -68,26 +68,30 @@ class DemoAPITests(unittest.TestCase):
         self.assertEqual(self.get("/recipes").get_json()["recipes"],[])
         self.assertEqual(r.headers["X-Recipe-Storage"],"isolated_demo_sqlite")
 
-    def test_full_api_matches_independent_offline_decision_oracle(self):
+    def test_archival_inputs_preserve_original_quality_reasons_and_require_tracking(self):
         results=self.run_all()
         expected=json.loads((Path(__file__).parent/"fixtures/recipe_demo_expected.json").read_text())
         by_source={r["assessment"]["observation_id"]:r["assessment"] for r in results}
-        for item in expected:
+        # Keep the original offline oracle frozen. Version 1.4 adds a mandatory
+        # tracking hold to archived inputs rather than rewriting their data.
+        for legacy in expected:
+            item={**legacy,'action':'UNRESOLVED','reason':'OBSERVATION_CHECK_FAILED','recipe_id':None,'recipe_status':None,
+                  'hold_reasons':sorted(set(legacy['hold_reasons']+['TRACKING_EVIDENCE_MISSING']))}
             actual=by_source[item["observation_id"]]
             for k,v in item.items():
                 self.assertEqual(actual["observation"].get(k) if k in ("video_id","vial_id") else actual[k],v,(item["observation_id"],k))
         patterns=self.get("/recipes").get_json()["recipes"]
-        self.assertEqual([(r["recipe_id"],r["occurrence_count"]) for r in patterns],[(100,2),(101,1)])
+        self.assertEqual(patterns,[])
 
-    def test_individual_create_reuse_and_retrieval(self):
+    def test_archival_source_retrieval_cannot_create_or_reuse_patterns(self):
         a=self.post("/recorded/video-1/V1-V06").get_json()
         b=self.post("/recorded/video-1/V1-V12").get_json()
-        self.assertEqual(a["assessment"]["action"],"CREATE_DISCOVERED_PATTERN")
-        self.assertEqual(b["assessment"]["action"],"REUSE_DISCOVERED_PATTERN")
+        self.assertEqual(a["assessment"]["action"],"UNRESOLVED")
+        self.assertEqual(b["assessment"]["action"],"UNRESOLVED")
         self.assertEqual(a["assessment"]["recipe_id"],b["assessment"]["recipe_id"])
         stored=self.get("/recorded/video-1/V1-V06").get_json()["assessment"]
         self.assertEqual(stored,a["assessment"])
-        self.assertEqual(self.get("/recipes/100").get_json()["recipe"]["status"],"DISCOVERED_UNVERIFIED")
+        self.assertEqual(self.get("/recipes/100").status_code,404)
         self.assertEqual(len(self.get("/videos/video-1/assessments").get_json()["assessments"]),2)
 
     def test_all_retries_do_not_duplicate_patterns_or_occurrences(self):
@@ -100,7 +104,10 @@ class DemoAPITests(unittest.TestCase):
     def test_boundaries_and_color_holds_remain_unresolved(self):
         for vial,reason in (("V1-V02","BOUNDARY_UNCERTAIN"),("V1-V13","COLOR_CONFLICT"),("V1-V07","OBSERVATION_CHECK_FAILED")):
             r=self.post("/recorded/video-1/"+vial).get_json()["assessment"]
-            self.assertEqual(r["action"],"UNRESOLVED");self.assertEqual(r["reason"],reason);self.assertIsNone(r["recipe_id"])
+            self.assertEqual(r["action"],"UNRESOLVED");self.assertIsNone(r["recipe_id"])
+            self.assertIn("TRACKING_EVIDENCE_MISSING",r["hold_reasons"])
+            if reason=="BOUNDARY_UNCERTAIN":self.assertEqual(r["timing"]["status"],reason)
+            if reason=="COLOR_CONFLICT":self.assertEqual(r["color"]["status"],"CONFLICTING")
         self.assertEqual(self.get("/recipes").get_json()["recipes"],[])
 
     def test_client_cannot_supply_measurements_ids_or_creation_policy(self):
@@ -130,21 +137,22 @@ class DemoAPITests(unittest.TestCase):
         tables={r[0] for r in store.connection.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         self.assertNotIn("demo_patterns",tables)
 
-    def test_restart_preserves_assessments_and_founder_profiles(self):
+    def test_restart_preserves_held_archival_assessments(self):
         self.post("/recorded/video-1/V1-V06")
-        founder=deepcopy(self.get("/recipes/100").get_json()["recipe"]["profile"])
+        original=self.get("/recorded/video-1/V1-V06").get_json()["assessment"]
         client=self.make_app().test_client()
         replay=self.post("/recorded/video-1/V1-V06",client).get_json()
         self.assertTrue(replay["idempotent_replay"])
         self.post("/recorded/video-1/V1-V12",client)
-        self.assertEqual(self.get("/recipes/100").get_json()["recipe"]["profile"],founder)
+        self.assertEqual(replay["assessment"],original)
+        self.assertEqual(self.get("/recipes").get_json()["recipes"],[])
 
     def test_concurrent_api_retries_create_one_entry(self):
         def submit(_):
             with self.app.test_client() as client:return self.post("/recorded/video-1/V1-V06",client).get_json()
         with ThreadPoolExecutor(max_workers=4) as pool:results=list(pool.map(submit,range(4)))
         self.assertEqual(sum(not r["idempotent_replay"] for r in results),1)
-        self.assertEqual(self.get("/status").get_json()["counts"],{"discovered_patterns":1,"saved_assessments":1,"linked_occurrences":1})
+        self.assertEqual(self.get("/status").get_json()["counts"],{"discovered_patterns":0,"saved_assessments":1,"linked_occurrences":0})
 
     def test_batch_runtime_failure_rolls_back_the_entire_request(self):
         bank=self.app.extensions["recipe_demo_service"].bank;original=bank._save_assessment
@@ -210,8 +218,8 @@ class DemoAPITests(unittest.TestCase):
     def test_pending_confirmed_history_is_visible_across_videos_and_restart(self):
         data=json.loads((Path(__file__).parent/"fixtures/two_fill_observations.json").read_text())["observations"]
         bank=self.app.extensions["recipe_demo_service"].bank
-        for o in data:
-            o["source_kind"]="FRESH_RECORDED_VIDEO_OBSERVATION"
+        from backend.tests.recorded_tracking_fixtures import with_tracking
+        data=[with_tracking(o) for o in data]
         bank.assess_many([o for o in data if o["video_id"]=="video-1"])
         groups=self.get("/patterns").get_json()["groups"]
         self.assertEqual(sum(g["status"]=="PENDING_REPEAT" for g in groups),3)

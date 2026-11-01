@@ -75,9 +75,11 @@ def create_demo_blueprint(service, producer=None):
 
     @bp.get('/producer/status')
     def producer_status():
-        from .recorded_producer import NativeDecoder
+        from .recorded_producer import NativeDecoder, PRODUCER_VERSION
+        from .recorded_eligibility import VERSION as TRACKING_POLICY
         return jsonify(enabled=producer is not None, **NativeDecoder.capability(),
             input_mode='FRESH_RECORDED_VIDEO_OBSERVATION', supported_videos=['video-1','video-2'],
+            producer_version=PRODUCER_VERSION,tracking_policy_version=TRACKING_POLICY,tracking_gate_enabled=True,
             coverage=service.coverage if service else None,
             operational_qualification_claim=False, normal_recipe_bank_writes=False)
 

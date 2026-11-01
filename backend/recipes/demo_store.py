@@ -11,8 +11,9 @@ from threading import RLock
 from .reviewed_trial import compare_timing
 from .reference_color import qualified_color as compare_color
 from . import pattern_membership
+from .recorded_eligibility import evaluate as evaluate_recorded_geometry, SOURCE_KIND
 
-ENGINE_VERSION = "recorded-pattern-demo/1.3"
+ENGINE_VERSION = "recorded-pattern-demo/1.4"
 
 
 def validate_demo_location(path, normal_paths):
@@ -56,6 +57,14 @@ def validate_observation(observation):
         if any(type(raw.get(k)) not in (int,float) or not math.isfinite(raw[k]) or raw[k]<0 for k in ("temporal_distance","region_distance")):raise ValueError("Invalid RGB reliability metrics")
     encoded(o)
     return o
+
+
+def recorded_tracking_check(observation):
+    # Packaged historical snapshots cannot act as an alternate write path around
+    # the fresh pixel-evidence gate. They remain assessable/readable as held.
+    if observation.get('source_kind')=='PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT':
+        return evaluate_recorded_geometry({'source_kind':SOURCE_KIND})
+    return evaluate_recorded_geometry(observation)
 
 
 class DemoBank:
@@ -138,6 +147,17 @@ class DemoBank:
     def assess_many(self, observations):
         with self.transaction():
             before=self.counts()
+            observations=[validate_observation(o) for o in observations]
+            tracks={}
+            for o in observations:
+                check=recorded_tracking_check(o)
+                if check and check['track_id']:
+                    group=(o['source_lineage']['video_sha256'],o['recorded_geometry'].get('tracker_sha256'),check['track_id'])
+                    tracks.setdefault(group,[]).append(o)
+            for group in tracks.values():
+                fills={pattern_membership.source_key(o) or str(o['source_episode_intervals'][0]['start']) for o in group}
+                if len(fills)>1:
+                    for o in group:o['recorded_geometry']['batch_identity_conflict']=True
             results=[self.assess(o) for o in observations]
             after=self.counts()
             return {"results":[{**r,"assessment":pattern_membership.project(self,r["assessment"])} for r in results],"new_patterns":after["discovered_patterns"]-before["discovered_patterns"],
@@ -161,7 +181,23 @@ class DemoBank:
             timing=compare_timing(o["duration_bounds_seconds"],profiles,self.rules["timing_allowance_seconds"])
             color=compare_color({"raw_rgb":o["raw_rgb"],"phase_note":"Automatic window; isolated development evidence, not operational qualification."},
                 timing["possible_recipe_ids"],profiles,self.rules)
+            tracking=recorded_tracking_check(o)
             reasons=list(o["hold_reasons"])
+            if tracking:
+                reasons.extend(tracking["hold_reasons"])
+                if tracking['track_id']:
+                    physical=pattern_membership.source_key(o) or str(o['source_episode_intervals'][0]['start'])
+                    for (raw_prior,) in self.connection.execute('SELECT result FROM demo_assessments WHERE observation_key LIKE ?',(o['source_lineage']['video_sha256']+':%',)):
+                        prior=json.loads(raw_prior);old=prior.get('recorded_tracking')
+                        if not old or old.get('track_id')!=tracking['track_id']:continue
+                        po=prior['observation']
+                        same_tracker=po.get('recorded_geometry',{}).get('tracker_sha256')==o.get('recorded_geometry',{}).get('tracker_sha256')
+                        old_physical=pattern_membership.source_key(po) or str(po['source_episode_intervals'][0]['start'])
+                        if same_tracker and physical!=old_physical:
+                            reasons.append('TRACKING_ID_REUSED_ACROSS_FILLS')
+                            tracking['hold_reasons']=sorted(set(tracking['hold_reasons']+['TRACKING_ID_REUSED_ACROSS_FILLS']))
+                            tracking['status']='HELD'
+                            break
             if o.get("available_demo_checks_pass") is not True:reasons.append("AVAILABLE_DEMO_CHECKS_NOT_PASSED")
             raw=o["raw_rgb"];times=o.get("sample_actual_seconds",[]);departure=o.get("departure_interval_seconds")
             window=o.get("candidate_appearance_window_seconds")
@@ -198,6 +234,7 @@ class DemoBank:
                 "confirmed_nominal_recipe_id":None,"hold_reasons":sorted(set(reasons)),"timing":timing,"color":color,
                 "observation":o,"validation_scope":self.scope,"original_operational_eligibility":o.get("operational_eligibility"),
                 "normal_bank_write":False,"reference_coverage_complete":self.nominal_ids<={p["recipe_id"] for p in self.references}}
+            if tracking:result["recorded_tracking"]=tracking
             self._save_assessment(key,evidence_hash,result)
             if identity is not None:self.connection.execute("INSERT INTO demo_occurrences VALUES (?,?)",(key,identity))
             pattern_membership.apply_membership(self,result)

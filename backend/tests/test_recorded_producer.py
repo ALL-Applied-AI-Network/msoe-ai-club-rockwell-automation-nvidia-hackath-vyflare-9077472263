@@ -13,6 +13,7 @@ from PIL import Image
 from app import create_app
 from recipes.recorded_producer import RecordedVideoProducer, NativeDecoder, measure_triplet
 from recipes.observation.features import extract
+from backend.tests.recorded_tracking_fixtures import with_tracking
 
 PREFIX='/api/recipe-workflow/demo/producer'
 TOKEN={'Authorization':'Bearer producer-test'}
@@ -29,7 +30,8 @@ class ProducerTests(unittest.TestCase):
         (self.root/'vial_fill_video_1.mp4').write_bytes(b'synthetic fixture only')
         bundle=json.loads((Path(__file__).parents[1]/'recipe_demo_assets/recorded_observations.json').read_text())
         self.observation=deepcopy(next(o for o in bundle['observations'] if o['vial_id']=='V1-V06'))
-        self.observation['source_kind']='FRESH_RECORDED_VIDEO_OBSERVATION';self.observation['observation_id']='fresh-unit-fixture'
+        self.observation['observation_id']='fresh-unit-fixture'
+        self.observation=with_tracking(self.observation)
 
     def close(self):
         self.producer.close();self.app.extensions['recipe_demo_service'].bank.close()
@@ -72,6 +74,16 @@ class ProducerTests(unittest.TestCase):
         result=self.result();result['observations'].append({'observation_id':'invalid'})
         self.producer.runner=lambda *args:result
         with patch.object(NativeDecoder,'capability',return_value={'available':True,'reason':None}),self.assertLogs(level='ERROR'):
+            self.post();self.wait()
+        self.assertEqual(self.producer.get('video-1')['state'],'failed')
+        self.assertEqual(self.producer.bank.counts()['saved_assessments'],0)
+        self.assertEqual(self.producer.bank.counts()['discovered_patterns'],0)
+
+    def test_geometry_publish_failure_prevents_recipe_writes(self):
+        from recipes.geometry_tracking import VERSION
+        result=self.result();result.update(geometry_frames=[{'version':VERSION}],source_sha256=self.observation['source_lineage']['video_sha256'])
+        self.producer.runner=lambda *args:result
+        with patch.object(self.app.extensions['geometry_service'],'publish',side_effect=OSError('fixture cache fault')),patch.object(NativeDecoder,'capability',return_value={'available':True,'reason':None}),self.assertLogs(level='ERROR'):
             self.post();self.wait()
         self.assertEqual(self.producer.get('video-1')['state'],'failed')
         self.assertEqual(self.producer.bank.counts()['saved_assessments'],0)

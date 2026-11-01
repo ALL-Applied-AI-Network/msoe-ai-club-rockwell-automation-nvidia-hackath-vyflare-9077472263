@@ -22,10 +22,12 @@ from .demo_store import digest, validate_observation
 from .observation.features import extract
 from .observation.trace import Config, Observer
 from .observation.refine import refine_visits
+from .geometry_tracking import GeometryTracker, detect_vials, IMPLEMENTATION_SHA as GEOMETRY_SHA
+from .recorded_eligibility import build_report, evaluate as geometry_eligibility, POLICY_SHA
 
 HERE = Path(__file__).with_name('observation')
 CONFIG = json.loads((HERE/'config.json').read_text())
-PRODUCER_VERSION = 'fixed-station-native/2'
+PRODUCER_VERSION = 'fixed-station-native/3'
 OFFSETS = [(0,0),(2,0),(-2,0),(0,2),(0,-2),(4,0),(-4,0),(0,4),(0,-4)]
 
 
@@ -77,16 +79,20 @@ def produce_video(source, video_id, progress=lambda **kw: None, decoder_factory=
     """Decode actual media anew. Return assessable observations and held visits."""
     number=int(video_id.removeprefix('video-')); source=Path(source)
     source_sha=file_sha(source)
-    implementation_sha=digest({'observation_files':{p.name:file_sha(p) for p in HERE.iterdir() if p.suffix in ('.py','.swift','.json')},'producer':file_sha(Path(__file__))})
+    implementation_sha=digest({'observation_files':{p.name:file_sha(p) for p in HERE.iterdir() if p.suffix in ('.py','.swift','.json')},'producer':file_sha(Path(__file__)),'geometry':GEOMETRY_SHA,'eligibility':POLICY_SHA})
     with TemporaryDirectory(prefix='vyflare-observation-') as temporary:
         root=Path(temporary); progress(stage='Compiling Decoder',progress=0)
         decoder=decoder_factory(root)
         progress(stage='Decoding Event Frames',progress=5)
         events=decoder.decode('events',source,root/'events')
         observer=Observer(number,Config(**CONFIG)); previous=None
+        geometry=GeometryTracker();geometry_frames=[]
         for i,record in enumerate(events):
             with Image.open(root/'events'/(record['id']+'.jpg')) as image:
-                features, previous=extract(np.asarray(image.convert('RGB')),previous)
+                pixels=np.asarray(image.convert('RGB'))
+                features, previous=extract(pixels,previous)
+            geometry_frames.append({**geometry.step(pixels,record['actual_seconds']),'frame_id':record['id'],
+                'sha256':file_sha(root/'events'/(record['id']+'.jpg'))})
             observer.step({'frame_id':record['id'],'video':number,'seconds':record['actual_seconds'],**features})
             if i%50==0: progress(stage='Detecting Fills',progress=10+int(65*i/len(events)))
         visits=[v for v in observer.finish_source()['observations'] if v['episodes']]
@@ -133,17 +139,27 @@ def produce_video(source, video_id, progress=lambda **kw: None, decoder_factory=
                 'timing_refinement':visit['timing_refinement'],
                 'identity_method':visit['identity_method'],'dispense_colors':None,'tank_sources':None,
                 'physical_volume':None,'chemical_composition':None}
+            colour_checks=[]
+            for frame in frames:
+                path=root/'color'/(frame['evidence_id']+'.png')
+                with Image.open(path) as image:
+                    detections=detect_vials(np.asarray(image.convert('RGB')));dimensions=list(image.size)
+                box=next((d['box'] for d in detections if d['position']=='Filling Position'),None)
+                colour_checks.append({'frame_id':frame['evidence_id'],'sha256':frame['sha256'],
+                    'actual_seconds':frame['actual_seconds'],'dimensions':dimensions,'box':box})
+            o['recorded_geometry']=build_report(o,geometry_frames,colour_checks,source_sha)
             observations.append(validate_observation(o))
         if file_sha(source)!=source_sha: raise ValueError('Source video changed during processing')
         progress(stage='Saving Recipe Assessments',progress=95)
         return {'observations':observations,'held_visits':held,'source_sha256':source_sha,
-            'event_frame_count':len(events),'detected_fill_count':len(visits),'producer_version':PRODUCER_VERSION}
+            'event_frame_count':len(events),'detected_fill_count':len(visits),'producer_version':PRODUCER_VERSION,
+            'geometry_frames':geometry_frames,'tracking_held_count':sum(geometry_eligibility(o)['status']=='HELD' for o in observations)}
 
 
 class RecordedVideoProducer:
     """One bounded worker; duplicate starts share the job, and writes are atomic."""
-    def __init__(self, bank, video_root, runner=produce_video):
-        self.bank=bank; self.video_root=Path(video_root); self.runner=runner
+    def __init__(self, bank, video_root, runner=produce_video, geometry_service=None):
+        self.bank=bank; self.video_root=Path(video_root); self.runner=runner; self.geometry_service=geometry_service
         self.lock=RLock(); self.jobs={}; self.executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='recorded-observer')
 
     def capability(self): return NativeDecoder.capability()
@@ -180,6 +196,9 @@ class RecordedVideoProducer:
             with self.lock: self.jobs[video_id].update(values)
         try:
             result=self.runner(path,video_id,progress)
+            geometry_frames=result.pop('geometry_frames',None)
+            if geometry_frames is not None and self.geometry_service is not None:
+                self.geometry_service.publish(video_id,path,result['source_sha256'],geometry_frames)
             # No partial bank writes if decode, features, phase or source validation fails.
             saved=self.bank.assess_many(result.pop('observations'))
             with self.lock: self.jobs[video_id].update(state='completed',stage='Complete',progress=100,

@@ -151,3 +151,99 @@ class GeometryQueueTests(unittest.TestCase):
             with patch('recipes.recorded_producer.NativeDecoder.capability',return_value={'available':True}),patch.object(service.executor,'submit') as submit:
                 self.assertEqual(service.start('video-2')['state'],'processing')
                 service.start('video-2');submit.assert_called_once()
+
+class DetectionLossQualificationTests(unittest.TestCase):
+    def initialized(self):
+        tracker=GeometryTracker();tracker.step(scene(),0)
+        identity=tracker.step(scene(),.25)['detections'][0]['track_id']
+        return tracker,identity
+    def lost(self,tracker,seconds,pixels=None):
+        with patch('recipes.geometry_tracking.detect_vials',return_value=[]):
+            return tracker.step(scene() if pixels is None else pixels,seconds)
+    def test_short_loss_keeps_latent_identity_without_drawing_stale_geometry(self):
+        tracker,identity=self.initialized()
+        for t in (.5,.75):
+            frame=self.lost(tracker,t);self.assertEqual(frame['detections'],[])
+            self.assertEqual(frame['identity_events'][0]['event'],'DETECTION_LOSS_PENDING')
+        first=tracker.step(scene(),1);self.assertIsNone(first['detections'][0]['track_id']);self.assertIsNone(first['detections'][0]['surface'])
+        second=tracker.step(scene(),1.25);self.assertEqual(second['detections'][0]['track_id'],identity)
+        event=second['identity_events'][0];self.assertEqual(event['event'],'DETECTION_LOSS_REASSOCIATED');self.assertEqual(event['interrupted_samples'],2)
+    def test_long_loss_expires_before_reacquisition(self):
+        tracker,identity=self.initialized()
+        for t in (.5,.75,1,1.25,1.5,1.75,2,2.25,2.5):self.lost(tracker,t)
+        frame=tracker.step(scene(),2.75)
+        self.assertEqual(frame['identity_events'][0]['reason'],'DETECTION_LOSS_BUDGET_EXCEEDED')
+        self.assertNotEqual(tracker.step(scene(),3)['detections'][0]['track_id'],identity)
+    def test_capture_gap_during_loss_cannot_reuse_identity(self):
+        tracker,identity=self.initialized();self.lost(tracker,.5)
+        frame=tracker.step(scene(),1)
+        self.assertIn('INPUT_GAP_IDENTITY_RESET',frame['issues'])
+        self.assertNotEqual(tracker.step(scene(),1.25)['detections'][0]['track_id'],identity)
+    def test_changed_holder_or_geometry_prevents_reassociation(self):
+        for kind in ('holder','geometry'):
+            with self.subTest(kind=kind):
+                tracker,identity=self.initialized();self.lost(tracker,.5)
+                if kind=='holder':
+                    changed=scene();changed[200:265,250:385]=60
+                    frame=tracker.step(changed,.75)
+                    self.assertEqual(frame['identity_events'][0]['reason'],'HOLDER_APPEARANCE_CHANGED')
+                    tracker.step(changed,1);later=tracker.step(changed,1.25)
+                else:
+                    from recipes.geometry_tracking import detect_vials
+                    detection=detect_vials(scene())[0];detection['box']['x']+=.08
+                    with patch('recipes.geometry_tracking.detect_vials',side_effect=lambda _: [{**detection,'box':dict(detection['box'])}]):
+                        frame=tracker.step(scene(),.75);self.assertEqual(frame['identity_events'][0]['reason'],'RETURNING_GEOMETRY_CHANGED')
+                        later=tracker.step(scene(),1)
+                self.assertNotEqual(later['detections'][0]['track_id'],identity)
+    def test_consecutive_motion_crossing_loss_boundary_cannot_keep_identity(self):
+        tracker,identity=self.initialized();changed=scene();changed[200:265,250:385]+=3
+        tracker.step(changed,.5);changed=scene();changed[200:265,250:385]+=6
+        frame=self.lost(tracker,.75,changed)
+        self.assertEqual(frame['identity_events'][0]['reason'],'SUSTAINED_HOLDER_MOTION')
+        tracker.step(changed,1);later=tracker.step(changed,1.25)
+        self.assertNotEqual(later['detections'][0]['track_id'],identity)
+    def test_returning_once_does_not_extend_the_recovery_budget(self):
+        tracker,identity=self.initialized()
+        for i in range(2,12):
+            t=i*.25
+            if i%2==0:self.lost(tracker,t)
+            else:tracker.step(scene(),t)
+        result=tracker.step(scene(),3)
+        self.assertNotEqual(result['detections'][0]['track_id'],identity)
+    def test_unconfirmed_identity_cannot_be_recovered(self):
+        tracker=GeometryTracker();tracker.step(scene(),0)
+        frame=self.lost(tracker,.25)
+        self.assertEqual(frame['identity_events'][0]['reason'],'NO_CONFIRMED_IDENTITY')
+
+class RecordedDetectionLossRegressionTests(unittest.TestCase):
+    def test_source_linked_dropouts_reassociate_and_real_departure_resets(self):
+        import hashlib,json
+        folder=Path(__file__).parent/'fixtures/geometry_qualification'
+        manifest=json.loads((folder/'manifest.json').read_text())
+        for clip in manifest['clips']:
+            with self.subTest(clip=clip['name']):
+                tracker=GeometryTracker();frames=[]
+                for r in clip['frames']:
+                    path=folder/r['file'];self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),r['sha256'])
+                    with Image.open(path) as image:frames.append(tracker.step(np.asarray(image.convert('RGB')),r['seconds']))
+                ids={d['track_id'] for f in frames for d in f['detections'] if d['track_id']}
+                if clip['expected']=='REASSOCIATE':
+                    self.assertEqual(len(ids),1)
+                    recovered=[e for f in frames for e in f['identity_events'] if e['event']=='DETECTION_LOSS_REASSOCIATED']
+                    self.assertTrue(recovered);self.assertTrue(all(e['duration_seconds']<=2.000001 for e in recovered))
+                else:self.assertGreater(len(ids),1)
+                for f in frames:
+                    if any(e['event']=='DETECTION_LOSS_PENDING' for e in f['identity_events']):self.assertEqual(f['detections'],[])
+
+class RecoveryEvidenceProjectionTests(unittest.TestCase):
+    def test_recovery_is_retained_without_rewriting_strict_continuity_or_recipe_eligibility(self):
+        tracker=GeometryTracker();frames=[tracker.step(scene(),0),tracker.step(scene(),.25)]
+        with patch('recipes.geometry_tracking.detect_vials',return_value=[]):frames.append(tracker.step(scene(),.5))
+        frames.extend([tracker.step(scene(),.75),tracker.step(scene(),1)])
+        observation={'observation_id':'qualified-test','vial_id':'test','source_episode_intervals':[{'start':[0,.1]}],'departure_interval_seconds':[1.25,1.5]}
+        result=observation_geometry(observation,frames)
+        self.assertEqual(len(result['track_ids']),1)
+        self.assertEqual(len(result['bounded_detection_recoveries']),1)
+        self.assertFalse(result['identity_continuous'])
+        self.assertIn('TRACKING_VISIBILITY_GAPS',result['issues'])
+        self.assertFalse(result['affects_recipe_decision'])

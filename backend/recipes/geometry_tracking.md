@@ -40,7 +40,7 @@ Inspection Workspace starts pixel tracking automatically when playable media is 
 
 Development validation used complete Videos 1 and 2 (5,130 decoded samples), source-linked 22 fill windows, synthetic boundary/motion cases, two native-frame regression images, HTTP/API tests and browser playback/MediaStream checks. Counts of tracked/surface frames describe output coverage and are not accuracy estimates. The two real regression images have development-reviewed surface labels; no independent geometry ground truth exists yet.
 
-Nineteen of 22 source fill windows have one emitted local track ID; Video 1 Vials 7 and 16 and Video 2 Vial 1 fragment. No emitted ID overlaps adjacent fill windows. These remain visible continuity issues. A strict all-samples continuity requirement is not met because even single-ID windows contain temporary unconfirmed samples.
+Version 1 baseline: nineteen of 22 source fill windows have one emitted local track ID; Video 1 Vials 7 and 16 and Video 2 Vial 1 fragment. No emitted ID overlaps adjacent fill windows. These remain visible continuity issues. A strict all-samples continuity requirement is not met because even single-ID windows contain temporary unconfirmed samples.
 
 Live Mode was exercised using an actual browser MediaStream generated from recorded Video 2, with the fixture clearly labeled and no physical camera accessed. Actual station-camera framing, transport cadence and hardware remain unvalidated. Deployment on Linux can process live/preview JPEGs; fresh whole-recording decoding retains the existing macOS dependency.
 
@@ -53,3 +53,10 @@ PYTHONPATH=backend .venv/bin/python backend/scripts/smoke_geometry_tracking.py \
 ```
 
 The observation file is optional and is read only after detection to join diagnostic windows. A separate demo bank is neither required nor written by this script.
+
+
+## Recorded Qualification Update — Version 2
+
+Recorded-only qualification now preserves a latent ID across supported detection loss for at most two seconds, including re-confirmation. Missing frames remain unmarked; two returning samples, stable holder-side appearance and compatible geometry are required. Expiry, input gaps, sustained motion or changed appearance reset association. The same 22 fill windows now retain one ID each, without shared IDs across adjacent fills. Strict all-samples continuity remains unproven.
+
+An 82-frame developmental surface review found correct withholding on the reviewed empty/obscured cases, plus visible-boundary misses, placement differences and foam ambiguity. Numeric surface height remains unqualified for recipe decisions. See [tracker_qualification.md](tracker_qualification.md) for evidence, caveats, regression coverage and the proposed eligibility rules awaiting review. Live inspection is deferred; this update does not enable recipe-policy integration.
