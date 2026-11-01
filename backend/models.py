@@ -104,6 +104,7 @@ class RemoteCosmosModel:
         self.timeout = float(os.getenv("COSMOS_FULL_TIMEOUT_SECONDS", "120"))
         if not 0 < self.timeout <= 3600:
             raise ValueError("COSMOS_FULL_TIMEOUT_SECONDS must be in (0, 3600]")
+        self.expected_implementation = os.getenv("COSMOS_EXPECTED_IMPLEMENTATION", "").strip()
         self.model = os.getenv("COSMOS_FULL_REMOTE_MODEL", "cosmos")
         if self.model not in {"cosmos", "cosmos_lite"}:
             raise ValueError("Remote worker model must be cosmos or cosmos_lite (local execution)")
@@ -148,6 +149,8 @@ class RemoteCosmosModel:
                 or payload["result"].get("mock")
                 or not isinstance(payload["result"].get("text"), str)):
             raise RemoteInferenceError("DGX Cosmos returned an invalid or non-real result")
+        if self.expected_implementation and payload["result"].get("implementation") != self.expected_implementation:
+            raise RemoteInferenceError("Cosmos worker implementation does not match the configured model")
         execution = payload["result"].get("execution")
         if (not isinstance(execution, dict)
                 or execution.get("system") != "Linux"

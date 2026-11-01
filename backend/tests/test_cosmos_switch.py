@@ -86,6 +86,20 @@ class CosmosSwitchTests(unittest.TestCase):
             self.assertEqual(full.call_args.args[0].size, (32, 24))
             self.assertEqual(full.call_args.args[1], 'Inspect this vial. µ')
 
+    def test_pinned_lora_implementation_and_provenance(self):
+        self.remote.expected_implementation = 'cosmos3-nano-vial-lora'
+        result = {'text': 'Contract fixture', 'implementation': 'cosmos3-nano-vial-lora',
+                  'execution': {'system': 'Linux', 'machine': 'aarch64', 'gpu': 'NVIDIA GB10'},
+                  'model_identity': {'base_snapshot': 'fixture-snapshot', 'adapter': 'pilot-v1/adapter-step-020'},
+                  'safety': {'provider': None, 'status': 'not_provided_by_this_lora_worker'}}
+        with patch.object(self.worker_model, 'predict', return_value=result):
+            response = self.post('cosmos_full')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json['result']['model_identity'], result['model_identity'])
+            self.assertEqual(response.json['result']['safety'], result['safety'])
+        with patch.object(self.worker_model, 'predict', return_value={**result, 'implementation': 'native-framework'}):
+            self.assertEqual(self.post('cosmos_full').status_code, 502)
+
     def test_full_rejects_worker_without_dgx_hardware(self):
         for execution in [None, {'system': 'Windows', 'machine': 'AMD64',
                                   'gpu': 'NVIDIA GB10'},

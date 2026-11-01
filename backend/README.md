@@ -1,5 +1,7 @@
 # VyFlare inference backend
 
+For the current fine-tuned Cosmos worker and Recorded Workspace prompting, use [Cosmos integration](COSMOS_INTEGRATION.md). The latest LoRA endpoint is port 7865 `/backend/predict`; port 8001 is the separate native Framework worker.
+
 ## Isolated Recipe Recognition Demonstration
 
 An opt-in backend API now connects packaged automatic-observer snapshots to interval/RGB matching and persistent discovered-pattern creation/reuse in a separate bank. It is disabled by default and does not run video inference or modify the normal recipe bank. See [the demonstration API guide](recipes/demo_api.md) for configuration, endpoints, current results and limitations. Frontend integration remains pending.

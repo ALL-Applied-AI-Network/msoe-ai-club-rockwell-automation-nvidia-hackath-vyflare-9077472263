@@ -1,5 +1,7 @@
 # DGX worker and laptop startup
 
+**Native Framework worker guide.** For the latest `codex/cosmos3-nano-finetune` Version 1 LoRA worker on port 7865, use [the current console integration guide](../COSMOS_INTEGRATION.md). The native worker below remains a separate optional configuration.
+
 The gateway runs ResNet-18 on the laptop CPU and sends `cosmos_full` requests
 through SSH to Cosmos3-Nano on the DGX GB10. Full is the remote route name;
 it currently uses the cached Nano checkpoint, not a separate larger model.

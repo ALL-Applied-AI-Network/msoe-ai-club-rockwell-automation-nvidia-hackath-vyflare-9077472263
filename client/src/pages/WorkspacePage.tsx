@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Camera, ChevronLeft, ChevronRight, Film, Maximize, Radio, Upload, VideoOff } from "lucide-react";
 import { Link } from "react-router-dom";
+import { CosmosPanel } from "../components/CosmosPanel";
 import { Model4Panel } from "../components/Model4Panel";
 import { AutomaticGeometry } from "../components/AutomaticGeometry";
 import { geometryAt, useAutomaticGeometry, useRecordedGeometry } from "../inspection/automaticGeometry";
@@ -187,6 +188,7 @@ export function WorkspacePage() {
           {mode === "live" && <p className="workspace-note">Tracking runs automatically after camera connection. Live automatic recipe assessment remains unavailable.</p>}
           <ol className="workspace-stages"><li><span>1</span>Evidence {mediaReady ? "ready" : "pending"}</li><li><span>2</span>{mode === "recorded" && selectedVial ? "Reviewed vial selected" : "Automatic Visual Tracking"}</li><li><span>3</span>{frames.length}/3 frames</li><li><span>4</span>{busy ? "Model 4 running" : "Model 4 on request"}</li></ol>
         </section>
+        {mode === "recorded" && <CosmosPanel key={sourceKey} media={video} sourceLabel={uploaded?.name ?? selectedVideo?.name ?? "Recorded Video"} health={health} mediaReady={mediaReady} disabled={blocked} refresh={refresh} />}
         {mode === "recorded" && !uploaded && selectedVideo && <RecordedObserverPanel key={videoId} observer={{ ...observer, reload: () => { observer.reload(); geometryRecording.reload(); } }} name={selectedVideo.name} onSeek={seek} />}
         {mode === "recorded" && uploaded && <p className="workspace-note">Automatic observation currently supports installed Videos 1 and 2. An opened local video is available for playback and manual frame review.</p>}
         <section className="workspace-frames card"><div className="workspace-section-heading"><div><p className="eyebrow">Model Evidence</p><h2>Three Post-Fill Frames</h2></div><span>{frames.length}/3 selected</span></div>

@@ -77,3 +77,29 @@ describe("Python gateway bridge", () => {
     expect((await fetch(`${url}/model4`)).status).toBe(502);
   });
 });
+
+describe("Cosmos recorded-frame transport", () => {
+  it("preserves captured evidence IDs, prompts and credentials without recipe calls", async () => {
+    vi.stubEnv("INFERENCE_TOKEN", "fixture-private-token");
+    const upstream=express();
+    upstream.post("/predict",express.raw({type:()=>true}),async(req,res)=>{
+      expect(req.headers.authorization).toBe("Bearer fixture-private-token");
+      const form=await new Request("http://localhost",{method:"POST",headers:{"Content-Type":req.headers["content-type"]!},body:req.body}).formData();
+      expect(form.get("frame_id")).toBe("captured-frame-7"); expect(form.get("model")).toBe("cosmos_full"); expect(form.get("prompt")).toBe("Describe this frame only.");
+      res.json({frame_id:form.get("frame_id"),model:form.get("model"),mode:"real",inference_ms:42,result:{text:"Contract-test description."}});
+    });
+    const bridge=express();bridge.use(inferenceRouter(await serve(upstream)));const url=await serve(bridge);
+    const response=await fetch(`${url}/predict`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:"data:image/png;base64,YWJj",model:"cosmos_full",frame_id:"captured-frame-7",prompt:"Describe this frame only."})});
+    expect(response.status).toBe(200);expect((await response.json()).frame_id).toBe("captured-frame-7");
+  });
+  it("rejects a successful reply bound to different evidence",async()=>{
+    const upstream=express();upstream.post("/predict",(_req,res)=>res.json({frame_id:"wrong-frame",model:"cosmos_full",mode:"real",result:{text:"Wrong evidence"}}));
+    const bridge=express();bridge.use(inferenceRouter(await serve(upstream)));const url=await serve(bridge);
+    const response=await fetch(`${url}/predict`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:"data:image/png;base64,YWJj",model:"cosmos_full",frame_id:"wanted"})});expect(response.status).toBe(502);
+  });
+  it("preserves busy responses without falling back to saved descriptions",async()=>{
+    const upstream=express();upstream.post("/predict",(_req,res)=>res.status(429).set("Retry-After","2").json({error:"GPU busy"}));
+    const bridge=express();bridge.use(inferenceRouter(await serve(upstream)));const url=await serve(bridge);
+    const response=await fetch(`${url}/predict`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:"data:image/png;base64,YWJj",model:"cosmos_full",frame_id:"wanted"})});expect(response.status).toBe(429);expect(response.headers.get("retry-after")).toBe("2");
+  });
+});
