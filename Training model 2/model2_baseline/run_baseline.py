@@ -22,10 +22,36 @@ CROPS = {
     "holder": ((250, 200, 390, 430), "station-holder-crop-v1"),  # holder band and below (v5 test)
     # Below the holder's bottom edge (measured y 258-262 in every frame): no vial label visible.
     "below": ((250, 265, 390, 430), "station-below-holder-crop-v1"),
+    # Whole vial with label barcode/text inpainted first (flawed approximation, see remove_labels).
+    "delabel": ((250, 40, 390, 430), "station-crop-delabel-v1"),
 }
 CROP = CROPS["crop"][0]
 OVERLAY_Y = 435                            # rows from here down carry the burned-in timestamp
-MODES = ("crop", "holder", "below", "full")  # full frame is the shortcut comparison
+MODES = ("crop", "holder", "below", "delabel", "full")  # full frame is the shortcut comparison
+LABEL_SEARCH = (slice(90, 240), slice(284, 356))  # tube span where labels appear (y, x)
+
+
+def label_mask(rgb):
+    """Dark barcode bars and print on the tube, found with a black-hat filter.
+
+    Known limits (visual review of all 60 vials): blank label paper and labels facing
+    away are not found, and liquid or bubbles in the holder hole are sometimes masked.
+    """
+    gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
+    blackhat = cv2.morphologyEx(gray, cv2.MORPH_BLACKHAT, cv2.getStructuringElement(cv2.MORPH_RECT, (9, 9)))
+    mask = np.zeros_like(gray)
+    mask[LABEL_SEARCH] = (blackhat[LABEL_SEARCH] > 35).astype(np.uint8) * 255
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15)))
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
+    kept = np.zeros_like(mask)
+    for i in range(1, count):
+        if stats[i, cv2.CC_STAT_AREA] >= 60:
+            kept[labels == i] = 255
+    return cv2.dilate(kept, cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5)))
+
+
+def remove_labels(rgb):
+    return cv2.inpaint(rgb, label_mask(rgb), 5, cv2.INPAINT_TELEA)
 SEED = CONFIG["seed"]
 
 
@@ -42,6 +68,8 @@ def station_input(rgb, mode, rng=None):
     """Mask the overlay, optionally augment, crop (crop modes) and letterbox."""
     rgb = rgb.copy()
     rgb[OVERLAY_Y:] = MEAN_RGB
+    if mode == "delabel":
+        rgb = remove_labels(rgb)
     x0, y0, x1, y1 = CROPS[mode][0] if mode in CROPS else (0, 0, rgb.shape[1], rgb.shape[0])
     dx = dy = 0
     if rng is not None:
@@ -258,6 +286,7 @@ def main():
     export_head(*final_heads["crop"][:2], eligible, OUT / "model" / "model2_head_crop.json", "crop")
     export_head(*final_heads["holder"][:2], eligible, OUT / "model" / "model2_head_holder.json", "holder")
     export_head(*final_heads["below"][:2], eligible, OUT / "model" / "model2_head_below_holder.json", "below")
+    export_head(*final_heads["delabel"][:2], eligible, OUT / "model" / "model2_head_delabel.json", "delabel")
     export_head(*final_heads["full"][:2], eligible, OUT / "model" / "model2_head_fullframe_comparison.json", "full")
 
     for name, rows in (("predictions_per_vial.csv", preds), ("predictions_phone_photos.csv", phone_eval(final_heads, backbone, vials))):

@@ -124,7 +124,7 @@ def main():
         ("field_v12", ["60"], "good 60, recipe 60 withheld"),
     ]
     AN.mkdir(parents=True, exist_ok=True)
-    for mode in ("crop", "holder", "below"):
+    for mode in ("crop", "holder", "below", "delabel"):
         tiles = []
         for key, withheld, caption in cases:
             if withheld:

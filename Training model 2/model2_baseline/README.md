@@ -15,8 +15,8 @@ Current version: `model2-baseline-v4` (2026-10-31), retrained on workbook `771c8
 Relative to v3, vial 28 changed good → bad (it left training, now 40 vials) and first
 vial 26 changed bad → good (it stays out of training and is reported as a transition
 vial). Earlier versions are in Git history: v1 `777e6a1`, v2 `052cb35`, v3 `669b3c2`.
-v5 adds the holder-crop test and v6 the label-removal (below-holder) test, described
-below. Neither changes the v4 results or the deployed model.
+v5 adds the holder-crop test, v6 the below-holder crop and v7 whole-vial label inpainting,
+described below. None of them changes the v4 results or the deployed model.
 
 ## Operator decisions applied
 
@@ -251,6 +251,51 @@ them to face away from the camera), and keep the full vial so the fill line stay
 Then retrain the full-vial or holder crop on those recordings, with several recipes per
 recording.
 
+## Whole vial with labels inpainted (v7, flawed approximation)
+
+v6 was saved first (`checkpoints/v6-below-holder-crop/`, tag `model2-v6-below-holder-crop`).
+v7 keeps the whole-vial crop (x 250–390, y 40–430) and first removes label marks in software
+(`station-crop-delabel-v1`, `remove_labels` in `run_baseline.py`). A black-hat filter
+finds dark barcode bars and print on the tube (y 90–240, x 284–356), and OpenCV Telea
+inpainting fills them. This is applied identically in training and evaluation.
+
+**Read these results as an approximation.** Visual review of all 60 vials
+(`outputs/analysis/label_removal_preview.png`, `label_mask_coverage.json`) shows:
+
+- **Paper remains.** The blank label paper is still visible, often with an inpainting smudge, so a vial-specific patch remains.
+- **Some labels are untouched.** Labels facing away from the camera are not detected: 20 of 60 vials have no mask in any frame.
+- **Liquid is sometimes masked.** In a few vials (for example `field_v04`, `v24`, `v5_e25`) liquid, bubbles or the meniscus in the holder hole are masked and smoothed.
+- **Same data again.** As with v5 and v6, this is a same-data comparison.
+
+| Test (per vial, CV, 0.90) | Full vial (v4) | Holder (v5) | Below holder (v6) | Whole vial, labels inpainted (v7) |
+|---|---|---|---|---|
+| A. Top-1 accuracy (40 good vials) | 0.775 | **0.875** | 0.850 | 0.800 |
+| A. Macro F1 | 0.682 | **0.849** | 0.811 | 0.721 |
+| A. Coverage | 0.650 | 0.675 | 0.675 | 0.650 |
+| A. Accuracy when answered | 0.962 | **1.000** | 0.963 | **1.000** |
+| B. Unfamiliar recipes falsely accepted | 13/40 | **6/40** | 19/40 | 10/40 |
+| C. Bad first vials accepted | 5/15 | 3/15 | 2/15 | **1/15** |
+| C. Bad later vials accepted | 3/4 | 4/4 | **2/4** | 3/4 |
+| C. First vial labeled good accepted | 0/1 | 0/1 | 0/1 | 0/1 |
+| D. Recipe 99 held-out recordings | 9/9 | 9/9 | 9/9 | 9/9 |
+| Phone photos accepted (good / bad) | 9 / 4 | 0 / 0 | 4 / 2 | 5 / 4 |
+
+v7 details:
+
+- **Per recipe (correct / vials):** 5 1/2, 6 2/2, 7 2/2, 8 0/2, 9 1/2, 10 2/2, 11 2/2, 12 2/2, 13 1/2, 14 0/2, 41 4/4, 50 2/3, 60 4/4, 99 9/9.
+- **No confident errors on good vials.** One 5 → 8 confusion (`v5_e03`, 0.47) abstained.
+- **Bad vials accepted:** `v5_e19` (11, its intended recipe) and `field_v17`, `v27`, `v28` (99, 0.98–1.00).
+- **Unfamiliar recipes accepted:** 6 → 12, 7 → 11, 9 → 8, 14 → 7, 41 → 12, 50 → 60, 60 → 50 (2), and clear 99 → 60/50 (2).
+
+Interpretation:
+
+- **Labels were part of the problem.** Removing the barcode and print (but not the paper) improves v4 on every bad-vial and unfamiliar-recipe measure except bad later vials, while keeping fill height. That supports re-recording without labels.
+- **The recording-context shortcut is unchanged.** Grad-CAM (`gradcam_delabel_model.png`) for field vials (`field_v07, v11, v12, v14, v25`) still peaks at the top of the tube and the nozzle, as in v4. Label removal does not address it; recordings with several recipes each do.
+- **Recipe 99 bad later vials** (`v17`, `v27`, `v28`) are accepted by every version, so recipe recognition cannot catch those defects.
+
+**Assessment:** not usable as supporting evidence. v7 is the strongest argument so far for
+recording without labels, and it does not replace that.
+
 ## Artifacts (`outputs/model/`)
 
 `model2_head_crop.json`: classes 5–14, 41, 50, 60, 99 in the head's stored order
@@ -258,5 +303,6 @@ recording.
 preprocessing `station-crop-v1`, threshold, backbone hash and `calibrated: false`.
 `model2_head_holder.json`: the same for `station-holder-crop-v1` (v5 test; not deployed).
 `model2_head_below_holder.json`: the same for `station-below-holder-crop-v1` (v6 test; not deployed).
+`model2_head_delabel.json`: the same for `station-crop-delabel-v1` (v7 test; not deployed; needs `remove_labels`).
 `model2_head_fullframe_comparison.json` is for the shortcut comparison only.
 Saved v4 model: `checkpoints/v4-station-crop/`.
