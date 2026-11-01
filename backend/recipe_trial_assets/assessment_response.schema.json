@@ -1,0 +1,332 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "reviewed-recipe-trial-response/1"
+    },
+    "assessment_id": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "experimental": {
+      "const": true
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "video_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "vial_number": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "label",
+        "video_number",
+        "vial_number"
+      ],
+      "additionalProperties": false
+    },
+    "timing": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "UNIQUE_TIMING_CANDIDATE",
+            "AMBIGUOUS",
+            "BOUNDARY_UNCERTAIN",
+            "NO_COMPATIBLE_REFERENCE"
+          ]
+        },
+        "possible_recipe_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "contained_recipe_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "duration_bounds_seconds": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "compatible_reference_profile_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "containing_reference_profile_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "possible_recipe_ids",
+        "contained_recipe_ids",
+        "duration_bounds_seconds",
+        "compatible_reference_profile_ids",
+        "containing_reference_profile_ids",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "color": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "CONSISTENT",
+            "CONFLICTING",
+            "UNRELIABLE",
+            "NOT_EVALUATED"
+          ]
+        },
+        "status_scope": {
+          "const": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC"
+        },
+        "rgb": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "temporal_distance": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "region_distance": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "comparisons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "recipe_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "color_distance": {
+                "type": "number",
+                "minimum": 0
+              },
+              "experimental_band_result": {
+                "type": "string",
+                "enum": [
+                  "CONSISTENT",
+                  "CONFLICTING"
+                ]
+              }
+            },
+            "required": [
+              "recipe_id",
+              "color_distance",
+              "experimental_band_result"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reliability_independently_validated": {
+          "const": false
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "status_scope",
+        "rgb",
+        "temporal_distance",
+        "region_distance",
+        "comparisons",
+        "reasons",
+        "reliability_independently_validated",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "review_flags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "COLOR_CONFLICT_REVIEW"
+        ]
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "nominal_recipe_count": {
+          "const": 52
+        },
+        "observed_recipe_count": {
+          "const": 14
+        },
+        "observed_profile_count": {
+          "const": 44
+        },
+        "observed_recipe_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "missing_recipe_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "required": [
+        "nominal_recipe_count",
+        "observed_recipe_count",
+        "observed_profile_count",
+        "observed_recipe_ids",
+        "missing_recipe_ids"
+      ],
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "timing": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "rules": {
+          "type": "string"
+        },
+        "profiles": {
+          "type": "string"
+        },
+        "measurements": {
+          "type": "string"
+        },
+        "diagnostics": {
+          "type": "string"
+        },
+        "catalog": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "timing",
+        "color",
+        "rules",
+        "profiles",
+        "measurements",
+        "diagnostics",
+        "catalog"
+      ],
+      "additionalProperties": false
+    },
+    "overall": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "INSUFFICIENT_EVIDENCE"
+        },
+        "confirmed_recipe_id": {
+          "const": null
+        },
+        "automatic_recipe_creation": {
+          "const": false
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "confirmed_recipe_id",
+        "automatic_recipe_creation",
+        "reasons"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "assessment_id",
+    "revision",
+    "generated_at",
+    "experimental",
+    "source",
+    "timing",
+    "color",
+    "review_flags",
+    "coverage",
+    "provenance",
+    "overall"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experimental Reviewed Recipe Trial Assessment"
+}

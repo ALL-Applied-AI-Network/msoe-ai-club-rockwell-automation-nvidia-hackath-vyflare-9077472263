@@ -1,0 +1,16 @@
+{
+  "motion_threshold": 2.0,
+  "presence_fraction": 0.2,
+  "chroma_cut": 15,
+  "delta_cut": 10,
+  "flow_on_fraction": 0.5,
+  "flow_off_fraction": 0.25,
+  "confirm_frames": 2,
+  "maximum_input_gap_seconds": 0.4,
+  "maximum_visit_seconds": 180.0,
+  "post_flow_guard_seconds": 0.5,
+  "motion_guard_seconds": 0.25,
+  "signature_recovery_distance": 4.0,
+  "band_width": 3,
+  "uncertainty_budget_seconds": 2.0
+}

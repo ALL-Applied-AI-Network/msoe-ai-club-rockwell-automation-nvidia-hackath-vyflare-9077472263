@@ -1,0 +1,2092 @@
+{
+  "version": 1,
+  "input_mode": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOTS",
+  "operational_qualification_claim": false,
+  "observations": [
+    {
+      "observation_id": "auto-video-1-visit-001",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.733333333333334,
+          13.266666666666666
+        ],
+        [
+          1.2333333333333343,
+          1.7666666666666657
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          3.0,
+          31.0,
+          48.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 2.23606797749979
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            6.5,
+            6.766666666666667
+          ],
+          "end": [
+            19.5,
+            19.766666666666666
+          ]
+        },
+        {
+          "start": [
+            26,
+            26.266666666666666
+          ],
+          "end": [
+            27.5,
+            27.766666666666666
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        28.3,
+        28.4,
+        28.5
+      ],
+      "departure_interval_seconds": [
+        29.766666666666666,
+        30
+      ],
+      "candidate_appearance_window_seconds": [
+        28.266666666666666,
+        29.516666666666666
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "372cededcf919910a7f8d0193ab6753e44c596e8908351235e0646550537ecf0",
+            "evidence_id": "auto-video-1-visit-001-post05",
+            "actual_seconds": 28.3
+          },
+          {
+            "sha256": "c68e4bbcebbc6ca22ea41d0a9bdcbd8dfa72572b18a17bc570b6430db3bd7861",
+            "evidence_id": "auto-video-1-visit-001-post15",
+            "actual_seconds": 28.4
+          },
+          {
+            "sha256": "5e15cc2520959f4d560565dd7546de616dbbbd2cf4ddfc53b96c2715fec65db7",
+            "evidence_id": "auto-video-1-visit-001-post25",
+            "actual_seconds": 28.5
+          }
+        ]
+      },
+      "available_demo_checks_pass": false,
+      "hold_reasons": [
+        "ARRIVAL_LEFT_CENSORED"
+      ],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V01",
+      "label": "Video 1 \u00b7 Vial 1",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-002",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.766666666666666,
+          13.233333333333334
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          2.0,
+          30.0,
+          47.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 2.23606797749979
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            59.266666666666666,
+            59.5
+          ],
+          "end": [
+            72.26666666666667,
+            72.5
+          ]
+        },
+        {
+          "start": [
+            79.26666666666667,
+            79.5
+          ],
+          "end": [
+            80.5,
+            80.76666666666667
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        81.3,
+        81.4,
+        81.5
+      ],
+      "departure_interval_seconds": [
+        83,
+        83.26666666666667
+      ],
+      "candidate_appearance_window_seconds": [
+        81.26666666666667,
+        82.75
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "80e143d6f01f3906a950ebc4ae67179156aee84a50cd619b19e762150a78ce99",
+            "evidence_id": "auto-video-1-visit-002-post05",
+            "actual_seconds": 81.3
+          },
+          {
+            "sha256": "63a86073b04cb9a2dab3709708f28b32645caf78ec310eb66eccd12b4c6710e3",
+            "evidence_id": "auto-video-1-visit-002-post15",
+            "actual_seconds": 81.4
+          },
+          {
+            "sha256": "9ae46c7069bb34e5c49487a2ff0a3969e26cf97b9389190fd341751337869689",
+            "evidence_id": "auto-video-1-visit-002-post25",
+            "actual_seconds": 81.5
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V02",
+      "label": "Video 1 \u00b7 Vial 2",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-003",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.733333333333334,
+          13.266666666666666
+        ],
+        [
+          1.23333333333332,
+          1.76666666666668
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          2.0,
+          30.0,
+          49.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 1.0
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            113,
+            113.26666666666667
+          ],
+          "end": [
+            126,
+            126.26666666666667
+          ]
+        },
+        {
+          "start": [
+            133,
+            133.26666666666668
+          ],
+          "end": [
+            134.5,
+            134.76666666666668
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        135.3,
+        135.4,
+        135.5
+      ],
+      "departure_interval_seconds": [
+        137.26666666666668,
+        137.5
+      ],
+      "candidate_appearance_window_seconds": [
+        135.26666666666668,
+        137.01666666666668
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "b7ccbe837595187a7615efac96ff34fd543988c90b921679a5661d68c893a21b",
+            "evidence_id": "auto-video-1-visit-003-post05",
+            "actual_seconds": 135.3
+          },
+          {
+            "sha256": "ec8d946fc5dae3ba7eefc2f69333808c458a6ae71eaaf39cf4344d4f59ef2ee1",
+            "evidence_id": "auto-video-1-visit-003-post15",
+            "actual_seconds": 135.4
+          },
+          {
+            "sha256": "d5c6cdb5f0fd3298715e7d7e9570b7b1aa1d76660a6d53171c0754d73925d386",
+            "evidence_id": "auto-video-1-visit-003-post25",
+            "actual_seconds": 135.5
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V03",
+      "label": "Video 1 \u00b7 Vial 3",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-004",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.5,
+          13.0
+        ],
+        [
+          1,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          2.0,
+          31.0,
+          47.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 2.23606797749979
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            167.76666666666668,
+            168
+          ],
+          "end": [
+            180.5,
+            180.76666666666668
+          ]
+        },
+        {
+          "start": [
+            187.76666666666668,
+            188
+          ],
+          "end": [
+            189,
+            189.26666666666668
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        189.8,
+        189.9,
+        190
+      ],
+      "departure_interval_seconds": [
+        192.26666666666668,
+        192.5
+      ],
+      "candidate_appearance_window_seconds": [
+        189.76666666666668,
+        192.01666666666668
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "133bbf3b2219228c2ff4c82054b3c0ef5698f2a27a570b1fca745b51c8263d1e",
+            "evidence_id": "auto-video-1-visit-004-post05",
+            "actual_seconds": 189.8
+          },
+          {
+            "sha256": "9575eac1054249504f94653339ac9888e6058efba7577c16b4d6e61c148d1056",
+            "evidence_id": "auto-video-1-visit-004-post15",
+            "actual_seconds": 189.9
+          },
+          {
+            "sha256": "6ef3871c5fec900193c8091adef1f1d35d4a273ec0f3f144efdd87361d4218da",
+            "evidence_id": "auto-video-1-visit-004-post25",
+            "actual_seconds": 190
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V04",
+      "label": "Video 1 \u00b7 Vial 4",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-005",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.76666666666668,
+          13.23333333333332
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          3.0,
+          30.0,
+          48.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 1.4142135623730951
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            222.26666666666668,
+            222.5
+          ],
+          "end": [
+            235.26666666666668,
+            235.5
+          ]
+        },
+        {
+          "start": [
+            242.5,
+            242.76666666666668
+          ],
+          "end": [
+            243.76666666666668,
+            244
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        244.53333333333333,
+        244.63333333333333,
+        244.73333333333332
+      ],
+      "departure_interval_seconds": [
+        246.5,
+        246.76666666666668
+      ],
+      "candidate_appearance_window_seconds": [
+        244.5,
+        246.25
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "1cbdd9d206927fdfaaf1a414ab650a934941087c7da2f7e4fdb712d4ae7e742c",
+            "evidence_id": "auto-video-1-visit-005-post05",
+            "actual_seconds": 244.53333333333333
+          },
+          {
+            "sha256": "d7de03c7c815326bc17d95fe22ac3cc66140ce2b2421a5eed436f1e7d1496b26",
+            "evidence_id": "auto-video-1-visit-005-post15",
+            "actual_seconds": 244.63333333333333
+          },
+          {
+            "sha256": "8a83304209bea06fcdfcb06b37b422e59afd60ccb0c3157d78fd2cb3f7373e7b",
+            "evidence_id": "auto-video-1-visit-005-post25",
+            "actual_seconds": 244.73333333333332
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V05",
+      "label": "Video 1 \u00b7 Vial 5",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-006",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          19,
+          19.5
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          9.0,
+          15.0,
+          13.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 2.23606797749979
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            270.76666666666665,
+            271
+          ],
+          "end": [
+            290,
+            290.26666666666665
+          ]
+        },
+        {
+          "start": [
+            302.5,
+            302.76666666666665
+          ],
+          "end": [
+            303.76666666666665,
+            304
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        304.53333333333336,
+        304.6333333333333,
+        304.73333333333335
+      ],
+      "departure_interval_seconds": [
+        306.26666666666665,
+        306.5
+      ],
+      "candidate_appearance_window_seconds": [
+        304.5,
+        306.01666666666665
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "6f74574af011b4577a22debfac11e0787d18d6961283d1a502443647d693f4f7",
+            "evidence_id": "auto-video-1-visit-006-post05",
+            "actual_seconds": 304.53333333333336
+          },
+          {
+            "sha256": "522264f3a1e92e594b3c86bba108ce7d0f7ce939e721f08f735c1ece663af12e",
+            "evidence_id": "auto-video-1-visit-006-post15",
+            "actual_seconds": 304.6333333333333
+          },
+          {
+            "sha256": "e819979384061979f3217aba9d9fcd7c2356cd672c83ff2d5bffdfe49cf36464",
+            "evidence_id": "auto-video-1-visit-006-post25",
+            "actual_seconds": 304.73333333333335
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V06",
+      "label": "Video 1 \u00b7 Vial 6",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-007",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          17.0,
+          17.76666666666665
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          37.0,
+          16.0,
+          8.5
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 3.0413812651491097
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            330,
+            330.5
+          ],
+          "end": [
+            347.5,
+            347.76666666666665
+          ]
+        },
+        {
+          "start": [
+            361,
+            361.26666666666665
+          ],
+          "end": [
+            362.26666666666665,
+            362.5
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        363.03333333333336,
+        363.1333333333333,
+        363.23333333333335
+      ],
+      "departure_interval_seconds": [
+        365,
+        365.26666666666665
+      ],
+      "candidate_appearance_window_seconds": [
+        363.0,
+        364.75
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "c7933b3786c477d9e61b6d327ad84e2653a039ee781d9cc027bae9af0d9c6b9b",
+            "evidence_id": "auto-video-1-visit-007-post05",
+            "actual_seconds": 363.03333333333336
+          },
+          {
+            "sha256": "bca360ccf7ec60075e144c88dc6f44902a90e614460ce0b6278a75256dcd8d5d",
+            "evidence_id": "auto-video-1-visit-007-post15",
+            "actual_seconds": 363.1333333333333
+          },
+          {
+            "sha256": "3e96a8ba64faaff25987dc42a308e9a54cf8acfd33b0f02feb75c5f7fd492e96",
+            "evidence_id": "auto-video-1-visit-007-post25",
+            "actual_seconds": 363.23333333333335
+          }
+        ]
+      },
+      "available_demo_checks_pass": false,
+      "hold_reasons": [
+        "COLOR_SAMPLING_UNRELIABLE"
+      ],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V07",
+      "label": "Video 1 \u00b7 Vial 7",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-008",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          18.5,
+          20
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          58.0,
+          17.0,
+          7.0
+        ],
+        "temporal_distance": 1.0,
+        "region_distance": 1.8027756377319946
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            389,
+            389.76666666666665
+          ],
+          "end": [
+            408.26666666666665,
+            409
+          ]
+        },
+        {
+          "start": [
+            421,
+            421.26666666666665
+          ],
+          "end": [
+            422.26666666666665,
+            422.5
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        423.03333333333336,
+        423.1333333333333,
+        423.23333333333335
+      ],
+      "departure_interval_seconds": [
+        425.5,
+        425.76666666666665
+      ],
+      "candidate_appearance_window_seconds": [
+        423.0,
+        425.25
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "b374b63fe2aec8d211ea5314e1a26f5a8054334af057d8bdbc50d22db6d21084",
+            "evidence_id": "auto-video-1-visit-008-post05",
+            "actual_seconds": 423.03333333333336
+          },
+          {
+            "sha256": "8177d06717fb5c03d06fe9535e74df6aa49c4cfbd744db8dc24a91a565ef985b",
+            "evidence_id": "auto-video-1-visit-008-post15",
+            "actual_seconds": 423.1333333333333
+          },
+          {
+            "sha256": "0155b4f14c2280462bab711a7151b236416f48e2e78506e81266eaa778adef90",
+            "evidence_id": "auto-video-1-visit-008-post25",
+            "actual_seconds": 423.23333333333335
+          }
+        ]
+      },
+      "available_demo_checks_pass": false,
+      "hold_reasons": [
+        "UNRESOLVED_FLOW_VISIBILITY"
+      ],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V08",
+      "label": "Video 1 \u00b7 Vial 8",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-009",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          18.5,
+          19.0
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          64.0,
+          17.0,
+          6.0
+        ],
+        "temporal_distance": 1.0,
+        "region_distance": 2.23606797749979
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            449.5,
+            449.76666666666665
+          ],
+          "end": [
+            468.26666666666665,
+            468.5
+          ]
+        },
+        {
+          "start": [
+            481.5,
+            481.76666666666665
+          ],
+          "end": [
+            482.76666666666665,
+            483
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        483.53333333333336,
+        483.6333333333333,
+        483.73333333333335
+      ],
+      "departure_interval_seconds": [
+        485,
+        485.26666666666665
+      ],
+      "candidate_appearance_window_seconds": [
+        483.5,
+        484.75
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "e067ae883c856a5d624f3f5d7c60972f5b070126c1f011c3fbfeed3f55a87f36",
+            "evidence_id": "auto-video-1-visit-009-post05",
+            "actual_seconds": 483.53333333333336
+          },
+          {
+            "sha256": "9111b633b0d77861f80216f52cd24104eee89e879a50aa98df90c59185f17f1f",
+            "evidence_id": "auto-video-1-visit-009-post15",
+            "actual_seconds": 483.6333333333333
+          },
+          {
+            "sha256": "fa1bc54365639a17a0cbe8ec2e724140aa5c5735a756a579005378b399bb2985",
+            "evidence_id": "auto-video-1-visit-009-post25",
+            "actual_seconds": 483.73333333333335
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V09",
+      "label": "Video 1 \u00b7 Vial 9",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-010",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          17.5,
+          18.26666666666665
+        ],
+        [
+          1.2333333333333485,
+          1.7666666666666515
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          63.0,
+          20.0,
+          8.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 5.5901699437494745
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            509.5,
+            510
+          ],
+          "end": [
+            527.5,
+            527.7666666666667
+          ]
+        },
+        {
+          "start": [
+            540.5,
+            540.7666666666667
+          ],
+          "end": [
+            542,
+            542.2666666666667
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        542.8,
+        542.9,
+        543
+      ],
+      "departure_interval_seconds": [
+        544.7666666666667,
+        545
+      ],
+      "candidate_appearance_window_seconds": [
+        542.7666666666667,
+        544.5166666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "46a99a17ea4b1a2dac018a884a17868fcdbd788edef1d365a7c2d9370a02ac75",
+            "evidence_id": "auto-video-1-visit-010-post05",
+            "actual_seconds": 542.8
+          },
+          {
+            "sha256": "c14eb78b01002735bec98f79255002f2352d0d1da931c67b339ebf9cdb689a0a",
+            "evidence_id": "auto-video-1-visit-010-post15",
+            "actual_seconds": 542.9
+          },
+          {
+            "sha256": "65c022b0c12dd4436bcb299b0d834e918ac7dc468b91f295d3f6e0d6ac861649",
+            "evidence_id": "auto-video-1-visit-010-post25",
+            "actual_seconds": 543
+          }
+        ]
+      },
+      "available_demo_checks_pass": false,
+      "hold_reasons": [
+        "COLOR_SAMPLING_UNRELIABLE"
+      ],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V10",
+      "label": "Video 1 \u00b7 Vial 10",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-011",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.733333333333348,
+          13.266666666666652
+        ],
+        [
+          1,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          10.0,
+          13.0,
+          12.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 1.4142135623730951
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            574,
+            574.2666666666667
+          ],
+          "end": [
+            587,
+            587.2666666666667
+          ]
+        },
+        {
+          "start": [
+            593.7666666666667,
+            594
+          ],
+          "end": [
+            595,
+            595.2666666666667
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        595.8,
+        595.9,
+        596
+      ],
+      "departure_interval_seconds": [
+        597.7666666666667,
+        598
+      ],
+      "candidate_appearance_window_seconds": [
+        595.7666666666667,
+        597.5166666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "3e5927279635106401dc4465e9026d25eee0e4ce0d11ffa158198705798026a2",
+            "evidence_id": "auto-video-1-visit-011-post05",
+            "actual_seconds": 595.8
+          },
+          {
+            "sha256": "8f7c26b1db99155bc0d69b7f29b79e0c3c1f5b03f5b91b12d222c44093dec44d",
+            "evidence_id": "auto-video-1-visit-011-post15",
+            "actual_seconds": 595.9
+          },
+          {
+            "sha256": "3b088af731094c10907bc7fe46ec449b88d8a9c6002d6772c47690d4660faa43",
+            "evidence_id": "auto-video-1-visit-011-post25",
+            "actual_seconds": 596
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V11",
+      "label": "Video 1 \u00b7 Vial 11",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-012",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          18.23333333333335,
+          18.76666666666665
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          10.0,
+          17.0,
+          15.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 0.0
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            622,
+            622.2666666666667
+          ],
+          "end": [
+            640.5,
+            640.7666666666667
+          ]
+        },
+        {
+          "start": [
+            652.5,
+            652.7666666666667
+          ],
+          "end": [
+            653.7666666666667,
+            654
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        654.5333333333333,
+        654.6333333333333,
+        654.7333333333333
+      ],
+      "departure_interval_seconds": [
+        656.2666666666667,
+        656.5
+      ],
+      "candidate_appearance_window_seconds": [
+        654.5,
+        656.0166666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "0b19b39bc641f24e363b1c6668dc9aa7ddb1de179901a7ea02c2ee5612c6516e",
+            "evidence_id": "auto-video-1-visit-012-post05",
+            "actual_seconds": 654.5333333333333
+          },
+          {
+            "sha256": "fd27f5e8580f6a0696cf94627e166f7addac475ee97a17b10c0d8df269de5c58",
+            "evidence_id": "auto-video-1-visit-012-post15",
+            "actual_seconds": 654.6333333333333
+          },
+          {
+            "sha256": "0e40a41db70315adc8e3c227bf577bbf8144112603585e5ff0fd10c580762ae9",
+            "evidence_id": "auto-video-1-visit-012-post25",
+            "actual_seconds": 654.7333333333333
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V12",
+      "label": "Video 1 \u00b7 Vial 12",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-013",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.5,
+          13.0
+        ],
+        [
+          1.2666666666666515,
+          1.7333333333333485
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          10.0,
+          12.0,
+          12.0
+        ],
+        "temporal_distance": 1.4142135623730951,
+        "region_distance": 1.0
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            685.7666666666667,
+            686
+          ],
+          "end": [
+            698.5,
+            698.7666666666667
+          ]
+        },
+        {
+          "start": [
+            706.2666666666667,
+            706.5
+          ],
+          "end": [
+            707.7666666666667,
+            708
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        708.5333333333333,
+        708.6333333333333,
+        708.7333333333333
+      ],
+      "departure_interval_seconds": [
+        710.5,
+        710.7666666666667
+      ],
+      "candidate_appearance_window_seconds": [
+        708.5,
+        710.25
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "39a7c0bb66e4b8ac3578e3e2a6dd0b3b64fbfeff567aefc729337cb83646930f",
+            "evidence_id": "auto-video-1-visit-013-post05",
+            "actual_seconds": 708.5333333333333
+          },
+          {
+            "sha256": "8ab5dbb13ec3f9ba283c04a346cdc62651d6184604348cfd289a22e5f5c504c6",
+            "evidence_id": "auto-video-1-visit-013-post15",
+            "actual_seconds": 708.6333333333333
+          },
+          {
+            "sha256": "314ecd5daf8f065f0b5afdff9662c027c1bcf08faaea2bac023fe6d84063ec78",
+            "evidence_id": "auto-video-1-visit-013-post25",
+            "actual_seconds": 708.7333333333333
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V13",
+      "label": "Video 1 \u00b7 Vial 13",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-014",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          12.733333333333348,
+          13.266666666666652
+        ],
+        [
+          1.2666666666666515,
+          1.7333333333333485
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          4.0,
+          23.0,
+          32.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 1.0
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            740,
+            740.2666666666667
+          ],
+          "end": [
+            753,
+            753.2666666666667
+          ]
+        },
+        {
+          "start": [
+            759.7666666666667,
+            760
+          ],
+          "end": [
+            761.2666666666667,
+            761.5
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        762.0333333333333,
+        762.1333333333333,
+        762.2333333333333
+      ],
+      "departure_interval_seconds": [
+        763.5,
+        763.7666666666667
+      ],
+      "candidate_appearance_window_seconds": [
+        762.0,
+        763.25
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "f7127e864393eb1014c10c065b2ebd76ba7d572b4306bf9d3603fb95bdab4e1a",
+            "evidence_id": "auto-video-1-visit-014-post05",
+            "actual_seconds": 762.0333333333333
+          },
+          {
+            "sha256": "5b7a8d0f816fb7ab774793ad81ab295881e0e314fc61a35a833f055227e2688f",
+            "evidence_id": "auto-video-1-visit-014-post15",
+            "actual_seconds": 762.1333333333333
+          },
+          {
+            "sha256": "0114e3e416c689e77845eb6adacb68d49ac1d8279f5875cf8faa7cd9dbc4e815",
+            "evidence_id": "auto-video-1-visit-014-post25",
+            "actual_seconds": 762.2333333333333
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V14",
+      "label": "Video 1 \u00b7 Vial 14",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-015",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          17.76666666666665,
+          18.5
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          9.0,
+          17.0,
+          14.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 1.4142135623730951
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            787.2666666666667,
+            787.5
+          ],
+          "end": [
+            805.2666666666667,
+            805.7666666666667
+          ]
+        },
+        {
+          "start": [
+            818.2666666666667,
+            818.5
+          ],
+          "end": [
+            819.5,
+            819.7666666666667
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        820.3,
+        820.4,
+        820.5
+      ],
+      "departure_interval_seconds": [
+        822.7666666666667,
+        823
+      ],
+      "candidate_appearance_window_seconds": [
+        820.2666666666667,
+        822.5166666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "115820d32cde3695049172cd28d8f6029bab60ab735bbb14a869ad0eb574e07e",
+            "evidence_id": "auto-video-1-visit-015-post05",
+            "actual_seconds": 820.3
+          },
+          {
+            "sha256": "a8379f915311de67bcaf0ae2d127dab20bd27c97422ac601679e72689cd8b9c0",
+            "evidence_id": "auto-video-1-visit-015-post15",
+            "actual_seconds": 820.4
+          },
+          {
+            "sha256": "a1cdbb7294e5d702742030f3c4b95b0e931f8692ddb94266adfbec9cd30cfc7a",
+            "evidence_id": "auto-video-1-visit-015-post25",
+            "actual_seconds": 820.5
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V15",
+      "label": "Video 1 \u00b7 Vial 15",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-016",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          18.0,
+          18.5
+        ],
+        [
+          7.2666666666666515,
+          8.0
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          38.0,
+          16.0,
+          8.0
+        ],
+        "temporal_distance": 1.0,
+        "region_distance": 1.0
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            848.2666666666667,
+            848.5
+          ],
+          "end": [
+            866.5,
+            866.7666666666667
+          ]
+        },
+        {
+          "start": [
+            879.2666666666667,
+            879.5
+          ],
+          "end": [
+            886.7666666666667,
+            887.2666666666667
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        887.8,
+        887.9,
+        888
+      ],
+      "departure_interval_seconds": [
+        894.2666666666667,
+        894.5
+      ],
+      "candidate_appearance_window_seconds": [
+        887.7666666666667,
+        894.0166666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "789ab70e9c4d54e8ba3c34d132b3e2a01004249aa1432dd533b85a606b999ff9",
+            "evidence_id": "auto-video-1-visit-016-post05",
+            "actual_seconds": 887.8
+          },
+          {
+            "sha256": "dcb48c2130fa5a48226d5c3ca9b66b6e7a7324d0eb7e0c1cd00400c3fa011383",
+            "evidence_id": "auto-video-1-visit-016-post15",
+            "actual_seconds": 887.9
+          },
+          {
+            "sha256": "96479f0258acb126b8c0d70dadfbb1cf8a18c99398937101711a628692d91278",
+            "evidence_id": "auto-video-1-visit-016-post25",
+            "actual_seconds": 888
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V16",
+      "label": "Video 1 \u00b7 Vial 16",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-017",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          19.0,
+          20.0
+        ],
+        [
+          8.0,
+          8.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          62.5,
+          20.0,
+          8.0
+        ],
+        "temporal_distance": 0.5,
+        "region_distance": 1.8027756377319946
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            919.7666666666667,
+            920.5
+          ],
+          "end": [
+            939.5,
+            939.7666666666667
+          ]
+        },
+        {
+          "start": [
+            952.5,
+            952.7666666666667
+          ],
+          "end": [
+            960.7666666666667,
+            961
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        961.5333333333333,
+        961.6333333333333,
+        961.7333333333333
+      ],
+      "departure_interval_seconds": [
+        968.2666666666667,
+        968.5
+      ],
+      "candidate_appearance_window_seconds": [
+        961.5,
+        968.0166666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "3fcbc9f4978e2ac271697dd6cc6be728741467f9d332ce1be27e53648aa58c1d",
+            "evidence_id": "auto-video-1-visit-017-post05",
+            "actual_seconds": 961.5333333333333
+          },
+          {
+            "sha256": "0836c406cf8a7dc831631b3ca87626394ec9f0c65c33dd6ad7ae9f814ad68b69",
+            "evidence_id": "auto-video-1-visit-017-post15",
+            "actual_seconds": 961.6333333333333
+          },
+          {
+            "sha256": "65aeed1be0c22f54755888299a0a04af7032659a397873423762647cac468534",
+            "evidence_id": "auto-video-1-visit-017-post25",
+            "actual_seconds": 961.7333333333333
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V17",
+      "label": "Video 1 \u00b7 Vial 17",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-018",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          17.5,
+          18.0
+        ],
+        [
+          8.0,
+          8.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          66.0,
+          19.0,
+          7.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 1.4142135623730951
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            993.7666666666667,
+            994
+          ],
+          "end": [
+            1011.5,
+            1011.7666666666667
+          ]
+        },
+        {
+          "start": [
+            1025.2666666666667,
+            1025.5
+          ],
+          "end": [
+            1033.5,
+            1033.7666666666667
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        1034.3,
+        1034.4,
+        1034.5
+      ],
+      "departure_interval_seconds": [
+        1042,
+        1042.2666666666667
+      ],
+      "candidate_appearance_window_seconds": [
+        1034.2666666666667,
+        1041.75
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "029bc29a6eeb0edca03fe5a5450774600f492c7f2ced36d1e4b932cfd69138f7",
+            "evidence_id": "auto-video-1-visit-018-post05",
+            "actual_seconds": 1034.3
+          },
+          {
+            "sha256": "f1c42bdcfc8713fffae8dfe656372faef402d72dc8cd384648848243d40276d1",
+            "evidence_id": "auto-video-1-visit-018-post15",
+            "actual_seconds": 1034.4
+          },
+          {
+            "sha256": "99808fe442c2ef9710edd412dbfaa9463b548aed91938cfe2ed0d120a8d29a17",
+            "evidence_id": "auto-video-1-visit-018-post25",
+            "actual_seconds": 1034.5
+          }
+        ]
+      },
+      "available_demo_checks_pass": false,
+      "hold_reasons": [
+        "UNRESOLVED_FLOW_VISIBILITY"
+      ],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V18",
+      "label": "Video 1 \u00b7 Vial 18",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-1-visit-019",
+      "video": 1,
+      "duration_bounds_seconds": [
+        [
+          17.5,
+          18.0
+        ],
+        [
+          8.266666666666652,
+          8.733333333333348
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          67.0,
+          17.0,
+          6.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 2.449489742783178
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            1066.2666666666667,
+            1066.5
+          ],
+          "end": [
+            1084,
+            1084.2666666666667
+          ]
+        },
+        {
+          "start": [
+            1098.2666666666667,
+            1098.5
+          ],
+          "end": [
+            1106.7666666666667,
+            1107
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        1107.5333333333333,
+        1107.6333333333334,
+        1107.7333333333333
+      ],
+      "departure_interval_seconds": [
+        1114.2666666666667,
+        1114.5
+      ],
+      "candidate_appearance_window_seconds": [
+        1107.5,
+        1114.0166666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "232906c1c0785992a6d278fca7c9a2a4290ee2e252f8d0786758b6b70c96f5b8",
+            "evidence_id": "auto-video-1-visit-019-post05",
+            "actual_seconds": 1107.5333333333333
+          },
+          {
+            "sha256": "d8ff1da9479338788131753bccf8d12db20d65b002b288430494de29454d8d39",
+            "evidence_id": "auto-video-1-visit-019-post15",
+            "actual_seconds": 1107.6333333333334
+          },
+          {
+            "sha256": "489c9280b6317653bb210dde40311d33dafd365922988cdb9860088ae5a45534",
+            "evidence_id": "auto-video-1-visit-019-post25",
+            "actual_seconds": 1107.7333333333333
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-1",
+      "vial_id": "V1-V19",
+      "label": "Video 1 \u00b7 Vial 19",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-2-visit-002",
+      "video": 2,
+      "duration_bounds_seconds": [
+        [
+          12.733333333333334,
+          13.266666666666666
+        ],
+        [
+          1.2333333333333343,
+          1.7666666666666657
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          6.0,
+          26.0,
+          37.0
+        ],
+        "temporal_distance": 0.0,
+        "region_distance": 1.4142135623730951
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            21,
+            21.266666666666666
+          ],
+          "end": [
+            34,
+            34.266666666666666
+          ]
+        },
+        {
+          "start": [
+            40.5,
+            40.766666666666666
+          ],
+          "end": [
+            42,
+            42.266666666666666
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        42.8,
+        42.9,
+        43
+      ],
+      "departure_interval_seconds": [
+        44.766666666666666,
+        45
+      ],
+      "candidate_appearance_window_seconds": [
+        42.766666666666666,
+        44.516666666666666
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "82cb78ed10042fe1a07844339cf37e687120c887d4302a4fb177decc5165643d",
+            "evidence_id": "auto-video-2-visit-002-post05",
+            "actual_seconds": 42.8
+          },
+          {
+            "sha256": "7047767fffb2579c4235ab128841310aa88d6453371cb409eeae15eb77f9db26",
+            "evidence_id": "auto-video-2-visit-002-post15",
+            "actual_seconds": 42.9
+          },
+          {
+            "sha256": "508723939981a445ac58dc854cd4a7e230849e70893d61da61407cd18330e974",
+            "evidence_id": "auto-video-2-visit-002-post25",
+            "actual_seconds": 43
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-2",
+      "vial_id": "V2-V01",
+      "label": "Video 2 \u00b7 Vial 1",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-2-visit-003",
+      "video": 2,
+      "duration_bounds_seconds": [
+        [
+          6.733333333333334,
+          7.266666666666666
+        ],
+        [
+          4.5,
+          5.0
+        ],
+        [
+          2.0,
+          2.7666666666666657
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          9.0,
+          16.0,
+          16.0
+        ],
+        "temporal_distance": 1.0,
+        "region_distance": 1.4142135623730951
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            64,
+            64.26666666666667
+          ],
+          "end": [
+            71,
+            71.26666666666667
+          ]
+        },
+        {
+          "start": [
+            84.26666666666667,
+            84.5
+          ],
+          "end": [
+            89,
+            89.26666666666667
+          ]
+        },
+        {
+          "start": [
+            97,
+            97.26666666666667
+          ],
+          "end": [
+            99.26666666666667,
+            99.76666666666667
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        100.3,
+        100.4,
+        100.5
+      ],
+      "departure_interval_seconds": [
+        102.26666666666667,
+        102.5
+      ],
+      "candidate_appearance_window_seconds": [
+        100.26666666666667,
+        102.01666666666667
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "967769b8c55427a1a7465d3e1f6ed94edf3c83aa4698b3e90a1297f78bdc4b5e",
+            "evidence_id": "auto-video-2-visit-003-post05",
+            "actual_seconds": 100.3
+          },
+          {
+            "sha256": "007aba5d5cfbbb5dc63e5efa94ac791c53895bbba67c777b0492292c6d516b70",
+            "evidence_id": "auto-video-2-visit-003-post15",
+            "actual_seconds": 100.4
+          },
+          {
+            "sha256": "6388166b6fb8fd685380fa8459d752596e4181525c81b6c98f7278b399d21b04",
+            "evidence_id": "auto-video-2-visit-003-post25",
+            "actual_seconds": 100.5
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-2",
+      "vial_id": "V2-V02",
+      "label": "Video 2 \u00b7 Vial 2",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    },
+    {
+      "observation_id": "auto-video-2-visit-004",
+      "video": 2,
+      "duration_bounds_seconds": [
+        [
+          12.73333333333332,
+          13.26666666666668
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "raw_rgb": {
+        "nominal": [
+          10.0,
+          16.0,
+          18.0
+        ],
+        "temporal_distance": 1.4142135623730951,
+        "region_distance": 1.4142135623730951
+      },
+      "source_episode_intervals": [
+        {
+          "start": [
+            133.5,
+            133.76666666666668
+          ],
+          "end": [
+            146.5,
+            146.76666666666668
+          ]
+        },
+        {
+          "start": [
+            153,
+            153.26666666666668
+          ],
+          "end": [
+            154.26666666666668,
+            154.5
+          ]
+        }
+      ],
+      "sample_actual_seconds": [
+        155.03333333333333,
+        155.13333333333333,
+        155.23333333333332
+      ],
+      "departure_interval_seconds": [
+        157,
+        157.26666666666668
+      ],
+      "candidate_appearance_window_seconds": [
+        155.0,
+        156.75
+      ],
+      "reference_cadence_and_window_check": true,
+      "source_lineage": {
+        "video_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+        "detector_sha256": "da27cb9d1274cc173b1d323d17261e4f5ef686179471e3df8dd7d27e6673cb9f",
+        "config_sha256": "d239d71a4a18f26b1dd61acfc1c5ea4bf35bed9bc1e145a3debfed628cccef1c",
+        "frame_provenance": [
+          {
+            "sha256": "7ffbd7af26d1a0a7d0bb00b3ddbf575b5dfbc7116bb690e1b5fb2d73538b50bd",
+            "evidence_id": "auto-video-2-visit-004-post05",
+            "actual_seconds": 155.03333333333333
+          },
+          {
+            "sha256": "2c051502b97150f7021a19387c11ddd473179a91e039ec58bcd9405fcaabcd7c",
+            "evidence_id": "auto-video-2-visit-004-post15",
+            "actual_seconds": 155.13333333333333
+          },
+          {
+            "sha256": "6d874fb03b909742fbd90bf86f962374337b915a424c3ebcc8c032de18b55fe7",
+            "evidence_id": "auto-video-2-visit-004-post25",
+            "actual_seconds": 155.23333333333332
+          }
+        ]
+      },
+      "available_demo_checks_pass": true,
+      "hold_reasons": [],
+      "qualification_scope": "AVAILABLE_DEVELOPMENT_CHECKS_ONLY_NOT_OPERATIONAL_QUALIFICATION",
+      "operational_eligibility": "NOT_VALIDATED",
+      "dispense_colors": null,
+      "tank_sources": null,
+      "physical_volume": null,
+      "chemical_composition": null,
+      "video_id": "video-2",
+      "vial_id": "V2-V03",
+      "label": "Video 2 \u00b7 Vial 3",
+      "source_kind": "PACKAGED_AUTOMATIC_OBSERVER_SNAPSHOT"
+    }
+  ],
+  "upstream_sha256": {
+    "preflight": "c80dc2eba8a2efe4c7364073ddb7ff96d22ee0a32d8db1619dd7af1bb9dd357c",
+    "offline_results": "954b795c3417914674f2b66907b0ef5701ac3956ef70e59344098c279043678a",
+    "observer_predictions": "ef105d12eb42285b7a2055744dce82ee04d1dd5a224e40f4e6b4b0e5b96debaf",
+    "automatic_color": "21b71cf21d657d2dc31597277e11d01d259b7e4d69c4ede0b8ac5fc3dd48cecb"
+  },
+  "reference_bundle_sha256": "2d82eb8d0ad081e46b8f6b854f13b21c80461a75ca2872c6aadd543723bfe182",
+  "nominal_catalog_sha256": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63",
+  "route_identity_basis": "Filled visits in each video, not barcodes or batch positions",
+  "limitations": [
+    "Saved automatic-observer output; this API does not decode or inspect a new video.",
+    "Available development checks only; original NOT_VALIDATED markers remain.",
+    "Discovered patterns are unverified observations, not confirmed chemical compositions.",
+    "Boundary cases and color conflicts remain unresolved under the agreed rules."
+  ]
+}

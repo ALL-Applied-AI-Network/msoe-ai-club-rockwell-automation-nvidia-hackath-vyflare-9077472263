@@ -1,5 +1,9 @@
 # VyFlare inference backend
 
+## Isolated Recipe Recognition Demonstration
+
+An opt-in backend API now connects packaged automatic-observer snapshots to interval/RGB matching and persistent discovered-pattern creation/reuse in a separate bank. It is disabled by default and does not run video inference or modify the normal recipe bank. See [the demonstration API guide](recipes/demo_api.md) for configuration, endpoints, current results and limitations. Frontend integration remains pending.
+
 ## Model 4 mixture estimates
 
 The frozen Model 4 checkpoint is available through `POST /predict/model4`.
@@ -396,3 +400,17 @@ monotonic `tracker_clock` into create_app and call manager.update_all explicitly
 Set `TRACKER_SCHEDULER_ENABLED=True` in app configuration to exercise the actual
 scheduler in tests. Production enables it by default. Do not also call tracker.run
 on app-managed trackers; the manager already owns their scheduling.
+
+## Reviewed Recipe Trial (Backend Only)
+
+The experimental `/api/recipe-workflow/trial/` routes compare the packaged reviewed
+fills from Videos 1 and 2 using interval timing and final-liquid RGB. They save
+immutable versions separately from existing assessments. No frontend wiring or
+automatic recipe creation is included. See [the trial API and evidence contract](recipes/reviewed_trial.md)
+for endpoints, provisional rules, limitations, packaging and tests.
+
+Fresh recorded-video acquisition and frontend display are documented in [recorded_producer.md](recipes/recorded_producer.md). This local experimental path supports installed Videos 1 and 2 on macOS; it uses the isolated demonstration bank.
+
+The experimental recorded workflow now persists pending color-conflict groups and append-only pattern memberships (engine 1.3). Two qualifying, distinct fills can establish an unverified observed pattern without clearing its original review flag. See the recorded producer guide for API fields, storage-version requirements and scope.
+
+Automatic fixed-station vial/visible-surface tracking now supports recorded playback and Live Mode through a shared pixel API. Whole-recording geometry is cached separately and joins recorded fill observations as supplemental evidence. See [geometry_tracking.md](recipes/geometry_tracking.md) for scope, routes, validation and remaining qualification limits.

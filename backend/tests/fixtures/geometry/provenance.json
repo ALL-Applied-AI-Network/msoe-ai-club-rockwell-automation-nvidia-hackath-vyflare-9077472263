@@ -1,0 +1,22 @@
+[
+  {
+    "file": "video-2-22s.png",
+    "source_video": "vial_fill_video_2.mp4",
+    "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+    "requested_seconds": 22,
+    "actual_seconds": 22,
+    "image_sha256": "af4583298b05087a0d3fa941087d2ca898add8d0a78413dcf66a5d051f3c514b",
+    "development_review": "Visible blue liquid boundary near y=379; approximate development review",
+    "independent_ground_truth": false
+  },
+  {
+    "file": "video-1-29s.png",
+    "source_video": "vial_fill_video_1.mp4",
+    "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+    "requested_seconds": 29,
+    "actual_seconds": 29,
+    "image_sha256": "63655378da0b1889285694aea1510c5a692eccabfaf86a7dc7bb12bcb47cee47",
+    "development_review": "Surface hidden; shading inside blue liquid must not be marked as a new surface",
+    "independent_ground_truth": false
+  }
+]

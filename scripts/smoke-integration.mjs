@@ -1,7 +1,11 @@
 import { spawn, execFileSync } from "node:child_process";
 import assert from "node:assert/strict";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+const recipeTestDir=mkdtempSync(path.join(tmpdir(),"vyflare-recipe-smoke-"));
 const python=process.env.PYTHON ?? (process.platform === "win32" ? ".venv/Scripts/python.exe" : ".venv/bin/python");
-const backend=spawn(python,["backend/app.py"],{env:{...process.env,PORT:"18000",MODEL_MODE:"real",ENABLED_MODELS:"measurements,model4"},stdio:["ignore","pipe","pipe"]});
+const backend=spawn(python,["backend/app.py"],{env:{...process.env,RECIPE_DB_PATH:path.join(recipeTestDir,"recipes.sqlite3"),PORT:"18000",MODEL_MODE:"real",ENABLED_MODELS:"measurements,model4"},stdio:["ignore","pipe","pipe"]});
 const web=spawn(process.execPath,["server/dist/server/src/index.js"],{env:{...process.env,PORT:"18787",INFERENCE_URL:"http://127.0.0.1:18000"},stdio:["ignore","pipe","pipe"]});
 let log=""; for(const child of [backend,web]){ child.stdout.on("data",b=>{log+=b});child.stderr.on("data",b=>{log+=b});child.on("error",e=>{log+=e.message}); }
 const waitFor=async url=>{for(let i=0;i<100;i++){try{const r=await fetch(url);if(r.ok)return;}catch{}await new Promise(r=>setTimeout(r,100));}throw new Error(`Service failed: ${url}\n${log}`);};
@@ -32,6 +36,11 @@ try{
   }
   const library=await(await fetch("http://127.0.0.1:18787/api/recipe-library/references")).json();assert.equal(library.recipes.length,52);
   for(const id of [41,50,60,99]) assert.ok(library.recipes.some(r=>r.recipe_id===id));
-  const candidates=await(await fetch("http://127.0.0.1:18787/api/recipe-library/candidates")).json();assert.deepEqual(candidates.recipes,[]);assert.equal(candidates.persistence,"in_memory");
+  const candidates=await(await fetch("http://127.0.0.1:18787/api/recipe-library/candidates")).json();assert.deepEqual(candidates.recipes,[]);assert.equal(candidates.persistence,"sqlite");
+  const assessUrl="http://127.0.0.1:18787/api/recipe-workflow/recorded/video-1/V1-V01";
+  const assess=()=>fetch(assessUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"}).then(r=>r.json());
+  const first=await assess();assert.equal(first.assessment.assessment_status,"INSUFFICIENT_EVIDENCE");assert.equal(first.assessment.coverage.comparable_reference_count,0);
+  assert.equal((await assess()).assessment.inspection_id,first.assessment.inspection_id);
+  const saved=await(await fetch("http://127.0.0.1:18787/api/recipe-workflow/videos/video-1/assessments")).json();assert.equal(saved.assessments.length,1);
   console.log("PASS: built console → Node → real Python measurements and frozen Model 4; normal/first-vial review, 52 recipes, 22 reviewed fills, original routes.");
-}finally{backend.kill();web.kill();}
+}finally{backend.kill();web.kill();rmSync(recipeTestDir,{recursive:true,force:true});}

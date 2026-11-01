@@ -24,7 +24,7 @@ export function recipeLibraryRouter(baseUrl = process.env.INFERENCE_URL ?? "http
       const body = await response.json();
       if (!response.ok) { res.status(response.status).json({ error: body.error ?? "Candidate service unavailable." }); return; }
       if (body.collection !== "UNMATCHED" || !Array.isArray(body.recipes)) throw Error("Invalid candidate response");
-      res.json({ ...body, persistence: "in_memory", source: "observation_matching_service" });
+      res.json({ ...body, persistence: response.headers.get("x-recipe-storage") ?? "in_memory", source: "observation_matching_service" });
     } catch { res.status(503).json({ error: "The unmatched-candidate service is unavailable. Check the Python connection." }); }
   });
   return router;
