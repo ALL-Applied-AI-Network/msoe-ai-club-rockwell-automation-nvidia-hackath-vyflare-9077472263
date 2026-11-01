@@ -198,7 +198,7 @@ export function WorkspacePage() {
         </section>
         {mode === "recorded" && <details className="advanced-review"><summary>Advanced Review: Manual Video Guides</summary><VideoGeometry key={sourceUrl ?? "none"} media={video} currentTime={currentTime} scope={uploaded ? "uploaded" : observation.vial?.id ?? null} scopeLabel={uploaded ? uploaded.name : observation.vial?.label ?? ""} disabled={blocked || !mediaReady} onSeek={seek} /></details>}
         {error && <p className="workspace-error" role="alert">{error}</p>}
-        <section className="workspace-other-models card"><h2>Other Model Workflows</h2><div><span>Cosmos</span><strong>{health?.models.some(m => m.startsWith("cosmos")) ? "Configured in Python" : "Not connected"}</strong><Link to="/analyze">Open image and prompt analysis</Link></div><div><span>Model 2</span><strong>Not integrated · validation pending</strong></div><div><span>Model 3</span><strong>Not integrated</strong></div></section>
+        <section className="workspace-other-models card"><h2>Other Model Workflows</h2><div><span>Cosmos</span><strong>{health?.models.some(m => m.startsWith("cosmos")) ? "Configured in Python" : "Not connected"}</strong><Link to="/analyze">Open image and prompt analysis</Link></div><div><span>Model 2</span><strong>{health?.models.includes("model2") ? "Experimental · In Comparison Panel" : "Not Enabled"}</strong></div><div><span>Model 3</span><strong>Not integrated</strong></div></section>
       </div>
       <Model4Panel key={sourceKey} initialVial={mode === "recorded" ? selectedVial?.label ?? "" : ""} frames={frames} health={health} refresh={refresh} busy={busy} onBusy={setBusy} />
     </div>

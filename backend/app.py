@@ -21,6 +21,7 @@ from recipes.geometry_api import GeometryService, create_geometry_blueprint
 from recipes.tracker_api import create_tracker_blueprint
 from recipes.tracker_manager import TrackerManager
 from model4_api import create_model4_blueprint
+from model2_api import create_model2_blueprint
 from recipes.durable import SQLiteStore
 from recipes.workflow_api import create_workflow_blueprint, load_reference_catalog
 from recipes.reviewed_trial import ReviewedTrialEngine
@@ -64,6 +65,7 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
     gate = threading.Lock()  # One inference total, including across both GPU models.
     app.extensions["inference_gate"] = gate
     app.register_blueprint(create_model4_blueprint(registry.get("model4"), gate))
+    app.register_blueprint(create_model2_blueprint(registry.get("model2"), registry.get("model4"), gate))
     catalog, catalog_sha = load_reference_catalog()
     store = None
     if recipe_repository is None and inspection_repository is None and (not app.testing or app.config["RECIPE_DB_PATH"]):
@@ -118,11 +120,11 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
 
     @app.before_request
     def check_origin():
-        if request.path == "/predict/model4":
+        if request.path in ("/predict/model4", "/predict/model2", "/predict/vial-evidence"):
             request.max_content_length = app.config["MODEL4_MAX_CONTENT_LENGTH"]
             request.max_form_parts = 24
         token = os.getenv("INFERENCE_TOKEN", "")
-        protected = request.path == "/predict" or request.blueprint in ("recipe_api", "inspection_api", "tracker_api", "model4_api", "recipe_workflow_api", "recipe_demo_api", "geometry_api")
+        protected = request.path == "/predict" or request.blueprint in ("recipe_api", "inspection_api", "tracker_api", "model4_api", "model2_api", "recipe_workflow_api", "recipe_demo_api", "geometry_api")
         if token and protected and request.method != "OPTIONS":
             import hmac
             if not hmac.compare_digest(request.headers.get("Authorization", ""), f"Bearer {token}"):
@@ -161,6 +163,8 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
             return error("Unknown or disabled model", 400)
         if name == "model4":
             return error("Use POST /predict/model4 with three registered post-fill frames", 400)
+        if name == "model2":
+            return error("Use POST /predict/model2 with three early post-flow frames and an intended recipe", 400)
         if include_resnet not in {"true", "false"}:
             return error("include_resnet must be true or false", 400)
         paired = include_resnet == "true" and name != "resnet18"

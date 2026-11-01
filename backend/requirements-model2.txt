@@ -1,0 +1,6 @@
+# Model2 branch e46c8e8: v4 station-crop CPU inference runtime.
+# Separate from the GPU Cosmos environment. Tested on macOS / Python 3.13.
+-r requirements-integration.lock.txt
+torch==2.14.1
+torchvision==0.29.1
+opencv-python-headless==5.0.0.93

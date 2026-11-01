@@ -1,0 +1,10 @@
+import type { Model4Response } from "./types";
+export type Model2Metadata = { model_id:string; config_version:string; preprocessing_version:string; head_sha256:string;
+  supported_recipe_ids:number[]; calibrated:false; accept_threshold:number; approved_for_supporting_evidence:boolean; mock:boolean;
+  validation:{known_issue?:string;unfamiliar_false_acceptance_rate?:number}; };
+export type Model2Result = { mock?:boolean; message?:string; observation:null|{predicted_recipe_id:number;top_score:number;second_recipe_id:number;second_score:number;
+  status:string;score_calibrated:false;scores:Record<string,number>};
+  verification:{intended_recipe_id:number;relation:string;counts_as_supporting_evidence:boolean;flags:string[];note:string;review_required:boolean;automatic_release:false;can_clear_other_flags:false};
+  input_quality:{stream_visible_frames:number[];warnings:string[]};model_metadata:Model2Metadata;interpretation:string; };
+export type VialEvidenceResponse = {frame_id:string;vial_id:string;batch_id:string;batch_position:number;intended_recipe_id:number;inference_ms:number;
+  model4:Model4Response['result'];model2:Model2Result;combined_review:{flags:string[];automatic_release:false;note:string}};

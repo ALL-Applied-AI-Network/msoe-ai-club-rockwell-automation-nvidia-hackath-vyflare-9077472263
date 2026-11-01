@@ -9,14 +9,14 @@ export function inferenceRouter(baseUrl = process.env.INFERENCE_URL ?? "http://1
     if (body === null) { res.status(502).json({ error: "Python returned an invalid response." }); return; }
     res.status(response.status).json(body);
   };
-  for (const path of ["/model4", "/model4/recipes"]) {
+  for (const path of ["/model4", "/model4/recipes", "/model2"]) {
     router.get(path, async (_req, res) => {
       try {
         await forward(await fetch(`${baseUrl}${path}`, { headers: authHeaders(), signal: AbortSignal.timeout(5000) }), res);
-      } catch { res.status(503).json({ error: "Model 4 is unavailable. Check the Python connection." }); }
+      } catch { res.status(503).json({ error: "Model metadata is unavailable. Check the Python connection." }); }
     });
   }
-  router.post("/model4", express.json({ limit: "17mb" }), async (req, res) => {
+  for (const endpoint of ["model4", "model2", "vial-evidence"]) router.post(`/${endpoint}`, express.json({ limit: "17mb" }), async (req, res) => {
     const { images, frame_id, vial_id, batch_id, batch_position, recipe_id, camera_profile } = req.body ?? {};
     if (![frame_id, vial_id, batch_id].every(value => typeof value === "string" && value.trim().length > 0 && value.trim().length <= 128)
       || !Number.isInteger(batch_position) || batch_position < 1 || batch_position > 999999999
@@ -40,8 +40,16 @@ export function inferenceRouter(baseUrl = process.env.INFERENCE_URL ?? "http://1
     for (const [key, value] of Object.entries({ frame_id: frame_id.trim(), vial_id: vial_id.trim(), batch_id: batch_id.trim(), batch_position, recipe_id, camera_profile })) body.append(key, String(value));
     files.forEach((file, i) => body.append("images", new Blob([new Uint8Array(file.bytes)], { type: file.type }), `post-fill-${i + 1}.${file.type === "image/png" ? "png" : "jpg"}`));
     try {
-      await forward(await fetch(`${baseUrl}/predict/model4`, { method: "POST", body, headers: authHeaders(), signal: AbortSignal.timeout(30000) }), res);
-    } catch { res.status(503).json({ error: "Model 4 inference unavailable or timed out. Check the Python service." }); }
+      const response = await fetch(`${baseUrl}/predict/${endpoint}`, { method: "POST", body, headers: authHeaders(), signal: AbortSignal.timeout(30000) });
+      if (response.ok) {
+        const result = await response.json().catch(() => null);
+        if (!result || result.frame_id !== frame_id.trim() || result.vial_id !== vial_id.trim() || result.batch_id !== batch_id.trim() || result.batch_position !== batch_position
+          || (endpoint === "vial-evidence" && result.intended_recipe_id !== recipe_id)) {
+          res.status(502).json({ error: "Vial evidence response does not match the submitted frame, vial or batch context." }); return;
+        }
+        res.json(result);
+      } else await forward(response, res);
+    } catch { res.status(503).json({ error: "Vial model inference unavailable or timed out. Check the Python service." }); }
   });
   router.get("/status", async (_req, res) => {
     try {
