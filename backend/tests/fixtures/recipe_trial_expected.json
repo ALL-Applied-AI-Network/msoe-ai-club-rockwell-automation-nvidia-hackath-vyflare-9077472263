@@ -1,0 +1,2985 @@
+[
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:c21e8701ad011ea967e51d605fd7995db015968629aec2bebd75a8dbd3d867ed",
+    "revision": "c21e8701ad011ea967e51d605fd7995db015968629aec2bebd75a8dbd3d867ed",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 1",
+      "video_number": 1,
+      "vial_number": 1
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          12.733333333333334,
+          13.266666666666666
+        ],
+        [
+          1.2333333333333343,
+          1.7666666666666657
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONSISTENT",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        3.0,
+        31.0,
+        48.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.4142135623730951,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 6.782329983125268,
+          "experimental_band_result": "CONSISTENT"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:23bdfe62373554910472dd0963ee0d59f6e8eab24b88ded7dcd2c894dc6f52e1",
+    "revision": "23bdfe62373554910472dd0963ee0d59f6e8eab24b88ded7dcd2c894dc6f52e1",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 2",
+      "video_number": 1,
+      "vial_number": 2
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          13.0,
+          13.5
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONSISTENT",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        2.0,
+        30.0,
+        47.0
+      ],
+      "temporal_distance": 1.0,
+      "region_distance": 2.23606797749979,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 8.06225774829855,
+          "experimental_band_result": "CONSISTENT"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:9fb49bd4dec311369485c73874253f8b2e0bbd605f6febdb89c4b34445015209",
+    "revision": "9fb49bd4dec311369485c73874253f8b2e0bbd605f6febdb89c4b34445015209",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 3",
+      "video_number": 1,
+      "vial_number": 3
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          12.733333333333334,
+          13.5
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONSISTENT",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        2.0,
+        30.0,
+        49.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.0,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 7.280109889280518,
+          "experimental_band_result": "CONSISTENT"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:c4e497e39380393e5984c452966614d67b7bb2641fbff9a53a4ee498cd8e0edd",
+    "revision": "c4e497e39380393e5984c452966614d67b7bb2641fbff9a53a4ee498cd8e0edd",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 4",
+      "video_number": 1,
+      "vial_number": 4
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          13.26666666666668,
+          14
+        ],
+        [
+          1.23333333333332,
+          1.76666666666668
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        2.0,
+        31.0,
+        47.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 2.449489742783178,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:952b1f4ea1d6b1a91db09177245912d67672cf1e89d438df561c404c7fd61d7f",
+    "revision": "952b1f4ea1d6b1a91db09177245912d67672cf1e89d438df561c404c7fd61d7f",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 5",
+      "video_number": 1,
+      "vial_number": 5
+    },
+    "timing": {
+      "status": "UNIQUE_TIMING_CANDIDATE",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [
+        7
+      ],
+      "duration_bounds_seconds": [
+        [
+          12.5,
+          13.0
+        ],
+        [
+          1.23333333333332,
+          1.76666666666668
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONSISTENT",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        3.0,
+        30.0,
+        48.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.4142135623730951,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 7.681145747868608,
+          "experimental_band_result": "CONSISTENT"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:611b2eeed5f9c3b23072938c546b557683e5cce1d263b7f023eb0e4a86db2b09",
+    "revision": "611b2eeed5f9c3b23072938c546b557683e5cce1d263b7f023eb0e4a86db2b09",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 6",
+      "video_number": 1,
+      "vial_number": 6
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          19,
+          19.76666666666665
+        ],
+        [
+          0.7333333333333485,
+          1.5
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        9.0,
+        15.0,
+        15.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.0,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:2a41d80241c06d95dbb70d2d0555945543435c00a40c428add5de82073edc871",
+    "revision": "2a41d80241c06d95dbb70d2d0555945543435c00a40c428add5de82073edc871",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 7",
+      "video_number": 1,
+      "vial_number": 7
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          17.23333333333335,
+          17.76666666666665
+        ],
+        [
+          1.2333333333333485,
+          2.0
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "UNRELIABLE",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        37.0,
+        16.0,
+        8.5
+      ],
+      "temporal_distance": 0.5,
+      "region_distance": 3.0413812651491097,
+      "comparisons": [],
+      "reasons": [
+        "REGION_SENSITIVITY_LIMIT_EXCEEDED"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:eee52be3080d3473e8f8300abddf0ba488dc0856ad4c6c91705dd9c97fbae5fd",
+    "revision": "eee52be3080d3473e8f8300abddf0ba488dc0856ad4c6c91705dd9c97fbae5fd",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 8",
+      "video_number": 1,
+      "vial_number": 8
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          19.0,
+          19.73333333333335
+        ],
+        [
+          1.5,
+          2
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        58.0,
+        17.0,
+        7.0
+      ],
+      "temporal_distance": 1.0,
+      "region_distance": 1.8027756377319946,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:5bcdb1dbb8513a8f99c01f72f2bc43f97468b0e6cec270b8299e865736656c10",
+    "revision": "5bcdb1dbb8513a8f99c01f72f2bc43f97468b0e6cec270b8299e865736656c10",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 9",
+      "video_number": 1,
+      "vial_number": 9
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          19.0,
+          19.76666666666665
+        ],
+        [
+          1.0,
+          1.7666666666666515
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        64.0,
+        18.0,
+        7.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.7320508075688772,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:1b3be9e4c9ed7d88f652ebbdac7b1ee031e3ad69a0f35a0215cff4978be00113",
+    "revision": "1b3be9e4c9ed7d88f652ebbdac7b1ee031e3ad69a0f35a0215cff4978be00113",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 10",
+      "video_number": 1,
+      "vial_number": 10
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          18.0,
+          18.76666666666665
+        ],
+        [
+          1.2333333333333485,
+          1.7666666666666515
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "UNRELIABLE",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        63.0,
+        20.0,
+        8.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 5.5901699437494745,
+      "comparisons": [],
+      "reasons": [
+        "REGION_SENSITIVITY_LIMIT_EXCEEDED"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:19efeb6875fee1161e88c7f4e7f28848925e6c8937b625f82786a21865ae4bf0",
+    "revision": "19efeb6875fee1161e88c7f4e7f28848925e6c8937b625f82786a21865ae4bf0",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 11",
+      "video_number": 1,
+      "vial_number": 11
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          12.5,
+          13.266666666666652
+        ],
+        [
+          1,
+          2.0
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONFLICTING",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        10.0,
+        13.0,
+        12.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.7320508075688772,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 46.486557196677836,
+          "experimental_band_result": "CONFLICTING"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [
+      "COLOR_CONFLICT_REVIEW"
+    ],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:7d0280a661fdbe602368db0e9806ddae9c62ffd50181e01a05ce2ed4cfc1c22c",
+    "revision": "7d0280a661fdbe602368db0e9806ddae9c62ffd50181e01a05ce2ed4cfc1c22c",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 12",
+      "video_number": 1,
+      "vial_number": 12
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          18.23333333333335,
+          18.76666666666665
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "UNRELIABLE",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": null,
+      "temporal_distance": null,
+      "region_distance": null,
+      "comparisons": [],
+      "reasons": [
+        "NO_VALIDATED_POSTFILL_WINDOW"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "No validated post-fill sampling window."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:fb7a69f0457ff160a2a650779847d91252ef26c3f8edd7c2af1b3349b529cbd1",
+    "revision": "fb7a69f0457ff160a2a650779847d91252ef26c3f8edd7c2af1b3349b529cbd1",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 13",
+      "video_number": 1,
+      "vial_number": 13
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          12.733333333333348,
+          13.5
+        ],
+        [
+          1.0,
+          1.7333333333333485
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONFLICTING",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        9.0,
+        11.0,
+        13.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.0,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 46.57252408878007,
+          "experimental_band_result": "CONFLICTING"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [
+      "COLOR_CONFLICT_REVIEW"
+    ],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:8fc0eab6e0bb8dfc483303c8964a4f3a85eb57d1148d81f612b953e1cf062a22",
+    "revision": "8fc0eab6e0bb8dfc483303c8964a4f3a85eb57d1148d81f612b953e1cf062a22",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 14",
+      "video_number": 1,
+      "vial_number": 14
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          12.233333333333348,
+          12.766666666666652
+        ],
+        [
+          1.0,
+          1.7333333333333485
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONSISTENT",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        4.0,
+        23.0,
+        32.0
+      ],
+      "temporal_distance": 1.0,
+      "region_distance": 1.0,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 23.68543856465402,
+          "experimental_band_result": "CONSISTENT"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:bb226eaa10b411e1ded7e954bff4a0bf210e1e3c0da51a96507604e7f6204906",
+    "revision": "bb226eaa10b411e1ded7e954bff4a0bf210e1e3c0da51a96507604e7f6204906",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 15",
+      "video_number": 1,
+      "vial_number": 15
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          17.76666666666665,
+          18.5
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        9.0,
+        17.0,
+        14.0
+      ],
+      "temporal_distance": 1.0,
+      "region_distance": 1.0,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:97dbe4b66e480c97286c4a492aaba68f6ee9444fe211dbca26e71aa67767d139",
+    "revision": "97dbe4b66e480c97286c4a492aaba68f6ee9444fe211dbca26e71aa67767d139",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 16",
+      "video_number": 1,
+      "vial_number": 16
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          18.0,
+          18.76666666666665
+        ],
+        [
+          7.7333333333333485,
+          8.5
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        37.0,
+        16.0,
+        8.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.0,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:0f8500afb4491d04b38ef654da4c91a4eb7816c2ac8957215e523d949f49f319",
+    "revision": "0f8500afb4491d04b38ef654da4c91a4eb7816c2ac8957215e523d949f49f319",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 17",
+      "video_number": 1,
+      "vial_number": 17
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          19.0,
+          20.0
+        ],
+        [
+          7.5,
+          8.266666666666652
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        62.5,
+        20.0,
+        8.0
+      ],
+      "temporal_distance": 1.0,
+      "region_distance": 1.8027756377319946,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "A thin colored trail remains below the nozzle in the sampled source view. A still image does not resolve residual wetting versus continuing discharge; settled final appearance is unverified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:737e4ddfe4eced2bfa0f4cba4f0f3399eae69d68c75e5be03c1f9a1caed20760",
+    "revision": "737e4ddfe4eced2bfa0f4cba4f0f3399eae69d68c75e5be03c1f9a1caed20760",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 18",
+      "video_number": 1,
+      "vial_number": 18
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          17.23333333333335,
+          18.26666666666665
+        ],
+        [
+          7.7333333333333485,
+          8.766666666666652
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "NOT_EVALUATED",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        66.0,
+        19.0,
+        7.0
+      ],
+      "temporal_distance": 0.0,
+      "region_distance": 1.4142135623730951,
+      "comparisons": [],
+      "reasons": [
+        "NO_TIMING_CANDIDATE_TO_COMPARE"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "A thin colored trail remains below the nozzle in the sampled source view. A still image does not resolve residual wetting versus continuing discharge; settled final appearance is unverified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:b4fd0b201d7ac5a43dc2101da09b8bb47ef2886e256f5e95764642317dc577b9",
+    "revision": "b4fd0b201d7ac5a43dc2101da09b8bb47ef2886e256f5e95764642317dc577b9",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 1 \u00b7 Vial 19",
+      "video_number": 1,
+      "vial_number": 19
+    },
+    "timing": {
+      "status": "NO_COMPATIBLE_REFERENCE",
+      "possible_recipe_ids": [],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          17.76666666666665,
+          18.5
+        ],
+        [
+          7.7333333333333485,
+          8.5
+        ]
+      ],
+      "compatible_reference_profile_ids": [],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "UNRELIABLE",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        65.0,
+        18.0,
+        6.0
+      ],
+      "temporal_distance": 1.8027756377319946,
+      "region_distance": 3.0,
+      "comparisons": [],
+      "reasons": [
+        "REGION_SENSITIVITY_LIMIT_EXCEEDED"
+      ],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "A thin colored trail remains below the nozzle in the sampled source view. A still image does not resolve residual wetting versus continuing discharge; settled final appearance is unverified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:f10a6f5686a421ea36fbf44c94395fcb7caca3b6e6ce91b69113f3b59636249d",
+    "revision": "f10a6f5686a421ea36fbf44c94395fcb7caca3b6e6ce91b69113f3b59636249d",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 2 \u00b7 Vial 1",
+      "video_number": 2,
+      "vial_number": 1
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          12.733333333333334,
+          13.266666666666666
+        ],
+        [
+          1.2333333333333343,
+          1.7666666666666657
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONSISTENT",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        6.0,
+        26.0,
+        37.0
+      ],
+      "temporal_distance": 1.0,
+      "region_distance": 1.4142135623730951,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 18.24828759089466,
+          "experimental_band_result": "CONSISTENT"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:59d9e092803cb59c81f30e45ba5bf579db055ddb41b137a569407c931e26ee86",
+    "revision": "59d9e092803cb59c81f30e45ba5bf579db055ddb41b137a569407c931e26ee86",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 2 \u00b7 Vial 2",
+      "video_number": 2,
+      "vial_number": 2
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        8
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          6.5,
+          7
+        ],
+        [
+          3.5,
+          4.266666666666666
+        ],
+        [
+          1.0,
+          1.7333333333333343
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e11",
+        "v5_e12"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONSISTENT",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        7.0,
+        20.0,
+        18.0
+      ],
+      "temporal_distance": 2.23606797749979,
+      "region_distance": 1.0,
+      "comparisons": [
+        {
+          "recipe_id": 8,
+          "color_distance": 7.681145747868608,
+          "experimental_band_result": "CONSISTENT"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "A thin colored trail remains below the nozzle in the sampled source view. A still image does not resolve residual wetting versus continuing discharge; settled final appearance is unverified."
+      ]
+    },
+    "review_flags": [],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  },
+  {
+    "schema_version": "reviewed-recipe-trial-response/1",
+    "assessment_id": "trial-format:04c5d241ce39976ca0b5673e7c4690864c8a27c4176a101a280a60acdb1b2f0f",
+    "revision": "04c5d241ce39976ca0b5673e7c4690864c8a27c4176a101a280a60acdb1b2f0f",
+    "generated_at": "2026-11-01T03:11:29.773923+00:00",
+    "experimental": true,
+    "source": {
+      "label": "Video 2 \u00b7 Vial 3",
+      "video_number": 2,
+      "vial_number": 3
+    },
+    "timing": {
+      "status": "BOUNDARY_UNCERTAIN",
+      "possible_recipe_ids": [
+        7
+      ],
+      "contained_recipe_ids": [],
+      "duration_bounds_seconds": [
+        [
+          11.5,
+          14.76666666666668
+        ],
+        [
+          1.23333333333332,
+          2
+        ]
+      ],
+      "compatible_reference_profile_ids": [
+        "v5_e08",
+        "v5_e09"
+      ],
+      "containing_reference_profile_ids": [],
+      "reason": "Only 14/52 recipe references covered; event/ingredient completeness and cross-session transfer unverified."
+    },
+    "color": {
+      "status": "CONFLICTING",
+      "status_scope": "EXPERIMENTAL_NUMERIC_DIAGNOSTIC",
+      "rgb": [
+        10.0,
+        16.0,
+        18.0
+      ],
+      "temporal_distance": 1.4142135623730951,
+      "region_distance": 1.4142135623730951,
+      "comparisons": [
+        {
+          "recipe_id": 7,
+          "color_distance": 39.92492955535426,
+          "experimental_band_result": "CONFLICTING"
+        }
+      ],
+      "reasons": [],
+      "reliability_independently_validated": false,
+      "limitations": [
+        "Offline numerical diagnostic only. Capture-domain and settled-phase limitations remain visible; no production color verdict assigned.",
+        "Post-flow phase follows reviewed timing only; settled appearance is not independently verified."
+      ]
+    },
+    "review_flags": [
+      "COLOR_CONFLICT_REVIEW"
+    ],
+    "coverage": {
+      "nominal_recipe_count": 52,
+      "observed_recipe_count": 14,
+      "observed_profile_count": 44,
+      "observed_recipe_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        41,
+        50,
+        60,
+        99
+      ],
+      "missing_recipe_ids": [
+        1,
+        2,
+        3,
+        4,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "provenance": {
+      "timing": "427b096da990216497ec3a03cf1d1e878c69bc9363ccb2e86f5850e06e608ded",
+      "color": "708b7ada48f4b98f60cc18881bc1733fba4a9559f606b451b47ef47010960aef",
+      "rules": "ed71f779de98fadf04beda72996d015ff3e1af0b95c075a917ad75311e370c7a",
+      "profiles": "481cea69c4cb86b924fc2d45ee9f306fd1ff08b7c2fad3cc16c7ace86d00df4d",
+      "measurements": "bc6f8108371a98d00e63c1b65e7f4692d775890f0477aff22cfe80466e400d45",
+      "diagnostics": "3824a456bd43c5cfe0e63de035692bf92b0193500eaa78b6f22219a772f494b4",
+      "catalog": "2e089a5ee2c505cc4d468eb1c3c68d1a61d6b209999aa1de2fe938bd0f514a63"
+    },
+    "overall": {
+      "status": "INSUFFICIENT_EVIDENCE",
+      "confirmed_recipe_id": null,
+      "automatic_recipe_creation": false,
+      "reasons": [
+        "EXPERIMENTAL_TRIAL",
+        "REFERENCE_COVERAGE_INCOMPLETE",
+        "EVENT_INGREDIENT_COMPLETENESS_UNVERIFIED"
+      ]
+    }
+  }
+]

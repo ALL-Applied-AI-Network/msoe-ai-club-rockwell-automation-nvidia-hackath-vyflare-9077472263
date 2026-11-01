@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Model2ResultView } from "./Model2ResultView";
+import type { Model2Metadata, Model2Result, VialEvidenceResponse } from "../inspection/model2";
 import { ArrowRight, RefreshCw } from "lucide-react";
 import { readResponse, tanks, type Frame, type Health, type Model4Response, type Recipe } from "../inspection/types";
 
@@ -9,7 +11,18 @@ export function Model4Panel({ frames, initialVial, health, refresh, busy, onBusy
   const [recipeId, setRecipeId] = useState(""), [vialId, setVialId] = useState(initialVial), [batchId, setBatchId] = useState(""), [position, setPosition] = useState("");
   const [registered, setRegistered] = useState(false), [reviewed, setReviewed] = useState(false);
   const [result, setResult] = useState<Model4Response | null>(null), [error, setError] = useState("");
+  const [includeModel2, setIncludeModel2] = useState(false), [model2Metadata, setModel2Metadata] = useState<Model2Metadata | null>(null);
+  const [model2Result, setModel2Result] = useState<Model2Result | null>(null), [model2Error, setModel2Error] = useState("");
   const controller = useRef<AbortController | null>(null);
+  const model2Available = Boolean(health?.available && health.models.includes("model2"));
+  useEffect(() => {
+    setModel2Metadata(null); setModel2Error("");
+    if (!model2Available) { setIncludeModel2(false); return; }
+    const abort = new AbortController();
+    fetch("/api/inference/model2", { signal: abort.signal }).then(readResponse<Model2Metadata>).then(setModel2Metadata)
+      .catch(e => { if (e.name !== "AbortError") setModel2Error(e.message); });
+    return () => abort.abort();
+  }, [model2Available, health]);
   const available = Boolean(health?.available && health.models.includes("model4"));
   useEffect(() => {
     setRecipes([]); setRecipeError("");
@@ -19,21 +32,26 @@ export function Model4Panel({ frames, initialVial, health, refresh, busy, onBusy
       .catch(e => { if (e.name !== "AbortError") setRecipeError(e.message); });
     return () => abort.abort();
   }, [available, health]);
-  useEffect(() => { setResult(null); setReviewed(false); setError(""); }, [frames]);
+  useEffect(() => { setResult(null); setModel2Result(null); setReviewed(false); setError(""); }, [frames]);
   useEffect(() => () => { controller.current?.abort(); }, []);
-  const invalidate = () => { setResult(null); setError(""); };
+  const invalidate = () => { setResult(null); setModel2Result(null); setError(""); };
   const batchPosition = Number(position);
   const ready = available && frames.length === 3 && recipes.some(r => String(r.recipe_id) === recipeId)
-    && vialId.trim().length > 0 && batchId.trim().length > 0 && /^[1-9][0-9]{0,8}$/.test(position) && registered && reviewed;
+    && vialId.trim().length > 0 && batchId.trim().length > 0 && /^[1-9][0-9]{0,8}$/.test(position) && registered && reviewed && (!includeModel2 || !!model2Metadata);
   const selectedRecipe = recipes.find(r => String(r.recipe_id) === recipeId);
   const run = async () => {
     if (!ready) return;
-    onBusy(true); setError(""); setResult(null); controller.current = new AbortController();
+    onBusy(true); setError(""); setResult(null); setModel2Result(null); controller.current = new AbortController();
     try {
-      const body = await fetch("/api/inference/model4", { method: "POST", headers: { "Content-Type": "application/json" }, signal: controller.current.signal,
+      const body = await fetch(includeModel2 ? "/api/inference/vial-evidence" : "/api/inference/model4", { method: "POST", headers: { "Content-Type": "application/json" }, signal: controller.current.signal,
         body: JSON.stringify({ images: frames.map(f => f.dataUrl), frame_id: crypto.randomUUID(), vial_id: vialId.trim(), batch_id: batchId.trim(), batch_position: batchPosition,
-          recipe_id: Number(recipeId), camera_profile: "vial-fill-640x480" }) }).then(readResponse<Model4Response>);
-      setResult(body);
+          recipe_id: Number(recipeId), camera_profile: "vial-fill-640x480" }) }).then(readResponse<Model4Response | VialEvidenceResponse>);
+      if (includeModel2) {
+        const paired = body as VialEvidenceResponse;
+        setModel2Result(paired.model2);
+        setResult({ frame_id: paired.frame_id, vial_id: paired.vial_id, batch_id: paired.batch_id, batch_position: paired.batch_position,
+          mode: paired.model4.mock ? "mock" : health?.mode ?? "real", inference_ms: paired.inference_ms, result: paired.model4 });
+      } else setResult(body as Model4Response);
     } catch (e) { setError(e instanceof Error && e.name === "AbortError" ? "Request cancelled. Backend processing may still finish." : e instanceof Error ? e.message : "Analysis failed."); }
     finally { onBusy(false); }
   };
@@ -54,7 +72,13 @@ export function Model4Panel({ frames, initialVial, health, refresh, busy, onBusy
       <label className="workspace-check"><input type="checkbox" checked={reviewed} onChange={e => { setReviewed(e.target.checked); invalidate(); }} />All three frames show this same vial after flow ends and before movement.</label>
     </fieldset>
     {recipeError && <p className="workspace-error" role="alert">{recipeError}</p>}
-    <button className="workspace-run" onClick={() => void run()} disabled={!ready || busy}>{busy ? "Analyzing three frames…" : "Run Comparison"}<ArrowRight size={16} /></button>
+    <section aria-label="Optional Model 2 Evidence"><h3>Experimental Model 2</h3>
+      <p className="workspace-note">{model2Available ? model2Metadata ? `${model2Metadata.config_version} · ${model2Metadata.approved_for_supporting_evidence ? "Experimental" : "Not Approved as Supporting Evidence"}` : "Loading Model 2 metadata…" : "Model 2 is not enabled in the Python service."}</p>
+      <label className="workspace-check"><input type="checkbox" checked={includeModel2} disabled={busy || !model2Metadata} onChange={e => { setIncludeModel2(e.target.checked); invalidate(); }} />Include Model 2 on These Same Three Frames</label>
+      <p className="workspace-note">Resemblance scores are uncalibrated. The selected comparison recipe is used after classification; it is not a model input. No scores are averaged with Model 4.</p>
+      {model2Error && <p className="workspace-error" role="alert">{model2Error}</p>}
+    </section>
+    <button className="workspace-run" onClick={() => void run()} disabled={!ready || busy}>{busy ? "Analyzing three frames…" : includeModel2 ? "Run Model 4 + Model 2" : "Run Comparison"}<ArrowRight size={16} /></button>
     {busy && <button className="ghost-button" onClick={() => controller.current?.abort()}>Cancel Request</button>}
     {error && <p className="workspace-error" role="alert">{error}</p>}
     <section className="workspace-results" aria-live="polite"><h3>Analysis Results</h3>
@@ -69,5 +93,6 @@ export function Model4Panel({ frames, initialVial, health, refresh, busy, onBusy
         <details><summary>Model Provenance and Response</summary><p className="workspace-note">{result.result.model_metadata.checkpoint_id}</p><pre className="result-json">{JSON.stringify(result, null, 2)}</pre></details>
       </>}
     </section>
+    {model2Result && <Model2ResultView result={model2Result} />}
   </aside>;
 }

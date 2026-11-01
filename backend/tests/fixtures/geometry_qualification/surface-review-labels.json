@@ -1,0 +1,1348 @@
+{
+  "purpose": "Source-only developmental review; selection frozen before tracker revision, stratified not random",
+  "items": [
+    {
+      "key": "v1-event_0005.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0005.50",
+      "actual_seconds": 5.5,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "49c7f9f6ee49dc28f25b87c2f3aeadda5f794acef84fc9798b77602cc1391030",
+      "review_number": 1,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0013.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0013.00",
+      "actual_seconds": 13,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "e1160289a045cc5b6ccb9aef971cbaebb882a215df745ff2e6335a7f7d08cc2b",
+      "review_number": 2,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        330,
+        346
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0028.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0028.50",
+      "actual_seconds": 28.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "208416152d4952e39398ccb9c8b08a442ff04115d641a6a698dc1b0f33fdb214",
+      "review_number": 3,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0058.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0058.25",
+      "actual_seconds": 58.266666666666666,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "71bb59bce925105ab49bfae5bc9b5bd97874110555afbcc1b30583241c19bbf2",
+      "review_number": 4,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0065.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0065.75",
+      "actual_seconds": 65.76666666666667,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "53f02c260e728344adde4453d6b9401f774d45bf3f07b4785ea2c71cb95b6a70",
+      "review_number": 5,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        335,
+        351
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0081.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0081.50",
+      "actual_seconds": 81.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "deb47884b95798ced372da84012db0b101851b1fd3d8aa92b3bfd8f8f2fa0945",
+      "review_number": 6,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0112.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0112.00",
+      "actual_seconds": 112,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "ff61e2d1594055ec8951275548eb58908678e068b990782d602d9cf37ae24bc6",
+      "review_number": 7,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0119.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0119.50",
+      "actual_seconds": 119.5,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "290a3a387f1cf76bf55c7deb249e38743144c4ae73b7f584611ecbae224d48d6",
+      "review_number": 8,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        335,
+        350
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0135.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0135.50",
+      "actual_seconds": 135.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "9d393e72f9f8e2fbf7729270e3ff85987098f23b0188672ea695ae6d27adfdb2",
+      "review_number": 9,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0166.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0166.75",
+      "actual_seconds": 166.76666666666668,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "612fa6d4a85e99ac686a35502f1da47585ae93d5edc7c2c63cc7234472407661",
+      "review_number": 10,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0174.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0174.25",
+      "actual_seconds": 174.26666666666668,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "796e550c4e5e4fb7fa74d9a4f782381e6eff7cf4335f0557e19b5ebf2aa861ea",
+      "review_number": 11,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        318,
+        334
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0190.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0190.00",
+      "actual_seconds": 190,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "d30b27d7bfe36df4d67c1eb7d56a744c051b37815a5075efddf94207e1e339d5",
+      "review_number": 12,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0221.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0221.25",
+      "actual_seconds": 221.26666666666668,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "0a97097cb8cdfd8db3b1f47c4a80c5e224c0a1968818d4e19eebb79ce1810422",
+      "review_number": 13,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0228.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0228.75",
+      "actual_seconds": 228.76666666666668,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "3c41f15de2ae00c6a5f12514142e2271d394de86875634505c7c99af8dd641ce",
+      "review_number": 14,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        326,
+        343
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0244.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0244.50",
+      "actual_seconds": 244.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "95dfabcf5b5ac548b6ec9f0a9c60995361fd840320714293e24b3a228f4427e0",
+      "review_number": 15,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0269.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0269.75",
+      "actual_seconds": 269.76666666666665,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "c2bbadebd8d3f8ce1837c8e69ab5bd3e88e727ca3dd3259908732b5c9be9fd5d",
+      "review_number": 16,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0280.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0280.50",
+      "actual_seconds": 280.5,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "0648b1f59a86f45655be930178bd40a900a07cd4af59aab289fbade7aa3d860f",
+      "review_number": 17,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        331,
+        346
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0304.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0304.50",
+      "actual_seconds": 304.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "86795decf12f4b650da108be16006d434438b13e8f3cfa02753185fe6873a643",
+      "review_number": 18,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0329.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0329.00",
+      "actual_seconds": 329,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "79ddd7edb9c1c094960c93c2c844495b37596f5782323357ab13e4fae209c83c",
+      "review_number": 19,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0339.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0339.00",
+      "actual_seconds": 339,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "7b1b4ec3f93e297ca3f7d71c2ee469555f176b98a247c97ba27c963a89986f7d",
+      "review_number": 20,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        320,
+        336
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0363.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0363.00",
+      "actual_seconds": 363,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "779e614e950137f7c3c5f0db49678090691dacfb77e5aa9d9e5908334daa377c",
+      "review_number": 21,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0388.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0388.00",
+      "actual_seconds": 388,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "719f747de29e3e4badee5730805017650f41dd3f7381c870ddf5447bba8d229b",
+      "review_number": 22,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0399.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0399.00",
+      "actual_seconds": 399,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "16b9ea3b9457f82d7ea7104447a7f7bf60e5892ccf570fcb36274c53f9ee3173",
+      "review_number": 23,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        320,
+        335
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0423.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0423.00",
+      "actual_seconds": 423,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "f5988d5dc54cf20bcdcb6422a66876b5ee9450ad191053701205108b30eb5730",
+      "review_number": 24,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0448.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0448.50",
+      "actual_seconds": 448.5,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "33a251b6a4db9055e5c081cb8340730a54bb671bfa1cec48052a3f64ea320f53",
+      "review_number": 25,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0459.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0459.00",
+      "actual_seconds": 459,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "2c739a705c01919241f1bb3eb179e6a737709fa038244b1458b3ac2532d07294",
+      "review_number": 26,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        322,
+        337
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0483.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0483.50",
+      "actual_seconds": 483.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "d55014b8903c8ca2fb995b00834a9fd14eed91d7787865ee243fbc7c77969d4e",
+      "review_number": 27,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0508.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0508.50",
+      "actual_seconds": 508.5,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "c6dba2e4cf50fbf847312681101c860589b30081102b197286a1f5a9b6111318",
+      "review_number": 28,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0518.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0518.75",
+      "actual_seconds": 518.7666666666667,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "ed20d453d9aef318f069af550189e3538c0934e10e4162d291386b7b8eb7d2f1",
+      "review_number": 29,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        323,
+        338
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0543.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0543.00",
+      "actual_seconds": 543,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "3b9f2aeb99c3dac865cc66da579e2b13f358dbd7b7d55e7d8085832b4c23bab3",
+      "review_number": 30,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0573.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0573.00",
+      "actual_seconds": 573,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "55231d62e9cb69f30db657fb05530a7e535a8abd180165fbc19b1b073f204b87",
+      "review_number": 31,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0580.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0580.50",
+      "actual_seconds": 580.5,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "c7232123670bdd45f8cd6280e071efb065f7fd1cea0dc4fcc6adc50e440a3543",
+      "review_number": 32,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        324,
+        338
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0596.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0596.00",
+      "actual_seconds": 596,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "3add15d6cf0c57bf6b19f7740f37078b48a807b499fee8ea16fcbc0100461e70",
+      "review_number": 33,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0621.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0621.00",
+      "actual_seconds": 621,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "33da10cfbb834c80ae2ded735320552937a97fff0f04efc7a0f726eb6c467acf",
+      "review_number": 34,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0631.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0631.25",
+      "actual_seconds": 631.2666666666667,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "b48c6daf88a4d7ee3a6f3a7996fb9b0d65c3149fc6497c9f2c52ff5427fd25fd",
+      "review_number": 35,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        323,
+        340
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0654.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0654.50",
+      "actual_seconds": 654.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "df4da9c19e3a9c91e6a7f797023515b6add7de95287371d4035c5a7efd0b8104",
+      "review_number": 36,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0684.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0684.75",
+      "actual_seconds": 684.7666666666667,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "1af5783e0776a678b20949d1517881502746a76c5c355a8d923eed2e99410c5d",
+      "review_number": 37,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0692.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0692.25",
+      "actual_seconds": 692.2666666666667,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "c4cb944b815a1fe82d2ea76e54d3cec7f2c4195c7c7965baabeb4554ba675995",
+      "review_number": 38,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        335,
+        350
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0708.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0708.50",
+      "actual_seconds": 708.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "3cac32573d8e7fe6dfd9d356b49c501a865203f527c4e427c8d14e966fc9fd8f",
+      "review_number": 39,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0739.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0739.00",
+      "actual_seconds": 739,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "50aca28c3eb838e3e14ea13a07f1d0aca905cd2ddde58f67ac365631ab4de142",
+      "review_number": 40,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0746.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0746.50",
+      "actual_seconds": 746.5,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "aa4e123603773764ba504c10744a747aae2f7e7bb2a5c421498326bce4536f38",
+      "review_number": 41,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        319,
+        335
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0762.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0762.00",
+      "actual_seconds": 762,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "e6a420bd06d3a32fa9a4eb5a9bc4b91adc720a55e542c3146cbaf4cc6df03fa0",
+      "review_number": 42,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0786.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0786.25",
+      "actual_seconds": 786.2666666666667,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "fa9b09fb7c4f2e2fba1c02bb9856aa4088ed6b1c96f4da4fb0b5299f9b867ee2",
+      "review_number": 43,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0796.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0796.25",
+      "actual_seconds": 796.2666666666667,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "3935e1d2652f663b0a41c149765506ccf86ac9e7b64793ac2d44512ebf3c067e",
+      "review_number": 44,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        338,
+        355
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0820.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0820.50",
+      "actual_seconds": 820.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "96c4bba2cbe34b06240d2753edec0ee0b7d2dba1b010929f73e4a15053762684",
+      "review_number": 45,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0847.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0847.25",
+      "actual_seconds": 847.2666666666667,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "dd905dea347bc6b9abc3ffaa29201126f03a5a7ca601f4289f565163e4277a3e",
+      "review_number": 46,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0857.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0857.50",
+      "actual_seconds": 857.5,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "d8ee788b34514d1584378cad58fa34d8ae8af79f1acfe800c78f73feeebd3290",
+      "review_number": 47,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        332,
+        346
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0888.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0888.00",
+      "actual_seconds": 888,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "84be131f90baf5e21484b3a1d99f23af9f8378025f8a11d673b4444826c312b2",
+      "review_number": 48,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_0918.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0918.75",
+      "actual_seconds": 918.7666666666667,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "e79be0e9479f806c237223f632269ce0ac7b74c9bb94c87d7f6b9c6914752836",
+      "review_number": 49,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_0930.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0930.00",
+      "actual_seconds": 930,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "0c1a1fa23a5b2d7b10cf509b326e2b7aaef152219a5ced7b8dd04bd101b24ed8",
+      "review_number": 50,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        331,
+        346
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0961.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0961.50",
+      "actual_seconds": 961.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "113fc68ceea85d242d9a46df34f3a564ab021e8c2dbfb1d3962acf2049185804",
+      "review_number": 51,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        183,
+        197
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0992.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0992.75",
+      "actual_seconds": 992.7666666666667,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "65e2d50fd45b74db2b033a97186fced30974e3159c942e4b4fe4094fef86f688",
+      "review_number": 52,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_1002.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_1002.75",
+      "actual_seconds": 1002.7666666666667,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "524a6f72bef9590f383ce22b50d4a3239b8bf87173819250ba941d9b3b33098b",
+      "review_number": 53,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        329,
+        344
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_1034.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_1034.50",
+      "actual_seconds": 1034.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "1e066512e40f11bd0179017f43fd0191466bd276c1d894a861bc3a2b5578c3bc",
+      "review_number": 54,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v1-event_1065.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_1065.25",
+      "actual_seconds": 1065.2666666666667,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "622fc351ef464baabb281bcf381f06e8b8ae49dc673cf8930df5e54918704698",
+      "review_number": 55,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v1-event_1075.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_1075.25",
+      "actual_seconds": 1075.2666666666667,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "634d4f00f5f527332fbc82b1e837b6ee1a09e9a6f00e968df6d919fc09bb8f67",
+      "review_number": 56,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        333,
+        349
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_1107.75",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_1107.75",
+      "actual_seconds": 1107.7666666666667,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "3da3ee7134e3a5878456b0dd13905700620b5e37b2c2b16ed475c5a29902354c",
+      "review_number": 57,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        183,
+        198
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0007.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0007.50",
+      "actual_seconds": 7.5,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "38b10c4a9f4a183f2879f78076f9a5e944e4b1544a8521f79dc94fc6a3061f38",
+      "review_number": 58,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        376,
+        386
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0169.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0169.00",
+      "actual_seconds": 169,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "938b31d21b39ebf5f3f0bc5755918801c1e1a5752d60fa8373e905c97af439d7",
+      "review_number": 59,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        372,
+        382
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0176.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0176.00",
+      "actual_seconds": 176,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "4c87f472e262dd7bdc2a5da0b3a70f4c544109d3166255e1d3e470ee134d5bf1",
+      "review_number": 60,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        307,
+        323
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0276.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0276.25",
+      "actual_seconds": 276.26666666666665,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "144b2dac5c8e2dc77906ff25e64262fec04741bc656e26f2d5983aefeb1c5bf4",
+      "review_number": 61,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        342,
+        355
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0359.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0359.25",
+      "actual_seconds": 359.26666666666665,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "9a794738e1cad1b01bb2ac981405204ce1bc4f0d0d235b428acdf4f09c06af6f",
+      "review_number": 62,
+      "review_status": "AMBIGUOUS_FOAM_OR_OCCLUSION",
+      "y_band_pixels": null,
+      "reason": "Foam/colored-liquid boundary differs from upper surface; cannot qualify an exact surface from this frame alone"
+    },
+    {
+      "key": "v1-event_0791.25",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0791.25",
+      "actual_seconds": 791.2666666666667,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "db11c565f756c3602c5675ea0b5bc4900e421e91c8c7051c40d517fec4c9bab8",
+      "review_number": 63,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        350,
+        364
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v1-event_0872.50",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0872.50",
+      "actual_seconds": 872.5,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "e548cb8bb28a38efeac421bb09fc5f53eda733ac642b9a4adc246f45dd737da6",
+      "review_number": 64,
+      "review_status": "AMBIGUOUS_FOAM_OR_OCCLUSION",
+      "y_band_pixels": null,
+      "reason": "Foam/colored-liquid boundary differs from upper surface; cannot qualify an exact surface from this frame alone"
+    },
+    {
+      "key": "v1-event_0879.00",
+      "video": 1,
+      "source_sha256": "1678ea5e8fa01a532c5114bbfeb9672413fd25b4d883d8ac881786f414804ddf",
+      "frame_id": "event_0879.00",
+      "actual_seconds": 879,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "c96b3ab6d0fd1fdf4c74c5069c7d8942b272034c9caab86e13018e173675e402",
+      "review_number": 65,
+      "review_status": "AMBIGUOUS_FOAM_OR_OCCLUSION",
+      "y_band_pixels": null,
+      "reason": "Foam/colored-liquid boundary differs from upper surface; cannot qualify an exact surface from this frame alone"
+    },
+    {
+      "key": "v2-event_0020.00",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0020.00",
+      "actual_seconds": 20,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "24ea33cd7ee67ef92440665ca8c6fae0971518d4936edd5643478605b878390e",
+      "review_number": 66,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v2-event_0027.75",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0027.75",
+      "actual_seconds": 27.766666666666666,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "58495cd3c7de6430c5d81030bbf4833dd3f5066dfc53022618fc8d5ab70449f2",
+      "review_number": 67,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        338,
+        353
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0043.00",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0043.00",
+      "actual_seconds": 43,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "a42764cfefa1a3906c0ddab4859edf848ae9c871567b38b9571057a39d7b2d35",
+      "review_number": 68,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v2-event_0063.00",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0063.00",
+      "actual_seconds": 63,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "2710fc6a76e43b060711a0f090e8e039f45c6b1071a09a37f2f64490ef98db98",
+      "review_number": 69,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v2-event_0067.50",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0067.50",
+      "actual_seconds": 67.5,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "cef9b075b71aa1b54a0ae7fb2d30b3ad31fcfdbdd8c1cb1b40f4160862db35b9",
+      "review_number": 70,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        373,
+        385
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0100.50",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0100.50",
+      "actual_seconds": 100.5,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "bfde0598b91092fd7aa1c625c501f2accd89890ae2b74b7b6f12f75d0c2fed99",
+      "review_number": 71,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v2-event_0132.50",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0132.50",
+      "actual_seconds": 132.5,
+      "selection": [
+        "before-flow"
+      ],
+      "image_sha256": "a766dff7fcbf651d7cb482f5ecd9af9935a05cb965a260ddc5de8f0ca12a030f",
+      "review_number": 72,
+      "review_status": "NO_VISIBLE_LIQUID_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Empty-appearing vial in source review; no visible colored liquid boundary"
+    },
+    {
+      "key": "v2-event_0140.00",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0140.00",
+      "actual_seconds": 140,
+      "selection": [
+        "mid-first-flow"
+      ],
+      "image_sha256": "135f7b9cf43decba5dac52ffdc824a7fe93fc40a8d911cb267d887e28e97ae09",
+      "review_number": 73,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        355,
+        373
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0155.00",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0155.00",
+      "actual_seconds": 155,
+      "selection": [
+        "post-fill"
+      ],
+      "image_sha256": "3718d2852b6c15de95ff598ffdff49a1bb3372454a8ee1e9b411922a9850dfb6",
+      "review_number": 74,
+      "review_status": "OBSCURED_SURFACE",
+      "y_band_pixels": null,
+      "reason": "Upper boundary obscured by label/holder; internal shading is not a new surface"
+    },
+    {
+      "key": "v2-event_0022.25",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0022.25",
+      "actual_seconds": 22.266666666666666,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "7b23e3c5258500aabc5821c607988a96871effc2f5a8da3ff5ee7a523bfab44b",
+      "review_number": 75,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        374,
+        385
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0067.25",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0067.25",
+      "actual_seconds": 67.26666666666667,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "2fb83ca10c56f1a1d13126b044189ac11aeaecb345f0d188e1aba586d963fd80",
+      "review_number": 76,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        373,
+        383
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0070.75",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0070.75",
+      "actual_seconds": 70.76666666666667,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "1ed1893d27fa78b4c1e49bf29bda6dcbf87a19bd30d56e00a27bda9c6b64221a",
+      "review_number": 77,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        340,
+        356
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0074.75",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0074.75",
+      "actual_seconds": 74.76666666666667,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "c2cf4a4129554624dd3faf6b6305faae3124c892f4ada4ace4538636aba490a2",
+      "review_number": 78,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        338,
+        352
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0078.00",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0078.00",
+      "actual_seconds": 78,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "ebbd75013cc9fafbf142bd8226f0fe098f350017a2b1967bb2135a6eae2ffcb8",
+      "review_number": 79,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        340,
+        351
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0081.00",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0081.00",
+      "actual_seconds": 81,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "c414f37172be9d30e23a1c5dafca7fdd664a9856d3a354900da6727ec7418dfd",
+      "review_number": 80,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        340,
+        351
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0084.50",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0084.50",
+      "actual_seconds": 84.5,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "538b56608ff32bd44938d2e4eda0a84334fda4200fd2d3f8c9a06bfc4c854f45",
+      "review_number": 81,
+      "review_status": "VISIBLE_APPROXIMATE",
+      "y_band_pixels": [
+        337,
+        352
+      ],
+      "reason": "Visible colored-liquid/air transition; turbulence/foam limits exact meniscus placement"
+    },
+    {
+      "key": "v2-event_0098.50",
+      "video": 2,
+      "source_sha256": "d5e07b9ac5d7e1df4b34349d40488c1d97475666986eb52b7b19bf466a06dd01",
+      "frame_id": "event_0098.50",
+      "actual_seconds": 98.5,
+      "selection": [
+        "baseline-emission"
+      ],
+      "image_sha256": "7c8bc7c66a66fe2a925951174d73ff2fda5190e4639b6ccef5e981b2a7646486",
+      "review_number": 82,
+      "review_status": "AMBIGUOUS_FOAM_OR_OCCLUSION",
+      "y_band_pixels": null,
+      "reason": "Foam/colored-liquid boundary differs from upper surface; cannot qualify an exact surface from this frame alone"
+    }
+  ],
+  "review_author": "Assistant developmental source-frame review",
+  "independent_ground_truth": false,
+  "human_verified": false,
+  "scope": "Approximate visible colored boundary, not calibrated physical level",
+  "labels_frozen_before_prediction_comparison": true
+}

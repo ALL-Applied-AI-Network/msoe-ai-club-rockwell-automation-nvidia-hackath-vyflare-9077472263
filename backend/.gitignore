@@ -3,6 +3,10 @@
 .env.*
 !.env.example
 .venv/
+.data/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
 
 # Python caches and test artifacts
 __pycache__/

@@ -1,6 +1,7 @@
 """Inspect snapshots without camera capture, model inference, or HTTP handling."""
 
 from datetime import datetime, timezone
+from dataclasses import replace
 from uuid import uuid4
 
 from .inspection_models import VialInspection
@@ -19,7 +20,7 @@ class VialInspectionService:
     """
 
     def __init__(self, recipes: RecipeRepository, inspections: InspectionRepository,
-                 matcher: RecipeMatcher | None = None) -> None:
+                 matcher: RecipeMatcher | None = None, *, required_reference_ids=None) -> None:
         if not isinstance(recipes, RecipeRepository):
             raise TypeError("recipes must be a RecipeRepository")
         if not isinstance(inspections, InspectionRepository):
@@ -29,6 +30,7 @@ class VialInspectionService:
         self.recipes = recipes
         self.inspections = inspections
         self.matcher = matcher if matcher is not None else RecipeMatcher()
+        self.required_reference_ids = frozenset(required_reference_ids or ())
 
     def inspect(self, observation: VialObservation,
                 inspection_id: str | None = None) -> VialInspection:
@@ -55,6 +57,11 @@ class VialInspectionService:
 
             intended = self.matcher.find_best_match(
                 observation, self.recipes.list_recipes("INTENDED"), "INTENDED")
+            available = {r.id for r in self.recipes.list_recipes("INTENDED") if r.final_color is not None}
+            missing = self.required_reference_ids - available
+            if intended.status != "MATCH" and missing:
+                intended = replace(intended, status="INSUFFICIENT_DATA", meets_threshold=False,
+                    reasons=intended.reasons + (f"{len(missing)} nominal recipes lack comparable dispense-duration and final-color reference patterns. Missing coverage cannot establish NO_MATCH.",))
             unmatched = None
             linked = None
             created = False

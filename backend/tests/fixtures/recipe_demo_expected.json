@@ -1,0 +1,259 @@
+[
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V01",
+    "observation_id": "auto-video-1-visit-001",
+    "action": "UNRESOLVED",
+    "reason": "OBSERVATION_CHECK_FAILED",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": [
+      "ARRIVAL_LEFT_CENSORED",
+      "AVAILABLE_DEMO_CHECKS_NOT_PASSED"
+    ]
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V02",
+    "observation_id": "auto-video-1-visit-002",
+    "action": "UNRESOLVED",
+    "reason": "BOUNDARY_UNCERTAIN",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V03",
+    "observation_id": "auto-video-1-visit-003",
+    "action": "UNRESOLVED",
+    "reason": "BOUNDARY_UNCERTAIN",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V04",
+    "observation_id": "auto-video-1-visit-004",
+    "action": "UNRESOLVED",
+    "reason": "BOUNDARY_UNCERTAIN",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V05",
+    "observation_id": "auto-video-1-visit-005",
+    "action": "UNRESOLVED",
+    "reason": "BOUNDARY_UNCERTAIN",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V06",
+    "observation_id": "auto-video-1-visit-006",
+    "action": "CREATE_DISCOVERED_PATTERN",
+    "reason": "NO_COMPATIBLE_OBSERVED_PROFILE",
+    "recipe_id": 100,
+    "recipe_status": "DISCOVERED_UNVERIFIED",
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V07",
+    "observation_id": "auto-video-1-visit-007",
+    "action": "UNRESOLVED",
+    "reason": "OBSERVATION_CHECK_FAILED",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": [
+      "AVAILABLE_DEMO_CHECKS_NOT_PASSED",
+      "COLOR_SAMPLING_UNRELIABLE"
+    ]
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V08",
+    "observation_id": "auto-video-1-visit-008",
+    "action": "UNRESOLVED",
+    "reason": "OBSERVATION_CHECK_FAILED",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": [
+      "AVAILABLE_DEMO_CHECKS_NOT_PASSED",
+      "UNRESOLVED_FLOW_VISIBILITY"
+    ]
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V09",
+    "observation_id": "auto-video-1-visit-009",
+    "action": "UNRESOLVED",
+    "reason": "COLOR_CONFLICT",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V10",
+    "observation_id": "auto-video-1-visit-010",
+    "action": "UNRESOLVED",
+    "reason": "OBSERVATION_CHECK_FAILED",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": [
+      "AVAILABLE_DEMO_CHECKS_NOT_PASSED",
+      "COLOR_SAMPLING_UNRELIABLE"
+    ]
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V11",
+    "observation_id": "auto-video-1-visit-011",
+    "action": "UNRESOLVED",
+    "reason": "COLOR_CONFLICT",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V12",
+    "observation_id": "auto-video-1-visit-012",
+    "action": "REUSE_DISCOVERED_PATTERN",
+    "reason": "UNIQUE_CONTAINING_PROFILE_WITH_CONSISTENT_COLOR",
+    "recipe_id": 100,
+    "recipe_status": "DISCOVERED_UNVERIFIED",
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V13",
+    "observation_id": "auto-video-1-visit-013",
+    "action": "UNRESOLVED",
+    "reason": "COLOR_CONFLICT",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V14",
+    "observation_id": "auto-video-1-visit-014",
+    "action": "UNRESOLVED",
+    "reason": "BOUNDARY_UNCERTAIN",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V15",
+    "observation_id": "auto-video-1-visit-015",
+    "action": "UNRESOLVED",
+    "reason": "BOUNDARY_UNCERTAIN",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V16",
+    "observation_id": "auto-video-1-visit-016",
+    "action": "CREATE_DISCOVERED_PATTERN",
+    "reason": "NO_COMPATIBLE_OBSERVED_PROFILE",
+    "recipe_id": 101,
+    "recipe_status": "DISCOVERED_UNVERIFIED",
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V17",
+    "observation_id": "auto-video-1-visit-017",
+    "action": "UNRESOLVED",
+    "reason": "COLOR_CONFLICT",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V18",
+    "observation_id": "auto-video-1-visit-018",
+    "action": "UNRESOLVED",
+    "reason": "OBSERVATION_CHECK_FAILED",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": [
+      "AVAILABLE_DEMO_CHECKS_NOT_PASSED",
+      "UNRESOLVED_FLOW_VISIBILITY"
+    ]
+  },
+  {
+    "video_id": "video-1",
+    "vial_id": "V1-V19",
+    "observation_id": "auto-video-1-visit-019",
+    "action": "UNRESOLVED",
+    "reason": "COLOR_CONFLICT",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-2",
+    "vial_id": "V2-V01",
+    "observation_id": "auto-video-2-visit-002",
+    "action": "UNRESOLVED",
+    "reason": "BOUNDARY_UNCERTAIN",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-2",
+    "vial_id": "V2-V02",
+    "observation_id": "auto-video-2-visit-003",
+    "action": "REUSE_REFERENCE_PATTERN",
+    "reason": "UNIQUE_CONTAINING_PROFILE_WITH_CONSISTENT_COLOR",
+    "recipe_id": 8,
+    "recipe_status": "REFERENCE_PATTERN_CANDIDATE",
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  },
+  {
+    "video_id": "video-2",
+    "vial_id": "V2-V03",
+    "observation_id": "auto-video-2-visit-004",
+    "action": "UNRESOLVED",
+    "reason": "COLOR_CONFLICT",
+    "recipe_id": null,
+    "recipe_status": null,
+    "confirmed_nominal_recipe_id": null,
+    "hold_reasons": []
+  }
+]

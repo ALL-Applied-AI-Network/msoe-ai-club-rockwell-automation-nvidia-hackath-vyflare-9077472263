@@ -28,3 +28,6 @@ __pycache__/
 *.zip
 .model-cache/
 !**/.env.example
+
+# Isolated optional Model 2 inference environment
+.venv-model2/

@@ -42,18 +42,20 @@ Set `INFERENCE_URL` on Express when Python runs elsewhere (default:
 
 - **Solution overview (`/overview`):** actual installed evidence counts, full
   reference-bank size, current model configuration, and workflow links. Simulated
-  six-case totals are excluded. Workspace comparison results are not stored as runs.
+  six-case totals are excluded. Saved recipe-assessment counts come from the connected service; Model 4 image-comparison results remain unsaved.
 - **Recipe library (`/recipes`):** all 52 integrity-checked nominal references,
   including 41, 50, 60 and 99, plus a separate unmatched-candidate collection read
-  from the Python observation service. Candidates are in memory and disappear on
-  restart. The reference-bank dosing schema and observed dispense-pattern schema
-  remain distinct; video/model observation ingestion is pending. No automatic
+  from the Python observation service. Candidates, assessments, reference patterns
+  and collection history use local SQLite storage by default. The library shows
+  timing/color-reference coverage separately from nominal dosing settings; automatic
+  video/model observation extraction remains pending. No automatic
   promotion or recipe discovery is performed by the Model 4 comparison panel.
 - **Inspection workspace (`/inspect`):** Recorded mode reviews videos 1–2 with
   sampled visual annotations for 22 fill sequences, native playback, and extraction
   of three post-fill frames. Original videos must be installed in
   `cosmos-original-dataset/videos`; an uploaded video can also be reviewed locally.
-  Recipes remain unknown until a reference is explicitly selected for comparison.
+  Recipe evidence is assessed separately from the reference selected for Model 4 comparison.
+  Missing timing/color references remain Insufficient Evidence; selection alone does not identify a recipe.
   Video sequence IDs do not establish batch position.
 - **Model 4 comparison:** enable `ENABLED_MODELS=measurements,model4` with
   `MODEL_MODE=real` in Python before startup. Supply reliable vial/batch IDs and
@@ -77,10 +79,10 @@ Set `INFERENCE_URL` on Express when Python runs elsewhere (default:
 - **Optional ResNet/Cosmos:** selected methods appear when enabled in Python health.
   An unavailable method returns an error, not fake results.
 
-Uploads/results are not persisted by this console. A remote Cosmos runtime can
+Uploaded images, manual guides and Model 4 comparison results are not persisted by this console. Recipe assessments and candidate records are persisted by the Python service. A remote Cosmos runtime can
 retain its own inference artifacts; inspect its runtime policy before using it.
 
-Recorded-video geometry tools add manual vial boxes and sloped dashed surface
+The optional Advanced Review panel contains recorded-video geometry tools for manual vial boxes and sloped dashed surface
 guides at explicit timestamps. Reuse a saved box, mark the surface in another
 frame, save, and optionally interpolate between keyframes. Guides are scoped to
 the reviewed vial and hidden outside saved time ranges, with coordinates mapped
@@ -88,6 +90,56 @@ to the visible video content even when it is letterboxed. They are not object
 detection, liquid segmentation, camera registration, or volume calibration. They
 do not crop/resize or draw into Model 4 input images. Guides live only in the
 current recorded-video page and reset on video/mode changes or navigation.
+
+## Recipe assessment integration
+
+The preset-video workflow uses the existing reviewed annotations, not new model
+inference or automatic video detection. At a reviewed final sample, or using
+Assess Selected Vial / Assess All Reviewed Vials, Node requests a server-side
+assessment. Source observations and outcomes are saved and restored on reload.
+
+Current compatibility audit: the packaged 52-recipe bank supplies nominal tank
+amounts/order but no comparable per-dispense timing/color reference patterns.
+The 22 reviewed fills retain sampling brackets and observed appearance; they do
+not establish exact ingredient-dispense measurements. These remain partial
+observations. All 22 therefore produce Insufficient Evidence with no learned
+candidate. No milliliter-to-duration conversion, invented tank identity, or
+midpoint-as-measurement is used. Model 4 mixture estimates are not recipe IDs.
+
+The service requires coverage of the nominal reference bank before declaring
+NO_MATCH. A complete existing reference can still match when others are missing.
+With sufficient observations and complete reference coverage, intended patterns
+are searched first, then unmatched patterns are reused or created. New candidate
+IDs start above the nominal bank's highest ID. Candidates never automatically
+become accepted references. Matching tolerances remain engineering defaults.
+
+Default storage: `backend/.data/recipes.sqlite3`, ignored by Git and Docker build
+contexts. Set `RECIPE_DB_PATH` to an absolute path on a durable mounted directory
+in deployment. Preserve that directory and its SQLite journal files across
+restarts/redeployments. Tests use isolated storage; no training fixtures are
+inserted into the real bank. Repositories and source-evidence metadata commit
+atomically; repeated evidence/reference versions reuse the same inspection.
+Reference-pattern or matching-config changes create a new assessment version,
+retaining history and marking older results as needing reassessment.
+
+Python endpoints (Node proxies only the reviewed-video operations):
+
+- `GET /api/recipe-workflow/status`: coverage, storage kind and saved-assessment count.
+- `GET /api/recipe-workflow/videos/<video_id>/assessments`: latest saved result per vial.
+- `POST /api/recipe-workflow/recorded/<video_id>/<vial_id>` with `{}`: assess the
+  whitelisted server-side review; browser-supplied observations are rejected.
+- `POST /api/recipe-workflow/observations`: trusted future producers supply a
+  validated `observation` and a `source` description. Requires a configured
+  `INFERENCE_TOKEN` and matching bearer credentials. This route is not exposed
+  through the frontend bridge. This provides an integration contract; the
+  camera/Model 2 observation producer is still pending.
+
+The ingestion observation contains `run_id`, `vial_id`, `dispenses` (ordered
+`color`, positive finite `duration_seconds`, optional `source`), `final_color`
+and `filling_complete`. Partial evidence must not be fabricated into complete
+dispenses. Node and Python share the optional inference token for reviewed
+operations; Node rejects foreign-origin writes. Model inference remains on its
+separate existing endpoints.
 
 ## Connect the vial-only recipe classifier
 
@@ -167,3 +219,11 @@ remain in Git history; this integration adds no new dataset or weight binaries.
   production reliability, or measured scrap savings is established.
 - Complete independent evaluation, external dataset/weight distribution, and a
   supervised CSI demonstration before making broader claims.
+
+## Recorded Tracking-Gated Recipe Workflow (Current)
+
+The experimental recorded workflow now processes installed Videos 1 and 2 from original pixels, qualifies tracking identity and direct final-color visibility, then compares timing/color and creates/reuses provisional observed patterns when the existing checks permit. Inspection Workspace displays tracking eligibility with each recipe outcome. Geometry and observer measurements come from one decode pass; overlays do not enter analysis images. Numeric liquid level remains excluded.
+
+This current native workflow is distinct from the older reviewed-annotation/snapshot interfaces described above. Historical packaged snapshots lack the tracking proof and stay held; they cannot authorize recipe creation. Live recipe inspection remains deferred, and other model integrations are unchanged.
+
+Producer 3 uses isolated demo engine 1.4. Preserve older pinned demo files and select a new separate `RECIPE_DEMO_DB_PATH` (for example, `recipe-demo-v1-4.sqlite3`) before enabling it. No automatic history migration or normal-bank changes occur. See [the detailed contract](backend/recipes/recorded_workflow_integration.md).

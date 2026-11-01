@@ -6,7 +6,11 @@ import { appData, cases, recipes } from "./data.js";
 import { inferenceRouter } from "./inference.js";
 import { inspectionRouter } from "./inspection.js";
 import { recipeLibraryRouter } from "./recipe-library.js";
+import { recipeWorkflowRouter } from "./recipe-workflow.js";
 import { readFileSync } from "node:fs";
+
+import { geometryRouter } from "./geometry.js";
+import { recordedProducerRouter } from "./recorded-producer.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 8787);
@@ -14,6 +18,9 @@ app.use(cors());
 app.use("/api/inference", inferenceRouter());
 app.use("/api/inspection", inspectionRouter());
 app.use("/api/recipe-library", recipeLibraryRouter());
+app.use("/api/recipe-workflow", recipeWorkflowRouter());
+app.use("/api/recorded-observer", recordedProducerRouter());
+app.use("/api/geometry", geometryRouter());
 app.use(express.json());
 
 app.get("/api/experiments", (_req, res) => {
@@ -28,7 +35,7 @@ app.get("/api/experiments", (_req, res) => {
   });
 });
 
-app.get("/api/health", (_req, res) => res.json({ status: "ok", mode: "experimental-workspace", inspectionMode: "recorded-review-and-camera-preview", automaticInspection: false, machineControl: false }));
+app.get("/api/health", (_req, res) => res.json({ status: "ok", mode: "experimental-workspace", inspectionMode: "recorded-review-and-camera-tracking", automaticVisualTracking: "experimental-fixed-station", automaticInspection: false, machineControl: false }));
 app.get("/api/bootstrap", (_req, res) => res.json(appData));
 app.get("/api/cases", (_req, res) => res.json(cases));
 app.get("/api/cases/:id", (req, res) => {

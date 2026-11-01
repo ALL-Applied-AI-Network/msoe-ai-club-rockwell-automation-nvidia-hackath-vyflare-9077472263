@@ -39,6 +39,7 @@ class RecipeRepository:
         self._recipes: dict[int, Recipe] = {}
         self._changes: dict[int, tuple[RecipeCollectionChange, ...]] = {}
         self._lock = RLock()
+        self.minimum_new_recipe_id = 1
 
     @contextmanager
     def transaction(self):
@@ -60,7 +61,7 @@ class RecipeRepository:
         if final_color is None:
             raise ValueError("A learned recipe requires final_color")
         with self._lock:
-            identifier = max(self._recipes, default=0) + 1
+            identifier = max(max(self._recipes, default=0) + 1, self.minimum_new_recipe_id)
             return self.add_recipe(Recipe(identifier, "UNMATCHED", dispenses, final_color))
 
     def add_recipe(self, recipe: Recipe) -> Recipe:

@@ -1,3 +1,9 @@
+> Integration update: the application now uses atomic SQLite-backed repository
+> snapshots by default. Reviewed-video recipe assessments, coverage checks, and
+> trusted observation-ingestion contracts are implemented in `workflow_api.py`.
+> The in-memory classes described below remain available for isolated tests.
+> See the root README's recipe-assessment section for current data limitations.
+
 # Recipe system design pseudocode
 
 This preserves the original design outline. `models.py` implements Dispense and

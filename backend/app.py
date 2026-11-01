@@ -17,9 +17,17 @@ from recipes.recipe_repository import RecipeRepository
 from recipes.inspection_api import create_inspection_blueprint
 from recipes.inspection_repository import InspectionRepository
 from recipes.vial_inspection_service import VialInspectionService
+from recipes.geometry_api import GeometryService, create_geometry_blueprint
 from recipes.tracker_api import create_tracker_blueprint
 from recipes.tracker_manager import TrackerManager
 from model4_api import create_model4_blueprint
+from model2_api import create_model2_blueprint
+from recipes.durable import SQLiteStore
+from recipes.workflow_api import create_workflow_blueprint, load_reference_catalog
+from recipes.reviewed_trial import ReviewedTrialEngine
+from recipes.demo_api import RecordedDemoService, create_demo_blueprint
+from recipes.demo_store import validate_demo_location
+from recipes.recorded_producer import RecordedVideoProducer
 
 MAX_IMAGE_PIXELS = 16_000_000
 Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS
@@ -36,29 +44,69 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
         MODEL4_MAX_CONTENT_LENGTH=12 * 1024 * 1024,
         RECIPE_MANAGEMENT_ACTOR=os.getenv("RECIPE_MANAGEMENT_ACTOR", ""),
         TRACKER_SCHEDULER_ENABLED=None,
+        RECIPE_DB_PATH=None,
+        RECIPE_DEMO_ENABLED=os.getenv("RECIPE_DEMO_ENABLED", "false").strip().lower() == "true",
+        RECIPE_DEMO_DB_PATH=os.getenv("RECIPE_DEMO_DB_PATH", ""),
         CORS_ORIGINS=[x.strip() for x in os.getenv(
             "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
         ).split(",") if x.strip()],
     )
     if config:
         app.config.update(config)
+    normal_db_path = app.config["RECIPE_DB_PATH"] or os.getenv("RECIPE_DB_PATH") or str(Path(__file__).with_name(".data") / "recipes.sqlite3")
+    normal_paths = [normal_db_path, Path(__file__).with_name(".data") / "recipes.sqlite3"]
+    if type(app.config["RECIPE_DEMO_ENABLED"]) is not bool:
+        raise ValueError("RECIPE_DEMO_ENABLED must be a boolean application setting")
+    if app.config["RECIPE_DEMO_ENABLED"]:
+        validate_demo_location(app.config["RECIPE_DEMO_DB_PATH"], normal_paths)
     CORS(app, origins=app.config["CORS_ORIGINS"], methods=["GET", "POST", "OPTIONS"],
          allow_headers=["Content-Type", "Authorization"], supports_credentials=False)
     registry = model_registry if model_registry is not None else load_models(app.config["MODEL_MODE"])
     gate = threading.Lock()  # One inference total, including across both GPU models.
     app.extensions["inference_gate"] = gate
     app.register_blueprint(create_model4_blueprint(registry.get("model4"), gate))
-    repository = recipe_repository if recipe_repository is not None else RecipeRepository()
+    app.register_blueprint(create_model2_blueprint(registry.get("model2"), registry.get("model4"), gate))
+    catalog, catalog_sha = load_reference_catalog()
+    store = None
+    if recipe_repository is None and inspection_repository is None and (not app.testing or app.config["RECIPE_DB_PATH"]):
+        db_path = normal_db_path
+        store = SQLiteStore(db_path)
+        store.recipes.minimum_new_recipe_id = max(int(k) for k in catalog["recipes"]) + 1
+    app.extensions["recipe_store"] = store
+    repository = recipe_repository if recipe_repository is not None else store.recipes if store else RecipeRepository()
     if not isinstance(repository, RecipeRepository):
         raise TypeError("recipe_repository must be a RecipeRepository")
     app.extensions["recipe_repository"] = repository
     app.register_blueprint(create_recipe_blueprint(repository))
-    inspections = inspection_repository if inspection_repository is not None else InspectionRepository()
+    inspections = inspection_repository if inspection_repository is not None else store.inspections if store else InspectionRepository()
     if not isinstance(inspections, InspectionRepository):
         raise TypeError("inspection_repository must be an InspectionRepository")
     app.extensions["inspection_repository"] = inspections
-    app.extensions["vial_inspection_service"] = VialInspectionService(repository, inspections)
+    app.extensions["vial_inspection_service"] = VialInspectionService(repository, inspections,
+        required_reference_ids={int(k) for k in catalog["recipes"]} if store or not app.testing else None)
     app.register_blueprint(create_inspection_blueprint(repository, inspections))
+    trial_engine = ReviewedTrialEngine(catalog, catalog_sha)
+    app.extensions["recipe_trial_engine"] = trial_engine
+    app.register_blueprint(create_workflow_blueprint(app.extensions["vial_inspection_service"], store, catalog, catalog_sha, trial_engine))
+    demo_service = None
+    if app.config["RECIPE_DEMO_ENABLED"]:
+        try:
+            demo_service = RecordedDemoService(catalog_sha, trial_engine, app.config["RECIPE_DEMO_DB_PATH"], normal_paths,
+                **({"assets": app.config["RECIPE_DEMO_ASSETS"]} if app.config.get("RECIPE_DEMO_ASSETS") else {}))
+        except Exception:
+            if store:
+                store.close()
+            raise
+    app.extensions["recipe_demo_service"] = demo_service
+    geometry = GeometryService(app.config.get("RECORDED_VIDEO_ROOT", Path(__file__).resolve().parents[1] / "cosmos-original-dataset" / "videos"),
+        app.config.get("GEOMETRY_CACHE_ROOT", Path(__file__).resolve().parent / ".data" / "geometry"), demo_service.bank if demo_service else None)
+    app.extensions["geometry_service"] = geometry
+    app.register_blueprint(create_geometry_blueprint(geometry))
+    producer = RecordedVideoProducer(demo_service.bank,
+        app.config.get('RECORDED_VIDEO_ROOT', Path(__file__).resolve().parents[1] / 'cosmos-original-dataset' / 'videos'),
+        geometry_service=geometry) if demo_service else None
+    app.extensions['recorded_video_producer'] = producer
+    app.register_blueprint(create_demo_blueprint(demo_service, producer))
     scheduler_enabled = app.config["TRACKER_SCHEDULER_ENABLED"]
     if scheduler_enabled is None:
         scheduler_enabled = not app.testing
@@ -72,11 +120,11 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
 
     @app.before_request
     def check_origin():
-        if request.path == "/predict/model4":
+        if request.path in ("/predict/model4", "/predict/model2", "/predict/vial-evidence"):
             request.max_content_length = app.config["MODEL4_MAX_CONTENT_LENGTH"]
             request.max_form_parts = 24
         token = os.getenv("INFERENCE_TOKEN", "")
-        protected = request.path == "/predict" or request.blueprint in ("recipe_api", "inspection_api", "tracker_api", "model4_api")
+        protected = request.path == "/predict" or request.blueprint in ("recipe_api", "inspection_api", "tracker_api", "model4_api", "model2_api", "recipe_workflow_api", "recipe_demo_api", "geometry_api")
         if token and protected and request.method != "OPTIONS":
             import hmac
             if not hmac.compare_digest(request.headers.get("Authorization", ""), f"Bearer {token}"):
@@ -89,6 +137,14 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
     @app.errorhandler(HTTPException)
     def http_error(exc):
         return jsonify(error=exc.description), exc.code
+
+    @app.after_request
+    def recipe_storage_header(response):
+        if request.blueprint == "recipe_demo_api":
+            response.headers["X-Recipe-Storage"] = "isolated_demo_sqlite" if demo_service else "disabled"
+        if request.blueprint in ("recipe_api", "inspection_api", "recipe_workflow_api"):
+            response.headers["X-Recipe-Storage"] = store.persistence if store else "in_memory"
+        return response
 
     @app.get("/health")
     def health():
@@ -107,6 +163,8 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
             return error("Unknown or disabled model", 400)
         if name == "model4":
             return error("Use POST /predict/model4 with three registered post-fill frames", 400)
+        if name == "model2":
+            return error("Use POST /predict/model2 with three early post-flow frames and an intended recipe", 400)
         if include_resnet not in {"true", "false"}:
             return error("include_resnet must be true or false", 400)
         paired = include_resnet == "true" and name != "resnet18"
@@ -179,4 +237,11 @@ if __name__ == "__main__":
         serve(application, host=os.getenv("HOST", "127.0.0.1"), port=port, threads=4,
               max_request_body_size=12 * 1024 * 1024)
     finally:
+        if application.extensions["recipe_demo_service"]:
+            application.extensions['recorded_video_producer'].close()
+        application.extensions["geometry_service"].close()
+        if application.extensions["recipe_demo_service"]:
+            application.extensions["recipe_demo_service"].bank.close()
         application.extensions["tracker_manager"].shutdown()
+        if application.extensions["recipe_store"]:
+            application.extensions["recipe_store"].close()

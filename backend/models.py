@@ -104,6 +104,7 @@ class RemoteCosmosModel:
         self.timeout = float(os.getenv("COSMOS_FULL_TIMEOUT_SECONDS", "120"))
         if not 0 < self.timeout <= 3600:
             raise ValueError("COSMOS_FULL_TIMEOUT_SECONDS must be in (0, 3600]")
+        self.expected_implementation = os.getenv("COSMOS_EXPECTED_IMPLEMENTATION", "").strip()
         self.model = os.getenv("COSMOS_FULL_REMOTE_MODEL", "cosmos")
         if self.model not in {"cosmos", "cosmos_lite"}:
             raise ValueError("Remote worker model must be cosmos or cosmos_lite (local execution)")
@@ -148,6 +149,8 @@ class RemoteCosmosModel:
                 or payload["result"].get("mock")
                 or not isinstance(payload["result"].get("text"), str)):
             raise RemoteInferenceError("DGX Cosmos returned an invalid or non-real result")
+        if self.expected_implementation and payload["result"].get("implementation") != self.expected_implementation:
+            raise RemoteInferenceError("Cosmos worker implementation does not match the configured model")
         execution = payload["result"].get("execution")
         if (not isinstance(execution, dict)
                 or execution.get("system") != "Linux"
@@ -243,14 +246,15 @@ class Cosmos3Model:
 def load_models(mode):
     from measurements import MeasurementsModel
     from model4 import Model4Model
+    from model2 import Model2Model
     names = [x.strip() for x in os.getenv("ENABLED_MODELS", "measurements").split(",")]
     factories = {"resnet18": ResNet18Model, "cosmos": Cosmos3Model,
                  "cosmos_lite": Cosmos3Model, "cosmos_full": RemoteCosmosModel,
-                 "measurements": MeasurementsModel, "model4": Model4Model}
+                 "measurements": MeasurementsModel, "model4": Model4Model, "model2": Model2Model}
     if not names or any(name not in factories for name in names):
-        raise ValueError("ENABLED_MODELS supports measurements, model4, resnet18, cosmos_lite, cosmos_full, cosmos")
+        raise ValueError("ENABLED_MODELS supports measurements, model4, model2, resnet18, cosmos_lite, cosmos_full, cosmos")
     if mode == "mock":
-        return {name: Model4Model(mock=True) if name == "model4" else MockModel(name) for name in names}
+        return {name: Model4Model(mock=True) if name == "model4" else Model2Model(mock=True) if name == "model2" else MockModel(name) for name in names}
     if mode != "real":
         raise ValueError("MODEL_MODE must be mock or real")
     # Fail startup on bad weights/dependencies; never silently switch to fake results.
