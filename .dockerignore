@@ -10,9 +10,9 @@ node_modules
 **/*.pth
 **/*.pt
 cosmos-original-dataset
-Training model 1
-Training model 2
-Training model 3
+research/model-1-recipe-classifier
+research/model-2-resnet-classifier
+research/model-3-mix-regression
 client/dist
 server/dist
 **/.data

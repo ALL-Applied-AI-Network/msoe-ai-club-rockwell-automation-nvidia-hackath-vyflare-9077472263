@@ -1,5 +1,23 @@
 # Integrated Vyflare Workspace
 
+**Team Vyflare — Fluid Mixing Station.** Start with the
+[executive summary](docs/EXECUTIVE_SUMMARY.md): problem, data cleaning, findings
+and compute usage.
+
+## Repository Layout
+
+```text
+backend/        Python API: image measurements, Model 4, recorded recipe observer, Cosmos routing
+client/         React + Vite inspection console
+server/         Express gateway (serves the console, proxies the Python API)
+shared/         TypeScript domain types shared by client and server
+scripts/        Integration smoke test
+evidence/       Recorded inspection manifest used by the console
+cosmos-original-dataset/  Station videos 1–5 and video-5 labels (default recording source)
+research/       Models 1–4 experiments and the Cosmos baseline — see research/README.md
+docs/           Executive summary, architecture diagram, integration index, technical reports
+```
+
 Vyflare combines recorded vial inspection, experimental recipe-pattern discovery,
 image analysis and separate model APIs. The workspace incorporates the earlier
 `ui-development`, `full-stack-attempt` and `vial-mix-anomaly-detection` work.

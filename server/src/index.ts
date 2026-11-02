@@ -27,8 +27,8 @@ app.get("/api/experiments", (_req, res) => {
   const read = (file: string) => JSON.parse(readFileSync(path.resolve(file), "utf-8"));
   res.json({
     provenance: "RECORDED_EXPERIMENT", validated: false,
-    anomaly: read("fluid-mixing-anomaly-detection/outputs/demo_data.json"),
-    cosmos: read("cosmos-model-data/batch-results/20261025-batch01/summary.json"),
+    anomaly: read("research/model-4-anomaly-detection/outputs/demo_data.json"),
+    cosmos: read("research/cosmos-baseline/batch-results/20261025-batch01/summary.json"),
     limitations: ["Recorded Video 5 experiments; not new inference or independent production validation.",
       "Anomaly reference labels are rule-based/suspected. Threshold calibration reuses the evaluated pool.",
       "Original frame labels have an unresolved clock-alignment discrepancy; the anomaly branch uses a separately corrected dataset."]
@@ -47,7 +47,7 @@ app.get("/api/recipes", (_req, res) => res.json(recipes));
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const clientDist = path.resolve(here, "../../../../client/dist");
-app.use("/experiment-thumbs", express.static(path.resolve("fluid-mixing-anomaly-detection/demo/thumbs")));
+app.use("/experiment-thumbs", express.static(path.resolve("research/model-4-anomaly-detection/demo/thumbs")));
 app.use(express.static(clientDist));
 app.get("/{*splat}", (_req, res) => res.sendFile("index.html", { root: clientDist }));
 
