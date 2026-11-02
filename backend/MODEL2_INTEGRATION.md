@@ -42,5 +42,10 @@ Local qualification status (2026-11-01): real CPU/browser inference and 23 of th
 for `v5_e10` on macOS ARM64 (maximum difference 0.0002324); all three fixture top
 recipes and threshold decisions are unchanged. Matching the source runtime versions
 did not remove the difference. This remains an open validation issue; the original
-oracle test is intentionally retained without relaxed tolerances. Full backend
-suite: 381 pass, 1 failure. Frontend/gateway suite: 45 pass; production build passes.
+oracle test is intentionally retained without relaxed tolerances. At that integration checkpoint, the backend
+suite had 381 passes and 1 failure; frontend/gateway tests had 45 passes.
+
+After automatic recorded-inspection integration (2026-11-01), the full backend
+suite has 392 passes and the same 1 parity failure; all 51 frontend/gateway tests,
+TypeScript checks and production build pass. Model 2 remains excluded from the
+automatic workflow; the added tests do not qualify its recipe predictions.

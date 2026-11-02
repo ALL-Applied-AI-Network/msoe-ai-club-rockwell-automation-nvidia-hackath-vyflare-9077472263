@@ -67,7 +67,7 @@ Fresh decoding retains the existing macOS dependency. Already decoded frame evid
 
 `backend/tests/fixtures/geometry_qualification/manifest.json` pins real dropout/departure regression clips to recording/frame hashes. Tests cover genuine departure, missing detections, expired budgets, capture gaps, changed appearance/geometry, sustained motion, unconfirmed identity and non-extending budgets. The full backend suite passed 342 tests after this change.
 
-## Next Step
+## Original Next Step (Completed)
 
 Review the proposed eligibility table, then integrate qualified recorded identity/visibility evidence with comparison, pending groups, discovery and reuse. Keep numeric surface height excluded until its coverage/foam/placement cases are resolved. No frontend, live-camera or recipe-policy changes are part of this qualification work.
 

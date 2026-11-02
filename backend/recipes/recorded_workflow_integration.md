@@ -10,13 +10,13 @@ This is developmental eligibility for the fixed recorded station, not operationa
 
 ## Same-Pass Producer and Evidence
 
-`fixed-station-native/3` computes the original dispense observer and geometry tracker from the same freshly decoded event frames. The timing allowance, observer/refinement thresholds, RGB measurement regions and nominal references are unchanged. A versioned report binds the original observation, source recording SHA, tracker/policy implementations, frame timestamps/hashes and direct final-color sample provenance. Surface coordinates do not enter this report or matcher.
+Producer 3 introduced the same-pass tracking gate; current `fixed-station-native/4` computes the original dispense observer and geometry tracker from the same freshly decoded event frames. The timing allowance, observer/refinement thresholds, RGB measurement regions and nominal references are unchanged. A versioned report binds the original observation, source recording SHA, tracker/policy implementations, frame timestamps/hashes and direct final-color sample provenance. Surface coordinates do not enter this report or matcher.
 
 Three original lossless final-color frames are checked directly. Their dimensions, source timestamps, evidence IDs and hashes must agree with the measurement provenance. The observed vial must cover the entire fixed RGB region and placement offsets, and its geometry must agree with nearby confirmed identity anchors. A latent tracking candidate does not substitute a drawn/interpolated box for missing sample evidence.
 
 `recorded_eligibility.evaluate()` recomputes `SUPPORTED`, `SUPPORTED_WITH_RECOVERY` or `HELD` from report evidence; it does not trust a caller-supplied supported boolean. Detection-loss events must account for missing samples, source clock and the bounded recovery. Per-frame unconfirmed states remain in the audit.
 
-The producer publishes its same-pass geometry for frontend playback before the bank transaction. This replaces the frontend's separate automatic geometry job. A publisher/source/pixel-processing failure causes no recipe transaction; the separately cached geometry is read-only evidence. The standalone Track Entire Recording action remains read-only.
+The producer publishes its same-pass geometry for frontend playback before the bank transaction. This replaces the frontend's separate automatic geometry job. A publisher/source/pixel-processing failure causes no recipe transaction; the separately cached geometry is read-only evidence. The standalone geometry API remains read-only with respect to recipe actions; its earlier Track Entire Recording UI action is no longer mounted.
 
 ## Bank Enforcement
 
@@ -32,9 +32,9 @@ Historical packaged snapshots have no new tracking proof. Their API routes retai
 
 The old engine-1.3 store is preserved and rejected by engine 1.4. Select a **new, separate** `RECIPE_DEMO_DB_PATH` such as `recipe-demo-v1-4.sqlite3` when enabling this revision. No old results are silently migrated, requalified or rewritten. The normal recipe bank and actual environment configuration are unchanged. The example environment file documents the new filename.
 
-Inspection Workspace shows tracking-supported/recovered/held status alongside recipe outcomes. Held evidence is excluded from effective link counts. Refreshing/completing producer processing refreshes geometry automatically. Numeric level is explicitly excluded. Other model workflows remain unchanged.
+Inspection Workspace now displays evidence-timed observations and recipe/hold outcomes in the Inspection Log. First playback ensures processing; pause affects log visibility, not background analysis. Same-pass geometry refreshes when processing completes. Held evidence is excluded from effective link counts, and numeric level remains excluded. Model APIs remain separate. See [automatic_recordings.md](automatic_recordings.md) for producer-4 registration, source binding and persistence.
 
-## Verification
+## Tracking-Gate Checkpoint Verification
 
 Fresh processing of both complete recordings evaluated 22 fills. Tracking eligibility supported 21; Video 1 Vial 7 was held because its three direct final-color frames lack supported vial geometry despite recovered event-frame identity. This does not label the liquid wrong or empty. The existing timing uncertainty for that fill remains.
 

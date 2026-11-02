@@ -16,8 +16,11 @@ Applications can raise `recipes.minimum_new_recipe_id` to reserve a larger catal
 coverage from being treated as proof of an unknown recipe. A complete existing
 reference can still match when other references are missing.
 
-This storage layer does not enable persistence in the application factory by
-itself. Application configuration and HTTP integration are separate changes.
+The application factory now uses this store by default for normal application
+recipes/inspections at `RECIPE_DB_PATH` or `backend/.data/recipes.sqlite3`.
+Injected repositories and tests without an explicit database can remain in
+memory. The recorded experimental bank uses its own separate `RECIPE_DEMO_DB_PATH`;
+it is not merged into this normal store.
 Keep database files and their SQLite journal files outside version control and
 container build contexts. Close each store when its application shuts down.
 

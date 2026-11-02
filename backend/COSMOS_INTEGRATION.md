@@ -38,11 +38,11 @@ The optional expected-implementation setting rejects a wrong worker rather than 
 
 Only the captured still is sent. The worker identity’s `frames:32` field is video configuration, not the frame count of this still-image request. Playing a recording does not automatically call Cosmos. Fine-tuned photo behavior is experimental because this adapter trained on videos. This feature is not full-video sequence reasoning or automatic continuous inspection. The branch's existing port-7865 video tester remains separate; automatic video-Cosmos orchestration is future work.
 
-The browser capture position is not a validated presentation timestamp. The captured PNG hash identifies the uploaded snapshot. The backend/remote client may resize/re-encode before worker inference, so the worker input hash can legitimately differ. Both are identified separately. Source/vial changes remount the panel and cancel pending requests; editing prompt/model clears the previous observation. Moving playback alone does not change the captured evidence.
+The browser capture position is not a validated presentation timestamp. The captured PNG hash identifies the uploaded snapshot. The backend/remote client may resize/re-encode before worker inference, so the worker input hash can legitimately differ. Both are identified separately. Recording source changes remount the panel and cancel pending requests; editing prompt/model clears the previous observation. Moving playback alone does not change the captured evidence.
 
 ## Separation From Recipe Decisions
 
-Cosmos is supporting appearance text only. Its prose never becomes dispense timing, measured volume, chemical identity, recipe identity, a pending-group vote or a bank mutation. Recipe matching/discovery retains all its current timing, color, tracking and lineage gates. Model 4 remains its own explicit three-frame comparison workflow.
+Cosmos is supporting appearance text only. Its prose never becomes dispense timing, measured volume, chemical identity, recipe identity, a pending-group vote or a bank mutation. Recipe matching/discovery retains all its current timing, color, tracking and lineage gates. Model 4 retains a separate explicit three-frame comparison API; its manual form is no longer mounted on Inspection Workspace. The current automatic log does not call Cosmos or Model 4.
 
 Successful HTTP results must match the submitted frame and route. Mock observations are rejected; errors and GPU busy responses stay visible, with no fallback to saved Video 5 descriptions. Cancellation aborts the client request; a running GPU request may finish remotely.
 
@@ -56,4 +56,4 @@ The real browser → Node → Python → SSH → LoRA worker path was tested wit
 
 Gateway inference time was approximately 3.83 seconds. This establishes transport, correct worker selection, prompt/provenance forwarding and rendering, not inspection accuracy. Both temporary recipe-store contents stayed unchanged. The normal application bank was not opened by this isolated preview.
 
-Validation passed 358 backend tests and 40 frontend/server tests, plus TypeScript and production build. Evidence is under the project-level `outputs/cosmos-recorded-integration-2026-11-01/`.
+At the Cosmos integration checkpoint, validation passed 358 backend tests and 40 frontend/server tests, plus TypeScript and production build. These are historical counts; see the root README for the current recorded-workflow validation and Model 2 parity issue. Evidence is under the project-level `outputs/cosmos-recorded-integration-2026-11-01/`.

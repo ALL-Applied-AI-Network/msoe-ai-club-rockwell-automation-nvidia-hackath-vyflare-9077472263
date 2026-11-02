@@ -1,8 +1,17 @@
 # Recorded Pattern Demonstration API
 
-This opt-in backend connects packaged automatic-observer snapshots to interval/RGB matching and a separate persistent discovered-pattern bank. It creates/reuses **Discovered—Unverified** entries. The normal recipe bank and existing reviewed trial are unchanged. No frontend or Express routes are connected to these endpoints yet.
+This opt-in backend connects packaged automatic-observer snapshots to interval/RGB matching and a separate persistent discovered-pattern bank. It creates/reuses **Discovered—Unverified** entries. The normal recipe bank and existing reviewed trial are unchanged. The current frontend/Express integration uses the fresh `/producer/` routes and shared pattern/recipe reads; see [automatic_recordings.md](automatic_recordings.md).
 
-It consumes saved automatic observations for Videos 1 and 2. It does **not** decode an uploaded video, run a camera/tracker, Model 4, Cosmos, Model 2, or the proposed higher-cadence revalidator. The snapshots retain their original `NOT_VALIDATED` markers. Available development checks are not operational qualification; an observed reference-pattern link is not a confirmed nominal or chemical identity.
+The historical snapshot routes described below consume saved automatic observations for Videos 1 and 2. These snapshot routes do **not** decode an uploaded video or run a camera/tracker, Model 4, Cosmos, Model 2 or a higher-cadence revalidator. The snapshots retain their original `NOT_VALIDATED` markers. Available development checks are not operational qualification; an observed reference-pattern link is not a confirmed nominal or chemical identity.
+
+## Current Scope and Historical Snapshot Contract
+
+Engine 1.4 holds legacy packaged snapshots with `TRACKING_EVIDENCE_MISSING`;
+they cannot create/reuse patterns or vote for discovery. Route descriptions and
+results below record their earlier development behavior. Fresh producer-4
+processing supplies the required tracking proof and is the current automatic
+workflow. Use `/producer/status` for fresh-video capability; `/status` retains
+its packaged-snapshot scope and does not advertise that producer capability.
 
 ## Configuration
 

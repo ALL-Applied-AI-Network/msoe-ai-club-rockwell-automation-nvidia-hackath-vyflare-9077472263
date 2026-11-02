@@ -4,7 +4,7 @@ For the current fine-tuned Cosmos worker and Recorded Workspace prompting, use [
 
 ## Isolated Recipe Recognition Demonstration
 
-An opt-in backend API now connects packaged automatic-observer snapshots to interval/RGB matching and persistent discovered-pattern creation/reuse in a separate bank. It is disabled by default and does not run video inference or modify the normal recipe bank. See [the demonstration API guide](recipes/demo_api.md) for configuration, endpoints, current results and limitations. Frontend integration remains pending.
+The opt-in recorded service decodes installed Videos 1–5 and registered station-view recordings from original pixels, then applies timing/color/tracking checks in a separate persistent demonstration bank. First playback queues analysis and the Inspection Log follows playback time while processing continues during pause. It is disabled unless an explicitly separate `RECIPE_DEMO_DB_PATH`, `RECIPE_DEMO_ENABLED=true` and server token are configured. See [automatic recorded inspection](recipes/automatic_recordings.md) and the [root startup guide](../README.md). Packaged snapshots remain historical held evidence; they are not the current frontend inference source. Live recipe processing remains deferred.
 
 ## Model 4 mixture estimates
 
@@ -21,7 +21,7 @@ explicitly rather than claiming an image safety pass.
 
 ## Cosmos Lite / Full switch
 
-The included frontend requests **ResNet-18 plus the selected Cosmos model**
+The legacy paired-photo test client can request **ResNet-18 plus the selected Cosmos model**
 for each photo by sending `include_resnet=true`. The backend runs them
 sequentially under one inference gate and returns both outputs in
 `results.resnet18` and `results.cosmos_lite` or `results.cosmos_full`.
@@ -278,7 +278,9 @@ ordered dispenses, and final color. Invalid parameters return 400; unknown IDs
 return 404. If `INFERENCE_TOKEN` is set, include its Bearer authorization header.
 
 One repository is shared across requests through
-`app.extensions["recipe_repository"]`; it starts empty and resets on restart.
+`app.extensions["recipe_repository"]`. Normal application startup uses SQLite at
+`RECIPE_DB_PATH` or `backend/.data/recipes.sqlite3`; records survive restart.
+Injected repositories and tests without a configured database can remain in memory.
 Applications/tests can inject it with `create_app(..., recipe_repository=repo)`.
 These routes are separate from the Express console's existing demo recipe data.
 See [recipe design and API contract](recipes/recipe_design.md) for details.
@@ -303,7 +305,8 @@ old/new collections, and unique change ID. Moves preserve recipe IDs and metadat
 repeating a move to the current collection does not duplicate history. Historical
 vial inspections are unchanged. Missing recipes return 404; invalid IDs/bodies
 return 400; non-JSON requests return 415. History follows the existing read-token
-policy. All storage remains in memory; no frontend actions are connected yet.
+policy. Normal application storage is durable SQLite; explicitly injected/test
+repositories may be in memory. Promotion/demotion has no connected frontend action.
 
 
 ## Inspection retrieval endpoints
@@ -326,8 +329,10 @@ there is no direct inspection-creation endpoint.
 The app owns one shared `inspection_repository` and `vial_inspection_service` in
 `app.extensions`, using the same `recipe_repository` as the recipe routes. Tests
 or application composition can inject `inspection_repository=...` into create_app.
-Storage starts empty and resets on restart. These endpoints are on Python's API;
-the Express console is not wired to them yet. Lists are currently unpaginated.
+Normal application inspection records persist in the shared SQLite store;
+injected in-memory test repositories reset on restart. These endpoints are on
+Python's API; the current Inspection Log uses the separate recorded producer
+event routes rather than these retrieval endpoints. Lists are unpaginated.
 
 
 ## Station tracker API and scheduler
@@ -411,12 +416,12 @@ immutable versions separately from existing assessments. No frontend wiring or
 automatic recipe creation is included. See [the trial API and evidence contract](recipes/reviewed_trial.md)
 for endpoints, provisional rules, limitations, packaging and tests.
 
-Fresh recorded-video acquisition and frontend display are documented in [recorded_producer.md](recipes/recorded_producer.md). This local experimental path supports installed Videos 1 and 2 on macOS; it uses the isolated demonstration bank.
+Fresh recorded-video acquisition and frontend display are documented in [recorded_producer.md](recipes/recorded_producer.md). This local experimental path supports installed Videos 1–5 and registered new station recordings on macOS; it uses the isolated demonstration bank.
 
-The experimental recorded workflow now persists pending color-conflict groups and append-only pattern memberships (engine 1.3). Two qualifying, distinct fills can establish an unverified observed pattern without clearing its original review flag. See the recorded producer guide for API fields, storage-version requirements and scope.
+The experimental recorded workflow persists pending color-conflict groups and append-only pattern memberships (introduced in engine 1.3, retained in current engine 1.4). Two qualifying, distinct fills can establish an unverified observed pattern without clearing its original review flag. See the recorded producer guide for API fields, storage-version requirements and scope.
 
 Automatic fixed-station vial/visible-surface tracking now supports recorded playback and Live Mode through a shared pixel API. Whole-recording geometry is cached separately and joins recorded fill observations as supplemental evidence. See [geometry_tracking.md](recipes/geometry_tracking.md) for scope, routes, validation and remaining qualification limits.
 
-Recorded recipe processing now uses producer 3 and demo engine 1.4. Source-bound identity/recovery and direct final-color visibility are mandatory before recipe actions; numeric liquid level remains excluded. Legacy packaged snapshots are retained as held evidence. Preserve older demo files and configure a separate 1.4 filename when enabling it. See [the integration contract](recipes/recorded_workflow_integration.md).
+Recorded recipe processing uses producer 4 and demo engine 1.4, retaining the producer-3 tracking gate. Source-bound identity/recovery and direct final-color visibility are mandatory before recipe actions; numeric liquid level remains excluded. Legacy packaged snapshots are retained as held evidence. Preserve older demo files and configure a separate 1.4 filename when enabling it. See [the integration contract](recipes/recorded_workflow_integration.md).
 
 The current recorded UI uses producer 4, automatic first-play processing, content-addressed opened recordings, and a playback-linked log. See [automatic_recordings.md](recipes/automatic_recordings.md). Live recipe processing remains deferred.
