@@ -96,3 +96,12 @@ Fresh processing of Videos 1 and 2 creates observed Recipe 102 from Video 1 Vial
 ## Producer 3 — Tracking-Gated Recipe Actions
 
 The current producer is `fixed-station-native/3`. It computes geometry during the same decode as the original observer, directly checks the three original final-color images, and binds this evidence to the observation before bank assessment. It publishes the same-pass geometry for display; the frontend no longer starts a duplicate automatic geometry job. Engine 1.4 blocks unsupported tracking on all recipe action paths and holds legacy packaged snapshots. Numeric liquid level remains excluded. See [recorded_workflow_integration.md](recorded_workflow_integration.md) for the current contract and separate-store requirement.
+
+## Current Automatic Playback Integration
+
+Producer 4 additionally supports installed Videos 3–5 and automatically registered
+new recordings. First playback ensures an analysis job; the Inspection Log replaces
+the manual comparison/timeline/process controls. See [automatic_recordings.md](automatic_recordings.md)
+for the current APIs, playback timing, source identity, persistence and limits.
+The earlier Videos-1/2 restriction and manual Process Recording UI above describe
+the previous integration. Observation/matching thresholds were not changed.

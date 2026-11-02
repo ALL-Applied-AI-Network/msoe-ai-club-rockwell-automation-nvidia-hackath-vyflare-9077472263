@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { InspectionEvent } from "./inspectionLog";
 import { readResponse } from "./types";
 export type PatternMembership = {
   group_id: string | null; recipe_id: number | null; status: string; revision_id: number;
@@ -20,7 +21,8 @@ export type DetectedAssessment = {
     duration_bounds_seconds: number[][]; departure_interval_seconds: number[] | null;
     candidate_appearance_window_seconds: number[] | null; raw_rgb: { nominal: number[] } | null };
 };
-export type ProducerJob = { state: "idle" | "processing" | "completed" | "saved" | "failed";
+export type ProducerJob = { state: "idle" | "queued" | "processing" | "completed" | "saved" | "failed";
+  events?: InspectionEvent[]; analyzed_through_seconds?: number; source_sha256?: string;
   stage?: string; progress: number; error?: string; detected_fill_count?: number;
   held_visits?: { label: string; hold_reasons: string[] }[]; assessments: DetectedAssessment[] };
 export type ProducerStatus = { enabled: boolean; available: boolean; reason: string | null; coverage?: { nominal_recipe_count: number; observed_recipe_count: number; observed_profile_count: number; missing_recipe_ids: number[] } };
@@ -38,10 +40,10 @@ export function detectedRecipeLabel(assessment?: DetectedAssessment) {
   if (assessment.action === "REUSE_REFERENCE_PATTERN") return `Reference Pattern ${assessment.recipe_id} · Identity Unconfirmed`;
   return assessment.color.status === "CONFLICTING" ? "Unresolved · Color Review Flag" : "Unresolved";
 }
-export function useRecordedObserver(videoId?: string) {
+export function useRecordedObserver(videoId?: string, automatic=false) {
   const [job, setJob] = useState<ProducerJob | null>(null), [status, setStatus] = useState<ProducerStatus | null>(null);
   const [error, setError] = useState(""), [requesting, setRequesting] = useState(false), [refresh, setRefresh] = useState(0);
-  const generation = useRef(0);
+  const generation = useRef(0), started=useRef(new Set<string>());
   useEffect(() => {
     generation.current++;
     const abort = new AbortController(); let timer: ReturnType<typeof setTimeout> | undefined;
@@ -52,7 +54,7 @@ export function useRecordedObserver(videoId?: string) {
         const value = await fetch(`/api/recorded-observer/videos/${videoId}`, { signal: abort.signal }).then(readResponse<ProducerJob>);
         if (abort.signal.aborted) return;
         setJob(value);
-        if (value.state === "processing") timer = setTimeout(() => void poll(), 1500);
+        if (value.state === "processing" || value.state === "queued") timer = setTimeout(() => void poll(), 1500);
       } catch (e) { if (!abort.signal.aborted) setError(e instanceof Error ? e.message : "Could not load observations."); }
     };
     fetch("/api/recorded-observer/status", { signal: abort.signal }).then(readResponse<ProducerStatus>).then(value => {
@@ -61,15 +63,19 @@ export function useRecordedObserver(videoId?: string) {
     }).catch(e => { if (!abort.signal.aborted) setError(e.message); });
     return () => { generation.current++; abort.abort(); if (timer) clearTimeout(timer); };
   }, [videoId, refresh]);
-  const start = useCallback(async () => {
+  const start = useCallback(async (retry=false) => {
     if (!videoId) return;
     const requestGeneration = generation.current;
     setRequesting(true); setError("");
     try {
-      await fetch(`/api/recorded-observer/videos/${videoId}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }).then(readResponse<ProducerJob>);
+      await fetch(`/api/recorded-observer/videos/${videoId}${retry ? "" : "/ensure"}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }).then(readResponse<ProducerJob>);
       if (requestGeneration === generation.current) setRefresh(n => n + 1);
     } catch (e) { if (requestGeneration === generation.current) setError(e instanceof Error ? e.message : "Could not start processing."); }
     finally { if (requestGeneration === generation.current) setRequesting(false); }
   }, [videoId]);
-  return { job, status, error, start, busy: requesting || job?.state === "processing", reload: () => setRefresh(n => n + 1) };
+  useEffect(() => {
+    if (!automatic || !videoId || !status?.enabled || !status.available || started.current.has(videoId)) return;
+    started.current.add(videoId); void start();
+  }, [automatic,videoId,status,start]);
+  return { job, status, error, start, busy: requesting || job?.state === "processing" || job?.state === "queued", reload: () => setRefresh(n => n + 1) };
 }

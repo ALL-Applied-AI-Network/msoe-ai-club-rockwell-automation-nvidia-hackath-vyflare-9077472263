@@ -27,7 +27,7 @@ describe("Fresh recording producer proxy", () => {
     expect((await post({})).status).toBe(202);
     expect((await post({}, "https://untrusted.example")).status).toBe(403);
     expect((await post({ path: "/tmp/forged" })).status).toBe(400);
-    expect((await fetch(`${base}/videos/video-3`)).status).toBe(404);
+    expect((await fetch(`${base}/videos/video-99`)).status).toBe(404);
     expect((await (await fetch(`${base}/videos/video-1`)).json()).assessments[0].recipe_id).toBe(100);
     expect((await (await fetch(`${base}/recipes`)).json()).recipes[0].recipe_id).toBe(100);
     expect((await (await fetch(`${base}/patterns`)).json()).groups[0].qualifying_fill_count).toBe(1);

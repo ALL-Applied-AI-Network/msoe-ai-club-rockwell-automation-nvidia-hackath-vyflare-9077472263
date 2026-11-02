@@ -418,3 +418,5 @@ The experimental recorded workflow now persists pending color-conflict groups an
 Automatic fixed-station vial/visible-surface tracking now supports recorded playback and Live Mode through a shared pixel API. Whole-recording geometry is cached separately and joins recorded fill observations as supplemental evidence. See [geometry_tracking.md](recipes/geometry_tracking.md) for scope, routes, validation and remaining qualification limits.
 
 Recorded recipe processing now uses producer 3 and demo engine 1.4. Source-bound identity/recovery and direct final-color visibility are mandatory before recipe actions; numeric liquid level remains excluded. Legacy packaged snapshots are retained as held evidence. Preserve older demo files and configure a separate 1.4 filename when enabling it. See [the integration contract](recipes/recorded_workflow_integration.md).
+
+The current recorded UI uses producer 4, automatic first-play processing, content-addressed opened recordings, and a playback-linked log. See [automatic_recordings.md](recipes/automatic_recordings.md). Live recipe processing remains deferred.

@@ -104,7 +104,8 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
     app.register_blueprint(create_geometry_blueprint(geometry))
     producer = RecordedVideoProducer(demo_service.bank,
         app.config.get('RECORDED_VIDEO_ROOT', Path(__file__).resolve().parents[1] / 'cosmos-original-dataset' / 'videos'),
-        geometry_service=geometry) if demo_service else None
+        geometry_service=geometry, upload_root=app.config.get("RECORDING_UPLOAD_ROOT") or os.getenv("RECORDING_UPLOAD_ROOT") or Path(app.config["RECIPE_DEMO_DB_PATH"]).expanduser().resolve().parent / "recordings") if demo_service else None
+    if producer:geometry.source_resolver=producer.source
     app.extensions['recorded_video_producer'] = producer
     app.register_blueprint(create_demo_blueprint(demo_service, producer))
     scheduler_enabled = app.config["TRACKER_SCHEDULER_ENABLED"]
@@ -120,6 +121,8 @@ def create_app(model_registry=None, config=None, *, recipe_repository=None, insp
 
     @app.before_request
     def check_origin():
+        if request.path == "/api/recipe-workflow/demo/producer/recordings":
+            request.max_content_length = 128 * 1024 * 1024
         if request.path in ("/predict/model4", "/predict/model2", "/predict/vial-evidence"):
             request.max_content_length = app.config["MODEL4_MAX_CONTENT_LENGTH"]
             request.max_form_parts = 24

@@ -222,8 +222,10 @@ remain in Git history; this integration adds no new dataset or weight binaries.
 
 ## Recorded Tracking-Gated Recipe Workflow (Current)
 
-The experimental recorded workflow now processes installed Videos 1 and 2 from original pixels, qualifies tracking identity and direct final-color visibility, then compares timing/color and creates/reuses provisional observed patterns when the existing checks permit. Inspection Workspace displays tracking eligibility with each recipe outcome. Geometry and observer measurements come from one decode pass; overlays do not enter analysis images. Numeric liquid level remains excluded.
+The experimental recorded workflow processes installed recordings and newly opened station-view recordings from original pixels, qualifies tracking identity and direct final-color visibility, then compares timing/color and creates/reuses provisional observed patterns when the existing checks permit. Inspection Workspace displays tracking eligibility with each recipe outcome. Geometry and observer measurements come from one decode pass; overlays do not enter analysis images. Numeric liquid level remains excluded.
 
 This current native workflow is distinct from the older reviewed-annotation/snapshot interfaces described above. Historical packaged snapshots lack the tracking proof and stay held; they cannot authorize recipe creation. Live recipe inspection remains deferred, and other model integrations are unchanged.
 
-Producer 3 uses isolated demo engine 1.4. Preserve older pinned demo files and select a new separate `RECIPE_DEMO_DB_PATH` (for example, `recipe-demo-v1-4.sqlite3`) before enabling it. No automatic history migration or normal-bank changes occur. See [the detailed contract](backend/recipes/recorded_workflow_integration.md).
+Producer 4 uses isolated demo engine 1.4. Preserve older pinned demo files and select a new separate `RECIPE_DEMO_DB_PATH` (for example, `recipe-demo-v1-4.sqlite3`) before enabling it. No automatic history migration or normal-bank changes occur. See [the detailed contract](backend/recipes/recorded_workflow_integration.md).
+
+Recorded inspection now starts automatically on playback and displays an evidence-timed Inspection Log. New recordings are registered by content hash; pause freezes log arrivals while analysis continues. See [automatic recorded inspection](backend/recipes/automatic_recordings.md) for supported geometry, APIs, local uploads, persistence and deployment limits.

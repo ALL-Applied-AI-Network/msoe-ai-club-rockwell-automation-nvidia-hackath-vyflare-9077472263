@@ -14,14 +14,14 @@ to `ENABLED_MODELS` alongside `model4`. The adapter verifies the complete backbo
 and head SHA256 hashes. Without an explicit path it uses the standard Torch cache
 and downloads the pinned official ImageNet backbone when absent.
 
-In Inspection Workspace, prepare the existing three registered 640 × 480 post-flow
-frames and complete the intended comparison recipe and reliable batch context.
-Select **Include Model 2 on These Same Three Frames**, then **Run Model 4 + Model 2**.
-The Python `/predict/vial-evidence` endpoint decodes each frame once and runs the
-two models independently under the existing shared nonblocking inference lock.
-The gateway checks the returned frame/vial/batch context. Model 4-only requests
-continue through their existing endpoint. `/predict/model2` also supports Model 2
-alone through the gateway; see `MODEL2_API.md` for the multipart contract.
+Recorded Inspection Workspace now uses an automatic timing/color/tracking log;
+the manual three-frame comparison form was removed from that page. Model 2
+remains available as an optional experimental API. The `/predict/model2` and
+`/predict/vial-evidence` endpoints still support the registered 640 × 480,
+three-early-post-flow-frame contract with an intended recipe and batch context.
+See `MODEL2_API.md` for that separate manual experiment contract. Model 4-only
+API requests also retain their existing endpoint. These APIs are not invoked by
+the automatic recipe observer.
 
 The classifier receives image features only. The intended recipe and batch position
 are applied afterward to its interpretation. Scores are uncalibrated; high scores

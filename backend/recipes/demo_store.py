@@ -144,7 +144,7 @@ class DemoBank:
             p,a,o=self.connection.execute("SELECT (SELECT COUNT(*) FROM demo_patterns),(SELECT COUNT(*) FROM demo_assessments),(SELECT COUNT(*) FROM demo_occurrences)").fetchone()
         return {"discovered_patterns":p,"saved_assessments":a,"linked_occurrences":o}
 
-    def assess_many(self, observations):
+    def assess_many(self, observations, *, capture_timeline=False):
         with self.transaction():
             before=self.counts()
             observations=[validate_observation(o) for o in observations]
@@ -158,9 +158,20 @@ class DemoBank:
                 fills={pattern_membership.source_key(o) or str(o['source_episode_intervals'][0]['start']) for o in group}
                 if len(fills)>1:
                     for o in group:o['recorded_geometry']['batch_identity_conflict']=True
-            results=[self.assess(o) for o in observations]
+            results=[]; snapshots=[]; seen={}
+            for o in observations:
+                results.append(self.assess(o))
+                if capture_timeline:
+                    from .inspection_log import completion_time
+                    for prior in results:
+                        a=pattern_membership.project(self,prior['assessment'])
+                        key=a['observation_id'];signature=digest(a.get('pattern_membership'))
+                        if key not in seen or seen[key]!=signature:
+                            snapshots.append({'assessment':deepcopy(a),'initial':key not in seen,
+                                'at':max(completion_time(o),completion_time(a['observation'])),'sequence':len(snapshots)})
+                        seen[key]=signature
             after=self.counts()
-            return {"results":[{**r,"assessment":pattern_membership.project(self,r["assessment"])} for r in results],"new_patterns":after["discovered_patterns"]-before["discovered_patterns"],
+            return {**({"playback_snapshots":snapshots} if capture_timeline else {}), "results":[{**r,"assessment":pattern_membership.project(self,r["assessment"])} for r in results],"new_patterns":after["discovered_patterns"]-before["discovered_patterns"],
                 "new_assessments":after["saved_assessments"]-before["saved_assessments"],
                 "replayed_assessments":sum(r["idempotent_replay"] for r in results)}
 

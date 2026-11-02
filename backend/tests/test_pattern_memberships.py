@@ -48,6 +48,27 @@ class MembershipTests(unittest.TestCase):
   self.assertIsNone(effective['recipe_id']);self.assertEqual(effective['timing']['possible_recipe_ids'],[7]);self.assertEqual(effective['color']['status'],'CONFLICTING')
   history=self.bank.membership_history(key);self.assertEqual([r['status'] for r in history],['PENDING_REPEAT','DISCOVERED_UNVERIFIED'])
   self.assertEqual(history[1]['supersedes_revision_id'],history[0]['revision_id'])
+ def test_playback_snapshot_does_not_reveal_a_later_pattern_confirmation(self):
+  from recipes.inspection_log import playback_events
+  first=observation('Video 1 · Vial 13');second=observation('Video 2 · Vial 3')
+  # Shift all temporal evidence of the second synthetic test observation forward,
+  # so this tests snapshot causality without relying on recording-relative clocks.
+  second['source_episode_intervals']=[{'start':[v+1000 for v in e['start']],'end':[v+1000 for v in e['end']]} for e in second['source_episode_intervals']]
+  second['duration_bounds_seconds']=[[e['end'][0]-e['start'][1],e['end'][1]-e['start'][0]] for e in second['source_episode_intervals']]
+  second['sample_actual_seconds']=[v+1000 for v in second['sample_actual_seconds']]
+  second['departure_interval_seconds']=[v+1000 for v in second['departure_interval_seconds']]
+  second['candidate_appearance_window_seconds']=[v+1000 for v in second['candidate_appearance_window_seconds']]
+  result=self.bank.assess_many([first,second],capture_timeline=True)
+  snapshots=result['playback_snapshots']
+  initial=next(s for s in snapshots if s['initial'] and s['assessment']['observation_id']==first['observation_id'])
+  self.assertEqual(initial['assessment']['pattern_membership']['status'],'PENDING_REPEAT')
+  updated=next(s for s in snapshots if not s['initial'])
+  self.assertEqual(updated['assessment']['pattern_membership']['status'],'DISCOVERED_UNVERIFIED')
+  self.assertGreater(updated['at'],initial['at'])
+  events=playback_events(snapshots)
+  early=[e for e in events if e['at']<=initial['at'] and e['kind']=='recipe']
+  self.assertTrue(all('102' not in e['title'] for e in early))
+
  def test_restart_persists_pending_confirmation_and_history(self):
   self.assess(observation('Video 1 · Vial 13'));self.bank=self.open()
   self.assertEqual(self.bank.pending_patterns()[0]['qualifying_fill_count'],1)

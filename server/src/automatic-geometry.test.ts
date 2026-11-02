@@ -28,7 +28,7 @@ describe("Pixel geometry routing and playback", () => {
     const foreign = await actualFetch(`${base}/sessions`, { method: "POST", headers: { Origin: "https://foreign.example", "Content-Type": "application/json" }, body: "{}" });
     expect(foreign.status).toBe(403);
     expect((await actualFetch(`${base}/sessions/bad/frame`, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })).status).toBe(400);
-    expect((await actualFetch(`${base}/recordings/video-3`)).status).toBe(404); expect(upstream).not.toHaveBeenCalled();
+    expect((await actualFetch(`${base}/recordings/video-99`)).status).toBe(404); expect(upstream).not.toHaveBeenCalled();
   });
   it("returns unavailable instead of simulated tracking", async () => {
     const base = await app(); vi.stubGlobal("fetch", vi.fn().mockRejectedValue(Error("offline")));
