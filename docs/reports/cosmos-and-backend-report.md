@@ -70,7 +70,7 @@ The batch took approximately 24 minutes, with individual observations generally 
 
 ### Human Verification of Baseline Observations
 
-We reviewed all 30 baseline outputs and recorded judgments in [the verification workbook](cosmos-model-data/output-verification.xlsx). All vial numbers and clip-folder identifiers match the dataset manifest. The workbook was read without modification.
+We reviewed all 30 baseline outputs and recorded judgments in [the verification workbook](../../research/cosmos-baseline/output-verification.xlsx). All vial numbers and clip-folder identifiers match the dataset manifest. The workbook was read without modification.
 
 The explicit `correct` column (`D3:D32`) marks **24 of 30 color descriptions correct (80.0%)** and **6 of 30 requiring correction (20.0%)**. There are no blank correctness ratings. These figures measure agreement with one reviewer on this recorded batch; they are not a held-out generalization score or an accuracy measure for every field in the model responses. The separate 30/30 JSON validation result measures structure only.
 
@@ -117,10 +117,10 @@ Next steps are to use the six reviewed corrections as regression cases while ret
 
 ## Evidence reviewed
 
-- [Baseline result summary](cosmos-model-data/README.md)
-- [Human verification workbook](cosmos-model-data/output-verification.xlsx)
-- [Backend architecture and API documentation](backend/README.md)
-- [Spark deployment and documented live test](backend/dgx/README.md)
-- [Model adapters and remote routing](backend/models.py)
-- [API tests](backend/tests/test_api.py) and [routing tests](backend/tests/test_cosmos_switch.py)
+- [Baseline result summary](../../research/cosmos-baseline/README.md)
+- [Human verification workbook](../../research/cosmos-baseline/output-verification.xlsx)
+- [Backend architecture and API documentation](../../backend/README.md)
+- [Spark deployment and documented live test](../../backend/dgx/README.md)
+- [Model adapters and remote routing](../../backend/models.py)
+- [API tests](../../backend/tests/test_api.py) and [routing tests](../../backend/tests/test_cosmos_switch.py)
 - Branch changes: `1b5469e` and `a418435`, compared with `implement-backend` at `b9184d9`.

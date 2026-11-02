@@ -17,8 +17,8 @@ COPY --from=build /app/server/dist server/dist/
 COPY package.json ./
 COPY evidence/ evidence/
 COPY backend/model4_assets/recipes.json backend/model4_assets/manifest.json backend/model4_assets/
-COPY fluid-mixing-anomaly-detection/outputs/demo_data.json fluid-mixing-anomaly-detection/outputs/demo_data.json
-COPY fluid-mixing-anomaly-detection/demo/thumbs/ fluid-mixing-anomaly-detection/demo/thumbs/
-COPY cosmos-model-data/batch-results/20261025-batch01/summary.json cosmos-model-data/batch-results/20261025-batch01/summary.json
+COPY research/model-4-anomaly-detection/outputs/demo_data.json research/model-4-anomaly-detection/outputs/demo_data.json
+COPY research/model-4-anomaly-detection/demo/thumbs/ research/model-4-anomaly-detection/demo/thumbs/
+COPY research/cosmos-baseline/batch-results/20261025-batch01/summary.json research/cosmos-baseline/batch-results/20261025-batch01/summary.json
 EXPOSE 8787
 CMD ["node", "server/dist/server/src/index.js"]
