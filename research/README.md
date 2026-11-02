@@ -2,7 +2,7 @@
 
 Model experiments, evaluation outputs and Cosmos baseline results. The running
 application lives in `backend/`, `client/` and `server/`; see the
-[root README](../README.md). Results are summarized in the
+[console guide](../docs/console.md). Results are summarized in the
 [executive summary](../docs/EXECUTIVE_SUMMARY.md).
 
 | Folder | Contents | Status |

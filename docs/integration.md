@@ -1,7 +1,7 @@
 # Vyflare Integration Guide
 
 The maintained startup, workflow, storage, validation and deployment overview is
-in the [root README](../README.md). This file previously duplicated the initial
+in the [console guide](console.md). This file previously duplicated the initial
 image-analysis integration instructions and is now an index to avoid conflicting
 startup guidance.
 
