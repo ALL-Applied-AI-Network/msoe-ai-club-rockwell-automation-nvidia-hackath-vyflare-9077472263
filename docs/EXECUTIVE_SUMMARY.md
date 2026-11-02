@@ -55,21 +55,20 @@ Most of our accuracy gains came from fixing the data, not from bigger models.
 
 ## Estimated credit and compute usage
 
-No billing export is in the repository, so these are estimates built from logged run times. GPU time on the shared DGX Spark is recorded; Brev instance time is not logged and is estimated.
+These figures estimate what the compute itself would cost at on-demand cloud GPU rates, not what the team paid. No billing export is in the repository, so they are built from logged run times. DGX Spark job times are recorded; worker uptime and Brev instance time are not logged and are estimated. All GPU time is priced at an assumed **$1.50–$2.50 per GPU-hour** (typical on-demand rate for an L40S-class GPU); CPU time at about $0.10 per hour.
 
-| Resource | Work | Recorded / estimated time | Estimated cost (USD) |
+| Resource | Work | Recorded / estimated time | Estimated compute cost (USD) |
 |---|---|---|---|
-| **DGX Spark** (GB10, provided hardware) | Cosmos3-Nano baseline batch, 30 clips | ~24 min (recorded) | $0 billed (event hardware) |
-| | LoRA smoke run + v1 pilot + synthetic continuation | ~18.4 min job wall time (recorded) | |
-| | Field and synthetic diagnostics | ~2.4 min (recorded) | |
-| | Persistent inference worker for the demo | Not logged; idle while unused | |
-| | **Recorded total** | **≈ 0.75 GPU-hours** | **$0** |
-| **Brev** (Isaac Sim 6.0.1 instance) | Digital-twin setup and 600-frame render (32 subframes each) | **Estimated 5–10 instance-hours**, including setup, pilot run and idle time | **$8–$25** (at an assumed $1.50–$2.50/hr for an L40S-class GPU) |
+| **DGX Spark** (GB10) | Cosmos3-Nano baseline batch, 30 clips | ~24 min (recorded) | $0.60–$1.00 |
+| | LoRA smoke run + v1 pilot + synthetic continuation | ~18.4 min (recorded) | $0.45–$0.75 |
+| | Field and synthetic diagnostics | ~2.4 min (recorded) | ~$0.10 |
+| | Persistent Cosmos inference worker (development and demo, Oct 26–Nov 1) | Estimated 10–20 hours of uptime | $15–$50 |
+| **Brev** (Isaac Sim 6.0.1 instance) | Digital-twin setup and 600-frame render (32 subframes each) | Estimated 5–10 instance-hours, including setup, pilot run and idle time | $8–$25 |
 | **build.nvidia.com** | Not used by any committed code | 0 | $0 |
-| **Laptops (CPU)** | Models 1–4 training and evaluation, console, tests | Model 2 full run ~5 min CPU; Models 3 and 4 are seconds | $0 |
-| **Total** | | | **≈ $8–$25 (midpoint ≈ $16)** |
+| **Laptops (CPU)** | Models 1–4 training and evaluation, console, tests | ~1–2 CPU-hours (Model 2 full run ~5 min; Models 3 and 4 seconds) | < $1 |
+| **Total** | | ≈ 16–31 GPU-hours | **≈ $24–$77 (midpoint ≈ $50)** |
 
-All spend is Brev credit; confirm against the Brev billing page. For reference, the 0.75 recorded DGX Spark GPU-hours would cost roughly $1–$2 on a rented cloud GPU at similar hourly rates.
+Most of the cost is GPUs kept running (the Cosmos worker and the Brev instance), not training: the recorded training and inference jobs themselves come to under $2.
 
 The cheapest models were also the strongest: Models 3 and 4 run on CPU in milliseconds per vial. GPU time went to Cosmos (explanations) and the digital twin (synthetic data).
 
