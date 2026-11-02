@@ -1,6 +1,6 @@
 # Integrated Vyflare Workspace
 
-**Team Vyflare — Fluid Mixing Station.** Start with the
+**Adaptive Fill Intelligence — Team Vyflare, Fluid Mixing Station.** Start with the
 [executive summary](docs/EXECUTIVE_SUMMARY.md): problem, data cleaning, findings
 and compute usage.
 

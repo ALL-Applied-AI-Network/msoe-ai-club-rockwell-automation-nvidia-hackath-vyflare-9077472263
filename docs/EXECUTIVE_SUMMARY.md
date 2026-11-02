@@ -1,4 +1,6 @@
-# Vision-Based Recipe Verification and Carryover Detection for a Fluid Mixing Station
+# Adaptive Fill Intelligence
+
+*Vision-based recipe verification and carryover detection for a fluid mixing station*
 
 **Executive Summary — Team Vyflare** · MSOE AI Club × Rockwell Automation × NVIDIA Hackathon, Fall 2026 · November 1, 2026
 
