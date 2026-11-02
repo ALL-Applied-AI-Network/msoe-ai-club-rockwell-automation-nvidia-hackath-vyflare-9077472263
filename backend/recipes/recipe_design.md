@@ -1,4 +1,10 @@
 > Integration update: the application now uses atomic SQLite-backed repository
+
+> Scope: the design and prototype milestones below are historical. Normal
+> application startup now uses durable SQLite; injected test repositories can
+> remain in memory. The current recorded workflow uses a separate engine-1.4
+> bank and producer-4 playback log. See [durable storage](durable.md) and
+> [automatic recorded inspection](automatic_recordings.md).
 > snapshots by default. Reviewed-video recipe assessments, coverage checks, and
 > trusted observation-ingestion contracts are implemented in `workflow_api.py`.
 > The in-memory classes described below remain available for isolated tests.

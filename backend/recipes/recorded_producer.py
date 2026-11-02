@@ -18,6 +18,8 @@ from threading import RLock
 import numpy as np
 from PIL import Image
 
+from .recording_sources import RecordingSources
+from .inspection_log import playback_events, observation_events, completion_time, clarify_saved_outcomes
 from .demo_store import digest, validate_observation
 from .observation.features import extract
 from .observation.trace import Config, Observer
@@ -27,7 +29,7 @@ from .recorded_eligibility import build_report, evaluate as geometry_eligibility
 
 HERE = Path(__file__).with_name('observation')
 CONFIG = json.loads((HERE/'config.json').read_text())
-PRODUCER_VERSION = 'fixed-station-native/3'
+PRODUCER_VERSION = 'fixed-station-native/4'
 OFFSETS = [(0,0),(2,0),(-2,0),(0,2),(0,-2),(4,0),(-4,0),(0,4),(0,-4)]
 
 
@@ -77,7 +79,7 @@ class NativeDecoder:
 
 def produce_video(source, video_id, progress=lambda **kw: None, decoder_factory=NativeDecoder):
     """Decode actual media anew. Return assessable observations and held visits."""
-    number=int(video_id.removeprefix('video-')); source=Path(source)
+    number=int(video_id.removeprefix('video-')) if video_id.startswith('video-') else int(video_id.removeprefix('recording-')[:12],16); source=Path(source)
     source_sha=file_sha(source)
     implementation_sha=digest({'observation_files':{p.name:file_sha(p) for p in HERE.iterdir() if p.suffix in ('.py','.swift','.json')},'producer':file_sha(Path(__file__)),'geometry':GEOMETRY_SHA,'eligibility':POLICY_SHA})
     with TemporaryDirectory(prefix='vyflare-observation-') as temporary:
@@ -109,11 +111,11 @@ def produce_video(source, video_id, progress=lambda **kw: None, decoder_factory=
         if set(decoded)!={t['id'] for t in tasks}: raise ValueError('Decoder did not account for all requested samples')
         observations=[]; held=[]
         for i,visit in enumerate(visits):
-            vial_id=f'V{number}-V{i+1:02}'; label=f'Video {number} · Vial {i+1}'
+            vial_id=f'V{number}-V{i+1:02}'; label=f'Video {number} · Vial {i+1}' if video_id.startswith('video-') else f'Opened Recording · Vial {i+1}'
             intervals=[{'start':e['start_interval_seconds'],'end':e['end_interval_seconds']} for e in visit['episodes']]
             base={'video_id':video_id,'vial_id':vial_id,'label':label,'episodes':intervals}
             if any(e['end'] is None or not e['start'][1]<e['end'][0] for e in intervals):
-                held.append({**base,'hold_reasons':sorted(set(visit['flags']+['INCOMPLETE_EVENT_INTERVALS']))}); continue
+                held.append({**base,'available_at':events[-1]['actual_seconds'],'hold_reasons':sorted(set(visit['flags']+['INCOMPLETE_EVENT_INTERVALS']))}); continue
             reasons=list(visit['flags']); raw=None; frames=[]; times=[]; cadence=False
             window=visit['candidate_appearance_window_seconds']; departure=visit['departure_interval_seconds']
             if window:
@@ -153,41 +155,82 @@ def produce_video(source, video_id, progress=lambda **kw: None, decoder_factory=
         progress(stage='Saving Recipe Assessments',progress=95)
         return {'observations':observations,'held_visits':held,'source_sha256':source_sha,
             'event_frame_count':len(events),'detected_fill_count':len(visits),'producer_version':PRODUCER_VERSION,
-            'geometry_frames':geometry_frames,'tracking_held_count':sum(geometry_eligibility(o)['status']=='HELD' for o in observations)}
+            'analyzed_through_seconds':events[-1]['actual_seconds'],'geometry_frames':geometry_frames,'tracking_held_count':sum(geometry_eligibility(o)['status']=='HELD' for o in observations)}
 
 
 class RecordedVideoProducer:
     """One bounded worker; duplicate starts share the job, and writes are atomic."""
-    def __init__(self, bank, video_root, runner=produce_video, geometry_service=None):
+    def __init__(self, bank, video_root, runner=produce_video, geometry_service=None, upload_root=None):
         self.bank=bank; self.video_root=Path(video_root); self.runner=runner; self.geometry_service=geometry_service
+        self.sources=RecordingSources(video_root, upload_root or Path(video_root)/".recordings")
+        with bank.lock:database_path=bank.connection.execute('PRAGMA database_list').fetchone()[2]
+        self.log_root=self.sources.uploads/('logs-'+hashlib.sha256(str(database_path).encode()).hexdigest()[:16])
         self.lock=RLock(); self.jobs={}; self.executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='recorded-observer')
 
     def capability(self): return NativeDecoder.capability()
 
-    def source(self, video_id):
-        if video_id not in ('video-1','video-2'): raise KeyError('Unknown recorded video')
-        path=self.video_root/f"vial_fill_{video_id.replace('-','_')}.mp4"
-        if not path.is_file(): raise FileNotFoundError('Source recording is not installed on the backend')
-        return path
+    def source(self, video_id): return self.sources.source(video_id)
+
+    def _journal(self, video_id):
+        return self.log_root/(file_sha(self.source(video_id))+'.json')
+
+    def _bank_fingerprint(self, video_id):
+        source_sha=file_sha(self.source(video_id))
+        with self.bank.lock:
+            rows=self.bank.connection.execute('SELECT observation_key,evidence_hash,result FROM demo_assessments WHERE observation_key LIKE ? ORDER BY observation_key',(source_sha+':%',)).fetchall()
+        return digest(rows)
 
     def saved(self, video_id):
-        if video_id not in ('video-1','video-2'): raise KeyError('Unknown recorded video')
+        source_sha=file_sha(self.source(video_id))
         return [r for r in self.bank.assessments() if r['observation'].get('source_kind')=='FRESH_RECORDED_VIDEO_OBSERVATION'
-            and r['observation']['video_id']==video_id]
+            and r['observation']['video_id']==video_id and r['observation']['source_lineage']['video_sha256']==source_sha]
 
     def get(self, video_id):
         saved=self.saved(video_id)
-        with self.lock: job=deepcopy(self.jobs.get(video_id,{'state':'saved' if saved else 'idle','progress':100 if saved else 0}))
-        return {'video_id':video_id,**job,'assessments':saved}
+        with self.lock:
+            job=deepcopy(self.jobs.get(video_id,{'state':'saved' if saved else 'idle','progress':100 if saved else 0}))
+            if job.get('source_sha256') and job['source_sha256']!=file_sha(self.source(video_id)) and job['state'] not in ('processing','queued'):
+                self.jobs.pop(video_id,None);job={'state':'saved' if saved else 'idle','progress':100 if saved else 0}
+        journal=self._journal(video_id)
+        events=job.pop('events',None); analyzed=job.get('analyzed_through_seconds',0)
+        if events is not None:pass
+        elif journal.exists():
+            cached=json.loads(journal.read_text())
+            if cached.get('bank_fingerprint')==self._bank_fingerprint(video_id):
+                events=cached['events'];analyzed=cached.get('analyzed_through_seconds',0)
+                if job['state'] in ('idle','saved'):job={**cached['job'],'stage':'Saved Analysis','progress':100}
+        if events is None and saved:
+            # Original stored decisions, not memberships projected using future fills.
+            baseline={r['observation_id']:r for r in self.bank.baseline_assessments()}
+            events=sorted([e for r in saved for e in observation_events(baseline[r['observation_id']])],key=lambda e:(e['at'],e['id']))
+            analyzed=max((e['at'] for e in events),default=0)
+        if events and any(e.get('kind')=='recipe' and e.get('title')=='Unresolved' for e in events):
+            # Presentation-only upgrade of old journals; do not reprocess footage,
+            # rewrite assessments, or project memberships learned from later fills.
+            source_sha=file_sha(self.source(video_id))
+            original=[r for r in self.bank.baseline_assessments()
+                if r['observation'].get('source_lineage',{}).get('video_sha256')==source_sha]
+            events=clarify_saved_outcomes(events,original)
+        return {'video_id':video_id,**job,'assessments':saved,'events':events or [],'analyzed_through_seconds':analyzed,
+            'source_sha256':file_sha(self.source(video_id))}
 
-    def start(self, video_id):
+    def ensure(self, video_id):
+        with self.lock:
+            value=self.get(video_id)
+            if value['state'] in ('processing','queued','completed','saved'):return value
+            if value['state']=='failed':return value
+            return self.start(video_id,queue=True)
+
+
+    def start(self, video_id, *, queue=False):
         path=self.source(video_id)
         if not self.capability()['available']: raise ValueError(self.capability()['reason'])
         with self.lock:
-            if any(j['state']=='processing' for j in self.jobs.values()):
-                if self.jobs.get(video_id,{}).get('state')=='processing': return self.get(video_id)
-                raise RuntimeError('Another recording is processing; wait for it to finish')
-            self.jobs[video_id]={'state':'processing','stage':'Queued','progress':0}
+            if self.jobs.get(video_id,{}).get('state') in ('processing','queued'):return self.get(video_id)
+            active=sum(j['state'] in ('queued','processing') for j in self.jobs.values())
+            if active and not queue:raise RuntimeError('Another recording is processing; wait for it to finish')
+            if active>=4:raise RuntimeError('The recording queue is full; retry after a recording finishes')
+            self.jobs[video_id]={'state':'queued' if queue else 'processing','stage':'Queued','progress':0,'source_sha256':file_sha(path)}
             self.executor.submit(self._run,path,video_id)
             return self.get(video_id)
 
@@ -195,14 +238,31 @@ class RecordedVideoProducer:
         def progress(**values):
             with self.lock: self.jobs[video_id].update(values)
         try:
+            progress(state="processing")
+            expected_sha=self.jobs[video_id]['source_sha256']
+            if file_sha(path)!=expected_sha:raise ValueError('Source changed while queued')
             result=self.runner(path,video_id,progress)
+            if file_sha(path)!=expected_sha or result.get('source_sha256',expected_sha)!=expected_sha:raise ValueError('Source changed during analysis')
             geometry_frames=result.pop('geometry_frames',None)
             if geometry_frames is not None and self.geometry_service is not None:
                 self.geometry_service.publish(video_id,path,result['source_sha256'],geometry_frames)
             # No partial bank writes if decode, features, phase or source validation fails.
-            saved=self.bank.assess_many(result.pop('observations'))
-            with self.lock: self.jobs[video_id].update(state='completed',stage='Complete',progress=100,
-                **result,new_patterns=saved['new_patterns'],replayed_assessments=saved['replayed_assessments'])
+            self.log_root.mkdir(parents=True,exist_ok=True)
+            journal=self._journal(video_id);temporary=journal.with_suffix('.tmp')
+            # A log preparation failure rolls back the associated recipe writes.
+            with self.bank.transaction():
+                saved=self.bank.assess_many(result.pop('observations'),capture_timeline=True)
+                events=playback_events(saved.pop('playback_snapshots'),result.get('held_visits',[]))
+                completed={**self.jobs[video_id], 'state':'completed','stage':'Complete','progress':100,
+                    **result,'new_patterns':saved['new_patterns'],'replayed_assessments':saved['replayed_assessments']}
+                temporary.write_text(json.dumps({'events':events,'analyzed_through_seconds':result.get('analyzed_through_seconds',max((e['at'] for e in events),default=0)),
+                    'job':completed,'bank_fingerprint':self._bank_fingerprint(video_id)},allow_nan=False))
+            try:temporary.replace(journal)
+            except OSError:
+                completed['cache_warning']='Analysis saved; playback log is available for this session but its disk cache could not be published.'
+                temporary.unlink(missing_ok=True)
+            with self.lock:self.jobs[video_id]={**completed,'events':events}
+
         except Exception:
             import logging
             logging.getLogger(__name__).exception('Recorded-video observation failed')

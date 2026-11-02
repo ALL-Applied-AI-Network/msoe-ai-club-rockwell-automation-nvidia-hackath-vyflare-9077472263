@@ -1,4 +1,5 @@
 import express from "express";
+import {recordingId} from "./recorded-producer.js";
 
 export function geometryRouter(baseUrl = process.env.INFERENCE_URL ?? "http://127.0.0.1:8000") {
   const router = express.Router();
@@ -37,7 +38,7 @@ export function geometryRouter(baseUrl = process.env.INFERENCE_URL ?? "http://12
     void forward(`/sessions/${req.params.sessionId}/frame`, req, res);
   });
   router.route("/recordings/:videoId").all((req, res, next) => {
-    if (!/^video-[12]$/.test(req.params.videoId)) { res.status(404).json({ error: "Unsupported recording." }); return; } next();
+    if (!recordingId.test(req.params.videoId)) { res.status(404).json({ error: "Unsupported recording." }); return; } next();
   }).get((req, res) => forward(`/recordings/${req.params.videoId}`, req, res))
     .post((req, res) => forward(`/recordings/${req.params.videoId}`, req, res));
   return router;

@@ -36,6 +36,7 @@ def observation_geometry(observation,frames):
 
 class GeometryService:
     def __init__(self,video_root,cache_root,bank=None):
+        self.source_resolver=None
         self.video_root=Path(video_root);self.cache_root=Path(cache_root);self.bank=bank
         self.lock=RLock();self.sessions={};self.jobs={};self.executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='pixel-geometry')
     def close(self):self.executor.shutdown(wait=True)
@@ -54,6 +55,7 @@ class GeometryService:
                 self.sessions.pop(key,None);raise KeyError('Tracking session expired; reconnect tracking')
             result=session['tracker'].step(pixels,seconds);session['touched']=monotonic();return result
     def source(self,video):
+        if self.source_resolver is not None:return self.source_resolver(video)
         if video not in ('video-1','video-2'):raise KeyError('Unsupported recording')
         source=self.video_root/f"vial_fill_{video.replace('-','_')}.mp4"
         if not source.is_file():raise FileNotFoundError('Source recording is not installed')

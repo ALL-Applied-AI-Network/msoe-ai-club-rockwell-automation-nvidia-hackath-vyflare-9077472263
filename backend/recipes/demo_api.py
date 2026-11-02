@@ -78,10 +78,30 @@ def create_demo_blueprint(service, producer=None):
         from .recorded_producer import NativeDecoder, PRODUCER_VERSION
         from .recorded_eligibility import VERSION as TRACKING_POLICY
         return jsonify(enabled=producer is not None, **NativeDecoder.capability(),
-            input_mode='FRESH_RECORDED_VIDEO_OBSERVATION', supported_videos=['video-1','video-2'],
+            input_mode='FRESH_RECORDED_VIDEO_OBSERVATION', supported_videos=[f'video-{n}' for n in range(1,6)], accepts_recordings=True, max_upload_bytes=128*1024*1024,
             producer_version=PRODUCER_VERSION,tracking_policy_version=TRACKING_POLICY,tracking_gate_enabled=True,
             coverage=service.coverage if service else None,
             operational_qualification_claim=False, normal_recipe_bank_writes=False)
+
+    @bp.post('/producer/recordings')
+    def register_recording():
+        if producer is None:return jsonify(error='Recorded producer is disabled'),503
+        if not producer.capability()['available']:return jsonify(error=producer.capability()['reason']),503
+        try:
+            value=producer.sources.register(request.stream,request.mimetype,request.headers.get('X-Recording-Name','Opened Recording'))
+            return jsonify(**value),201
+        except OverflowError as exc:return jsonify(error=str(exc)),413
+        except ValueError as exc:return jsonify(error=str(exc)),422
+
+    @bp.post('/producer/videos/<video_id>/ensure')
+    def ensure_video(video_id):
+        invalid=empty_body()
+        if invalid:return invalid
+        if producer is None:return jsonify(error='Recorded producer is disabled'),503
+        try:return jsonify(**producer.ensure(video_id)),202
+        except (KeyError,FileNotFoundError):return jsonify(error='Unknown or unavailable recording'),404
+        except ValueError as exc:return jsonify(error=str(exc)),503
+        except RuntimeError as exc:return jsonify(error=str(exc)),409
 
     @bp.get('/producer/videos/<video_id>')
     def producer_video(video_id):

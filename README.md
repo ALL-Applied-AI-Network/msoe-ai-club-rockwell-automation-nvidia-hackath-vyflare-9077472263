@@ -1,229 +1,172 @@
-# Integrated Vyflare workspace
+# Integrated Vyflare Workspace
 
-The console combines `ui-development`, `full-stack-attempt` (which includes Amy's
-three notebooks and the Cosmos gateway), and `vial-mix-anomaly-detection`.
+Vyflare combines recorded vial inspection, experimental recipe-pattern discovery,
+image analysis and separate model APIs. The workspace incorporates the earlier
+`ui-development`, `full-stack-attempt` and `vial-mix-anomaly-detection` work.
 
-## Complete local startup
+## Current Recorded Inspection Workflow
 
-Requirements: Node 24.19+ (24.x), pnpm 11.25+, Python 3.12+.
-From the repository root in PowerShell:
+Open `/inspect`, select an installed recording (Videos 1–5) or **Open a Recording**,
+then play it. First playback starts an idempotent background analysis job. The
+producer reads original pixels to associate vial visits, detect dispenses, measure
+final appearance and qualify tracking/visibility before recipe actions.
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r backend/requirements-integration.lock.txt
+The **Inspection Log** shows timestamped flow observations, timing/color evidence,
+recipe candidates, discovered patterns and unresolved/review reasons. Pausing
+freezes log arrivals while backend analysis continues. Resuming admits entries
+at or before playback time; seeking updates visible history without revealing
+future confirmations. Analysis can lag playback and reports its progress.
+
+The manual Model 4 comparison form, reviewed timeline and separate Process
+Recording panel have been removed from this page. Saved reviewed annotations are
+not inputs to automatic observation. New recordings use the same observer and
+checks; they do not train or tune a model. Replaying identical footage reuses its
+results without adding recipe votes.
+
+Supported fresh processing currently requires **macOS, AVFoundation and `swiftc`**,
+the original unrotated **640 × 480 station view**, and recordings of at most 30
+minutes. This is not arbitrary-camera or unattended qualification. Local uploads
+accept MP4/MOV/WebM up to 128 MiB, with a 512 MiB registration storage budget.
+
+See [automatic recorded inspection](backend/recipes/automatic_recordings.md),
+[tracking eligibility](backend/recipes/recorded_workflow_integration.md) and the
+[corrected data-pipeline diagram](docs/architecture/README.md).
+
+## Local Startup
+
+Requirements: Node 24.19+ (24.x), pnpm 11.25+, Python 3.12+. Install from the
+repository root:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r backend/requirements-integration.lock.txt
 pnpm install --frozen-lockfile
-.\.venv\Scripts\Activate.ps1
-$env:MODEL_MODE = "real"
-$env:ENABLED_MODELS = "measurements,model4"
+source .venv/bin/activate
+export MODEL_MODE=real
+export ENABLED_MODELS=measurements,model4
+```
+
+To enable automatic recorded recipe processing, configure the following in the
+same shell before starting both services:
+
+```sh
+export RECIPE_DEMO_ENABLED=true
+export RECIPE_DEMO_DB_PATH="$PWD/backend/.data/recipe-demo-v1-4.sqlite3"
+# Supply a private server-to-server token locally; use the same value on Node/Python.
+export INFERENCE_TOKEN='replace-with-your-private-local-token'
 pnpm run dev:integrated
 ```
 
-Open http://localhost:5173/inspect. The original `/analyze` and `/experiments`
-workflows remain available. No `.env` is needed: the commands above enable real
-CPU measurements and Model 4 on port 8000, Express uses port 8787, and Vite uses
-port 5173. Without the environment settings, Python defaults to measurements only.
+Open http://localhost:5173/inspect. Python defaults to port 8000, Express to 8787,
+and Vite to 5173. `INFERENCE_URL` selects a different private Python gateway.
+Without demo configuration the separate recorded recipe service is disabled;
+CPU image measurements remain available. Automatic observation does not require
+Model 4, Model 2 or Cosmos.
 
-Without PowerShell activation, start two terminals:
+On Windows use `.venv\Scripts\python.exe` and PowerShell environment variables
+(`$env:NAME = "value"`) for the image/model APIs. Fresh recorded decoding is not
+yet supported on Windows or Linux. `RECORDED_VIDEO_ROOT` and `GEOMETRY_CACHE_ROOT`
+are application configuration overrides; they are not environment-variable
+settings read by the default launcher. Installed sources default to
+`cosmos-original-dataset/videos/vial_fill_video_1.mp4` through `_5.mp4`.
 
-```powershell
-# Terminal 1
-.\.venv\Scripts\python.exe backend/app.py
-# Terminal 2
-pnpm run dev
-```
+## Recipe Banks and Persistence
 
-On macOS/Linux use `.venv/bin/python` and `source .venv/bin/activate`, then run
-`MODEL_MODE=real ENABLED_MODELS=measurements,model4 pnpm run dev:integrated`.
-Set `INFERENCE_URL` on Express when Python runs elsewhere (default:
-`http://127.0.0.1:8000`). Keep the gateway private or use its optional shared
-`INFERENCE_TOKEN`, configured identically on Node and Python.
+- **Nominal references:** 52 integrity-checked recipe settings, including 41, 50,
+  60 and 99. Nominal amounts/order do not establish measured composition or
+  complete comparable timing/color coverage.
+- **Recorded experimental bank:** an explicitly separate SQLite file selected by
+  `RECIPE_DEMO_DB_PATH`. Producer `fixed-station-native/4` uses demo engine 1.4.
+  Eligible fills reuse reference/discovered patterns or establish provisional
+  patterns; pending repeat, boundary, ambiguity and missing/poor evidence cases
+  retain their holds. Two qualifying distinct color-conflicting fills can create
+  a Discovered–Unverified pattern while retaining the review flag. Missing an
+  applicable qualified reference is not by itself proof of a new recipe.
+- **Normal workflow bank:** defaults to `backend/.data/recipes.sqlite3`, or
+  `RECIPE_DB_PATH`. Its reviewed/tracker APIs remain distinct from recorded demo
+  processing. The automatic recorded producer does not write this bank.
 
-## Available workflows
+Preserve older incompatible pinned demo banks and select a new 1.4 filename;
+there is no automatic history migration. Recipe IDs depend on bank contents and
+processing order. Discovered IDs describe unverified timing/appearance patterns,
+not chemical identification or automatic promotion to verified recipes.
 
-- **Solution overview (`/overview`):** actual installed evidence counts, full
-  reference-bank size, current model configuration, and workflow links. Simulated
-  six-case totals are excluded. Saved recipe-assessment counts come from the connected service; Model 4 image-comparison results remain unsaved.
-- **Recipe library (`/recipes`):** all 52 integrity-checked nominal references,
-  including 41, 50, 60 and 99, plus a separate unmatched-candidate collection read
-  from the Python observation service. Candidates, assessments, reference patterns
-  and collection history use local SQLite storage by default. The library shows
-  timing/color-reference coverage separately from nominal dosing settings; automatic
-  video/model observation extraction remains pending. No automatic
-  promotion or recipe discovery is performed by the Model 4 comparison panel.
-- **Inspection workspace (`/inspect`):** Recorded mode reviews videos 1–2 with
-  sampled visual annotations for 22 fill sequences, native playback, and extraction
-  of three post-fill frames. Original videos must be installed in
-  `cosmos-original-dataset/videos`; an uploaded video can also be reviewed locally.
-  Recipe evidence is assessed separately from the reference selected for Model 4 comparison.
-  Missing timing/color references remain Insufficient Evidence; selection alone does not identify a recipe.
-  Video sequence IDs do not establish batch position.
-- **Model 4 comparison:** enable `ENABLED_MODELS=measurements,model4` with
-  `MODEL_MODE=real` in Python before startup. Supply reliable vial/batch IDs and
-  batch position, a comparison recipe, and three registered 640×480 images.
-  The UI shows estimated proportions and differences from the selected reference,
-  flags the first vial separately, and requires review. It does not identify a
-  recipe, establish delivered volume, or automatically release a vial.
-- **Live mode:** camera selection, preview, and disconnect controls. Browser camera
-  access requires localhost or HTTPS and permission. Automated tracking, fill-end
-  detection, and live frame capture are pending integration. Model 2 is pending;
-  Model 3 is not connected; Cosmos retains its existing prompt-analysis workflow.
-- **Analyze an image:** real upload through React -> Express -> Python. The CPU
-  method measures average RGB in a user-selected region. It requires no weights
-  or GPU, does not segment liquid, and abstains from defect and volume judgments.
-  Mouse/touch rectangle drawing and numeric coordinates update each other; new
-  image uploads reset the selection. The selected area is sent to real analysis.
-- **Recorded experiments:** 30 saved anomaly results, thumbnail images, and Cosmos
-  clip observations joined by vial ID. These come from different data pipelines;
-  they are saved evidence, not new inference or a jointly validated model.
-- **Original inspection pages:** six simulated review cases, still labeled as such.
-- **Optional ResNet/Cosmos:** selected methods appear when enabled in Python health.
-  An unavailable method returns an error, not fake results.
+`RECORDING_UPLOAD_ROOT` selects registered media/log storage; its default is a
+`recordings` directory beside the demo database. Source-bound journals preserve
+playback events across restarts and are checked against the selected bank.
+Interrupted jobs need to be restarted; the single-process queue is not durable.
+Normal/demo databases, recording storage and geometry caches must remain outside
+Git and have persistent storage if deployed. Image-analysis uploads and separate
+Model 4 results are not saved by the console; registered recordings are persisted.
 
-Uploaded images, manual guides and Model 4 comparison results are not persisted by this console. Recipe assessments and candidate records are persisted by the Python service. A remote Cosmos runtime can
-retain its own inference artifacts; inspect its runtime policy before using it.
+## Other Available Workflows
 
-The optional Advanced Review panel contains recorded-video geometry tools for manual vial boxes and sloped dashed surface
-guides at explicit timestamps. Reuse a saved box, mark the surface in another
-frame, save, and optionally interpolate between keyframes. Guides are scoped to
-the reviewed vial and hidden outside saved time ranges, with coordinates mapped
-to the visible video content even when it is letterboxed. They are not object
-detection, liquid segmentation, camera registration, or volume calibration. They
-do not crop/resize or draw into Model 4 input images. Guides live only in the
-current recorded-video page and reset on video/mode changes or navigation.
+- **Overview (`/overview`):** installed evidence, reference-bank size, saved
+  assessments, current configuration and workflow links. Model 4 results remain
+  unsaved; historical simulated cases are separate.
+- **Recipes (`/recipes`):** nominal references, normal unmatched candidates and
+  separate experimental pending/discovered patterns. Provisional patterns are not
+  verified recipes.
+- **Analyze an Image (`/analyze`):** React → Express → Python analysis. CPU
+  measurements average RGB within a drawn/numeric region; they do not segment
+  liquid or establish physical volume or defects.
+- **Recorded Experiments (`/experiments`):** saved anomaly results and Cosmos
+  observations for 30 vials, not fresh inference or jointly validated accuracy.
+- **Live Mode:** camera preview and experimental pixel tracking. Actual station
+  camera validation, automatic live fill completion, final-color sampling and
+  live recipe processing remain deferred. Uncertain/hidden surfaces stay unmarked;
+  numeric liquid height is excluded from recipe decisions.
+- **Cosmos:** optional prompted still-frame analysis on the DGX Spark LoRA worker;
+  it does not decide recipe matches or mutate the bank. See
+  [Cosmos integration](backend/COSMOS_INTEGRATION.md) and [DGX setup](backend/dgx/README.md).
+- **Model 4:** optional API for kernel-ridge mixture estimates from three
+  registered post-fill frames and a chosen recipe/context. It does not identify
+  an unknown recipe or release a vial. See [API guide](backend/MODEL4_API.md).
+- **Model 2:** imported experimental v4 classifier API, excluded from automatic
+  recipe decisions and not approved as supporting evidence. See
+  [integration status](backend/MODEL2_INTEGRATION.md) and [API](backend/MODEL2_API.md).
+  Model 3's workflow role is not integrated.
 
-## Recipe assessment integration
-
-The preset-video workflow uses the existing reviewed annotations, not new model
-inference or automatic video detection. At a reviewed final sample, or using
-Assess Selected Vial / Assess All Reviewed Vials, Node requests a server-side
-assessment. Source observations and outcomes are saved and restored on reload.
-
-Current compatibility audit: the packaged 52-recipe bank supplies nominal tank
-amounts/order but no comparable per-dispense timing/color reference patterns.
-The 22 reviewed fills retain sampling brackets and observed appearance; they do
-not establish exact ingredient-dispense measurements. These remain partial
-observations. All 22 therefore produce Insufficient Evidence with no learned
-candidate. No milliliter-to-duration conversion, invented tank identity, or
-midpoint-as-measurement is used. Model 4 mixture estimates are not recipe IDs.
-
-The service requires coverage of the nominal reference bank before declaring
-NO_MATCH. A complete existing reference can still match when others are missing.
-With sufficient observations and complete reference coverage, intended patterns
-are searched first, then unmatched patterns are reused or created. New candidate
-IDs start above the nominal bank's highest ID. Candidates never automatically
-become accepted references. Matching tolerances remain engineering defaults.
-
-Default storage: `backend/.data/recipes.sqlite3`, ignored by Git and Docker build
-contexts. Set `RECIPE_DB_PATH` to an absolute path on a durable mounted directory
-in deployment. Preserve that directory and its SQLite journal files across
-restarts/redeployments. Tests use isolated storage; no training fixtures are
-inserted into the real bank. Repositories and source-evidence metadata commit
-atomically; repeated evidence/reference versions reuse the same inspection.
-Reference-pattern or matching-config changes create a new assessment version,
-retaining history and marking older results as needing reassessment.
-
-Python endpoints (Node proxies only the reviewed-video operations):
-
-- `GET /api/recipe-workflow/status`: coverage, storage kind and saved-assessment count.
-- `GET /api/recipe-workflow/videos/<video_id>/assessments`: latest saved result per vial.
-- `POST /api/recipe-workflow/recorded/<video_id>/<vial_id>` with `{}`: assess the
-  whitelisted server-side review; browser-supplied observations are rejected.
-- `POST /api/recipe-workflow/observations`: trusted future producers supply a
-  validated `observation` and a `source` description. Requires a configured
-  `INFERENCE_TOKEN` and matching bearer credentials. This route is not exposed
-  through the frontend bridge. This provides an integration contract; the
-  camera/Model 2 observation producer is still pending.
-
-The ingestion observation contains `run_id`, `vial_id`, `dispenses` (ordered
-`color`, positive finite `duration_seconds`, optional `source`), `final_color`
-and `filling_complete`. Partial evidence must not be fabricated into complete
-dispenses. Node and Python share the optional inference token for reviewed
-operations; Node rejects foreign-origin writes. Model inference remains on its
-separate existing endpoints.
-
-## Connect the vial-only recipe classifier
-
-Install torch/torchvision for your platform using `backend/requirements-models.txt`.
-Keep weights outside Git. Create a JSON labels file containing this ordered array:
-
-```json
-["5","6","7","8","9","10","11","12","13","14"]
-```
-
-In `backend/.env`:
-
-```dotenv
-MODEL_MODE=real
-ENABLED_MODELS=measurements,resnet18
-RESNET_DEVICE=cpu
-RESNET_CHECKPOINT=/absolute/path/to/vial_resnet18_recipe_model.pth
-RESNET_LABELS=/absolute/path/to/recipe-labels.json
-```
-
-Restart Python and refresh the connection in Analyze an image. The adapter accepts
-Model 1's `model_state_dict` bundle, validates recipe order, and applies its timestamp
-mask and image-padding/normalization. Unknown custom preprocessing fails explicitly.
-Fusion requires a paired-image adapter and is rejected by this single-image path.
-Without custom weights, ResNet returns generic ImageNet demonstration classes.
-Recipe scores are not calibrated defect probabilities. Actual checkpoint parity
-and GPU inference have not been tested in this integration environment.
-
-For Cosmos, follow [the DGX guide](backend/dgx/README.md), then enable
-`measurements,cosmos_full` and set the existing `COSMOS_FULL_URL` tunnel destination.
-Gateway health does not guarantee remote GPU readiness. Lite/Full are routes to
-Cosmos3-Nano, not differently sized models. Browser cancellation does not stop an
-already-running remote inference job.
+The old six-case demo pages remain explicitly simulated. Manual geometry-guide
+components and comparison components remain in source but are not mounted in the
+current inspection page. Drawn overlays never enter analysis pixels.
 
 ## Verification
 
-```powershell
+```sh
 pnpm run check
-$env:PYTHONPATH = "$PWD\backend"
-.\.venv\Scripts\python.exe -m unittest discover -s backend/tests -p 'test_*.py'
+PYTHONPATH=backend .venv/bin/python -m unittest discover -s backend/tests -p 'test_*.py'
 pnpm run test:integration
 ```
 
-The integration smoke test needs a production build and uses temporary ports 18000
-and 18787. It tests a known red image through the actual HTTP proxy into real Python
-code, plus frozen Model 4 inference through the proxy, normal/first-vial review,
-recipe references, recorded evidence, thumbnails and SPA routes. Set `PYTHON` to the Python
-executable if your environment differs from `.venv`. CI uses the same workflow.
+Model 2 tests additionally need its separate dependencies and pinned backbone;
+see its integration guide. The HTTP smoke test needs a production build and uses
+temporary ports 18000/18787; set `PYTHON` if the executable differs from `.venv`.
 
-## Deployment and branch scope
+Recorded implementation validation (2026-11-01): 51 frontend/gateway tests,
+TypeScript checks and production build pass. Backend: 392/393 pass; the existing
+Model 2 strict macOS ARM64 score-parity failure is retained without relaxed
+assertions. Fresh pixel-based runs of Videos 1, 3 and 4, arbitrary content-ID
+processing of Video 3, paused/resumed/seeking logs and restart/replay checks were
+validated against an isolated bank. These are development checks, not accuracy
+or unattended-reliability estimates.
 
-The root Dockerfile now builds the Node console. The CPU Python image is
-`backend/Dockerfile`, built with repository root as context. Python binds loopback
-locally and supports `HOST=0.0.0.0` inside the container. GPU Cosmos uses its existing
-DGX runtime, not this CPU container.
+## Deployment and Remaining Limits
 
-The existing `render.yaml` continues targeting `ui-development`; this integration
-does not change the deployed service. A test Render service can target
-`integration/usable-console` with the existing Node build/start commands and
-`INFERENCE_URL` pointing to its private Python gateway. Recorded evidence works
-without Python; image analysis requires a reachable Python service.
+The root Dockerfile builds the Node console; `backend/Dockerfile` is the separate
+CPU Python service. DGX Cosmos uses its own worker. Node hosting alone does not
+provide Python inference, database persistence or native video acquisition.
+Linux/Render requires a validated decoder adapter before fresh recording analysis
+can run there. Public media uploads are denied by the current loopback-only
+upload route; remote support requires authenticated deployment configuration.
 
-The reverted `model_api` FluidCheck service is not activated: it uses unfitted
-physical parameters and a different schema. Its branch remains available. The
-maintained Flask gateway provides the integrated runtime. Original notebooks and
-Cosmos evidence remain in their team folders. Large existing source-branch videos
-remain in Git history; this integration adds no new dataset or weight binaries.
+The checked-in `render.yaml` still names `ui-development`; the team has separately
+reported configuring the Render dashboard to deploy `main`. Verify dashboard
+settings rather than assuming the YAML reflects the deployed branch. Deployment
+and Render backend connections are separate work; this commit does not deploy.
 
-## Submission limits
-
-- Resolve the reported camera/video clock discrepancy before further training.
-- Model 2's random-frame 100% score is not unseen-vial performance.
-- Anomaly reference labels are rule-based/suspected, and threshold calibration
-  reuses the evaluated pool: 5/5 suspected detections include five false alarms.
-- Cosmos 24/30 color-description acceptance is a team review of one recorded batch.
-- No calibrated milliliters, actual composition assay, verified carryover cause,
-  production reliability, or measured scrap savings is established.
-- Complete independent evaluation, external dataset/weight distribution, and a
-  supervised CSI demonstration before making broader claims.
-
-## Recorded Tracking-Gated Recipe Workflow (Current)
-
-The experimental recorded workflow now processes installed Videos 1 and 2 from original pixels, qualifies tracking identity and direct final-color visibility, then compares timing/color and creates/reuses provisional observed patterns when the existing checks permit. Inspection Workspace displays tracking eligibility with each recipe outcome. Geometry and observer measurements come from one decode pass; overlays do not enter analysis images. Numeric liquid level remains excluded.
-
-This current native workflow is distinct from the older reviewed-annotation/snapshot interfaces described above. Historical packaged snapshots lack the tracking proof and stay held; they cannot authorize recipe creation. Live recipe inspection remains deferred, and other model integrations are unchanged.
-
-Producer 3 uses isolated demo engine 1.4. Preserve older pinned demo files and select a new separate `RECIPE_DEMO_DB_PATH` (for example, `recipe-demo-v1-4.sqlite3`) before enabling it. No automatic history migration or normal-bank changes occur. See [the detailed contract](backend/recipes/recorded_workflow_integration.md).
+Earlier anomaly recall/precision and Cosmos color-review figures describe their
+original experiments, not the current automatic workflow. No calibrated volume,
+chemical identity, verified carryover cause, production reliability or measured
+scrap savings is established. Numeric surface height, live recipe automation and
+further model qualification remain outside the completed recorded integration.

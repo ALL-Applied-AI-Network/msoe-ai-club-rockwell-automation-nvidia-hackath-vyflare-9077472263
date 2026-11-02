@@ -11,7 +11,7 @@ import numpy as np
 from PIL import Image
 
 from app import create_app
-from recipes.recorded_producer import RecordedVideoProducer, NativeDecoder, measure_triplet
+from recipes.recorded_producer import RecordedVideoProducer, NativeDecoder, measure_triplet, file_sha
 from recipes.observation.features import extract
 from backend.tests.recorded_tracking_fixtures import with_tracking
 
@@ -31,6 +31,7 @@ class ProducerTests(unittest.TestCase):
         bundle=json.loads((Path(__file__).parents[1]/'recipe_demo_assets/recorded_observations.json').read_text())
         self.observation=deepcopy(next(o for o in bundle['observations'] if o['vial_id']=='V1-V06'))
         self.observation['observation_id']='fresh-unit-fixture'
+        self.observation['source_lineage']['video_sha256']=file_sha(self.root/'vial_fill_video_1.mp4')
         self.observation=with_tracking(self.observation)
 
     def close(self):

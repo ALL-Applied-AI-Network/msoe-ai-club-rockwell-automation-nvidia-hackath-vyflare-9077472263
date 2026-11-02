@@ -35,7 +35,7 @@ app.get("/api/experiments", (_req, res) => {
   });
 });
 
-app.get("/api/health", (_req, res) => res.json({ status: "ok", mode: "experimental-workspace", inspectionMode: "recorded-review-and-camera-tracking", automaticVisualTracking: "experimental-fixed-station", automaticInspection: false, machineControl: false }));
+app.get("/api/health", (_req, res) => res.json({ status: "ok", mode: "experimental-workspace", inspectionMode: "recorded-review-and-camera-tracking", automaticVisualTracking: "experimental-fixed-station", automaticInspection: false, automaticRecordedInspection: "on_playback_when_supported_backend_is_connected", automaticRecipeRelease: false, machineControl: false }));
 app.get("/api/bootstrap", (_req, res) => res.json(appData));
 app.get("/api/cases", (_req, res) => res.json(cases));
 app.get("/api/cases/:id", (req, res) => {

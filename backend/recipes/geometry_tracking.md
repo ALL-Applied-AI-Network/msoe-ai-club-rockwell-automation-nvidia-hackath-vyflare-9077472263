@@ -2,6 +2,29 @@
 
 The experimental pixel tracker supports the active filling position in the existing fixed, unmodified 640 × 480 station view. Recorded playback and Live Mode share the same backend detector and causal association rules. It requires no per-fill box drawing or surface marking. It is not qualified for arbitrary cameras, neighboring vials, clear liquids, physical volume measurement or unattended recipe decisions.
 
+## Current Recorded Integration
+
+Producer 4 computes tracking and dispense observation in the same native decode
+for installed Videos 1–5 and registered station recordings. It publishes geometry
+for display and supplies qualified identity/direct-final-color evidence to the
+engine-1.4 recipe gate. This gate is implemented; it is not awaiting integration.
+Numeric surface height remains excluded. See
+[recorded eligibility](recorded_workflow_integration.md) and
+[automatic playback](automatic_recordings.md).
+
+First playback automatically ensures the observer job. The inspection page reads
+cached same-pass geometry, with preview/session tracking while a recent cached
+sample is unavailable. It no longer mounts Process Recording, Track Entire
+Recording, Review a Detected Surface or manual-guide controls. Standalone geometry
+API operations remain available; their diagnostic projections do not themselves
+perform recipe actions. With the enabled producer, the source resolver supports
+registered recordings and installed Videos 1–5; a standalone service without that
+resolver retains its original Videos-1/2 source restriction.
+
+The baseline sections below preserve the initial tracker implementation and its
+validation. Statements about supplemental geometry not affecting decisions refer
+to that baseline, not the current tracking-eligibility gate.
+
 ## Requirements and Decision Rules
 
 - Find the active vial's sustained body edges and visible rim/base from source pixels in the calibrated station search lane. Reject unsupported resolution and missing geometry rather than resize or invent a vial.
@@ -12,7 +35,7 @@ The experimental pixel tracker supports the active filling position in the exist
 
 Version and implementation SHA-256 are exposed with configuration. No new model weights or third-party inference service are required; pixel processing uses the installed NumPy/Pillow backend.
 
-## Backend and Recorded Observer Integration
+## Initial Backend and Recorded Observer Integration
 
 `GeometryService` provides bounded, five-minute-idle tracking sessions (maximum eight), strict frame dimensions, monotonically increasing capture times and a single whole-recording worker. Images in live/preview sessions are processed in memory. The whole-recording worker uses the existing local macOS native decoder at four frames per second for installed Videos 1 and 2, without reading labels during detection.
 
@@ -20,7 +43,7 @@ Whole-recording geometry is cached separately from recipe storage. Cache keys in
 
 Completed geometry joins fresh recorded-observer assessments by recording hash and each fill's original start/departure window. The supplemental summary includes tracked/visible-surface sample counts, local track IDs, explicit identity-change/visibility-gap issues and a strict continuity flag. `affects_recipe_decision` remains false. Qualification of residual tracking cases is required before adopting a geometry-based recipe eligibility policy.
 
-## API and Frontend
+## Initial API and Frontend
 
 Python routes under `/api/geometry`:
 
@@ -59,4 +82,4 @@ The observation file is optional and is read only after detection to join diagno
 
 Recorded-only qualification now preserves a latent ID across supported detection loss for at most two seconds, including re-confirmation. Missing frames remain unmarked; two returning samples, stable holder-side appearance and compatible geometry are required. Expiry, input gaps, sustained motion or changed appearance reset association. The same 22 fill windows now retain one ID each, without shared IDs across adjacent fills. Strict all-samples continuity remains unproven.
 
-An 82-frame developmental surface review found correct withholding on the reviewed empty/obscured cases, plus visible-boundary misses, placement differences and foam ambiguity. Numeric surface height remains unqualified for recipe decisions. See [tracker_qualification.md](tracker_qualification.md) for evidence, caveats, regression coverage and the proposed eligibility rules awaiting review. Live inspection is deferred; this update does not enable recipe-policy integration.
+An 82-frame developmental surface review found correct withholding on the reviewed empty/obscured cases, plus visible-boundary misses, placement differences and foam ambiguity. Numeric surface height remains unqualified for recipe decisions. See [tracker_qualification.md](tracker_qualification.md) for evidence, caveats and regression coverage. Its reviewed eligibility rules are now integrated through the current gate described above; numeric level and live recipe processing remain deferred.

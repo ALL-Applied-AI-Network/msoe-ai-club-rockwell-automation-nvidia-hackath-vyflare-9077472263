@@ -1,43 +1,86 @@
 # Fresh Recorded-Video Observation
 
-The local experimental path now decodes installed Videos 1 and 2 anew, runs the fixed-station observer, measures final appearance at reference cadence, and passes complete interval observations into the separate demonstration bank. The browser accepts no measurements or source paths. The matcher and its 1-second timing allowance are unchanged. Boundary cases stay unresolved; conflicting colors remain flagged.
+## Current Contract — Producer 4 / Engine 1.4
 
-This is fixed-camera fill-visit association, not a general vial detector or liquid-surface tracker. No Cosmos, Model 2, or Model 4 call is made by this producer. No chemical identification or unattended reliability claim is made.
+The recorded producer decodes original pixels for installed Videos 1–5 and
+content-addressed opened station recordings. It detects fill visits/dispenses,
+performs bounded timing refinement, measures final RGB and checks same-pass
+tracking plus direct final-color visibility before any recipe action. It does
+not load reviewed labels, expected recipe IDs or saved predictions as observation
+inputs. No Cosmos, Model 2 or Model 4 call is required by this producer.
 
-## Configuration
+First playback ensures an analysis job. The **Inspection Log** replaces the manual
+comparison form, reviewed timeline and separate processing panel. Pause freezes
+log arrivals while analysis continues; resume and seeks reveal only appropriate
+source-time events. Later confirming fills append later membership updates rather
+than rewriting early events with knowledge from the future. See
+[automatic_recordings.md](automatic_recordings.md) for the maintained API,
+registration, playback, persistence and upload contract.
 
-Use the existing opt-in demonstration configuration described in [demo_api.md](demo_api.md): `RECIPE_DEMO_ENABLED=true`, an explicitly separate `RECIPE_DEMO_DB_PATH`, and `INFERENCE_TOKEN` configured in both Python and the Node proxy environment. Keep the normal and demonstration databases separate. These changes do not modify the existing `.env`, enable the feature on a running server, or deploy it.
+## Configuration and Supported Sources
 
-Fresh acquisition currently requires **macOS, AVFoundation, and `swiftc`**. The decoder is compiled in a temporary work directory. It rejects rotated or resized views, recordings longer than 30 minutes, and more than 7,200 event frames. Decode subprocesses have timeouts. Linux/Render needs a decoder adapter and color/timestamp equivalence checks before this path can run there. The status endpoint explicitly reports an unavailable decoder on unsupported hosts.
+Enable `RECIPE_DEMO_ENABLED=true`, configure an explicitly separate
+`RECIPE_DEMO_DB_PATH` for engine 1.4, and configure the same private `INFERENCE_TOKEN`
+on Python and Node. Keep the normal and demo databases separate. Preserve old
+incompatible demo files; there is no automatic migration.
 
-The supported recordings are the files `vial_fill_video_1.mp4` and `vial_fill_video_2.mp4` under `cosmos-original-dataset/videos/`. `RECORDED_VIDEO_ROOT` is an application configuration override for controlled deployments/tests, not a request parameter. Opening a local browser video remains playback/manual review only. Live mode remains a camera preview.
+Fresh acquisition requires **macOS, AVFoundation and `swiftc`**, unrotated original
+640 × 480 station geometry and at most 30 minutes of footage. Linux/Render needs
+a validated decoder adapter. Installed sources are
+`cosmos-original-dataset/videos/vial_fill_video_1.mp4` through `_5.mp4`.
+`RECORDED_VIDEO_ROOT` is an application configuration override, not a request or
+default-launcher environment parameter. New MP4/MOV/WebM media is registered by
+SHA256; filenames cannot select server paths. Local uploads are bounded to
+128 MiB each and a 512 MiB registration storage budget.
 
-## API and UI
-
-Python routes, all using the existing token/origin gate:
-
-- `GET /api/recipe-workflow/demo/producer/status`: capability, scope, supported sources, comparison-reference coverage.
-- `POST /api/recipe-workflow/demo/producer/videos/video-1` (or `video-2`), body exactly `{}`: start a fresh job; returns HTTP 202.
-- `GET /api/recipe-workflow/demo/producer/videos/video-1`: progress, error, saved automatic assessments, incomplete held visits.
-- `GET /api/recipe-workflow/demo/recipes`: discovered patterns in the shared experimental bank.
-
-The Node proxy exposes `/api/recorded-observer/status`, `/videos/:videoId`, and `/recipes`, forwarding the private token server-side. It preserves upstream error codes and rejects arbitrary video IDs, measurements, file paths, and cross-origin writes.
-
-On Inspection Workspace, select an installed recording and choose **Process Recording**. No manual timing/color qualification is requested. The job continues independently of playback; the UI polls progress, shows saved outcomes and hold reasons, and offers **View Fill** seeking. Reprocess Recording reads the actual media again; unchanged evidence reuses assessments. Playback alone does not start processing. The reviewed timeline and Model 4's selected-recipe comparison remain separately identified.
-
-Recipes includes **Discovered Recipes · Experimental Bank**, showing IDs, linked fill counts, founder duration intervals, and measured RGB. The earlier review-service candidates are separately labeled; they are not the experimental store. The nominal recipe catalog is unchanged.
+The one-second timing allowance, color safeguards and tracking eligibility checks
+remain in force. Boundary/ambiguity cases stay unresolved; conflicting colors
+retain their review flag. Numeric liquid height is excluded. Two distinct
+qualifying color-conflicting fills can establish an unverified observed pattern
+under the agreed exception. Missing reference evidence alone cannot prove novelty.
+This is not chemical identification or qualification for unattended use.
 
 ## Integrity and Lifecycle
 
-Event images preserve the development decoder's 4 fps JPEG acquisition. Color uses fresh native PNGs at three requested offsets 0.05, 0.15 and 0.25 seconds into the observer-derived appearance window, checking actual times, cadence, temporal stability and spatial sensitivity. Actual source hashes are checked before and after processing. No reviewed labels, saved predictions, manual event boundaries or expected recipe IDs are loaded by the producer.
+The source SHA is checked at queuing, processing start and completion. Observation
+lineage binds decoder/configuration/producer revisions and source evidence.
+Unchanged evidence reuses saved assessments without new occurrences; conflicting
+evidence under the same identity is rejected. Engine 1.4 enforces tracking on all
+recipe actions, including pending-group votes. Historical packaged snapshots
+without tracking proof remain held.
 
-The observer/configuration/decoder revision is included in source lineage. Fresh observations have a different source kind and identity namespace from packaged snapshots. Reprocessing the same evidence adds no duplicate occurrences. Decoder/configuration changes need an explicit producer revision and reassessment policy; changed evidence with an existing identity is rejected, not overwritten.
+One worker runs one recording at a time. Automatic `ensure` supports up to four
+active/queued recordings and reuses existing jobs/results. The explicit legacy
+start route remains for controlled reprocessing and returns 409 if another
+recording is active. Jobs are process-local; shutdown-interrupted work needs to
+be restarted. Acquisition/qualification/log-preparation failures do not commit
+partial recipe runs. Assessments and memberships commit together in SQLite.
 
-One worker per application process runs one recording at a time. Duplicate starts of the active recording share that job; another recording returns 409. New observations are assessed in one bank transaction only after acquisition completes. Failures preserve previous assessments and do not commit a partial run. Incomplete event intervals stay held and do not create recipes. Temporary images/compiler products are removed on completion or failure.
+Persistent source-bound event journals retain incomplete-visit details, causal
+membership updates and analyzed-through time. They are scoped to the bank path
+and checked against immutable bank rows, preventing results from a different or
+reset bank from appearing as that bank's recipe IDs. If a historical bank lacks
+a valid journal, fallback uses original baseline decisions rather than later
+membership projections. See the automatic guide for storage directories.
 
-Job progress and incomplete held-visit details are process-local. Assessment and recipe records persist in the demonstration SQLite database; after restart they appear as saved results. A recording interrupted by shutdown must be processed again. This is a single-process development integration, not a distributed job queue.
+Recipes displays the experimental discovered patterns and pending groups
+separately from nominal references and normal-service candidates. IDs depend on
+bank contents and processing order. Live camera preview/tracking is separate;
+automatic live recipe processing remains deferred.
 
-## Verification
+## Validation and Development History
+
+Current validation (2026-11-01): 51 frontend/gateway tests, TypeScript checks and
+production build pass; 392/393 backend tests pass with the existing Model 2 strict
+score-parity issue retained. Fresh native runs of Videos 1, 3 and 4, content-ID
+processing and restart/replay checks exercised the current integration. These do
+not establish accuracy on all installed or unseen recordings.
+
+The following sections preserve the **earlier development checkpoints**, including
+their original counts, versions and scripts. They do not describe the current UI,
+current assignment counts or a requirement to downgrade an engine-1.4 bank.
+
+## Historical Initial-Producer Verification
 
 Run from the repository root:
 
@@ -87,7 +130,7 @@ A pending group has no recipe ID. The second qualifying occurrence creates the o
 
 `assessment.recipe_id`, `action`, `timing` and `color` retain their baseline meanings. `assessment.pattern_membership` supplies the current effective pattern ID/status, revision ID, qualifying count, prior candidate IDs, retained review flags and membership history. Consumers should use the membership recipe ID when present for effective observed-pattern counts, while displaying the original conflict. `DemoBank.baseline_assessments()` exposes immutable baseline snapshots; `assessments()` exposes the current projected view. `counts().linked_occurrences` counts persisted links once per canonical membership.
 
-`GET /api/recipe-workflow/demo/patterns` returns pending/confirmed groups and the discovered recipe list in one consistent snapshot. `GET /api/recipe-workflow/demo/patterns/<group_id>/history` returns member histories. The Node proxy exposes `/api/recorded-observer/patterns`. Inspection Workspace shows pending/confirmed status and membership history. Recipes shows pending groups without IDs alongside discovered recipes with their counts and retained review flags.
+`GET /api/recipe-workflow/demo/patterns` returns pending/confirmed groups and the discovered recipe list in one consistent snapshot. `GET /api/recipe-workflow/demo/patterns/<group_id>/history` returns member histories. The Node proxy exposes `/api/recorded-observer/patterns`. Inspection Workspace now shows evidence-timed pending/confirmed updates in the log; full group history remains available through the API. Recipes shows pending groups without IDs alongside discovered recipes with their counts and retained review flags.
 
 The engine version is 1.3. Older pinned demo stores must be preserved and a new separately configured demo filename selected before enabling 1.3. They are rejected before the new membership tables are created; no automatic migration or old-result rewriting occurs. Producer 2's timing/acquisition logic remains unchanged. Actual `.env`, normal recipe storage and public deployment are not changed by this integration.
 
@@ -95,4 +138,4 @@ Fresh processing of Videos 1 and 2 creates observed Recipe 102 from Video 1 Vial
 
 ## Producer 3 — Tracking-Gated Recipe Actions
 
-The current producer is `fixed-station-native/3`. It computes geometry during the same decode as the original observer, directly checks the three original final-color images, and binds this evidence to the observation before bank assessment. It publishes the same-pass geometry for display; the frontend no longer starts a duplicate automatic geometry job. Engine 1.4 blocks unsupported tracking on all recipe action paths and holds legacy packaged snapshots. Numeric liquid level remains excluded. See [recorded_workflow_integration.md](recorded_workflow_integration.md) for the current contract and separate-store requirement.
+Producer `fixed-station-native/3` introduced this tracking gate; current producer 4 retains it. It computes geometry during the same decode as the original observer, directly checks the three original final-color images, and binds this evidence to the observation before bank assessment. It publishes the same-pass geometry for display; the frontend no longer starts a duplicate automatic geometry job. Engine 1.4 blocks unsupported tracking on all recipe action paths and holds legacy packaged snapshots. Numeric liquid level remains excluded. See [recorded_workflow_integration.md](recorded_workflow_integration.md) for the current contract and separate-store requirement.

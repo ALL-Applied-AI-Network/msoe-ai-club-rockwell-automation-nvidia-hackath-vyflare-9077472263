@@ -14,14 +14,14 @@ to `ENABLED_MODELS` alongside `model4`. The adapter verifies the complete backbo
 and head SHA256 hashes. Without an explicit path it uses the standard Torch cache
 and downloads the pinned official ImageNet backbone when absent.
 
-In Inspection Workspace, prepare the existing three registered 640 × 480 post-flow
-frames and complete the intended comparison recipe and reliable batch context.
-Select **Include Model 2 on These Same Three Frames**, then **Run Model 4 + Model 2**.
-The Python `/predict/vial-evidence` endpoint decodes each frame once and runs the
-two models independently under the existing shared nonblocking inference lock.
-The gateway checks the returned frame/vial/batch context. Model 4-only requests
-continue through their existing endpoint. `/predict/model2` also supports Model 2
-alone through the gateway; see `MODEL2_API.md` for the multipart contract.
+Recorded Inspection Workspace now uses an automatic timing/color/tracking log;
+the manual three-frame comparison form was removed from that page. Model 2
+remains available as an optional experimental API. The `/predict/model2` and
+`/predict/vial-evidence` endpoints still support the registered 640 × 480,
+three-early-post-flow-frame contract with an intended recipe and batch context.
+See `MODEL2_API.md` for that separate manual experiment contract. Model 4-only
+API requests also retain their existing endpoint. These APIs are not invoked by
+the automatic recipe observer.
 
 The classifier receives image features only. The intended recipe and batch position
 are applied afterward to its interpretation. Scores are uncalibrated; high scores
@@ -42,5 +42,10 @@ Local qualification status (2026-11-01): real CPU/browser inference and 23 of th
 for `v5_e10` on macOS ARM64 (maximum difference 0.0002324); all three fixture top
 recipes and threshold decisions are unchanged. Matching the source runtime versions
 did not remove the difference. This remains an open validation issue; the original
-oracle test is intentionally retained without relaxed tolerances. Full backend
-suite: 381 pass, 1 failure. Frontend/gateway suite: 45 pass; production build passes.
+oracle test is intentionally retained without relaxed tolerances. At that integration checkpoint, the backend
+suite had 381 passes and 1 failure; frontend/gateway tests had 45 passes.
+
+After automatic recorded-inspection integration (2026-11-01), the full backend
+suite has 392 passes and the same 1 parity failure; all 51 frontend/gateway tests,
+TypeScript checks and production build pass. Model 2 remains excluded from the
+automatic workflow; the added tests do not qualify its recipe predictions.
