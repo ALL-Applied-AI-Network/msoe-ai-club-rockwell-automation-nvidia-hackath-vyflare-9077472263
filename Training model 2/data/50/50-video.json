@@ -1,0 +1,41 @@
+{
+ "recording_id": "20261028_210906_318043",
+ "batch_id": "2026-10-0004",
+ "started_at": "2026-10-28T21:09:06.318+00:00",
+ "camera": {
+  "device": "/dev/v4l/by-id/usb-4K_USB_CAMERA_HD_USB_CAMERA_01.00.00-video-index0",
+  "settings": {
+   "auto_exposure": 3.0,
+   "exposure": 156.0,
+   "auto_wb": 0.0,
+   "wb_temperature": 4600.0,
+   "gain": 100.0,
+   "brightness": 0.0,
+   "contrast": 1.0,
+   "saturation": 60.0,
+   "focus": 0.0,
+   "autofocus": 1.0
+  }
+ },
+ "video_file": "video_vial_fill_2026-10-0004_20261028_210906_318043.mp4",
+ "samples": [
+  {
+   "recording_id": "20261028_210906_318043",
+   "batch_id": "2026-10-0004",
+   "sample_number": 1,
+   "captured_at": "2026-10-28T21:09:06.330+00:00",
+   "video_elapsed_s": 0.012,
+   "red_ml": 30,
+   "yellow_ml": 0,
+   "blue_ml": 40,
+   "water_ml": 0,
+   "total_ml": 70,
+   "notes": "rec #50",
+   "video_file": "video_vial_fill_2026-10-0004_20261028_210906_318043.mp4"
+  }
+ ],
+ "stopped_at": "2026-10-28T21:14:59.713+00:00",
+ "duration_s": 353.39,
+ "frames": 8719,
+ "sample_count": 1
+}
